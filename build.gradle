@@ -1,0 +1,103 @@
+import java.util.Properties
+
+def requiredJava = JavaVersion.VERSION_21
+if (JavaVersion.current() != requiredJava) {
+    throw new GradleException(
+        "Embedra requires JDK 21 for the Ghidra 12.1.3 baseline; current JVM is ${JavaVersion.current()}."
+    )
+}
+
+def configuredGhidraDir = providers.gradleProperty('GHIDRA_INSTALL_DIR')
+    .orElse(providers.environmentVariable('GHIDRA_INSTALL_DIR'))
+    .getOrElse('')
+
+if (configuredGhidraDir.isBlank()) {
+    throw new GradleException(
+        'Set GHIDRA_INSTALL_DIR or pass -PGHIDRA_INSTALL_DIR=<Ghidra 12.1.3 directory>.'
+    )
+}
+
+def ghidraInstallDir = file(configuredGhidraDir).canonicalFile
+def ghidraPropertiesFile = new File(ghidraInstallDir, 'Ghidra/application.properties')
+if (!ghidraPropertiesFile.isFile()) {
+    throw new GradleException(
+        "GHIDRA_INSTALL_DIR does not contain Ghidra/application.properties: ${ghidraInstallDir}"
+    )
+}
+
+def ghidraProperties = new Properties()
+ghidraPropertiesFile.withReader('UTF-8') { reader -> ghidraProperties.load(reader) }
+def requiredGhidraVersion = '12.1.3'
+def configuredGhidraVersion = ghidraProperties.getProperty('application.version')
+if (configuredGhidraVersion != requiredGhidraVersion) {
+    throw new GradleException(
+        "Embedra requires Ghidra ${requiredGhidraVersion}; configured installation is ${configuredGhidraVersion ?: 'unknown'}."
+    )
+}
+
+apply from: new File(ghidraInstallDir, 'support/buildExtension.gradle')
+
+group = 'io.github.rezabakhshi.embedra'
+apply from: rootProject.file('gradle/build-quality.gradle')
+
+tasks.register('verifyProjectScaffold') {
+    group = 'verification'
+    description = 'Verifies the minimum pinned Ghidra extension project structure.'
+
+    doLast {
+        [
+            'Module.manifest',
+            'extension.properties',
+            'gradlew',
+            'gradlew.bat',
+            'gradle/wrapper/gradle-wrapper.jar',
+            'gradle/wrapper/gradle-wrapper.properties'
+        ].each { relativePath ->
+            if (!file(relativePath).isFile()) {
+                throw new GradleException("Required project file is missing: ${relativePath}")
+            }
+        }
+
+        def extensionProperties = new Properties()
+        file('extension.properties').withReader('UTF-8') { reader ->
+            extensionProperties.load(reader)
+        }
+        if (extensionProperties.getProperty('name') != '@extname@') {
+            throw new GradleException('extension.properties must retain the @extname@ build token.')
+        }
+        if (extensionProperties.getProperty('version') != '@extversion@') {
+            throw new GradleException('extension.properties must retain the @extversion@ build token.')
+        }
+
+        def wrapperProperties = new Properties()
+        file('gradle/wrapper/gradle-wrapper.properties').withReader('UTF-8') { reader ->
+            wrapperProperties.load(reader)
+        }
+        def distributionUrl = wrapperProperties.getProperty('distributionUrl', '')
+        if (!distributionUrl.endsWith('/gradle-9.6.1-bin.zip')) {
+            throw new GradleException("Gradle Wrapper must be pinned to 9.6.1; found ${distributionUrl}")
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyProjectScaffold')
+}
+
+tasks.named('buildExtension') {
+    dependsOn tasks.named('check')
+    if (fileTree('src/main/java').matching { include '**/*.java' }.isEmpty()) {
+        exclude '**/*-src.zip'
+    }
+    includeEmptyDirs = false
+    exclude 'ghidra_12.1.3_PUBLIC_20260817/**'
+    exclude '.embedra/**'
+    exclude 'docs/adr/**'
+    exclude 'Embedra-SpecKit.md'
+    exclude 'PROJECT_STATE.md'
+    exclude 'config/**'
+    exclude 'gradle/**'
+    exclude 'gradle.lockfile'
+    exclude 'gradle.properties'
+    exclude 'scripts/**'
+}

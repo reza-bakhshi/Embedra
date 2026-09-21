@@ -1,0 +1,16 @@
+/.gradle/
+/build/
+/dist/
+/bin/
+/ghidra_12.1.3_PUBLIC_20260817/
+
+# Local IDE and editor state
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# Host metadata
+.DS_Store
+Thumbs.db

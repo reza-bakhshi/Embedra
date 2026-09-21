@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "specification": {
+    "path": "Embedra-SpecKit.md",
+    "sha256": "414f22a911d59afe19a8177802c7e0e8e6d38b102ea55f078ee4db2296553161"
+  },
+  "projectClassification": "NEW",
+  "currentTask": {
+    "id": "T005",
+    "status": "READY",
+    "reasonCode": null
+  },
+  "completedTasks": [
+    "T001",
+    "T002",
+    "T003",
+    "T004"
+  ],
+  "blockedTasks": [],
+  "acceptanceGates": {},
+  "versionControl": {
+    "present": true,
+    "branch": "main",
+    "commit": "HEAD"
+  },
+  "workingTree": {
+    "state": "CLEAN",
+    "uncommittedWork": []
+  },
+  "toolchains": {
+    "ghidra": {
+      "version": "12.1.3",
+      "release": "PUBLIC",
+      "buildDate": "2026-08-17",
+      "revision": "8b4c91d4d5bd1549622bfbade0df199585b98365"
+    },
+    "java": {
+      "observedVersion": "21.0.12",
+      "requiredBaseline": "21",
+      "compatibleBaselineVerified": true
+    },
+    "gradle": {
+      "wrapperVersion": "9.6.1",
+      "distributionCached": true
+    },
+    "host": {
+      "os": "Linux",
+      "architecture": "x86-64",
+      "kernel": "7.0.0-31-generic"
+    }
+  },
+  "catalogSnapshots": [],
+  "fixtureEvidence": [],
+  "evidence": {
+    "task": ".embedra/evidence/tasks/T004.md",
+    "commands": ".embedra/evidence/commands.jsonl"
+  },
+  "knownFailures": [],
+  "nextTask": "T005",
+  "nextAction": "Report T005 requirements and test-first plan; write failing tests for canonical report ordering/schema identity, catalog snapshot/diff behavior, topology reporting, and stable snapshot helpers.",
+  "artifacts": [
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260921_Embedra.zip",
+      "sha256": "07d158876bc8379360bbd25bd504fac1652614e8581f5e2ba3349f7a7cc7f198",
+      "sizeBytes": 56108,
+      "status": "T004_REPRODUCIBLE_BUILD_ARTIFACT"
+    }
+  ],
+  "resolvedFailures": [
+    {
+      "code": "T001_JDK21_UNAVAILABLE",
+      "resolution": "OpenJDK 21.0.12 became available and was used for all passing build evidence."
+    },
+    {
+      "code": "T001_WRAPPER_ABSENT",
+      "resolution": "Standard Gradle 9.6.1 Wrapper generated and verified."
+    },
+    {
+      "code": "T001_PACKAGE_INCLUDED_TOOLCHAIN",
+      "resolution": "Local Ghidra, continuity, and specification paths excluded; final ZIP reduced to intended 5,402-byte contents."
+    },
+    {
+      "code": "T002_MISSING_BUILD_QUALITY_TASKS",
+      "resolution": "Pinned test, coverage, formatting, and static-analysis tasks configured and verified."
+    },
+    {
+      "code": "T002_PACKAGE_DEVELOPMENT_FILES",
+      "resolution": "Development-only Gradle/config/script inputs excluded; exact package contents validated."
+    },
+    {
+      "code": "T002_ACCEPTANCE_SCRIPT_SYNTAX",
+      "resolution": "Expected-entry string repaired and validated with sh -n before the final passing run."
+    },
+    {
+      "code": "T003_CHECKSTYLE_TEST_LAYOUT",
+      "resolution": "Five empty-line-separator violations in the new architecture test were corrected without suppressions before acceptance."
+    },
+    {
+      "code": "T004_SERIAL_LINT_FAILURE",
+      "resolution": "The checked diagnostic exception payload was made transient so Java serialization lint passes without disabling -Werror."
+    },
+    {
+      "code": "T004_STYLE_AND_COVERAGE_GAPS",
+      "resolution": "Five formatting violations were corrected and missing boundary tests raised every core class with branches above the configured 90% threshold without exclusions."
+    }
+  ],
+  "mostRecentCommands": [
+    {
+      "command": "scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "PASS: two clean T004 builds byte-identical; exact extension/source ZIP contents valid; SHA-256 07d158876bc8379360bbd25bd504fac1652614e8581f5e2ba3349f7a7cc7f198."
+    },
+    {
+      "command": "./gradlew --offline --no-daemon --rerun-tasks -P<ghidra> clean check jacocoTestReport jacocoTestCoverageVerification buildExtension",
+      "exitStatus": 0,
+      "result": "PASS: all 14 actionable tasks executed; 28 tests passed; Checkstyle/formatting passed; core branch coverage 129/130 (99.23%)."
+    },
+    {
+      "command": "validate T004 continuity and offline test regression",
+      "exitStatus": 0,
+      "result": "PASS: records agree on T005 READY; offline tests, pure-core isolation, both ZIP layers, and artifact digest/size validated."
+    }
+  ],
+  "buildQuality": {
+    "junit": "6.1.3",
+    "jacoco": "0.8.15",
+    "checkstyle": "14.1.0",
+    "dependencyLock": "gradle.lockfile",
+    "reproducibilityScript": "scripts/verify-build-quality.sh",
+    "coreBranchThreshold": 0.90,
+    "coreThresholdMeasured": true,
+    "coreBranchCoverage": 0.9923,
+    "minimumCoreClassBranchCoverage": 0.9286
+  },
+  "architecture": {
+    "pureBoundaries": [
+      "core",
+      "formats",
+      "targets",
+      "analyzers",
+      "pack"
+    ],
+    "adapterBoundary": "ghidra",
+    "enforcementTest": "io.github.rezabakhshi.embedra.build.ArchitectureBoundaryTest"
+  },
+  "coreFoundation": {
+    "rangeCoordinates": "NON_NEGATIVE_SIGNED_LONG",
+    "rangeSemantics": "HALF_OPEN_CHECKED",
+    "diagnosticCodes": "STABLE_ENUM_IDS",
+    "defaultParserLimits": {
+      "maxInputBytes": 268435456,
+      "maxAllocationBytes": 16777216,
+      "maxExtractedBytes": 536870912,
+      "maxObjects": 1000000,
+      "maxNestingDepth": 32,
+      "maxWallTimeSeconds": 30
+    },
+    "topologyModel": "VALIDATED_IMMUTABLE_GRAPH"
+  }
+}

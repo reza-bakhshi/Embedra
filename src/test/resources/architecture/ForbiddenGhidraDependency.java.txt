@@ -1,0 +1,7 @@
+package architecture.fixture;
+
+import ghidra.program.model.listing.Program;
+
+final class ForbiddenGhidraDependency {
+    private Program program;
+}
