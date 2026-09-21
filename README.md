@@ -4,7 +4,9 @@ Embedra is an open-source Ghidra extension for embedded-firmware reverse enginee
 
 Implementation has only begun. No firmware format or device is currently advertised as supported. `Embedra-SpecKit.md` is the single authoritative project specification.
 
-The implemented pure-core foundation currently provides checked source/address ranges, bounded little-endian reads, cooperative cancellation, parser limits, typed diagnostics, evidence/confidence, and validated processor-topology models. These foundations do not constitute firmware-format or device support.
+The implemented pure-core foundation currently provides checked source/address ranges, bounded little-endian reads, cooperative cancellation, parser limits, typed diagnostics, evidence/confidence, validated processor-topology models, deterministic canonical reports, and versioned device-catalog snapshot/diff contracts. These foundations do not constitute firmware-format or device support.
+
+The versioned JSON schemas are checked in under `schemas/` and packaged as extension resources. Golden snapshots are immutable test oracles: tests fail on a missing or changed snapshot and never rewrite one automatically.
 
 ## Build baseline
 

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:embedra:schema:device-catalog-snapshot:1",
+  "title": "Embedra Device Catalog Snapshot v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaId", "catalogId", "source", "devices"],
+  "properties": {
+    "schemaId": {"const": "urn:embedra:schema:device-catalog-snapshot:1"},
+    "catalogId": {"type": "string", "minLength": 1},
+    "source": {"$ref": "#/$defs/source"},
+    "devices": {"type": "array", "items": {"$ref": "#/$defs/device"}}
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "revision", "license", "provenance"],
+      "properties": {
+        "identity": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1},
+        "license": {"type": "string", "minLength": 1},
+        "provenance": {"type": "string", "minLength": 1}
+      }
+    },
+    "device": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deviceId", "vendor", "family", "series", "exactPart", "package",
+        "attributes", "supportStates"
+      ],
+      "properties": {
+        "deviceId": {"type": "string", "minLength": 1},
+        "vendor": {"type": "string", "minLength": 1},
+        "family": {"type": "string", "minLength": 1},
+        "series": {"type": "string", "minLength": 1},
+        "exactPart": {"type": "string", "minLength": 1},
+        "package": {"type": "string", "minLength": 1},
+        "attributes": {"type": "object", "additionalProperties": {"type": "string"}},
+        "supportStates": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "enum": ["PLANNED", "EXPERIMENTAL", "VERIFIED", "UNSUPPORTED"]
+          }
+        }
+      }
+    }
+  }
+}

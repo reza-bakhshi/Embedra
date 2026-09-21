@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:embedra:schema:execution-topology:1",
+  "title": "Embedra Execution Topology Report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaId",
+    "programStrategy",
+    "processors",
+    "sharedMemories",
+    "bootRelationships",
+    "communicationLinks",
+    "processorGroups"
+  ],
+  "properties": {
+    "schemaId": {"const": "urn:embedra:schema:execution-topology:1"},
+    "programStrategy": {"enum": ["SHARED_PROGRAM", "SEPARATE_PROGRAMS"]},
+    "processors": {"type": "array", "items": {"$ref": "#/$defs/processor"}},
+    "sharedMemories": {"type": "array", "items": {"$ref": "#/$defs/sharedMemory"}},
+    "bootRelationships": {"type": "array", "items": {"$ref": "#/$defs/bootRelationship"}},
+    "communicationLinks": {"type": "array", "items": {"$ref": "#/$defs/communicationLink"}},
+    "processorGroups": {"type": "array", "items": {"$ref": "#/$defs/processorGroup"}}
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "source", "detail"],
+      "properties": {
+        "kind": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "detail": {"type": "string", "minLength": 1}
+      }
+    },
+    "addressRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["addressSpace", "start", "length"],
+      "properties": {
+        "addressSpace": {"type": "string", "minLength": 1},
+        "start": {"type": "integer", "minimum": 0},
+        "length": {"type": "integer", "minimum": 0}
+      }
+    },
+    "resetEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "addressSpace", "address", "confidence", "evidence"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "addressSpace": {"type": "string", "minLength": 1},
+        "address": {"type": "integer", "minimum": 0},
+        "confidence": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "processor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "kind", "instructionSet", "ghidraLanguageId", "compilerSpecId", "role",
+        "securityDomain", "ownership", "addressSpaces", "resetEntries", "firmwareSource",
+        "confidence", "evidence"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "minLength": 1},
+        "instructionSet": {"type": ["string", "null"]},
+        "ghidraLanguageId": {"type": ["string", "null"]},
+        "compilerSpecId": {"type": ["string", "null"]},
+        "role": {"type": "string", "minLength": 1},
+        "securityDomain": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "kind"],
+          "properties": {
+            "id": {"type": "string", "minLength": 1},
+            "kind": {"type": "string", "minLength": 1}
+          }
+        },
+        "ownership": {"type": "string", "minLength": 1},
+        "addressSpaces": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "resetEntries": {"type": "array", "items": {"$ref": "#/$defs/resetEntry"}},
+        "firmwareSource": {"type": "string", "minLength": 1},
+        "confidence": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "sharedMemory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "range", "owners", "readers", "writers", "aliases", "confidence", "evidence"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "range": {"$ref": "#/$defs/addressRange"},
+        "owners": {"type": "array", "items": {"type": "string"}},
+        "readers": {"type": "array", "items": {"type": "string"}},
+        "writers": {"type": "array", "items": {"type": "string"}},
+        "aliases": {"type": "array", "items": {"$ref": "#/$defs/addressRange"}},
+        "confidence": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "bootRelationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sourceNodeId", "targetNodeId", "type", "mechanism", "confidence", "evidence"],
+      "properties": {
+        "id": {"type": "string"},
+        "sourceNodeId": {"type": "string"},
+        "targetNodeId": {"type": "string"},
+        "type": {"type": "string"},
+        "mechanism": {"type": "string"},
+        "confidence": {"type": "string"},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "communicationLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "participants", "registerRange", "confidence", "evidence"],
+      "properties": {
+        "id": {"type": "string"},
+        "kind": {"type": "string"},
+        "participants": {"type": "array", "items": {"type": "string"}},
+        "registerRange": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/addressRange"}]},
+        "confidence": {"type": "string"},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "processorGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "members"],
+      "properties": {
+        "id": {"type": "string"},
+        "kind": {"type": "string"},
+        "members": {"type": "array", "items": {"type": "string"}, "minItems": 2}
+      }
+    }
+  }
+}

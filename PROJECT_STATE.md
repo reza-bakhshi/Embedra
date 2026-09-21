@@ -3,11 +3,11 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T005 — READY**.
-- Last completed task: **T004**.
+- Current task: **T006 — READY**.
+- Last completed task: **T005**.
 - Acceptance gates: none run.
-- Version control: Git repository on branch `main`; the repository snapshot identifies its revision as `HEAD`.
-- Specification: `Embedra-SpecKit.md`, SHA-256 `414f22a911d59afe19a8177802c7e0e8e6d38b102ea55f078ee4db2296553161`.
+- Version control: Git repository on branch `main`; T005 is saved in the current `HEAD` commit.
+- Specification: `Embedra-SpecKit.md`, SHA-256 `559df024bec02e083b522bd36fcc0b6141bdb46d97e3cbedd65193a0ce6de96e`.
 
 ## Verified Environment
 
@@ -20,17 +20,17 @@
 
 ## Completed Work
 
-T001 through T004 are complete. The pure core now provides checked half-open source/address ranges, bounded little-endian reads, cooperative cancellation, centralized parser limits, typed stable diagnostics, evidence/confidence, and validated execution-topology models. The topology distinguishes instruction-bearing processors from fixed hardware and records security domains, symmetric/alternative groups, shared memory/aliases, boot/reset relationships, communication links, and shared-versus-separate-program strategy. The final uncached offline regression executed all 14 actionable tasks successfully; all 28 tests passed. Current core branch coverage is 129/130 (99.23%), with every covered core class at or above 92.86%. Two clean builds produced byte-identical 56,108-byte ZIPs with SHA-256 `07d158876bc8379360bbd25bd504fac1652614e8581f5e2ba3349f7a7cc7f198`. No foundation acceptance gate occurs until T007.
+T001 through T005 are complete. The pure core now also provides a restricted deterministic JSON writer; versioned canonical-report, execution-topology, exact-device catalog snapshot, and catalog-diff contracts; and immutable golden-snapshot assertions. Reports include inputs, providers/packs, validations, mappings, applied symbols/types with provenance, metadata, topology, findings, diagnostics, and explicit reproducibility settings without host paths or timestamps. Catalog entries retain an explicit per-capability support state and diff only exact device identities. The final uncached offline regression executed all 15 actionable tasks successfully; all 41 tests passed. Current core branch coverage is 99.55%, with every core class containing branches at or above 92.86%. Two clean builds produced byte-identical 103,934-byte ZIPs with SHA-256 `aa6693eb56ea34c222cb8c5741a8e112a68d6c31b0d25f71feeb595bc246f229`. No foundation acceptance gate occurs until T007.
 
 ## Changed Files
 
-- Added range, bounded-reader, cancellation, parser-limit, diagnostic, evidence, confidence, and topology production models under the pure core.
-- Added 23 T004 tests covering successful, boundary, malformed, overflow, cancellation, resource-limit, and topology-reference behavior.
-- Documented core invariants/defaults and added ADR 0003; no dependency, vendor data, firmware fixture, or device-support claim was introduced.
-- Marked T004 complete and updated mandatory continuity/evidence records.
+- Added deterministic report and catalog production contracts under `core/report` and `core/catalog`.
+- Added four closed JSON Schema 2020-12 documents, packaged them inside the extension JAR, and added 13 T005 tests plus two reviewed golden snapshots.
+- Documented canonicalization and catalog semantics and added ADR 0004; no dependency, vendor data, firmware fixture, catalog snapshot, or device-support claim was introduced.
+- Marked T005 complete and updated mandatory continuity/evidence records.
 
 No firmware parser, provider, device data, fixture, catalog, or support claim was added.
 
 ## Exact Next Action
 
-Begin T005 by reporting its deterministic schema/snapshot requirements and expected files, then write failing tests for canonical report ordering/schema identity, device-catalog snapshot/diff behavior, execution-topology reporting, and stable snapshot helpers. Do not begin T006 until T005 is complete.
+Begin T006 by reporting its pack-manifest, digest, provenance, local-installation, and offline-selection requirements and expected files. Write failing tests for valid/malformed manifests, digest mismatch, provenance/license rejection, traversal-safe local installation, deterministic offline selection, and missing/incompatible packs before production implementation. Do not begin T007 until T006 is complete.

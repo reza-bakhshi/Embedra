@@ -632,7 +632,7 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [x] T002 Configure reproducible builds, tests, coverage, formatting, static analysis, and extension packaging.
 - [x] T003 Create core/format/target/analyzer/ghidra/pack package boundaries and an automated no-Ghidra-in-core architecture test.
 - [x] T004 Implement checked source/address ranges, bounded little-endian reader, cancellation, parser limits, typed diagnostics, evidence/confidence, `ProcessorNode`, `ExecutionTopology`, shared-memory, boot-relationship, and security-domain models.
-- [ ] T005 Implement deterministic canonical report schema, device-catalog snapshot/diff schema, execution-topology reporting, and snapshot helpers.
+- [x] T005 Implement deterministic canonical report schema, device-catalog snapshot/diff schema, execution-topology reporting, and snapshot helpers.
 - [ ] T006 Implement pack manifest schema, digest verification, provenance validation, local installation, and offline selection.
 - [ ] T007 Create CI with pure tests, Ghidra integration tests, fixture provenance validation, release ZIP build, and the mandatory repository-local `PROJECT_STATE.md` plus `.embedra/state.json`/evidence handoff system.
 

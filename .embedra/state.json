@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "414f22a911d59afe19a8177802c7e0e8e6d38b102ea55f078ee4db2296553161"
+    "sha256": "559df024bec02e083b522bd36fcc0b6141bdb46d97e3cbedd65193a0ce6de96e"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T005",
+    "id": "T006",
     "status": "READY",
     "reasonCode": null
   },
@@ -14,7 +14,8 @@
     "T001",
     "T002",
     "T003",
-    "T004"
+    "T004",
+    "T005"
   ],
   "blockedTasks": [],
   "acceptanceGates": {},
@@ -52,18 +53,18 @@
   "catalogSnapshots": [],
   "fixtureEvidence": [],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T004.md",
+    "task": ".embedra/evidence/tasks/T005.md",
     "commands": ".embedra/evidence/commands.jsonl"
   },
   "knownFailures": [],
-  "nextTask": "T005",
-  "nextAction": "Report T005 requirements and test-first plan; write failing tests for canonical report ordering/schema identity, catalog snapshot/diff behavior, topology reporting, and stable snapshot helpers.",
+  "nextTask": "T006",
+  "nextAction": "Report T006 pack requirements and test-first plan; write failing tests for manifest validation, digest/provenance/license enforcement, traversal-safe local installation, deterministic offline selection, and missing/incompatible-pack diagnostics.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260921_Embedra.zip",
-      "sha256": "07d158876bc8379360bbd25bd504fac1652614e8581f5e2ba3349f7a7cc7f198",
-      "sizeBytes": 56108,
-      "status": "T004_REPRODUCIBLE_BUILD_ARTIFACT"
+      "sha256": "aa6693eb56ea34c222cb8c5741a8e112a68d6c31b0d25f71feeb595bc246f229",
+      "sizeBytes": 103934,
+      "status": "T005_REPRODUCIBLE_BUILD_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -102,23 +103,31 @@
     {
       "code": "T004_STYLE_AND_COVERAGE_GAPS",
       "resolution": "Five formatting violations were corrected and missing boundary tests raised every core class with branches above the configured 90% threshold without exclusions."
+    },
+    {
+      "code": "T005_NULL_CANONICALIZATION",
+      "resolution": "Canonical map sorting now uses immutable entries that permit required JSON null values."
+    },
+    {
+      "code": "T005_STYLE_AND_COVERAGE_GAPS",
+      "resolution": "Two style violations and missing model boundary cases were corrected without suppressions or coverage exclusions."
     }
   ],
   "mostRecentCommands": [
     {
       "command": "scripts/verify-build-quality.sh",
       "exitStatus": 0,
-      "result": "PASS: two clean T004 builds byte-identical; exact extension/source ZIP contents valid; SHA-256 07d158876bc8379360bbd25bd504fac1652614e8581f5e2ba3349f7a7cc7f198."
+      "result": "PASS: two clean T005 builds byte-identical; exact extension/source ZIP contents valid; SHA-256 aa6693eb56ea34c222cb8c5741a8e112a68d6c31b0d25f71feeb595bc246f229."
     },
     {
       "command": "./gradlew --offline --no-daemon --rerun-tasks -P<ghidra> clean check jacocoTestReport jacocoTestCoverageVerification buildExtension",
       "exitStatus": 0,
-      "result": "PASS: all 14 actionable tasks executed; 28 tests passed; Checkstyle/formatting passed; core branch coverage 129/130 (99.23%)."
+      "result": "PASS: all 15 actionable tasks executed; 41 tests passed; Checkstyle/formatting passed; core branch coverage 99.55%."
     },
     {
-      "command": "validate T004 continuity and offline test regression",
+      "command": "validate T005 schemas, tests, coverage, package resources, and artifact",
       "exitStatus": 0,
-      "result": "PASS: records agree on T005 READY; offline tests, pure-core isolation, both ZIP layers, and artifact digest/size validated."
+      "result": "PASS: four schemas parse and are packaged; 41 tests pass; reproducible artifact digest/size validated."
     }
   ],
   "buildQuality": {
@@ -129,7 +138,7 @@
     "reproducibilityScript": "scripts/verify-build-quality.sh",
     "coreBranchThreshold": 0.90,
     "coreThresholdMeasured": true,
-    "coreBranchCoverage": 0.9923,
+    "coreBranchCoverage": 0.9955,
     "minimumCoreClassBranchCoverage": 0.9286
   },
   "architecture": {
@@ -155,6 +164,10 @@
       "maxNestingDepth": 32,
       "maxWallTimeSeconds": 30
     },
-    "topologyModel": "VALIDATED_IMMUTABLE_GRAPH"
+    "topologyModel": "VALIDATED_IMMUTABLE_GRAPH",
+    "canonicalReportSchema": "urn:embedra:schema:canonical-report:1",
+    "executionTopologySchema": "urn:embedra:schema:execution-topology:1",
+    "deviceCatalogSnapshotSchema": "urn:embedra:schema:device-catalog-snapshot:1",
+    "deviceCatalogDiffSchema": "urn:embedra:schema:device-catalog-diff:1"
   }
 }
