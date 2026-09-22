@@ -6,7 +6,7 @@
 - Current task: **T008 — COMPLETE**.
 - Last completed task: **T008**.
 - Acceptance gates: Foundation `PASS`; maintainer approval received on 2026-09-22.
-- Version control: Git repository on branch `main` at baseline commit `2314e4488ffb5f2c7d7b25bb392883c760539040`; T006 through T008 are intentionally uncommitted.
+- Version control: Git repository on branch `main`; T006 through T008 are committed in `a63144e629a5f86a69a859bd2e422d960c4017b2`, followed only by this continuity update. Working tree is clean.
 - Specification: `Embedra-SpecKit.md`, SHA-256 `0b751b375d67a6bfcefa47b554af46df65c91393baade10eecdf4b8bf4731cf0`.
 
 ## Verified Environment
