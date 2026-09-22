@@ -67,7 +67,8 @@ Embedra/THIRD_PARTY_NOTICES.md
 Embedra/docs/
 Embedra/docs/architecture.md
 Embedra/docs/fixture-policy.md
-Embedra/docs/pack-format.md'
+Embedra/docs/pack-format.md
+Embedra/docs/support-matrix.md'
 if find src/main/java -type f -name '*.java' -print -quit | grep -q .; then
     expected_entries="${expected_entries}
 Embedra/lib/Embedra-src.zip"

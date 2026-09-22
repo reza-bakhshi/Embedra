@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "0b751b375d67a6bfcefa47b554af46df65c91393baade10eecdf4b8bf4731cf0"
+    "sha256": "c151f6d453af195ba6935f4479ef02125741b121f0eda56e13f5332b2ad91a19"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T008",
+    "id": "T013",
     "status": "COMPLETE",
     "reasonCode": null
   },
@@ -18,7 +18,12 @@
     "T005",
     "T006",
     "T007",
-    "T008"
+    "T008",
+    "T009",
+    "T010",
+    "T011",
+    "T012",
+    "T013"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -32,11 +37,13 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "a63144e629a5f86a69a859bd2e422d960c4017b2"
+    "commit": "922a0d4a00c65fd89f132cebd4881b41cd15b875"
   },
   "workingTree": {
-    "state": "CLEAN",
-    "uncommittedWork": []
+    "state": "DIRTY",
+    "uncommittedWork": [
+      "T009-T013 fixtures, parser/provider tests, implementation, documentation, and evidence"
+    ]
   },
   "toolchains": {
     "ghidra": {
@@ -83,22 +90,86 @@
       "sizeBytes": 400,
       "redistributionStatus": "REDISTRIBUTABLE",
       "oracle": "src/test/resources/oracles/esp32s3/esp32s3-freestanding-minimal-no-digest.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.malformed.malformed-truncated-segment-data",
+      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-truncated-segment-data.bin",
+      "sha256": "4641e566106a295665812eb77d9bc25d4375c6e8d58040498fef80dca00713a8",
+      "sizeBytes": 350,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-truncated-segment-data.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.malformed.malformed-segment-length-overflow",
+      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-segment-length-overflow.bin",
+      "sha256": "97ae4aff29e84a894c89bbf26b21060417ddd93b67285c5689fc3b015f1852fa",
+      "sizeBytes": 400,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-segment-length-overflow.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.malformed.malformed-overlapping-segments",
+      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-overlapping-segments.bin",
+      "sha256": "450ccc4447b805f005677aec70ffd30a7b4113389b359a2faa64484f9822b40a",
+      "sizeBytes": 400,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-overlapping-segments.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.malformed.malformed-wrong-chip",
+      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-wrong-chip.bin",
+      "sha256": "7f9544aec9d09774b93034094274b8baff14dba5349b0d99307e203b247dd802",
+      "sizeBytes": 400,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-wrong-chip.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.malformed.malformed-checksum",
+      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-checksum.bin",
+      "sha256": "56686515f40fb2874644e3c539e5952138368a8fbe39ad448bcdd6e2d52c57e9",
+      "sizeBytes": 400,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-checksum.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.malformed.malformed-digest",
+      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-digest.bin",
+      "sha256": "9f8426ea35927ec2d2d6535e2d4a8ef2551def779535e786b250699bc7a89dcd",
+      "sizeBytes": 432,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-digest.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.malformed.malformed-entry-unaligned",
+      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-entry-unaligned.bin",
+      "sha256": "42427fc50f1843dd2a8f593fe3d6e859cec26db4754471536c72f16d48d34e81",
+      "sizeBytes": 400,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-entry-unaligned.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.malformed.malformed-trailing-data",
+      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-trailing-data.bin",
+      "sha256": "23bd40d77d07120c9879652b2d5a538f846eb0d88b44f0786cb432a8fb8b8b80",
+      "sizeBytes": 404,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-trailing-data.expectations.json"
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T008.md",
+    "task": ".embedra/evidence/tasks/T013.md",
     "gate": ".embedra/evidence/gates/foundation.md",
     "commands": ".embedra/evidence/commands.jsonl"
   },
   "knownFailures": [],
-  "nextTask": "T009",
-  "nextAction": "Begin T009 by reporting prerequisites and generating malformed ESP image fixtures for truncation, overflow, overlap, wrong-chip, checksum, digest, entry, and trailing-data cases; do not begin T010.",
+  "nextTask": "T014",
+  "nextAction": "Begin T014 by reporting prerequisites and writing failing Ghidra segment-mapping and rollback tests against the T011 parser and T013 provider decisions; do not implement T015.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260922_Embedra.zip",
-      "sha256": "946b28123f7ff9b86ec21309a711f160f2dab24f254561dc1e1a7abfe79399d1",
-      "sizeBytes": 152216,
-      "status": "T008_REPRODUCIBLE_BUILD_ARTIFACT"
+      "sha256": "1f48bbb8fed564bb350e7644b3145e154db09730d4ddfb21b3272a69eb6ee983",
+      "sizeBytes": 194328,
+      "status": "T013_REPRODUCIBLE_BUILD_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -181,19 +252,19 @@
   ],
   "mostRecentCommands": [
     {
-      "command": "scripts/generate-esp32s3-golden-fixtures.sh plus repository oracle hash comparison",
+      "command": "JAVA_HOME=<jdk21> ./gradlew --offline --no-daemon pureTest",
       "exitStatus": 0,
-      "result": "PASS: two builds per invocation and a second complete regeneration were byte-identical; digest/no-digest fixture SHA-256 values match retained manifests and oracles."
+      "result": "PASS: 86 unit tests, Checkstyle, formatting, scaffold, JaCoCo report, and coverage verification passed."
     },
     {
-      "command": "scripts/verify-build-quality.sh",
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew ghidraIntegrationTest --tests <ESP32-S3 language integration>",
       "exitStatus": 0,
-      "result": "PASS: two clean builds byte-identical; exact extension/source ZIP contents valid; SHA-256 946b28123f7ff9b86ec21309a711f160f2dab24f254561dc1e1a7abfe79399d1."
+      "result": "PASS: real Ghidra service resolved Xtensa language, default compiler, little endianness, and alignment 1."
     },
     {
-      "command": "./gradlew --offline --no-daemon --rerun-tasks -P<ghidra> clean check jacocoTestReport jacocoTestCoverageVerification buildExtension plus fixture validator",
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
       "exitStatus": 0,
-      "result": "PASS: all 18 actions executed; 61 unit and 2 Ghidra integration tests passed; fixture provenance, Checkstyle, formatting, and coverage passed."
+      "result": "PASS: two builds byte-identical; 86 unit and 3 integration tests passed; 194328-byte ZIP SHA-256 1f48bbb8fed564bb350e7644b3145e154db09730d4ddfb21b3272a69eb6ee983."
     }
   ],
   "buildQuality": {
@@ -246,6 +317,18 @@
     "selection": "LOCAL_ONLY_HIGHEST_COMPATIBLE",
     "networkRequired": false,
     "publisherAuthentication": false
+  },
+  "targetProviders": {
+    "esp32s3": {
+      "supportState": "EXPERIMENTAL",
+      "chipId": 9,
+      "languageId": "Xtensa:LE:32:default",
+      "compilerSpecId": "default",
+      "instructionAlignmentBytes": 1,
+      "memoryEvidence": "ESP-IDF v6.0 soc.h",
+      "chipEvidence": "esptool v5.4.0 targets/esp32s3.py",
+      "mappedProgramVerified": false
+    }
   },
   "foundationAutomation": {
     "pureTask": "pureTest",

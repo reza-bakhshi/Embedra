@@ -1,0 +1,19 @@
+{
+  "fixtureId": "esp32s3.malformed.malformed-checksum",
+  "baseFixture": "esp32s3-freestanding-minimal-no-digest.bin",
+  "baseSha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
+  "imageSha256": "56686515f40fb2874644e3c539e5952138368a8fbe39ad448bcdd6e2d52c57e9",
+  "imageSize": 400,
+  "expectedOutcome": "REJECT",
+  "expectedFailureClass": "CHECKSUM_MISMATCH",
+  "mutation": {
+    "kind": "REPLACE",
+    "offset": 399,
+    "originalHex": "5d",
+    "mutatedHex": "5c",
+    "description": "Flip the padded XOR checksum byte."
+  },
+  "esptoolVersion": "5.4.0",
+  "esptoolExitStatus": 0,
+  "esptoolObservation": "IMAGE_INFO_COMPLETED_POLICY_REJECTION_REQUIRED"
+}

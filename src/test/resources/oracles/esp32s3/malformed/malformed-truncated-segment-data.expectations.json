@@ -1,0 +1,19 @@
+{
+  "fixtureId": "esp32s3.malformed.malformed-truncated-segment-data",
+  "baseFixture": "esp32s3-freestanding-minimal-no-digest.bin",
+  "baseSha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
+  "imageSha256": "4641e566106a295665812eb77d9bc25d4375c6e8d58040498fef80dca00713a8",
+  "imageSize": 350,
+  "expectedOutcome": "REJECT",
+  "expectedFailureClass": "TRUNCATED_SEGMENT_DATA",
+  "mutation": {
+    "kind": "TRUNCATE",
+    "offset": 350,
+    "originalHex": "400",
+    "mutatedHex": "350",
+    "description": "Truncate inside the final IRAM segment data."
+  },
+  "esptoolVersion": "5.4.0",
+  "esptoolExitStatus": 2,
+  "esptoolObservation": "IMAGE_INFO_REJECTED"
+}

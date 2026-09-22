@@ -1,0 +1,27 @@
+{
+  "fixtureId": "esp32s3.malformed.malformed-segment-length-overflow",
+  "sha256": "97ae4aff29e84a894c89bbf26b21060417ddd93b67285c5689fc3b015f1852fa",
+  "target": "ESP32-S3",
+  "device": "ESP32-S3 (chip ID 9 baseline; malformed test input)",
+  "inputFormat": "Malformed Espressif application image v1",
+  "origin": "Deterministic malformed derivative of esp32s3-freestanding-minimal-no-digest.bin",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:8c5cda8b99f6792b4bb0c5640949cbc5a1218f0c487820b29e7f669169a588c8",
+  "generationCommand": "sh scripts/generate-esp32s3-malformed-fixtures.sh",
+  "toolchain": "POSIX shell/coreutils/jq; esptool 5.4.0 oracle only",
+  "oracleCommands": [
+    "timeout 10s esptool --chip esp32s3 image-info <fixture>",
+    "compare exact mutation against the pinned T008 golden fixture"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/esp32s3/malformed/malformed-segment-length-overflow.expectations.json",
+  "malformed": true,
+  "requirements": [
+    "T009",
+    "ESP-001",
+    "ESP-002",
+    "ESP-003",
+    "ESP-004",
+    "ESP-005"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "fixtureId": "esp32s3.malformed.malformed-segment-length-overflow",
+  "baseFixture": "esp32s3-freestanding-minimal-no-digest.bin",
+  "baseSha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
+  "imageSha256": "97ae4aff29e84a894c89bbf26b21060417ddd93b67285c5689fc3b015f1852fa",
+  "imageSize": 400,
+  "expectedOutcome": "REJECT",
+  "expectedFailureClass": "SEGMENT_LENGTH_OUT_OF_INPUT",
+  "mutation": {
+    "kind": "REPLACE",
+    "offset": 344,
+    "originalHex": "24000000",
+    "mutatedHex": "ffffffff",
+    "description": "Replace final segment length 36 with unsigned 0xffffffff."
+  },
+  "esptoolVersion": "5.4.0",
+  "esptoolExitStatus": 2,
+  "esptoolObservation": "IMAGE_INFO_REJECTED"
+}

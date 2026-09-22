@@ -1,0 +1,4 @@
+esptool v5.4.0
+Image size: 400 bytes
+
+ERROR: A fatal error occurred: End of file reading segment 0x40378000, length 4294967295 (actual length 52)

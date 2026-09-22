@@ -1,0 +1,19 @@
+{
+  "fixtureId": "esp32s3.malformed.malformed-trailing-data",
+  "baseFixture": "esp32s3-freestanding-minimal-no-digest.bin",
+  "baseSha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
+  "imageSha256": "23bd40d77d07120c9879652b2d5a538f846eb0d88b44f0786cb432a8fb8b8b80",
+  "imageSize": 404,
+  "expectedOutcome": "REJECT",
+  "expectedFailureClass": "UNEXPECTED_TRAILING_DATA",
+  "mutation": {
+    "kind": "APPEND",
+    "offset": 400,
+    "originalHex": "",
+    "mutatedHex": "454d4252",
+    "description": "Append non-padding ASCII EMBR bytes after the checksum boundary."
+  },
+  "esptoolVersion": "5.4.0",
+  "esptoolExitStatus": 0,
+  "esptoolObservation": "IMAGE_INFO_COMPLETED_POLICY_REJECTION_REQUIRED"
+}

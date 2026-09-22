@@ -29,6 +29,18 @@ Source and target ranges are immutable half-open ranges. Construction rejects ne
 
 Execution topology is a validated graph rather than a processor count. Processor nodes distinguish CPU cores, programmable coprocessors, radio processors, boot ROM code, DMA/bus masters, fixed-function accelerators, and non-programmable radio hardware. Nodes retain ISA, optional Ghidra language/compiler IDs, role, ownership, address spaces, reset/entry candidates, firmware-source relationship, security domain, confidence, and evidence. The topology separately records symmetric or alternative-boot groups, shared memory and aliases, boot/reset relationships, inter-processor communication, and whether faithful representation requires shared or separate Ghidra programs.
 
+## Pure ESP application-image boundary
+
+ESP application-image detection and parsing live entirely below `formats.esp` and have no Ghidra dependency. Detection distinguishes non-matches from ESP-magic inputs with malformed structural headers. Parsing retains every encoded load address and source byte range, bounds segment count and allocation, rejects overlapping target ranges, verifies the seeded XOR checksum and optional SHA-256 digest, and requires exact end of input. Parsed segment, padding, and digest arrays are defensively copied.
+
+The generic parser reports the image's encoded chip ID without selecting a target. A caller may instead supply an expected chip ID for an explicit mismatch check. The pure layer enforces only architecture-neutral structural entry evidence: even alignment and containment in an encoded segment. Executable-memory classification, exact language alignment, and Ghidra entry creation remain target-provider and loader responsibilities in later tasks; the parser does not guess them.
+
+## ESP32-S3 target provider
+
+The first concrete target provider resolves ESP32-S3 only when image chip ID `9` matches the bundled, provenance-bearing esptool definition. The registry is a generated-data boundary with an intentionally narrow T013 snapshot; the complete Espressif catalog generator remains T026 and future devices are not added as provider branches.
+
+The provider selects Ghidra `Xtensa:LE:32:default` with compiler specification `default`, including the language's one-byte instruction alignment. Address classification uses the half-open ESP-IDF v6.0 DROM, IROM, IRAM, and DRAM definitions and refuses ranges spanning a boundary or using another address space. Entry decisions additionally require containment in an image segment classified executable. The provider returns a pure plan decision and never mutates a Ghidra program.
+
 ## Canonical reports and catalogs
 
 Canonical JSON is emitted by a small pure-core writer that accepts only deterministic JSON values: maps with string keys, ordered iterables, integral numbers, strings, booleans, and null. Map keys are sorted, record collections are normalized by stable identity, strings are fully escaped, and output ends with one newline. Sets, floating-point values, non-string keys, and arbitrary object serialization are rejected so host iteration order and object identity cannot leak into evidence.

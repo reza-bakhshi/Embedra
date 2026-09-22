@@ -1,0 +1,19 @@
+{
+  "fixtureId": "esp32s3.malformed.malformed-entry-unaligned",
+  "baseFixture": "esp32s3-freestanding-minimal-no-digest.bin",
+  "baseSha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
+  "imageSha256": "42427fc50f1843dd2a8f593fe3d6e859cec26db4754471536c72f16d48d34e81",
+  "imageSize": 400,
+  "expectedOutcome": "REJECT",
+  "expectedFailureClass": "INVALID_ENTRY_POINT_ALIGNMENT",
+  "mutation": {
+    "kind": "REPLACE",
+    "offset": 4,
+    "originalHex": "08803740",
+    "mutatedHex": "09803740",
+    "description": "Change the executable entry from 0x40378008 to unaligned 0x40378009."
+  },
+  "esptoolVersion": "5.4.0",
+  "esptoolExitStatus": 0,
+  "esptoolObservation": "IMAGE_INFO_COMPLETED_POLICY_REJECTION_REQUIRED"
+}

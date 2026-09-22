@@ -3,11 +3,11 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T008 — COMPLETE**.
-- Last completed task: **T008**.
+- Current task: **T013 — COMPLETE**.
+- Last completed task: **T013**.
 - Acceptance gates: Foundation `PASS`; maintainer approval received on 2026-09-22.
-- Version control: Git repository on branch `main`; T006 through T008 are committed in `a63144e629a5f86a69a859bd2e422d960c4017b2`, followed only by this continuity update. Working tree is clean.
-- Specification: `Embedra-SpecKit.md`, SHA-256 `0b751b375d67a6bfcefa47b554af46df65c91393baade10eecdf4b8bf4731cf0`.
+- Version control: Git repository on branch `main` at commit `922a0d4`; T009-T013 work is uncommitted.
+- Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
 
@@ -21,17 +21,17 @@
 
 ## Completed Work
 
-T001 through T008 are complete and the Foundation gate is `PASS` and approved. T008 adds two deterministic, redistributable ESP32-S3 application-image fixtures from an attributed Apache-2.0 freestanding source: digest-appended and no-digest variants. Retained esptool and ELF oracles cover chip ID 9, DROM/DRAM/IRAM segments, entry, checksum, digest, and application-description metadata. The generator builds twice, rejects byte drift, links no runtime, and keeps tools/caches outside the repository. The final uncached configured regression executed all 18 actions successfully; 61 unit and 2 integration tests passed. Two package builds were byte-identical and produced a 152,216-byte ZIP with SHA-256 `946b28123f7ff9b86ec21309a711f160f2dab24f254561dc1e1a7abfe79399d1`. No firmware/device compatibility is claimed.
+T001 through T013 are complete and the Foundation gate is `PASS` and approved. T012 retained the expected red provider compilation failure. T013 adds the pure ESP32-S3 target provider, provenance-bearing chip-ID 9 registry snapshot, exact Ghidra language/compiler selection, authoritative DROM/IROM/IRAM/DRAM classification, proposed permissions, and entry decisions requiring selected-language alignment plus containment in a mapped executable segment. The real Ghidra 12.1.3 language service resolves `Xtensa:LE:32:default`, compiler `default`, and instruction alignment 1. The clean regression passed 86 unit and 3 integration tests. Two builds produced the same 194,328-byte ZIP with SHA-256 `1f48bbb8fed564bb350e7644b3145e154db09730d4ddfb21b3272a69eb6ee983`. ESP32-S3 remains `EXPERIMENTAL`; no Ghidra segment mapping, exact silicon variant, board, or hardware claim is made.
 
 ## Changed Files
 
-- Added freestanding ESP32-S3 fixture generator source and deterministic generation script.
-- Added 432-byte digest and 400-byte no-digest golden images, adjacent provenance manifests, esptool snapshots, ELF snapshots, and canonical expectations.
-- Added fixture evidence regression, ADR 0007, fixture-policy guidance, third-party attribution, and runtime-package exclusion for generator inputs.
-- Marked T008 complete and recorded tool, fixture, command, licensing, corrective-failure, and regression evidence.
+- Added T012 ESP32-S3 provider contract tests and retained their expected red compile result.
+- Added T013 pure target decision models, ESP32-S3 provider, maintained chip-ID resource, malformed registry tests, and real Ghidra language-resolution integration coverage.
+- Added ADR 0010 and an explicit `EXPERIMENTAL` support-matrix entry.
+- T009-T013 fixture, parser/provider, test, documentation, and evidence changes remain uncommitted.
 
-No firmware parser, provider, device catalog, loader, or support claim was added.
+No loader, mapped Ghidra program, complete device catalog, exact variant, board, or hardware support claim was added.
 
 ## Exact Next Action
 
-Begin T009 by reporting its prerequisites and generating malformed ESP image fixtures for truncation, overflow, overlap, wrong-chip, checksum, digest, entry, and trailing-data cases. Do not begin T010 until T009 satisfies the Universal Definition of Done.
+Begin T014 by reporting prerequisites and writing failing Ghidra segment-mapping and rollback tests against the T011 parser and T013 provider decisions. Do not implement T015 during T014.

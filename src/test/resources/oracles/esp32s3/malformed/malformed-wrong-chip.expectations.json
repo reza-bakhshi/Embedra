@@ -1,0 +1,19 @@
+{
+  "fixtureId": "esp32s3.malformed.malformed-wrong-chip",
+  "baseFixture": "esp32s3-freestanding-minimal-no-digest.bin",
+  "baseSha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
+  "imageSha256": "7f9544aec9d09774b93034094274b8baff14dba5349b0d99307e203b247dd802",
+  "imageSize": 400,
+  "expectedOutcome": "REJECT",
+  "expectedFailureClass": "CHIP_ID_MISMATCH",
+  "mutation": {
+    "kind": "REPLACE",
+    "offset": 12,
+    "originalHex": "0900",
+    "mutatedHex": "0000",
+    "description": "Replace ESP32-S3 chip ID 9 with ESP32 chip ID 0."
+  },
+  "esptoolVersion": "5.4.0",
+  "esptoolExitStatus": 0,
+  "esptoolObservation": "IMAGE_INFO_COMPLETED_POLICY_REJECTION_REQUIRED"
+}

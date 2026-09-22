@@ -27,3 +27,22 @@ sh scripts/generate-esp32s3-golden-fixtures.sh
 The generator builds the ELF and both images twice in isolated temporary directories and rejects any byte difference. It also checks the expected chip ID, entry point, segment addresses and application metadata before replacing the retained fixture manifests and esptool/ELF snapshots. Toolchains and build caches remain outside the repository.
 
 These fixtures are test evidence, not a device-support claim. T008 adds no detector, parser, provider, loader, or verified silicon/package variant.
+
+## ESP32-S3 malformed corpus
+
+T009 derives eight single-purpose malformed inputs from the pinned T008 images. Each derivative has an adjacent provenance manifest, a machine-readable rejection expectation, and retained timeout-bounded esptool output.
+
+| Case | Exact mutation | Expected Embedra outcome |
+|---|---|---|
+| Truncation | Cut the no-digest image to 350 bytes inside final IRAM data | Reject truncated segment data |
+| Length overflow | Replace the final segment's 36-byte length with `0xffffffff` | Reject length outside the input without allocation |
+| Overlap | Move the four-byte segment to `0x3c010100`, inside the first DROM range | Reject overlapping target ranges |
+| Wrong chip | Replace ESP32-S3 chip ID 9 with ESP32 chip ID 0 | Reject explicit ESP32-S3 target mismatch |
+| Checksum | Change checksum byte `0x5d` to `0x5c` | Reject checksum mismatch |
+| Digest | Change the first validation-digest byte from `0x30` to `0x31` | Reject digest mismatch |
+| Entry | Change entry `0x40378008` to unaligned `0x40378009` | Reject invalid entry alignment |
+| Trailing data | Append non-padding bytes `45 4d 42 52` | Reject unexpected trailing data |
+
+Run `sh scripts/generate-esp32s3-malformed-fixtures.sh` after the T008 baselines are present. The generator verifies their exact SHA-256 values before mutation and applies a ten-second limit to every esptool oracle invocation.
+
+esptool is an independent format oracle, not the complete Embedra acceptance policy. Version 5.4.0 rejects the truncation and huge-length cases, warns about chip mismatch, reports invalid checksum/digest without a non-zero exit, and does not reject overlap, unaligned entry, or trailing data. The snapshots preserve those behaviors while every malformed expectation still requires Embedra to reject safely. Parser enforcement remains T010/T011.
