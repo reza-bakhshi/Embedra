@@ -37,13 +37,11 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "922a0d4a00c65fd89f132cebd4881b41cd15b875"
+    "commit": "c36bc94be5d5634659a24e9bd194d207cfb74c78"
   },
   "workingTree": {
-    "state": "DIRTY",
-    "uncommittedWork": [
-      "T009-T013 fixtures, parser/provider tests, implementation, documentation, and evidence"
-    ]
+    "state": "CLEAN",
+    "uncommittedWork": []
   },
   "toolchains": {
     "ghidra": {

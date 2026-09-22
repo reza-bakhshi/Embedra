@@ -6,7 +6,7 @@
 - Current task: **T013 — COMPLETE**.
 - Last completed task: **T013**.
 - Acceptance gates: Foundation `PASS`; maintainer approval received on 2026-09-22.
-- Version control: Git repository on branch `main` at commit `922a0d4`; T009-T013 work is uncommitted.
+- Version control: T009-T013 implementation is committed on branch `main` at `c36bc94be5d5634659a24e9bd194d207cfb74c78`, followed only by this continuity update. Working tree is clean.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -28,7 +28,7 @@ T001 through T013 are complete and the Foundation gate is `PASS` and approved. T
 - Added T012 ESP32-S3 provider contract tests and retained their expected red compile result.
 - Added T013 pure target decision models, ESP32-S3 provider, maintained chip-ID resource, malformed registry tests, and real Ghidra language-resolution integration coverage.
 - Added ADR 0010 and an explicit `EXPERIMENTAL` support-matrix entry.
-- T009-T013 fixture, parser/provider, test, documentation, and evidence changes remain uncommitted.
+- T009-T013 fixture, parser/provider, test, documentation, and evidence changes are committed.
 
 No loader, mapped Ghidra program, complete device catalog, exact variant, board, or hardware support claim was added.
 
