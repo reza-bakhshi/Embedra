@@ -16,6 +16,7 @@ trap 'rm -f "$task_list"; rm -rf "$work_dir"' EXIT HUP INT TERM
 for required_task in \
     checkstyleMain \
     checkstyleTest \
+    ghidraIntegrationTest \
     jacocoTestReport \
     jacocoTestCoverageVerification \
     test \
@@ -64,7 +65,9 @@ Embedra/Module.manifest
 Embedra/README.md
 Embedra/THIRD_PARTY_NOTICES.md
 Embedra/docs/
-Embedra/docs/architecture.md'
+Embedra/docs/architecture.md
+Embedra/docs/fixture-policy.md
+Embedra/docs/pack-format.md'
 if find src/main/java -type f -name '*.java' -print -quit | grep -q .; then
     expected_entries="${expected_entries}
 Embedra/lib/Embedra-src.zip"

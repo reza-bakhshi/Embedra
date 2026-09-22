@@ -10,35 +10,77 @@ if (JavaVersion.current() != requiredJava) {
 def configuredGhidraDir = providers.gradleProperty('GHIDRA_INSTALL_DIR')
     .orElse(providers.environmentVariable('GHIDRA_INSTALL_DIR'))
     .getOrElse('')
+def requestedTasks = gradle.startParameter.taskNames.collect { it.tokenize(':').last() }
+def pureInvocation = configuredGhidraDir.isBlank() && !requestedTasks.isEmpty()
+    && requestedTasks.every { it in ['clean', 'pureTest'] }
 
 if (configuredGhidraDir.isBlank()) {
-    throw new GradleException(
-        'Set GHIDRA_INSTALL_DIR or pass -PGHIDRA_INSTALL_DIR=<Ghidra 12.1.3 directory>.'
-    )
+    if (!pureInvocation) {
+        throw new GradleException(
+            'Set GHIDRA_INSTALL_DIR or use the Ghidra-independent pureTest task.'
+        )
+    }
+    apply plugin: 'java'
 }
+else {
+    def ghidraInstallDir = file(configuredGhidraDir).canonicalFile
+    def ghidraPropertiesFile = new File(ghidraInstallDir, 'Ghidra/application.properties')
+    if (!ghidraPropertiesFile.isFile()) {
+        throw new GradleException(
+            "GHIDRA_INSTALL_DIR does not contain Ghidra/application.properties: ${ghidraInstallDir}"
+        )
+    }
 
-def ghidraInstallDir = file(configuredGhidraDir).canonicalFile
-def ghidraPropertiesFile = new File(ghidraInstallDir, 'Ghidra/application.properties')
-if (!ghidraPropertiesFile.isFile()) {
-    throw new GradleException(
-        "GHIDRA_INSTALL_DIR does not contain Ghidra/application.properties: ${ghidraInstallDir}"
-    )
+    def ghidraProperties = new Properties()
+    ghidraPropertiesFile.withReader('UTF-8') { reader -> ghidraProperties.load(reader) }
+    def requiredGhidraVersion = '12.1.3'
+    def configuredGhidraVersion = ghidraProperties.getProperty('application.version')
+    if (configuredGhidraVersion != requiredGhidraVersion) {
+        throw new GradleException(
+            "Embedra requires Ghidra ${requiredGhidraVersion}; configured installation is ${configuredGhidraVersion ?: 'unknown'}."
+        )
+    }
+
+    apply from: new File(ghidraInstallDir, 'support/buildExtension.gradle')
 }
-
-def ghidraProperties = new Properties()
-ghidraPropertiesFile.withReader('UTF-8') { reader -> ghidraProperties.load(reader) }
-def requiredGhidraVersion = '12.1.3'
-def configuredGhidraVersion = ghidraProperties.getProperty('application.version')
-if (configuredGhidraVersion != requiredGhidraVersion) {
-    throw new GradleException(
-        "Embedra requires Ghidra ${requiredGhidraVersion}; configured installation is ${configuredGhidraVersion ?: 'unknown'}."
-    )
-}
-
-apply from: new File(ghidraInstallDir, 'support/buildExtension.gradle')
 
 group = 'io.github.rezabakhshi.embedra'
 apply from: rootProject.file('gradle/build-quality.gradle')
+
+if (pureInvocation) {
+    sourceSets.main.java.exclude 'io/github/rezabakhshi/embedra/ghidra/**'
+}
+
+tasks.register('pureTest') {
+    group = 'verification'
+    description = 'Runs the complete Ghidra-independent quality and test suite.'
+    dependsOn tasks.named('check')
+}
+
+if (!configuredGhidraDir.isBlank()) {
+    sourceSets {
+        integrationTest {
+            java.srcDir 'src/integrationTest/java'
+            resources.srcDir 'src/integrationTest/resources'
+            compileClasspath += files(sourceSets.main.output, sourceSets.main.compileClasspath,
+                configurations.testRuntimeClasspath)
+            runtimeClasspath += output + compileClasspath
+        }
+    }
+    configurations.integrationTestImplementation.extendsFrom configurations.testImplementation
+    configurations.integrationTestRuntimeOnly.extendsFrom configurations.testRuntimeOnly
+
+    tasks.register('ghidraIntegrationTest', Test) {
+        group = 'verification'
+        description = 'Runs tests compiled against the pinned Ghidra API.'
+        testClassesDirs = sourceSets.integrationTest.output.classesDirs
+        classpath = sourceSets.integrationTest.runtimeClasspath
+        shouldRunAfter tasks.named('test')
+    }
+    tasks.named('check') {
+        dependsOn tasks.named('ghidraIntegrationTest')
+    }
+}
 
 tasks.register('verifyProjectScaffold') {
     group = 'verification'
@@ -90,21 +132,25 @@ tasks.named('processResources') {
     }
 }
 
-tasks.named('buildExtension') {
-    dependsOn tasks.named('check')
-    if (fileTree('src/main/java').matching { include '**/*.java' }.isEmpty()) {
-        exclude '**/*-src.zip'
+if (!configuredGhidraDir.isBlank()) {
+    tasks.named('buildExtension') {
+        dependsOn tasks.named('check')
+        if (fileTree('src/main/java').matching { include '**/*.java' }.isEmpty()) {
+            exclude '**/*-src.zip'
+        }
+        includeEmptyDirs = false
+        exclude 'ghidra_12.1.3_PUBLIC_20260817/**'
+        exclude '.github/**'
+        exclude '.embedra/**'
+        exclude 'docs/adr/**'
+        exclude 'Embedra-SpecKit.md'
+        exclude 'fixtures/**'
+        exclude 'PROJECT_STATE.md'
+        exclude 'config/**'
+        exclude 'gradle/**'
+        exclude 'gradle.lockfile'
+        exclude 'gradle.properties'
+        exclude 'scripts/**'
+        exclude 'schemas/**'
     }
-    includeEmptyDirs = false
-    exclude 'ghidra_12.1.3_PUBLIC_20260817/**'
-    exclude '.embedra/**'
-    exclude 'docs/adr/**'
-    exclude 'Embedra-SpecKit.md'
-    exclude 'PROJECT_STATE.md'
-    exclude 'config/**'
-    exclude 'gradle/**'
-    exclude 'gradle.lockfile'
-    exclude 'gradle.properties'
-    exclude 'scripts/**'
-    exclude 'schemas/**'
 }

@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "559df024bec02e083b522bd36fcc0b6141bdb46d97e3cbedd65193a0ce6de96e"
+    "sha256": "0b751b375d67a6bfcefa47b554af46df65c91393baade10eecdf4b8bf4731cf0"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T006",
-    "status": "READY",
+    "id": "T008",
+    "status": "COMPLETE",
     "reasonCode": null
   },
   "completedTasks": [
@@ -15,18 +15,30 @@
     "T002",
     "T003",
     "T004",
-    "T005"
+    "T005",
+    "T006",
+    "T007",
+    "T008"
   ],
   "blockedTasks": [],
-  "acceptanceGates": {},
+  "acceptanceGates": {
+    "foundation": {
+      "result": "PASS",
+      "approval": "APPROVED",
+      "approvedDate": "2026-09-22",
+      "evidence": ".embedra/evidence/gates/foundation.md"
+    }
+  },
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "HEAD"
+    "commit": "2314e4488ffb5f2c7d7b25bb392883c760539040"
   },
   "workingTree": {
-    "state": "CLEAN",
-    "uncommittedWork": []
+    "state": "DIRTY",
+    "uncommittedWork": [
+      "T006 through T008 pack/foundation/ESP32-S3 fixture implementation, tests, documentation, task evidence, and gate records"
+    ]
   },
   "toolchains": {
     "ghidra": {
@@ -44,6 +56,12 @@
       "wrapperVersion": "9.6.1",
       "distributionCached": true
     },
+    "espFixtureGeneration": {
+      "compiler": "xtensa-esp-elf esp-15.2.0_20251204",
+      "esptool": "5.4.0",
+      "espIdfReferenceVersion": "v6.0",
+      "espIdfReferenceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800"
+    },
     "host": {
       "os": "Linux",
       "architecture": "x86-64",
@@ -51,20 +69,38 @@
     }
   },
   "catalogSnapshots": [],
-  "fixtureEvidence": [],
+  "fixtureEvidence": [
+    {
+      "fixtureId": "esp32s3.esptool-v5.4.0.esp32s3-freestanding-minimal",
+      "path": "src/test/resources/fixtures/esp32s3/esp32s3-freestanding-minimal.bin",
+      "sha256": "f17b265cb900c385c53a6ee4bd72ae371c22ed1ba2e92354faf84093fbb6d85d",
+      "sizeBytes": 432,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/esp32s3-freestanding-minimal.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.esptool-v5.4.0.esp32s3-freestanding-minimal-no-digest",
+      "path": "src/test/resources/fixtures/esp32s3/esp32s3-freestanding-minimal-no-digest.bin",
+      "sha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
+      "sizeBytes": 400,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/esp32s3-freestanding-minimal-no-digest.expectations.json"
+    }
+  ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T005.md",
+    "task": ".embedra/evidence/tasks/T008.md",
+    "gate": ".embedra/evidence/gates/foundation.md",
     "commands": ".embedra/evidence/commands.jsonl"
   },
   "knownFailures": [],
-  "nextTask": "T006",
-  "nextAction": "Report T006 pack requirements and test-first plan; write failing tests for manifest validation, digest/provenance/license enforcement, traversal-safe local installation, deterministic offline selection, and missing/incompatible-pack diagnostics.",
+  "nextTask": "T009",
+  "nextAction": "Begin T009 by reporting prerequisites and generating malformed ESP image fixtures for truncation, overflow, overlap, wrong-chip, checksum, digest, entry, and trailing-data cases; do not begin T010.",
   "artifacts": [
     {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260921_Embedra.zip",
-      "sha256": "aa6693eb56ea34c222cb8c5741a8e112a68d6c31b0d25f71feeb595bc246f229",
-      "sizeBytes": 103934,
-      "status": "T005_REPRODUCIBLE_BUILD_ARTIFACT"
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260922_Embedra.zip",
+      "sha256": "946b28123f7ff9b86ec21309a711f160f2dab24f254561dc1e1a7abfe79399d1",
+      "sizeBytes": 152216,
+      "status": "T008_REPRODUCIBLE_BUILD_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -111,23 +147,55 @@
     {
       "code": "T005_STYLE_AND_COVERAGE_GAPS",
       "resolution": "Two style violations and missing model boundary cases were corrected without suppressions or coverage exclusions."
+    },
+    {
+      "code": "T006_CHECKSTYLE_LAYOUT",
+      "resolution": "Six field-separator violations were corrected without suppressions."
+    },
+    {
+      "code": "T006_REPRODUCIBILITY_ORACLE",
+      "resolution": "The obsolete dated T005 ZIP was moved out of dist and the exact package oracle was extended for the new pack-format documentation before the final passing reproducibility run."
+    },
+    {
+      "code": "T007_INTEGRATION_CLASSPATH",
+      "resolution": "Gradle file-collection composition was corrected before the Ghidra integration source set compiled."
+    },
+    {
+      "code": "T007_REAL_API_TRANSACTION_RETURN",
+      "resolution": "The integration proxy was corrected to honor Ghidra Program.endTransaction's boolean return contract."
+    },
+    {
+      "code": "T007_PACKAGED_REPOSITORY_AUTOMATION",
+      "resolution": "The exact-content oracle caught .github workflow files in the extension; buildExtension now excludes repository automation."
+    },
+    {
+      "code": "T008_FULL_IDF_LICENSE_SCOPE",
+      "resolution": "The exploratory full ESP-IDF image was discarded; final fixtures link no vendor or compiler runtime and adapt only the attributed Apache-2.0 application-description layout."
+    },
+    {
+      "code": "T008_EXPECTED_SYMBOL_SNAPSHOT_CHANGE",
+      "resolution": "The first regeneration after adding application-description evidence changed only the intended ELF symbol snapshot; the next complete regeneration was byte-identical."
+    },
+    {
+      "code": "T008_PACKAGED_FIXTURE_GENERATOR",
+      "resolution": "The exact-content oracle caught repository-only fixture source in the extension ZIP; buildExtension now excludes fixtures and the repeated package gate passes."
     }
   ],
   "mostRecentCommands": [
     {
+      "command": "scripts/generate-esp32s3-golden-fixtures.sh plus repository oracle hash comparison",
+      "exitStatus": 0,
+      "result": "PASS: two builds per invocation and a second complete regeneration were byte-identical; digest/no-digest fixture SHA-256 values match retained manifests and oracles."
+    },
+    {
       "command": "scripts/verify-build-quality.sh",
       "exitStatus": 0,
-      "result": "PASS: two clean T005 builds byte-identical; exact extension/source ZIP contents valid; SHA-256 aa6693eb56ea34c222cb8c5741a8e112a68d6c31b0d25f71feeb595bc246f229."
+      "result": "PASS: two clean builds byte-identical; exact extension/source ZIP contents valid; SHA-256 946b28123f7ff9b86ec21309a711f160f2dab24f254561dc1e1a7abfe79399d1."
     },
     {
-      "command": "./gradlew --offline --no-daemon --rerun-tasks -P<ghidra> clean check jacocoTestReport jacocoTestCoverageVerification buildExtension",
+      "command": "./gradlew --offline --no-daemon --rerun-tasks -P<ghidra> clean check jacocoTestReport jacocoTestCoverageVerification buildExtension plus fixture validator",
       "exitStatus": 0,
-      "result": "PASS: all 15 actionable tasks executed; 41 tests passed; Checkstyle/formatting passed; core branch coverage 99.55%."
-    },
-    {
-      "command": "validate T005 schemas, tests, coverage, package resources, and artifact",
-      "exitStatus": 0,
-      "result": "PASS: four schemas parse and are packaged; 41 tests pass; reproducible artifact digest/size validated."
+      "result": "PASS: all 18 actions executed; 61 unit and 2 Ghidra integration tests passed; fixture provenance, Checkstyle, formatting, and coverage passed."
     }
   ],
   "buildQuality": {
@@ -139,7 +207,9 @@
     "coreBranchThreshold": 0.90,
     "coreThresholdMeasured": true,
     "coreBranchCoverage": 0.9955,
-    "minimumCoreClassBranchCoverage": 0.9286
+    "minimumCoreClassBranchCoverage": 0.9286,
+    "packInstructionCoverage": 0.9226,
+    "packBranchCoverage": 0.7759
   },
   "architecture": {
     "pureBoundaries": [
@@ -168,6 +238,23 @@
     "canonicalReportSchema": "urn:embedra:schema:canonical-report:1",
     "executionTopologySchema": "urn:embedra:schema:execution-topology:1",
     "deviceCatalogSnapshotSchema": "urn:embedra:schema:device-catalog-snapshot:1",
-    "deviceCatalogDiffSchema": "urn:embedra:schema:device-catalog-diff:1"
+    "deviceCatalogDiffSchema": "urn:embedra:schema:device-catalog-diff:1",
+    "packManifestSchema": "urn:embedra:schema:pack-manifest:1"
+  },
+  "packFoundation": {
+    "manifestVersion": 1,
+    "versionSyntax": "MAJOR.MINOR.PATCH",
+    "installation": "VERIFY_COPY_REVERIFY_ATOMIC_MOVE",
+    "selection": "LOCAL_ONLY_HIGHEST_COMPATIBLE",
+    "networkRequired": false,
+    "publisherAuthentication": false
+  },
+  "foundationAutomation": {
+    "pureTask": "pureTest",
+    "ghidraIntegrationTask": "ghidraIntegrationTest",
+    "transactionPolicy": "ROLLBACK_UNLESS_EXPLICIT_COMMIT",
+    "fixtureValidator": "scripts/validate-fixture-provenance.sh",
+    "handoffValidator": "scripts/validate-handoff.sh",
+    "hostedCiExecuted": false
   }
 }

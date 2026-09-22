@@ -3,6 +3,7 @@ package io.github.rezabakhshi.embedra.core.report;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import io.github.rezabakhshi.embedra.pack.PackManifest;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -21,7 +22,8 @@ class SchemaResourcesTest {
             "schemas/catalog/device-catalog-snapshot-v1.schema.json",
                 "urn:embedra:schema:device-catalog-snapshot:1",
             "schemas/catalog/device-catalog-diff-v1.schema.json",
-                "urn:embedra:schema:device-catalog-diff:1");
+                "urn:embedra:schema:device-catalog-diff:1",
+            "schemas/pack/pack-manifest-v1.schema.json", PackManifest.SCHEMA_ID);
 
         for (Map.Entry<String, String> schema : schemas.entrySet()) {
             String text = Files.readString(PROJECT.resolve(schema.getKey()), StandardCharsets.UTF_8);

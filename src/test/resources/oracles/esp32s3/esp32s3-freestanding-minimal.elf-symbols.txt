@@ -1,0 +1,5 @@
+Symbol table '.symtab' contains 12 entries:
+     8: 3fc88000     4 OBJECT  LOCAL  DEFAULT    3 embedra_fixture_marker
+     9: 3c010120    37 OBJECT  LOCAL  DEFAULT    1 embedra_fixture_identity
+    10: 3c010020   256 OBJECT  LOCAL  DEFAULT    1 embedra_app_description
+    11: 40378008    28 FUNC    GLOBAL DEFAULT    2 _start

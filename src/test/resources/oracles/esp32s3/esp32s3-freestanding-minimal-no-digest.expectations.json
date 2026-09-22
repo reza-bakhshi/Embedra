@@ -1,0 +1,74 @@
+{
+  "fixtureId": "esp32s3.esptool-v5.4.0.esp32s3-freestanding-minimal-no-digest",
+  "imageSha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
+  "imageSize": 400,
+  "esptoolVersion": "5.4.0",
+  "chipId": 9,
+  "target": "ESP32-S3",
+  "entryPoint": "0x40378008",
+  "segmentCount": 3,
+  "checksum": "0x5d",
+  "checksumValid": true,
+  "digestAppended": false,
+  "digest": null,
+  "digestValid": null,
+  "segments": [
+    {
+      "index": 0,
+      "length": 296,
+      "loadAddress": "0x3c010020",
+      "fileOffset": 24,
+      "memoryTypes": [
+        "DROM"
+      ]
+    },
+    {
+      "index": 1,
+      "length": 4,
+      "loadAddress": "0x3fc88000",
+      "fileOffset": 328,
+      "memoryTypes": [
+        "BYTE_ACCESSIBLE",
+        "MEM_INTERNAL",
+        "DRAM"
+      ]
+    },
+    {
+      "index": 2,
+      "length": 36,
+      "loadAddress": "0x40378000",
+      "fileOffset": 340,
+      "memoryTypes": [
+        "MEM_INTERNAL",
+        "IRAM"
+      ]
+    }
+  ],
+  "applicationDescription": {
+    "projectName": "embedra_t008_fixture",
+    "version": "1.0.0",
+    "idfVersion": "fixture-no-idf-runtime",
+    "secureVersion": 0,
+    "mmuPageSizeBytes": 65536
+  },
+  "elfSha256": "5afdf13c7222622fd00b42245188a8f9209698e4605e90e62ac2ef14259862c2",
+  "elfMachine": "Tensilica Xtensa Processor",
+  "elfEntryPoint": "0x40378008",
+  "elfLoadSegments": [
+    {
+      "virtualAddress": "0x3c010020",
+      "fileSize": 293,
+      "flags": "R"
+    },
+    {
+      "virtualAddress": "0x40378000",
+      "fileSize": 36,
+      "flags": "R E"
+    },
+    {
+      "virtualAddress": "0x3fc88000",
+      "fileSize": 4,
+      "flags": "RW"
+    }
+  ]
+}

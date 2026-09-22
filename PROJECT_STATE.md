@@ -3,11 +3,11 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T006 — READY**.
-- Last completed task: **T005**.
-- Acceptance gates: none run.
-- Version control: Git repository on branch `main`; T005 is saved in the current `HEAD` commit.
-- Specification: `Embedra-SpecKit.md`, SHA-256 `559df024bec02e083b522bd36fcc0b6141bdb46d97e3cbedd65193a0ce6de96e`.
+- Current task: **T008 — COMPLETE**.
+- Last completed task: **T008**.
+- Acceptance gates: Foundation `PASS`; maintainer approval received on 2026-09-22.
+- Version control: Git repository on branch `main` at baseline commit `2314e4488ffb5f2c7d7b25bb392883c760539040`; T006 through T008 are intentionally uncommitted.
+- Specification: `Embedra-SpecKit.md`, SHA-256 `0b751b375d67a6bfcefa47b554af46df65c91393baade10eecdf4b8bf4731cf0`.
 
 ## Verified Environment
 
@@ -17,20 +17,21 @@
 - Java verified: OpenJDK `21.0.12`, 64-bit; the required baseline is satisfied.
 - Negative compatibility check: JDK 25 is rejected with a specific early diagnostic.
 - Build quality: JUnit `6.1.3`, JaCoCo `0.8.15`, Checkstyle `14.1.0`; resolved dependencies are locked.
+- ESP fixture tools: Espressif `xtensa-esp-elf` `esp-15.2.0_20251204`; esptool `5.4.0`; ESP-IDF v6.0 reference revision `662a3be354759d9487bf4b1a629fadb766cb1800`.
 
 ## Completed Work
 
-T001 through T005 are complete. The pure core now also provides a restricted deterministic JSON writer; versioned canonical-report, execution-topology, exact-device catalog snapshot, and catalog-diff contracts; and immutable golden-snapshot assertions. Reports include inputs, providers/packs, validations, mappings, applied symbols/types with provenance, metadata, topology, findings, diagnostics, and explicit reproducibility settings without host paths or timestamps. Catalog entries retain an explicit per-capability support state and diff only exact device identities. The final uncached offline regression executed all 15 actionable tasks successfully; all 41 tests passed. Current core branch coverage is 99.55%, with every core class containing branches at or above 92.86%. Two clean builds produced byte-identical 103,934-byte ZIPs with SHA-256 `aa6693eb56ea34c222cb8c5741a8e112a68d6c31b0d25f71feeb595bc246f229`. No foundation acceptance gate occurs until T007.
+T001 through T008 are complete and the Foundation gate is `PASS` and approved. T008 adds two deterministic, redistributable ESP32-S3 application-image fixtures from an attributed Apache-2.0 freestanding source: digest-appended and no-digest variants. Retained esptool and ELF oracles cover chip ID 9, DROM/DRAM/IRAM segments, entry, checksum, digest, and application-description metadata. The generator builds twice, rejects byte drift, links no runtime, and keeps tools/caches outside the repository. The final uncached configured regression executed all 18 actions successfully; 61 unit and 2 integration tests passed. Two package builds were byte-identical and produced a 152,216-byte ZIP with SHA-256 `946b28123f7ff9b86ec21309a711f160f2dab24f254561dc1e1a7abfe79399d1`. No firmware/device compatibility is claimed.
 
 ## Changed Files
 
-- Added deterministic report and catalog production contracts under `core/report` and `core/catalog`.
-- Added four closed JSON Schema 2020-12 documents, packaged them inside the extension JAR, and added 13 T005 tests plus two reviewed golden snapshots.
-- Documented canonicalization and catalog semantics and added ADR 0004; no dependency, vendor data, firmware fixture, catalog snapshot, or device-support claim was introduced.
-- Marked T005 complete and updated mandatory continuity/evidence records.
+- Added freestanding ESP32-S3 fixture generator source and deterministic generation script.
+- Added 432-byte digest and 400-byte no-digest golden images, adjacent provenance manifests, esptool snapshots, ELF snapshots, and canonical expectations.
+- Added fixture evidence regression, ADR 0007, fixture-policy guidance, third-party attribution, and runtime-package exclusion for generator inputs.
+- Marked T008 complete and recorded tool, fixture, command, licensing, corrective-failure, and regression evidence.
 
-No firmware parser, provider, device data, fixture, catalog, or support claim was added.
+No firmware parser, provider, device catalog, loader, or support claim was added.
 
 ## Exact Next Action
 
-Begin T006 by reporting its pack-manifest, digest, provenance, local-installation, and offline-selection requirements and expected files. Write failing tests for valid/malformed manifests, digest mismatch, provenance/license rejection, traversal-safe local installation, deterministic offline selection, and missing/incompatible packs before production implementation. Do not begin T007 until T006 is complete.
+Begin T009 by reporting its prerequisites and generating malformed ESP image fixtures for truncation, overflow, overlap, wrong-chip, checksum, digest, entry, and trailing-data cases. Do not begin T010 until T009 satisfies the Universal Definition of Done.
