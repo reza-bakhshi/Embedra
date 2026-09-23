@@ -6,7 +6,8 @@
 - Current task: **T026 — authoritative ESP catalog (`COMPLETE`)**.
 - Last completed task: **T026**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
-- Version control: T023-T024 and their continuity handoff are committed on branch `main` at `90ea517`; T025 and gate-review remediation are uncommitted.
+- Version control: T025, the approved gate-review remediation, and T026 are
+  committed on branch `main` at `42e4369`.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -53,8 +54,8 @@ overall ESP32-S3 support remains `EXPERIMENTAL`.
 - Clean verification passed 140 unit and 22 real-Ghidra tests plus 4 Python
   generator tests; reproducible ZIP SHA-256 is
   `5e764521fb3fefb7fdda20256fdb7af4db89a799647b05f22c4f441ac6c51dbc`.
-- T001-T024 implementation is committed; T025, review-2 gate, and T026 work are uncommitted.
-  Restricted `esp32s3_ctf_dump_4MB.bin` remains ignored and untracked. The
+- T001-T026 implementation and gate evidence are committed. Restricted
+  `esp32s3_ctf_dump_4MB.bin` remains ignored and untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
   absent; its ignore and package-exclusion safeguards remain.
 
@@ -62,5 +63,12 @@ No complete device catalog, exact variant, board, or hardware support claim was 
 
 ## Exact Next Action
 
-Begin T027 by reporting its shared-behavior/topology prerequisites and writing
-the failing common-service tests. Do not begin T028 until T027 is complete.
+Before beginning T027, complete the maintainer-requested ESP32-S3 log-driven
+remediation: add evidence-tested ESP32-S3 Xtensa instruction coverage for the
+observed `SALT`/`SALTU` failures, make disabled enrichment visible without
+silently enabling revision-dependent packs, add restricted-real-dump regression
+coverage, and classify invalid embedded-media signatures conservatively. Keep
+filesystem/media extraction and versioned ESP-IDF signatures within their
+existing later-task boundaries. After the remediation is verified and its
+continuity evidence is committed, begin T027. Do not begin T028 until T027 is
+complete.
