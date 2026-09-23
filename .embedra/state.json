@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "07da04bc0717a3b92fa48b14bbb3e590df4f220beca2ad06a1eda30038f44a2d"
+    "sha256": "2a26abbea8dbe176eb7c33fa34edfa6ddc834bd57b2c36b1ba5801dcd7a9200c"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T022",
-    "status": "COMPLETE",
+    "id": "T025",
+    "status": "IN_PROGRESS",
     "reasonCode": null
   },
   "completedTasks": [
@@ -32,7 +32,9 @@
     "T019",
     "T020",
     "T021",
-    "T022"
+    "T022",
+    "T023",
+    "T024"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -52,11 +54,13 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "ca1a55f194c41dbc16614b840a681884ac94cda4"
+    "commit": "4a61a48ed2492702ecd08271e4eda47d2faf0a6a"
   },
   "workingTree": {
-    "state": "CLEAN",
-    "uncommittedWork": []
+    "state": "DIRTY",
+    "uncommittedWork": [
+      "completed T023-T024 analyzers and T025 start checkpoint"
+    ]
   },
   "toolchains": {
     "ghidra": {
@@ -214,19 +218,19 @@
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T022.md",
+    "task": ".embedra/evidence/tasks/T024.md",
     "gate": ".embedra/evidence/gates/esp32s3-application.md",
     "commands": ".embedra/evidence/commands.jsonl"
   },
   "knownFailures": [],
-  "nextTask": "T023",
-  "nextAction": "Write failing bounded ESP-IDF metadata, logging-call, FreeRTOS, and versioned library-signature enrichment tests using T022 pack provenance and conflict-preserving application boundaries.",
+  "nextTask": "T025",
+  "nextAction": "Write failing bounded factory/OTA diff and ESP-oriented CTF finding tests, then complete the mandatory ESP32-S3 full-flash acceptance gate and stop for explicit approval before T026.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
-      "sha256": "3d261bfaa9477247c94682229a225c61855aa2a1da15a7530f9e92dc082ad36c",
-      "sizeBytes": 408330,
-      "status": "T022_REPRODUCIBLE_BUILD_ARTIFACT_WITH_VERIFIED_PACKS"
+      "sha256": "b2cb5c81e9a33367059dfdb50d4aa692c4bc6dea619167592655975b3133ba0f",
+      "sizeBytes": 460992,
+      "status": "T024_REPRODUCIBLE_BUILD_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -309,19 +313,19 @@
   ],
   "mostRecentCommands": [
     {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> targeted T022 pure and real-Ghidra pack tests",
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> targeted T024 security-summary tests",
       "exitStatus": 0,
-      "result": "PASS: provenance/integrity parsing, 2,197 ROM symbols, 61 peripheral windows/2,173 register addresses, user preservation, idempotence, removal, and cancellation passed."
+      "result": "PASS: three tests cover image hashes, RSA V2 structure and bad CRC, partition/NVS indicators, unavailable eFuses, limits, cancellation, and immutability."
     },
     {
       "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew --offline --no-daemon --rerun-tasks clean check jacocoTestReport jacocoTestCoverageVerification buildExtension",
       "exitStatus": 0,
-      "result": "PASS: all 19 actions reran; 118 unit and 17 real-Ghidra integration tests passed."
+      "result": "PASS: all 19 actions reran; 125 unit and 17 real-Ghidra integration tests passed."
     },
     {
       "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> sh scripts/verify-build-quality.sh",
       "exitStatus": 0,
-      "result": "PASS: two complete builds produced byte-identical 408330-byte ZIPs with SHA-256 3d261bfaa9477247c94682229a225c61855aa2a1da15a7530f9e92dc082ad36c; verified packs are present and restricted bytes are absent."
+      "result": "PASS: two complete builds produced byte-identical 460992-byte ZIPs with SHA-256 b2cb5c81e9a33367059dfdb50d4aa692c4bc6dea619167592655975b3133ba0f."
     }
   ],
   "buildQuality": {

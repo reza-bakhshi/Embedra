@@ -3,10 +3,10 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T022 — COMPLETE; T023 is next**.
-- Last completed task: **T022**.
+- Current task: **T025 — IN PROGRESS**.
+- Last completed task: **T024**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved on 2026-09-23.
-- Version control: T014-T022 are committed on branch `main` at `ca1a55f194c41dbc16614b840a681884ac94cda4`, followed only by this continuity update. Working tree is clean.
+- Version control: T014-T022 are committed on branch `main` at `ca1a55f194c41dbc16614b840a681884ac94cda4`, with continuity commit `4a61a48`; completed T023-T024 and the T025 start checkpoint are uncommitted.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -21,7 +21,7 @@
 
 ## Completed Work
 
-T001 through T022 are complete. T022 adds two provenance/integrity-checked offline ESP32-S3 enrichment packs generated deterministically from pinned ESP-IDF v6.0: 2,197 ROM symbols and 61 peripheral windows with 2,173 register addresses/aliases. The Ghidra applicator is transactional, idempotent, conflict preserving, and receipt-removable. Overall ESP32-S3 support remains `EXPERIMENTAL` because exact catalog variants and physical hardware verification are incomplete.
+T001 through T024 are complete. T024 adds a bounded ESP32-S3 security summary for image hashes, structurally valid RSA V2 signature blocks, encrypted-partition flags, and NVS-key indicators while keeping unavailable eFuse state explicit. Overall ESP32-S3 support remains `EXPERIMENTAL` because cryptographic signature verification, production signature data, Ghidra fact collection, exact catalog variants, and physical hardware verification are incomplete.
 
 ## Changed Files
 
@@ -33,10 +33,12 @@ T001 through T022 are complete. T022 adds two provenance/integrity-checked offli
 - Added T020 immutable workspace/extraction models, exact embedded-image boundary validation, separate-program loader behavior, persistent flash provenance, tests, ADR, and user documentation.
 - Added T021 handler/inspection/OTA models, explicit registry, erased-slot planning, RTC-data mapping, restricted-dump tests, ADR, and documentation.
 - Added T022 content schemas, pinned deterministic generator, ROM/peripheral packs, integrity-first loaders/models, transactional Ghidra applicator/removal receipts, real-Ghidra tests, ADR, notices, and documentation.
-- T001-T022 implementation is committed; the restricted local dump remains ignored and untracked.
+- Added T023 immutable enrichment facts/results, metadata/log/FreeRTOS/signature analyzer, strict evidence distinctions, limits/cancellation tests, ADR, and support documentation.
+- Added T024 immutable security evidence/results, ESP32-S3 RSA V2 structure scanner, image-hash and partition/NVS indicators, unavailable-eFuse safeguards, tests, ADR, and documentation.
+- T001-T022 implementation is committed; completed T023 is uncommitted and the restricted local dump remains ignored and untracked.
 
 No complete device catalog, exact variant, board, or hardware support claim was added.
 
 ## Exact Next Action
 
-Start T023 test-first with ESP-IDF metadata, logging-call, FreeRTOS, and library-signature enrichment contracts. Reuse the T022 pack/provenance and conflict-preserving application boundaries; do not infer an IDF version or signature match without bounded evidence.
+Write failing T025 factory/OTA diff and ESP-oriented CTF finding tests first, including unchanged/moved/modified artifacts, evidence/confidence distinctions, false-positive negatives, limits, cancellation, and deterministic output. Then run the mandatory ESP32-S3 full-flash gate and wait for explicit approval before T026.

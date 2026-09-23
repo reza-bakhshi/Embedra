@@ -656,8 +656,8 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [x] T020 Implement bootloader/app/data partition extraction and multi-program workspace planning.
 - [x] T021 Implement OTA state, NVS/NVS-keys, PHY, coredump, FAT, SPIFFS, LittleFS, and custom partition handler contracts.
 - [x] T022 Implement provenance-checked ESP32-S3 ROM symbol and peripheral packs.
-- [ ] T023 Implement ESP-IDF metadata, logging-call, FreeRTOS, and library-signature enrichments.
-- [ ] T024 Implement ESP security summary that distinguishes image evidence from unavailable eFuse state.
+- [x] T023 Implement ESP-IDF metadata, logging-call, FreeRTOS, and library-signature enrichments.
+- [x] T024 Implement ESP security summary that distinguishes image evidence from unavailable eFuse state.
 - [ ] T025 Implement factory/OTA diff and ESP-oriented CTF findings.
 
 ### ESP family

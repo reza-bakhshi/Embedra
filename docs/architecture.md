@@ -115,6 +115,40 @@ deterministic conflict entries. Reapplication recognizes identical artifacts;
 receipt-scoped removal deletes only artifacts created by that application and
 refuses changed or user-bearing blocks.
 
+## ESP-IDF semantic enrichment
+
+T023 keeps Ghidra fact collection separate from the pure analyzer. Its immutable
+context distinguishes decoded strings, resolved symbols, call sites with proven
+constant arguments, function bytes, and an optional validated `esp_app_desc_t`.
+The analyzer never treats an interesting string as a function or use-site.
+
+IDF project/version metadata is emitted only from the parsed application
+descriptor. Logging findings require an exact supported log target, a resolved
+call to that target, and resolved tag and format pointers at the call site.
+FreeRTOS findings require exact resolved symbols with their source-pack identity.
+Library signatures are indexed by exact device, IDF version, toolchain, and
+optimization. A fully specified byte match may be `VERIFIED`; relocation-masked
+matches remain `DERIVED`. Every result retains evidence and pack identity, and
+the report lists detectors that ran plus capabilities or signature indexes that
+were unavailable. Inputs are immutable and bounded by shared byte/object limits
+with cooperative cancellation.
+
+## ESP32-S3 security summary
+
+T024 summarizes only evidence present in the supplied bytes. An appended image
+SHA-256 is `VERIFIED` only when the parser's stored and calculated digests match.
+The Secure Boot scanner recognizes the ESP32-S3 RSA V2 4 KiB signature sector
+and accepts a 1,216-byte block only when its `0xe7` magic, scheme version, and
+CRC over the documented 1,196-byte prefix validate. This establishes a
+structurally valid encoded signature block, not a cryptographically verified
+signature and not enabled Secure Boot.
+
+Partition encryption flags and an NVS-key partition are reported as indicators.
+They never establish flash-encryption or NVS-encryption runtime state. Without a
+separately acquired eFuse snapshot, both Secure Boot and flash-encryption eFuse
+states are explicitly `UNAVAILABLE`. Security inputs are bounded, cancellable,
+immutable, and never expose NVS key contents.
+
 ## Canonical reports and catalogs
 
 Canonical JSON is emitted by a small pure-core writer that accepts only deterministic JSON values: maps with string keys, ordered iterables, integral numbers, strings, booleans, and null. Map keys are sorted, record collections are normalized by stable identity, strings are fully escaped, and output ends with one newline. Sets, floating-point values, non-string keys, and arbitrary object serialization are rejected so host iteration order and object identity cannot leak into evidence.

@@ -25,6 +25,12 @@ register aliases, and 32-bit register data without replacing user-primary
 names or existing types. Reapplication is idempotent, and its immutable receipt
 supports targeted removal of artifacts that have not been changed by the user.
 
+The pure ESP-IDF enrichment layer can distinguish parsed project metadata,
+resolved logging call sites and their tag/format strings, exact FreeRTOS symbol
+evidence, and device/IDF/toolchain/optimization-indexed library signatures. It
+does not promote strings or near signatures into verified findings. A bundled
+production signature payload and desktop fact-collection UI are not yet claimed.
+
 The versioned JSON schemas are checked in under `schemas/` and packaged as extension resources. Pack format and local installation rules are documented in `docs/pack-format.md`. Golden snapshots are immutable test oracles: tests fail on a missing or changed snapshot and never rewrite one automatically.
 
 ## Build baseline
