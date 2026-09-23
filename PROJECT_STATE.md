@@ -39,6 +39,10 @@ digest-gated restricted-capture regression, and a bounded pure PNG candidate
 classifier. The restricted candidate is invalid, and no generalized media or
 filesystem work has begun.
 
+SpecKit now schedules **T026A**, a bounded ESP32-S3 ESP-IDF FIDB pilot, before
+T027. This is a planned task; no FIDB has been generated or attached by
+Embedra. The handoff prompt is `.embedra/prompts/T026A-esp32s3-fidb.md`.
+
 ## Changed Files
 
 - Added T015 loader, transactional mapper, stable mapping failure codes, entry application, and immutable import report.
@@ -78,4 +82,5 @@ No complete device catalog, exact variant, board, or hardware support claim was 
 
 ## Exact Next Action
 
-Begin T027 in the next session; do not start T028 until T027 is complete.
+Begin T026A using `.embedra/prompts/T026A-esp32s3-fidb.md`. Complete and
+commit its evidence before T027; do not start T028 until T027 is complete.

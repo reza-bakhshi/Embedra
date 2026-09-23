@@ -212,6 +212,7 @@ As a maintainer, I can run parsing, import, enrichment, diffing, and report gene
 - **ESP-018**: Map exact silicon/SiP/package/embedded-memory variants to a shared provider only when executable architecture and memory behavior are proven identical; variant-specific flash, PSRAM, ROM, eFuse/security, package, and peripheral differences remain data-driven.
 - **ESP-019**: Treat modules and development boards as optional board profiles referencing an exact SoC part; module flash/PSRAM and board external-memory layouts may extend but never overwrite the SoC definition.
 - **ESP-020**: Treat ESP8266 as a separate legacy image/SDK provider and never count it as proof of ESP32-family coverage.
+- **ESP-021**: Generate ESP32-S3 Function ID databases only from symbolized, reproducible, target-matched ESP-IDF builds with recorded SDK revision, component licenses, compiler/toolchain, configuration, optimization, Ghidra language, and generated-database digest. Test FID applicability and match precision in real Ghidra against stripped positive and negative fixtures before applying names. FID use MUST be explicit, preserve user-defined names, report ambiguous or unavailable matches, and never imply that an absent database ran.
 
 ### 4.3 STM32 family
 
@@ -527,6 +528,8 @@ Schema identity, tool build, input digests, providers/packs, validations, worksp
 
 ESP application images use their encoded segment addresses. Full flash processing first establishes a flash-offset view, validates the partition table, then parses each app partition independently. ROM symbols and peripheral definitions are revision/target packs. ESP-IDF signatures are indexed by target, IDF version, toolchain, and optimization evidence.
 
+For ESP32-S3 Function ID, follow the reproducible symbolized-build workflow described by [Tarlogic](https://www.tarlogic.com/blog/esp32-firmware-using-ghidra-fidb/) using exact ESP32-S3 builds, not its original ESP32 example as a matching oracle. Pin the ESP-IDF revision and toolchain, record build configuration and optimization, and create candidate Ghidra FIDBs from symbolized ELFs. Ghidra may consider an Xtensa database applicable across language variants with the same processor, width, and endianness; applicability alone does not verify names in `Xtensa:LE:32:esp32s3`. A local pilot may be attached explicitly after positive/negative match tests, while redistribution requires a component-level license review. The broader multi-version and multi-library signature corpus remains T064.
+
 The ESP catalog generator records every official SoC part and embedded-memory/package variant rather than maintaining a handwritten permanent list. Each provider declares its Xtensa or RISC-V CPU topology, application cores, low-power/ULP execution units, ROMs, shared memories, and security hardware. A module or board profile may add flash, PSRAM, or external components but cannot change the selected silicon identity.
 
 ### 8.2 STM32
@@ -663,6 +666,7 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 ### ESP family
 
 - [x] T026 Build the authoritative ESP SoC/part/module/board catalog generator, provenance snapshot, exact-variant resolver, and CI drift detection; ingest every official ESP32-branded series present at generation time.
+- [ ] T026A Build and validate an ESP32-S3 ESP-IDF Function ID pilot before T027: write failing real-Ghidra applicability and naming tests; generate candidate FIDBs from pinned symbolized ESP32-S3 reference builds at documented optimization levels; measure stripped positive, wrong-version/configuration, and unrelated-code matches; add an explicit conflict-preserving attach/run path and deterministic provenance/status diagnostics. Bundle a database only if its component licenses permit redistribution and the match gate passes; otherwise retain a local opt-in workflow and record the precise blocker. Do not claim arbitrary application-function coverage or start the broad T064 corpus.
 - [ ] T027 Refactor only proven shared ESP behavior into common Xtensa/RISC-V-neutral services and the common execution-topology contract.
 - [ ] T028 Add original ESP32 and ESP32-S2 fixtures/providers/packs independently and pass their full relevant suites.
 - [ ] T029 Add ESP32-C3 as the first RISC-V ESP provider and prove no Xtensa assumptions remain in common code.

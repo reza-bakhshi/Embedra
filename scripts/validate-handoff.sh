@@ -32,7 +32,8 @@ fi
 
 evidence_path=$(jq -r '.evidence.task' "$state")
 case "$evidence_path" in
-    .embedra/evidence/tasks/T[0-9][0-9][0-9].md) ;;
+    .embedra/evidence/tasks/T[0-9][0-9][0-9].md | \
+    .embedra/evidence/tasks/T[0-9][0-9][0-9][A-Z].md) ;;
     *)
         echo "Task evidence path is invalid." >&2
         exit 1

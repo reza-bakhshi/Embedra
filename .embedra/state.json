@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "ddbe45bebc4ae51c674b62e773848ce890dfb3231617ecc2461f278483d9c747"
+    "sha256": "ff5f7dc5371dadb25fc6ccac22a18957c2c6fdbf4c0e62e9e00f3efcc2176ad2"
   },
   "projectClassification": "NEW",
   "currentTask": {
@@ -249,11 +249,12 @@
     "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
     "commands": ".embedra/evidence/commands.jsonl",
     "logDrivenRemediation": ".embedra/evidence/tasks/T025-log-driven-remediation.md",
-    "gateAddendum": ".embedra/evidence/gates/esp32s3-full-flash-r2-language-addendum.md"
+    "gateAddendum": ".embedra/evidence/gates/esp32s3-full-flash-r2-language-addendum.md",
+    "nextTaskPrompt": ".embedra/prompts/T026A-esp32s3-fidb.md"
   },
   "knownFailures": [],
-  "nextTask": "T027",
-  "nextAction": "Begin T027 in the next session; do not start T028 until T027 is complete.",
+  "nextTask": "T026A",
+  "nextAction": "Begin the ESP32-S3 ESP-IDF Function ID pilot T026A using .embedra/prompts/T026A-esp32s3-fidb.md; complete and commit its evidence before T027. Do not start T028 until T027 is complete.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
