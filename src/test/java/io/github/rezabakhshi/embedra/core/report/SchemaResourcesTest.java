@@ -23,6 +23,8 @@ class SchemaResourcesTest {
                 "urn:embedra:schema:device-catalog-snapshot:1",
             "schemas/catalog/device-catalog-diff-v1.schema.json",
                 "urn:embedra:schema:device-catalog-diff:1",
+            "schemas/catalog/esp-device-catalog-v1.schema.json",
+                "urn:embedra:schema:esp-device-catalog:1",
             "schemas/pack/pack-manifest-v1.schema.json", PackManifest.SCHEMA_ID);
 
         for (Map.Entry<String, String> schema : schemas.entrySet()) {

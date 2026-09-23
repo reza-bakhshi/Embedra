@@ -2,10 +2,12 @@ package io.github.rezabakhshi.embedra.ghidra.esp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ghidra.GhidraApplicationLayout;
 import ghidra.app.util.bin.ByteArrayProvider;
+import ghidra.app.util.Option;
 import ghidra.app.util.importer.MessageLog;
 import ghidra.app.util.opinion.LoadResults;
 import ghidra.app.util.opinion.LoadSpec;
@@ -57,6 +59,53 @@ class EspApplicationImageLoaderTest {
         assertEquals("default",
             spec.getLanguageCompilerSpec().getCompilerSpecID().getIdAsString());
         assertTrue(spec.isPreferred());
+    }
+
+    @Test
+    void exposesConservativeOptInForBundledRegisterAndRomEnrichment()
+            throws Exception {
+        EspApplicationImageLoader loader = new EspApplicationImageLoader();
+        ByteArrayProvider provider = new ByteArrayProvider("firmware.bin",
+            fixture("esp32s3-freestanding-minimal.bin"));
+        LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
+
+        List<Option> options = loader.getDefaultOptions(provider, spec, null,
+            false, false);
+
+        Option enrichment = options.stream().filter(option -> option.getName().equals(
+            EspApplicationImageLoader.APPLY_ESP32S3_PACKS_OPTION)).findFirst().orElseThrow();
+        assertEquals(Boolean.FALSE, enrichment.getValue());
+    }
+
+    @Test
+    void appliesBundledSvdRomAndPeripheralPacksOnlyWhenSelected() throws Exception {
+        EspApplicationImageLoader loader = new EspApplicationImageLoader();
+        ByteArrayProvider provider = new ByteArrayProvider("firmware.bin",
+            fixture("esp32s3-freestanding-minimal.bin"));
+        LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
+        List<Option> options = loader.getDefaultOptions(provider, spec, null,
+            false, false);
+        options.stream().filter(option -> option.getName().equals(
+            EspApplicationImageLoader.APPLY_ESP32S3_PACKS_OPTION)).findFirst()
+            .orElseThrow().setValue(Boolean.TRUE);
+        Object consumer = new Object();
+        ImporterSettings settings = new ImporterSettings(provider, "firmware.bin",
+            null, "/", false, spec, options, consumer, new MessageLog(),
+            TaskMonitor.DUMMY);
+
+        try (LoadResults<? extends DomainObject> results = loader.load(settings)) {
+            results.getPrimary().apply(domainObject -> {
+                Program program = (Program) domainObject;
+                assertEquals("ets_printf", program.getFunctionManager().getFunctionAt(
+                    program.getAddressFactory().getDefaultAddressSpace()
+                        .getAddress(0x4000_05d0L)).getName());
+                assertNotNull(program.getListing().getDefinedDataAt(
+                    program.getAddressFactory().getDefaultAddressSpace()
+                        .getAddress(0x6003_a040L)));
+                assertEquals("espressif.esp32s3.svd", program.getOptions(
+                    "Embedra ESP32-S3 SVD").getString("Pack ID", ""));
+            });
+        }
     }
 
     @Test
@@ -152,10 +201,14 @@ class EspApplicationImageLoaderTest {
         ByteArrayProvider provider = new ByteArrayProvider("untrusted-name.dat", flash);
         LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
         Object consumer = new Object();
+        List<Option> options = loader.getDefaultOptions(provider, spec, null,
+            false, false);
+        options.stream().filter(option -> option.getName().equals(
+            EspApplicationImageLoader.APPLY_ESP32S3_PACKS_OPTION)).findFirst()
+            .orElseThrow().setValue(Boolean.TRUE);
         ImporterSettings settings = new ImporterSettings(provider,
             "esp32s3_ctf_dump_4MB.bin", null, "/", false, spec,
-            loader.getDefaultOptions(provider, spec, null, false, false), consumer,
-            new MessageLog(), TaskMonitor.DUMMY);
+            options, consumer, new MessageLog(), TaskMonitor.DUMMY);
 
         try (LoadResults<? extends DomainObject> results = loader.load(settings)) {
             assertEquals(2, results.size());
@@ -163,6 +216,21 @@ class EspApplicationImageLoaderTest {
             results.forEach(loaded -> names.add(loaded.getName()));
             assertEquals(List.of("esp32s3_ctf_dump_4MB_app0",
                 "esp32s3_ctf_dump_4MB_bootloader"), names);
+            results.getPrimary().apply(domainObject -> {
+                Program program = (Program) domainObject;
+                assertNotNull(program.getFunctionManager().getFunctionAt(
+                    program.getAddressFactory().getDefaultAddressSpace()
+                        .getAddress(0x4000_05d0L)));
+                assertEquals("ets_printf", program.getFunctionManager().getFunctionAt(
+                    program.getAddressFactory().getDefaultAddressSpace()
+                        .getAddress(0x4000_05d0L)).getName());
+                assertTrue(program.getListing().getDefinedDataAt(
+                    program.getAddressFactory().getDefaultAddressSpace()
+                        .getAddress(0x6003_a040L)).getDataType().getName()
+                    .contains("AES_MODE"));
+                assertEquals("espressif.esp32s3.svd", program.getOptions(
+                    "Embedra ESP32-S3 SVD").getString("Pack ID", ""));
+            });
         }
     }
 

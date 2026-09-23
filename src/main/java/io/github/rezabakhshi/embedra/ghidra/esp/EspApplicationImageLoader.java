@@ -2,12 +2,14 @@ package io.github.rezabakhshi.embedra.ghidra.esp;
 
 import ghidra.app.util.bin.ByteProvider;
 import ghidra.app.util.bin.ByteArrayProvider;
+import ghidra.app.util.Option;
 import ghidra.app.util.opinion.AbstractLibrarySupportLoader;
 import ghidra.app.util.opinion.LoadSpec;
 import ghidra.app.util.opinion.Loaded;
 import ghidra.app.util.opinion.Loader.ImporterSettings;
 import ghidra.program.model.lang.LanguageCompilerSpecPair;
 import ghidra.program.model.listing.Program;
+import ghidra.framework.model.DomainObject;
 import ghidra.util.exception.CancelledException;
 import io.github.rezabakhshi.embedra.core.CancellationToken;
 import io.github.rezabakhshi.embedra.core.ParserLimits;
@@ -32,6 +34,10 @@ import java.util.Locale;
 
 /** Ghidra loader entry point for validated ESP32-S3 application images. */
 public final class EspApplicationImageLoader extends AbstractLibrarySupportLoader {
+    public static final String APPLY_ESP32S3_PACKS_OPTION =
+        "Apply verified ESP32-S3 ROM, peripheral, and SVD packs"
+            + " (explicit revision assertion)";
+
     private static final int ESP32_S3_CHIP_ID = 9;
 
     private final Esp32S3TargetProvider targetProvider = new Esp32S3TargetProvider(
@@ -40,6 +46,33 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
     @Override
     public String getName() {
         return "Embedra ESP Application Image";
+    }
+
+    @Override
+    public List<Option> getDefaultOptions(ByteProvider provider, LoadSpec loadSpec,
+            DomainObject domainObject, boolean loadIntoProgram,
+            boolean mirrorFsLayout) {
+        List<Option> options = new ArrayList<>(super.getDefaultOptions(provider, loadSpec,
+            domainObject, loadIntoProgram, mirrorFsLayout));
+        options.add(new Option(APPLY_ESP32S3_PACKS_OPTION, Boolean.class,
+            Boolean.FALSE, "Embedra ESP32-S3 enrichment",
+            "Explicitly apply provenance-checked common ESP32-S3 data; "
+                + "silicon revision is not inferred"));
+        return options;
+    }
+
+    @Override
+    public String validateOptions(ByteProvider provider, LoadSpec loadSpec,
+            List<Option> options, Program program) {
+        String inherited = super.validateOptions(provider, loadSpec, options, program);
+        if (inherited != null) {
+            return inherited;
+        }
+        Option selected = findOption(options);
+        if (selected == null || !(selected.getValue() instanceof Boolean)) {
+            return "ESP32-S3 pack option must have a Boolean value";
+        }
+        return null;
     }
 
     @Override
@@ -97,6 +130,7 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
             settings.log().appendMsg(getName(), "Mapped "
                 + result.importReport().segments().size() + " validated segments for "
                 + result.importReport().deviceId());
+            applySelectedEnrichment(program, settings);
         }
         catch (DiagnosticException exception) {
             throw diagnosticIOException(exception);
@@ -136,6 +170,7 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
                         + result.importReport().segments().size() + " validated segments for "
                         + childName + " from flash offset 0x"
                         + Long.toHexString(executable.flashRange().offset()));
+                    applySelectedEnrichment(program, childSettings);
                     loadedPrograms.add(new Loaded<>(program, childSettings));
                     retained = true;
                 }
@@ -184,6 +219,35 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
     private static IOException diagnosticIOException(DiagnosticException exception) {
         return new IOException(exception.diagnostic().code().id() + ": "
             + exception.getMessage(), exception);
+    }
+
+    private void applySelectedEnrichment(Program program, ImporterSettings settings)
+            throws IOException, CancelledException {
+        Option option = findOption(settings.options());
+        if (option == null || !Boolean.TRUE.equals(option.getValue())) {
+            return;
+        }
+        try {
+            CancellationToken cancellation = settings.monitor()::isCancelled;
+            Esp32S3BundledPacks packs = Esp32S3BundledPacks.load(cancellation);
+            EspSvdApplicationReport svd = new Esp32S3SvdApplicator().apply(program,
+                packs.svd(), settings.monitor());
+            EspPackApplicationReport symbols = new Esp32S3PackApplicator().apply(program,
+                packs.rom(), packs.peripherals(), settings.monitor());
+            settings.log().appendMsg(getName(), "Applied explicit ESP32-S3 enrichment: "
+                + symbols.createdSymbols().size() + " ROM/header symbols, "
+                + svd.createdDataAddresses().size() + " SVD registers, "
+                + svd.createdComments() + " SVD descriptions; provenance stored in program");
+        }
+        catch (DiagnosticException | EspMappingException exception) {
+            throw new IOException("Explicit ESP32-S3 pack application failed: "
+                + exception.getMessage(), exception);
+        }
+    }
+
+    private static Option findOption(List<Option> options) {
+        return options.stream().filter(option ->
+            APPLY_ESP32S3_PACKS_OPTION.equals(option.getName())).findFirst().orElse(null);
     }
 
     private static byte[] readBounded(ByteProvider provider) throws IOException {

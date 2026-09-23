@@ -21,10 +21,10 @@ class ArchitectureBoundaryTest {
         "src/main/java/io/github/rezabakhshi/embedra");
 
     private static final List<String> REQUIRED_BOUNDARIES = List.of(
-        "core", "formats", "targets", "analyzers", "ghidra", "pack");
+        "core", "formats", "targets", "analyzers", "ghidra", "pack", "svd");
 
     private static final List<String> PURE_BOUNDARIES = List.of(
-        "core", "formats", "targets", "analyzers", "pack");
+        "core", "formats", "targets", "analyzers", "pack", "svd");
 
     private static final Pattern GHIDRA_IMPORT = Pattern.compile(
         "^\\s*import\\s+(?:static\\s+)?(?:ghidra\\.|"

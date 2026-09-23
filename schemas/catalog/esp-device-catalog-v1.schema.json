@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:embedra:schema:esp-device-catalog:1",
+  "title": "Embedra ESP Device Catalog v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaId", "catalogId", "snapshotDate", "generator", "sourceFactsSha256",
+    "sources", "records"
+  ],
+  "properties": {
+    "schemaId": {"const": "urn:embedra:schema:esp-device-catalog:1"},
+    "catalogId": {"const": "espressif.esp32-family"},
+    "snapshotDate": {"type": "string", "format": "date"},
+    "generator": {"type": "string", "minLength": 1},
+    "sourceFactsSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/record"}
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "url", "revision", "sha256", "license", "redistribution"],
+      "properties": {
+        "identity": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "revision": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "license": {"type": "string", "minLength": 1},
+        "redistribution": {"enum": ["ALLOWED", "DERIVED_FACTS_ONLY"]}
+      }
+    },
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recordId", "kind", "series", "exactPart", "package", "isa",
+        "applicationCoreCount", "auxiliaryProcessors", "embeddedFlashMb",
+        "embeddedPsramMb", "lifecycle", "siliconRevision", "firmwareChipId",
+        "romIdentity", "topologyEvidence", "socCapabilityMacros",
+        "peripheralCapabilities", "securityCapabilities", "siliconRecordIds",
+        "supportStates"
+      ],
+      "properties": {
+        "recordId": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["SILICON", "MODULE", "BOARD"]},
+        "series": {"type": "string", "minLength": 1},
+        "exactPart": {"type": "string", "minLength": 1},
+        "package": {"type": "string", "minLength": 1},
+        "isa": {"enum": ["XTENSA", "RISCV", "PROFILE"]},
+        "applicationCoreCount": {"type": "integer", "minimum": 0},
+        "auxiliaryProcessors": {"type": "array", "items": {"type": "string"}},
+        "embeddedFlashMb": {"type": "string", "minLength": 1},
+        "embeddedPsramMb": {"type": "string", "minLength": 1},
+        "lifecycle": {"type": "string", "minLength": 1},
+        "siliconRevision": {"type": "string", "minLength": 1},
+        "firmwareChipId": {"type": "string", "minLength": 1},
+        "romIdentity": {"type": "string", "minLength": 1},
+        "topologyEvidence": {"type": "string", "minLength": 1},
+        "socCapabilityMacros": {"type": "array", "items": {"type": "string"}},
+        "peripheralCapabilities": {"type": "array", "items": {"type": "string"}},
+        "securityCapabilities": {"type": "array", "items": {"type": "string"}},
+        "siliconRecordIds": {"type": "array", "items": {"type": "string"}},
+        "supportStates": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "enum": ["PLANNED", "EXPERIMENTAL", "VERIFIED", "UNSUPPORTED"]
+          }
+        }
+      }
+    }
+  }
+}

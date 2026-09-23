@@ -66,6 +66,26 @@ class Esp32S3EnrichmentPackTest {
     }
 
     @Test
+    void loadsPinnedSvdFieldsAndReconciliationEvidence() throws Exception {
+        EspSvdPack pack = EspSvdPackLoader.load(
+            pack("espressif.esp32s3.svd"), ParserLimits.defaults(),
+            CancellationToken.none());
+
+        assertEquals("be20aa12560889d6125d144cdb48cf615ac17628",
+            pack.manifest().provenance().revision());
+        assertEquals("ESP32-S3", pack.device().name());
+        assertTrue(pack.device().peripherals().size() > 50);
+        assertTrue(pack.registerCount() > 4000);
+        assertTrue(pack.fieldCount() > 10000);
+        assertEquals(0x6003_a040L, pack.device().requirePeripheral("AES")
+            .requireRegister("MODE").address());
+        assertEquals(42, pack.reconciliation().matchingPeripheralBases());
+        assertTrue(pack.reconciliation().matchingRegisterAddresses() > 1500);
+        assertEquals("a3c50b67cfa2ee2832db91d27fa5157ce856d6b66eafa95dba8c3f389626695b",
+            pack.reconciliation().headerPackContentSha256());
+    }
+
+    @Test
     void rejectsTamperingWrongPackKindLimitsAndCancellation() throws Exception {
         Path copy = temporaryDirectory.resolve("rom");
         copyTree(pack("espressif.esp32s3.rom"), copy);
@@ -105,10 +125,14 @@ class Esp32S3EnrichmentPackTest {
             .resolve("rom-symbols.json"));
         String peripherals = Files.readString(pack("espressif.esp32s3.peripherals")
             .resolve("peripherals.json"));
+        String svd = Files.readString(pack("espressif.esp32s3.svd")
+            .resolve("registers.json"));
         assertFalse(rom.contains("esp32s3_ctf_dump"));
         assertFalse(peripherals.contains("esp32s3_ctf_dump"));
+        assertFalse(svd.contains("esp32s3_ctf_dump"));
         assertFalse(rom.contains("/home/"));
         assertFalse(peripherals.contains("/home/"));
+        assertFalse(svd.contains("/home/"));
     }
 
     private static Path pack(String id) {

@@ -11,6 +11,7 @@
 | `targets` | Platform/device identity, topology, memory, and entry decisions | Pure boundaries and Java standard library |
 | `analyzers` | Pure enrichment, signatures, crypto/CTF scanning, and diff engines | Pure boundaries and Java standard library |
 | `pack` | Offline manifests, provenance, integrity, installation, and selection | Pure boundaries and Java standard library |
+| `svd` | Hardened CMSIS-SVD parsing and immutable register/field models | `core`, Java standard library |
 | `ghidra` | Loaders, mappers, services, UI, and transactional application | Any pure boundary and Ghidra APIs |
 
 Subpackages inherit the rules of their nearest boundary. Vendor- and format-specific implementation remains below `formats` and `targets`; the common core does not gain target-selection branches.
@@ -115,6 +116,31 @@ deterministic conflict entries. Reapplication recognizes identical artifacts;
 receipt-scoped removal deletes only artifacts created by that application and
 refuses changed or user-bearing blocks.
 
+Gate remediation adds a third pack generated from official Espressif
+CMSIS-SVD revision `be20aa12560889d6125d144cdb48cf615ac17628`. The generator
+rejects DTD/entity declarations, bounds bytes/elements/depth, expands register
+arrays deterministically, and fails when a shared peripheral or register name
+disagrees with the pinned ESP-IDF-derived pack. The retained reconciliation is
+42 common peripheral bases and 1,530 common register addresses with no address
+conflict. The generated pack contains 54 peripherals, 4,283 registers, and
+11,769 fields.
+
+SVD application is an explicit import option because chip ID 9 establishes
+ESP32-S3 but not an exact silicon revision. It maps volatile, non-executable
+peripheral blocks, creates qualified register labels and field-aware Ghidra
+structures, retains descriptions as namespaced comments, and records source
+revision and pack digest. Existing blocks, symbols, instructions, data types,
+and comments are preserved. The current upstream ESP32-S3 SVD contains no
+enumerated values; the parser and applicator support them when supplied, but no
+enum is fabricated from descriptive prose.
+
+The Ghidra crypto bridge runs after reference analysis only for programs with
+the explicit SVD pack identity. Its pure detector requires resolved mode plus
+trigger writes before naming an AES/SHA hardware algorithm, and separately
+classifies resolved vendor ROM/API call sites. Findings are bookmarks; detector
+coverage and unsupported cases are program options. Peripheral presence,
+isolated constants, entropy, and unresolved writes remain non-findings.
+
 ## ESP-IDF semantic enrichment
 
 T023 keeps Ghidra fact collection separate from the pure analyzer. Its immutable
@@ -149,13 +175,46 @@ separately acquired eFuse snapshot, both Secure Boot and flash-encryption eFuse
 states are explicitly `UNAVAILABLE`. Security inputs are bounded, cancellable,
 immutable, and never expose NVS key contents.
 
+## ESP factory/OTA diff and CTF leads
+
+T025 compares redacted artifact metadata rather than firmware bytes. Exact
+SHA-256 and physical flash ranges classify factory/OTA relationships as
+unchanged, moved, modified, added, or removed. Application version strings are
+reported metadata only and are never parsed heuristically to claim a downgrade.
+
+ESP-specific CTF leads are deliberately narrow: a numeric `secure_version`
+decrease, a candidate image with a verified digest mismatch, or an unencrypted
+NVS-key partition. Each lead has a stable code, severity, confidence, source
+range when available, and evidence. NVS-key content is never retained. Generic
+credential, endpoint, crypto, entropy, and flag scanning remains in T056-T064.
+
 ## Canonical reports and catalogs
 
 Canonical JSON is emitted by a small pure-core writer that accepts only deterministic JSON values: maps with string keys, ordered iterables, integral numbers, strings, booleans, and null. Map keys are sorted, record collections are normalized by stable identity, strings are fully escaped, and output ends with one newline. Sets, floating-point values, non-string keys, and arbitrary object serialization are rejected so host iteration order and object identity cannot leak into evidence.
 
 Canonical report schema v1 records tool build, input digests, provider and pack identities, validation evidence, mappings, applied symbols and types with provenance, metadata, execution topology, findings, diagnostics, and reproducibility settings. It deliberately has no timestamp or host path and declares fixed `en-US`/`UTC` settings. Execution topology has its own schema because topology is also an independent output and snapshot oracle.
 
-Device catalogs use exact device IDs and explicit support state per capability. A snapshot records its source identity, revision, license, and provenance. A deterministic diff reports added, removed, and changed exact records without treating a family relationship as verification. These contracts enable later vendor catalog generators and drift checks; T005 does not ingest vendor data or claim device support.
+Device catalogs use exact device IDs and explicit support state per capability. A snapshot records its source identity, revision, license, and provenance. A deterministic diff reports added, removed, and changed exact records without treating a family relationship as verification.
+
+T026 instantiates this contract for Espressif. A bounded Python ingestion step
+extracts only normalized factual fields from digest-pinned official SoC,
+module, and development-board pages and combines them with the exact pinned
+Apache-2.0 ESP-IDF Kconfig/SoC-capability metadata. The committed source-facts
+snapshot regenerates an integrity-checked offline catalog byte-for-byte, so
+normal builds do not fetch mutable data. Silicon, module, and board records are
+different entity kinds. Profiles contain exact silicon-record references and
+never become processor models; multiple references remain an explicit
+ambiguity. The pure Java loader checks the detached digest, closed properties,
+resource limits, cancellation, topology consistency, reference integrity, and
+explicit per-capability support states before exposing a resolver.
+
+The resolver first performs case-insensitive exact-part matching. A base
+profile query may return multiple orderable candidates, and an unknown query
+stays unknown; neither path guesses a device. All 53 silicon, 161 module, and
+58 board records in the 2026-09-23 snapshot begin `PLANNED`. A separate
+scheduled/manual CI job is the only networked catalog path: it downloads current
+official pages and ESP-IDF, emits normalized candidate facts, and fails on
+added, removed, or changed records for review.
 
 The schemas under `schemas/` use stable URN identities and closed object definitions and are packaged inside the extension JAR. Checked-in golden JSON under `src/test/resources/snapshots/` is updated only by deliberate review; the test helper never creates or refreshes snapshots.
 

@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "2a26abbea8dbe176eb7c33fa34edfa6ddc834bd57b2c36b1ba5801dcd7a9200c"
+    "sha256": "ddbe45bebc4ae51c674b62e773848ce890dfb3231617ecc2461f278483d9c747"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T025",
-    "status": "IN_PROGRESS",
-    "reasonCode": null
+    "id": "T026",
+    "status": "COMPLETE",
+    "reasonCode": "ESP_CATALOG_GENERATED_AND_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -34,7 +34,9 @@
     "T021",
     "T022",
     "T023",
-    "T024"
+    "T024",
+    "T025",
+    "T026"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -49,16 +51,26 @@
       "approval": "APPROVED",
       "approvedDate": "2026-09-23",
       "evidence": ".embedra/evidence/gates/esp32s3-application.md"
+    },
+    "esp32s3_full_flash": {
+      "result": "PASS",
+      "approval": "APPROVED",
+      "approvedDate": "2026-09-23",
+      "evidence": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
+      "approvalEvidence": ".embedra/evidence/gates/esp32s3-full-flash-r2-approval.md",
+      "supersedes": ".embedra/evidence/gates/esp32s3-full-flash.md"
     }
   },
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "a3faf81"
+    "commit": "90ea5171cac0ff43a1c3fe8baa94ffbb06fdbfa6"
   },
   "workingTree": {
-    "state": "CLEAN",
-    "uncommittedWork": []
+    "state": "DIRTY",
+    "uncommittedWork": [
+      "completed T025 implementation, SVD/crypto gate remediation, approved ESP32-S3 full-flash review-2 gate, and completed T026 catalog work"
+    ]
   },
   "toolchains": {
     "ghidra": {
@@ -82,13 +94,31 @@
       "espIdfReferenceVersion": "v6.0",
       "espIdfReferenceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800"
     },
+    "espSvdGeneration": {
+      "source": "https://github.com/espressif/svd",
+      "revision": "be20aa12560889d6125d144cdb48cf615ac17628",
+      "license": "Apache-2.0"
+    },
     "host": {
       "os": "Linux",
       "architecture": "x86-64",
       "kernel": "7.0.0-31-generic"
     }
   },
-  "catalogSnapshots": [],
+  "catalogSnapshots": [
+    {
+      "catalogId": "espressif.esp32-family",
+      "snapshotDate": "2026-09-23",
+      "path": "catalogs/espressif/2026-09-23/catalog.json",
+      "sha256": "a012ee03ad12ec075b8b782cd8b3abd66cc236216cfe4001cf2c2a2a92990a00",
+      "sourceFactsPath": "catalogs/espressif/sources/source-facts.json",
+      "sourceFactsSha256": "c7866b0c4fe5e336c02cfbfe16402901b0448184b3f6587d8835ae6ec919be58",
+      "siliconRecords": 53,
+      "moduleProfiles": 161,
+      "boardProfiles": 58,
+      "supportState": "PLANNED"
+    }
+  ],
   "fixtureEvidence": [
     {
       "fixtureId": "esp32s3.esptool-v5.4.0.esp32s3-freestanding-minimal",
@@ -216,19 +246,20 @@
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T024.md",
-    "gate": ".embedra/evidence/gates/esp32s3-application.md",
+    "task": ".embedra/evidence/tasks/T026.md",
+    "remediation": ".embedra/evidence/tasks/T025-remediation.md",
+    "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
     "commands": ".embedra/evidence/commands.jsonl"
   },
   "knownFailures": [],
-  "nextTask": "T025",
-  "nextAction": "Write failing bounded factory/OTA diff and ESP-oriented CTF finding tests, then complete the mandatory ESP32-S3 full-flash acceptance gate and stop for explicit approval before T026.",
+  "nextTask": "T027",
+  "nextAction": "Begin T027 with its prerequisites and test-first report, then refactor only behavior proven common across ESP ISAs into neutral services and the shared topology contract. Do not start T028.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
-      "sha256": "b2cb5c81e9a33367059dfdb50d4aa692c4bc6dea619167592655975b3133ba0f",
-      "sizeBytes": 460992,
-      "status": "T024_REPRODUCIBLE_BUILD_ARTIFACT"
+      "sha256": "5e764521fb3fefb7fdda20256fdb7af4db89a799647b05f22c4f441ac6c51dbc",
+      "sizeBytes": 821611,
+      "status": "T026_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -307,23 +338,27 @@
     {
       "code": "T008_PACKAGED_FIXTURE_GENERATOR",
       "resolution": "The exact-content oracle caught repository-only fixture source in the extension ZIP; buildExtension now excludes fixtures and the repeated package gate passes."
+    },
+    {
+      "code": "ESP32S3_GATE_REVIEW_PACKAGED_LOCAL_FIRMWARE",
+      "resolution": "The exact-content oracle caught untracked flash_dump.bin before release. It is now absent; ignore and explicit package-exclusion safeguards remain. The repeated package and restricted-path scan pass."
     }
   ],
   "mostRecentCommands": [
     {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> targeted T024 security-summary tests",
-      "exitStatus": 0,
-      "result": "PASS: three tests cover image hashes, RSA V2 structure and bad CRC, partition/NVS indicators, unavailable eFuses, limits, cancellation, and immutability."
+      "command": "JAVA_HOME=<jdk21> ./gradlew --offline --no-daemon pureTest; python3 -m unittest scripts/tests/test_generate_esp_catalog.py",
+      "exitStatus": 1,
+      "result": "EXPECTED FAIL: Java compilation reported absent ESP catalog/resolver symbols and Python reported the absent generator."
     },
     {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew --offline --no-daemon --rerun-tasks clean check jacocoTestReport jacocoTestCoverageVerification buildExtension",
+      "command": "python3 scripts/generate-esp-catalog.py ingest/generate/check/drift <pinned-official-inputs>",
       "exitStatus": 0,
-      "result": "PASS: all 19 actions reran; 125 unit and 17 real-Ghidra integration tests passed."
+      "result": "PASS: 53 silicon, 161 module, and 58 board records generated deterministically; identical-input drift reported no additions, removals, or changes."
     },
     {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> sh scripts/verify-build-quality.sh",
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> verify reproducibility, then rerun clean check/buildExtension uncached",
       "exitStatus": 0,
-      "result": "PASS: two complete builds produced byte-identical 460992-byte ZIPs with SHA-256 b2cb5c81e9a33367059dfdb50d4aa692c4bc6dea619167592655975b3133ba0f."
+      "result": "PASS: 140 unit, 22 real-Ghidra, and 4 Python generator tests; two byte-identical builds followed by all 20 actions executed uncached; 821611-byte ZIP SHA-256 5e764521fb3fefb7fdda20256fdb7af4db89a799647b05f22c4f441ac6c51dbc."
     }
   ],
   "buildQuality": {
@@ -345,7 +380,8 @@
       "formats",
       "targets",
       "analyzers",
-      "pack"
+      "pack",
+      "svd"
     ],
     "adapterBoundary": "ghidra",
     "enforcementTest": "io.github.rezabakhshi.embedra.build.ArchitectureBoundaryTest"

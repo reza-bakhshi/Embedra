@@ -3,10 +3,10 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T025 — IN PROGRESS**.
-- Last completed task: **T024**.
-- Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved on 2026-09-23.
-- Version control: T023-T024 are committed on branch `main` at `a3faf81`; T025 has no uncommitted implementation yet.
+- Current task: **T026 — authoritative ESP catalog (`COMPLETE`)**.
+- Last completed task: **T026**.
+- Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
+- Version control: T023-T024 and their continuity handoff are committed on branch `main` at `90ea517`; T025 and gate-review remediation are uncommitted.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -18,10 +18,18 @@
 - Negative compatibility check: JDK 25 is rejected with a specific early diagnostic.
 - Build quality: JUnit `6.1.3`, JaCoCo `0.8.15`, Checkstyle `14.1.0`; resolved dependencies are locked.
 - ESP fixture tools: Espressif `xtensa-esp-elf` `esp-15.2.0_20251204`; esptool `5.4.0`; ESP-IDF v6.0 reference revision `662a3be354759d9487bf4b1a629fadb766cb1800`.
+- ESP SVD input: official Apache-2.0 Espressif SVD revision `be20aa12560889d6125d144cdb48cf615ac17628`.
 
 ## Completed Work
 
-T001 through T024 are complete. T024 adds a bounded ESP32-S3 security summary for image hashes, structurally valid RSA V2 signature blocks, encrypted-partition flags, and NVS-key indicators while keeping unavailable eFuse state explicit. Overall ESP32-S3 support remains `EXPERIMENTAL` because cryptographic signature verification, production signature data, Ghidra fact collection, exact catalog variants, and physical hardware verification are incomplete.
+T001 through T025 are complete. Gate-review remediation adds a hardened bounded
+SVD parser/generator, a provenance-checked ESP32-S3 SVD pack, import-selectable
+ROM/peripheral/SVD application, field-aware Ghidra register types and comments,
+and conservative hardware/ROM crypto bookmarks with explicit unsupported
+coverage. The maintainer approved the revised ESP32-S3 full-flash gate and T026
+completed the authoritative offline ESP catalog with 53 silicon variants, 161
+module profiles, and 58 board profiles. All new records remain `PLANNED` and
+overall ESP32-S3 support remains `EXPERIMENTAL`.
 
 ## Changed Files
 
@@ -35,10 +43,24 @@ T001 through T024 are complete. T024 adds a bounded ESP32-S3 security summary fo
 - Added T022 content schemas, pinned deterministic generator, ROM/peripheral packs, integrity-first loaders/models, transactional Ghidra applicator/removal receipts, real-Ghidra tests, ADR, notices, and documentation.
 - Added T023 immutable enrichment facts/results, metadata/log/FreeRTOS/signature analyzer, strict evidence distinctions, limits/cancellation tests, ADR, and support documentation.
 - Added T024 immutable security evidence/results, ESP32-S3 RSA V2 structure scanner, image-hash and partition/NVS indicators, unavailable-eFuse safeguards, tests, ADR, and documentation.
-- T001-T024 implementation is committed; the restricted local dump remains ignored and untracked.
+- Added T025 immutable artifact/diff/finding models, bounded analyzer, redaction and false-positive tests, ADR, documentation, and the ESP32-S3 full-flash gate report.
+- Added review remediation with 54 SVD peripherals, 4,283 registers, 11,769
+  fields, 42 peripheral-base and 1,530 register-address cross-checks, explicit
+  import wiring, Ghidra structures/comments/bookmarks, and ADR 0018.
+- Added T026 bounded official-product ingestion, pinned normalized facts,
+  generated ESP catalog/schema, exact-variant resolver, shared catalog
+  projection, explicit networked drift CI, tests, documentation, and ADR 0019.
+- Clean verification passed 140 unit and 22 real-Ghidra tests plus 4 Python
+  generator tests; reproducible ZIP SHA-256 is
+  `5e764521fb3fefb7fdda20256fdb7af4db89a799647b05f22c4f441ac6c51dbc`.
+- T001-T024 implementation is committed; T025, review-2 gate, and T026 work are uncommitted.
+  Restricted `esp32s3_ctf_dump_4MB.bin` remains ignored and untracked. The
+  transient untracked `flash_dump.bin` caught by the package oracle is now
+  absent; its ignore and package-exclusion safeguards remain.
 
 No complete device catalog, exact variant, board, or hardware support claim was added.
 
 ## Exact Next Action
 
-Write failing T025 factory/OTA diff and ESP-oriented CTF finding tests first, including unchanged/moved/modified artifacts, evidence/confidence distinctions, false-positive negatives, limits, cancellation, and deterministic output. Then run the mandatory ESP32-S3 full-flash gate and wait for explicit approval before T026.
+Begin T027 by reporting its shared-behavior/topology prerequisites and writing
+the failing common-service tests. Do not begin T028 until T027 is complete.

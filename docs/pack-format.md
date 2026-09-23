@@ -52,3 +52,19 @@ functions, and data types are preserved and reported as deterministic
 conflicts. An application receipt identifies only created artifacts so they can
 be removed without remapping firmware bytes; changed/user-bearing blocks are
 left in place.
+
+Gate remediation adds `espressif.esp32s3.svd` version `1.0.0`, conforming to
+`urn:embedra:schema:esp-svd-pack:1`. It cites the official Apache-2.0
+Espressif SVD repository at immutable revision
+`be20aa12560889d6125d144cdb48cf615ac17628`. Its canonical content expands SVD
+register arrays and retains peripheral ranges, register access/reset metadata,
+descriptions, fields, and enumerated values when present. The current ESP32-S3
+source has no enumerated values; none are inferred from prose.
+
+`scripts/generate-esp32s3-svd-pack.py <espressif-svd-checkout>` rejects another
+revision, missing license evidence, oversized/deep XML, and DTD/entity input.
+Generation cross-checks shared names against the existing ESP-IDF peripheral
+pack and fails on an address disagreement. The checked-in reconciliation
+records the source pack digest, 42 matching peripheral bases, 1,530 matching
+register addresses, and the fail-on-conflict policy. Installed operation uses
+only these bundled, integrity-checked files and performs no network access.

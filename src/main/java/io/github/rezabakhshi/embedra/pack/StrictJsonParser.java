@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /** Bounded JSON parser for untrusted persisted contracts. */
-final class StrictJsonParser {
+public final class StrictJsonParser {
     private final String input;
 
     private final ParserLimits limits;
@@ -35,7 +35,7 @@ final class StrictJsonParser {
         this.startedNanos = startedNanos;
     }
 
-    static Object parse(byte[] bytes, ParserLimits limits, CancellationToken token)
+    public static Object parse(byte[] bytes, ParserLimits limits, CancellationToken token)
             throws DiagnosticException {
         token.throwIfCancellationRequested();
         if (bytes.length > limits.maxInputBytes() || bytes.length > limits.maxAllocationBytes()) {

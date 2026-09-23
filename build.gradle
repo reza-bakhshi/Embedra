@@ -57,6 +57,16 @@ tasks.register('pureTest') {
     dependsOn tasks.named('check')
 }
 
+tasks.register('verifyEspCatalogGenerator', Exec) {
+    group = 'verification'
+    description = 'Runs offline ESP catalog generator and drift-contract tests.'
+    commandLine 'python3', '-m', 'unittest', 'scripts/tests/test_generate_esp_catalog.py'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyEspCatalogGenerator')
+}
+
 if (!configuredGhidraDir.isBlank()) {
     sourceSets {
         integrationTest {
@@ -146,6 +156,7 @@ if (!configuredGhidraDir.isBlank()) {
         exclude 'docs/adr/**'
         exclude 'Embedra-SpecKit.md'
         exclude 'esp32s3_ctf_dump_4MB.bin'
+        exclude 'flash_dump.bin'
         exclude 'fixtures/**'
         exclude 'PROJECT_STATE.md'
         exclude 'config/**'
@@ -154,5 +165,6 @@ if (!configuredGhidraDir.isBlank()) {
         exclude 'gradle.properties'
         exclude 'scripts/**'
         exclude 'schemas/**'
+        exclude 'catalogs/espressif/sources/**'
     }
 }

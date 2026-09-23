@@ -17,7 +17,13 @@ import ghidra.program.model.lang.CompilerSpecID;
 import ghidra.program.model.lang.Language;
 import ghidra.program.model.lang.LanguageID;
 import ghidra.program.model.mem.MemoryBlock;
+import ghidra.program.model.data.BitFieldDataType;
+import ghidra.program.model.data.Enum;
+import ghidra.program.model.data.Structure;
+import ghidra.program.model.symbol.RefType;
 import ghidra.program.model.symbol.SourceType;
+import ghidra.app.util.importer.MessageLog;
+import ghidra.program.model.address.AddressSet;
 import ghidra.util.task.TaskMonitor;
 import ghidra.util.task.TaskMonitorAdapter;
 import io.github.rezabakhshi.embedra.core.CancellationToken;
@@ -26,11 +32,21 @@ import io.github.rezabakhshi.embedra.ghidra.transaction.GhidraProgramTransaction
 import io.github.rezabakhshi.embedra.pack.Esp32S3PackLoader;
 import io.github.rezabakhshi.embedra.pack.EspPeripheralPack;
 import io.github.rezabakhshi.embedra.pack.EspRomSymbolPack;
+import io.github.rezabakhshi.embedra.pack.EspSvdPack;
+import io.github.rezabakhshi.embedra.pack.EspSvdPackLoader;
+import io.github.rezabakhshi.embedra.svd.EspSvdAccess;
+import io.github.rezabakhshi.embedra.svd.EspSvdDevice;
+import io.github.rezabakhshi.embedra.svd.EspSvdEnumeratedValue;
+import io.github.rezabakhshi.embedra.svd.EspSvdField;
+import io.github.rezabakhshi.embedra.svd.EspSvdPeripheral;
+import io.github.rezabakhshi.embedra.svd.EspSvdRegister;
 import io.github.rezabakhshi.embedra.targets.esp.Esp32S3TargetProvider;
 import io.github.rezabakhshi.embedra.targets.esp.EspressifChipIdRegistry;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
+import java.util.OptionalLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -154,6 +170,106 @@ class Esp32S3PackApplicatorTest {
             () -> new Esp32S3PackApplicator().apply(program, rom, peripherals, monitor));
         assertNull(program.getMemory().getBlock(address(0x4000_05d0L)));
         assertNull(program.getMemory().getBlock(address(0x6000_4004L)));
+    }
+
+    @Test
+    void appliesSvdRegisterTypesFieldsDescriptionsAndCryptoNamesIdempotently()
+            throws Exception {
+        EspSvdPack svd = EspSvdPackLoader.load(pack("espressif.esp32s3.svd"),
+            ParserLimits.defaults(), CancellationToken.none());
+        Esp32S3SvdApplicator applicator = new Esp32S3SvdApplicator();
+
+        EspSvdApplicationReport first = applicator.apply(program, svd,
+            TaskMonitor.DUMMY);
+
+        assertTrue(first.committed());
+        assertTrue(first.createdBlocks().size() > 40);
+        assertTrue(first.createdDataAddresses().size() > 4000);
+        assertTrue(first.createdComments() > 4000);
+        Address mode = address(0x6003_a040L);
+        assertNotNull(program.getListing().getDefinedDataAt(mode));
+        assertTrue(program.getListing().getDefinedDataAt(mode).getDataType()
+            .getName().contains("AES_MODE"));
+        assertTrue(Arrays.stream(program.getSymbolTable().getSymbols(mode))
+            .anyMatch(symbol -> symbol.getName().equals("AES_MODE_REG")));
+        assertTrue(program.getListing().getComment(
+            ghidra.program.model.listing.CommentType.EOL, mode).contains("AES Mode"));
+
+        EspSvdApplicationReport second = applicator.apply(program, svd,
+            TaskMonitor.DUMMY);
+        assertEquals(0, second.createdBlocks().size());
+        assertEquals(0, second.createdSymbols().size());
+        assertEquals(0, second.createdDataAddresses().size());
+        assertEquals(0, second.createdComments());
+    }
+
+    @Test
+    void annotatesResolvedRomCryptoCallAndRecordsDetectorCoverage() throws Exception {
+        try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
+                program, "Create crypto evidence")) {
+            MemoryBlock code = program.getMemory().createUninitializedBlock("code",
+                address(0x4200_0000L), 0x100, false);
+            code.setRead(true);
+            code.setExecute(true);
+            MemoryBlock romBlock = program.getMemory().createUninitializedBlock("rom",
+                address(0x4000_0000L), 0x20000, false);
+            romBlock.setRead(true);
+            romBlock.setExecute(true);
+            program.getFunctionManager().createFunction("esp_sha256_start",
+                address(0x4000_1234L), new AddressSet(address(0x4000_1234L)),
+                SourceType.IMPORTED);
+            program.getReferenceManager().addMemoryReference(address(0x4200_0010L),
+                address(0x4000_1234L), RefType.UNCONDITIONAL_CALL,
+                SourceType.ANALYSIS, 0);
+            program.getOptions("Embedra ESP32-S3 SVD").setString("Pack ID",
+                "espressif.esp32s3.svd");
+            transaction.commit();
+        }
+
+        EmbedraEsp32S3CryptoAnalyzer analyzer = new EmbedraEsp32S3CryptoAnalyzer();
+        assertTrue(analyzer.canAnalyze(program));
+        try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
+                program, "Run crypto analyzer")) {
+            assertTrue(analyzer.added(program,
+                new AddressSet(address(0x4200_0000L), address(0x4200_00ffL)),
+                TaskMonitor.DUMMY, new MessageLog()));
+            transaction.commit();
+        }
+
+        assertNotNull(program.getBookmarkManager().getBookmark(address(0x4200_0010L),
+            "Analysis", "Embedra Crypto"));
+        assertEquals(1, program.getOptions("Embedra ESP32-S3 Crypto Analysis")
+            .getInt("Finding Count", -1));
+        assertTrue(program.getOptions("Embedra ESP32-S3 Crypto Analysis")
+            .getString("Unsupported Algorithms", "").contains("software-crypto"));
+    }
+
+    @Test
+    void appliesAuthoritativeSvdEnumeratedValuesWithoutInferringMissingEnums()
+            throws Exception {
+        EspSvdPack source = EspSvdPackLoader.load(pack("espressif.esp32s3.svd"),
+            ParserLimits.defaults(), CancellationToken.none());
+        EspSvdField field = new EspSvdField("MODE", "Key mode", 0, 3,
+            EspSvdAccess.READ_WRITE, List.of(new EspSvdEnumeratedValue(
+                "AES_256_ENCRYPT", 2, "256-bit encryption")));
+        EspSvdRegister register = new EspSvdRegister("MODE", "AES Mode register",
+            0x6003_a040L, 32, EspSvdAccess.READ_WRITE, OptionalLong.of(0),
+            List.of(field));
+        EspSvdPeripheral peripheral = new EspSvdPeripheral("AES",
+            "AES accelerator", 0x6003_a000L, 0x6003_a0b8L, List.of(register));
+        EspSvdPack fixture = new EspSvdPack(source.manifest(), new EspSvdDevice(
+            "ESP32-S3", source.device().sourceRevision(), List.of(peripheral)),
+            source.reconciliation());
+
+        new Esp32S3SvdApplicator().apply(program, fixture, TaskMonitor.DUMMY);
+
+        Structure structure = (Structure) program.getListing().getDefinedDataAt(
+            address(0x6003_a040L)).getDataType();
+        BitFieldDataType bitField = (BitFieldDataType) structure
+            .getDefinedComponents()[0].getDataType();
+        assertTrue(bitField.getBaseDataType() instanceof Enum);
+        assertEquals(2, ((Enum) bitField.getBaseDataType())
+            .getValue("AES_256_ENCRYPT"));
     }
 
     private Address address(long offset) {

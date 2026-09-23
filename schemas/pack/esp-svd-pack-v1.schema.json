@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:embedra:schema:esp-svd-pack:1",
+  "title": "Embedra ESP SVD Pack v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaId",
+    "deviceId",
+    "deviceName",
+    "sourceRevision",
+    "sourceFiles",
+    "peripherals",
+    "reconciliation"
+  ],
+  "properties": {
+    "schemaId": {"const": "urn:embedra:schema:esp-svd-pack:1"},
+    "deviceId": {"type": "string", "minLength": 1},
+    "deviceName": {"type": "string", "minLength": 1},
+    "sourceRevision": {"type": "string", "minLength": 1},
+    "sourceFiles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "peripherals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/peripheral"}
+    },
+    "reconciliation": {"$ref": "#/$defs/reconciliation"}
+  },
+  "$defs": {
+    "peripheral": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "description", "baseAddress", "endExclusive", "registers"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "description": {"type": "string"},
+        "baseAddress": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "endExclusive": {"type": "integer", "minimum": 1, "maximum": 4294967296},
+        "registers": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/register"}
+        }
+      }
+    },
+    "register": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "description",
+        "address",
+        "sizeBits",
+        "access",
+        "resetValue",
+        "fields"
+      ],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "description": {"type": "string"},
+        "address": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "sizeBits": {"type": "integer", "minimum": 1, "maximum": 64},
+        "access": {
+          "enum": [
+            "read-only",
+            "write-only",
+            "read-write",
+            "writeOnce",
+            "read-writeOnce",
+            "UNKNOWN"
+          ]
+        },
+        "resetValue": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "fields": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/field"}
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "description",
+        "bitOffset",
+        "bitWidth",
+        "access",
+        "enumeratedValues"
+      ],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "description": {"type": "string"},
+        "bitOffset": {"type": "integer", "minimum": 0, "maximum": 63},
+        "bitWidth": {"type": "integer", "minimum": 1, "maximum": 64},
+        "access": {
+          "enum": [
+            "read-only",
+            "write-only",
+            "read-write",
+            "writeOnce",
+            "read-writeOnce",
+            "INHERITED"
+          ]
+        },
+        "enumeratedValues": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/enumeratedValue"}
+        }
+      }
+    },
+    "enumeratedValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value", "description"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "value": {"type": "integer"},
+        "description": {"type": "string"}
+      }
+    },
+    "reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "headerPackContentSha256",
+        "matchingPeripheralBases",
+        "matchingRegisterAddresses",
+        "policy"
+      ],
+      "properties": {
+        "headerPackContentSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "matchingPeripheralBases": {"type": "integer", "minimum": 0},
+        "matchingRegisterAddresses": {"type": "integer", "minimum": 0},
+        "policy": {"const": "fail-on-shared-name-address-conflict"}
+      }
+    }
+  }
+}

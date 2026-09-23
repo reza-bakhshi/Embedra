@@ -658,11 +658,11 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [x] T022 Implement provenance-checked ESP32-S3 ROM symbol and peripheral packs.
 - [x] T023 Implement ESP-IDF metadata, logging-call, FreeRTOS, and library-signature enrichments.
 - [x] T024 Implement ESP security summary that distinguishes image evidence from unavailable eFuse state.
-- [ ] T025 Implement factory/OTA diff and ESP-oriented CTF findings.
+- [x] T025 Implement factory/OTA diff and ESP-oriented CTF findings.
 
 ### ESP family
 
-- [ ] T026 Build the authoritative ESP SoC/part/module/board catalog generator, provenance snapshot, exact-variant resolver, and CI drift detection; ingest every official ESP32-branded series present at generation time.
+- [x] T026 Build the authoritative ESP SoC/part/module/board catalog generator, provenance snapshot, exact-variant resolver, and CI drift detection; ingest every official ESP32-branded series present at generation time.
 - [ ] T027 Refactor only proven shared ESP behavior into common Xtensa/RISC-V-neutral services and the common execution-topology contract.
 - [ ] T028 Add original ESP32 and ESP32-S2 fixtures/providers/packs independently and pass their full relevant suites.
 - [ ] T029 Add ESP32-C3 as the first RISC-V ESP provider and prove no Xtensa assumptions remain in common code.

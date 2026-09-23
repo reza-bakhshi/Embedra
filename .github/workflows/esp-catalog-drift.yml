@@ -1,0 +1,48 @@
+name: esp-catalog-drift
+
+on:
+  schedule:
+    - cron: '23 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare-official-catalog:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out immutable Embedra revision
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Fetch current official inputs for explicit drift check
+        run: |
+          curl --proto '=https' --tlsv1.2 --fail --location \
+            --output "$RUNNER_TEMP/socs.html" https://www.espressif.com/en/products/socs
+          curl --proto '=https' --tlsv1.2 --fail --location \
+            --output "$RUNNER_TEMP/modules.html" https://www.espressif.com/en/products/modules
+          curl --proto '=https' --tlsv1.2 --fail --location \
+            --output "$RUNNER_TEMP/devkits.html" https://www.espressif.com/en/products/devkits
+          git clone --depth 1 https://github.com/espressif/esp-idf.git "$RUNNER_TEMP/esp-idf"
+      - name: Compare normalized exact products
+        run: |
+          python3 scripts/generate-esp-catalog.py drift \
+            --socs "$RUNNER_TEMP/socs.html" \
+            --modules "$RUNNER_TEMP/modules.html" \
+            --boards "$RUNNER_TEMP/devkits.html" \
+            --idf "$RUNNER_TEMP/esp-idf" \
+            --baseline catalogs/espressif/sources/source-facts.json \
+            --snapshot-date "$(date -u +%F)" \
+            --output "$RUNNER_TEMP/esp-catalog-drift.json"
+      - name: Upload candidate normalized facts on drift
+        if: failure()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: esp-catalog-drift-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/esp-catalog-drift.json
+            ${{ runner.temp }}/candidate-source-facts.json
+          if-no-files-found: error
+          retention-days: 14

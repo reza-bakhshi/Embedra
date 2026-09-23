@@ -64,6 +64,11 @@ Embedra/LICENSE
 Embedra/Module.manifest
 Embedra/README.md
 Embedra/THIRD_PARTY_NOTICES.md
+Embedra/catalogs/
+Embedra/catalogs/espressif/
+Embedra/catalogs/espressif/2026-09-23/
+Embedra/catalogs/espressif/2026-09-23/catalog.json
+Embedra/catalogs/espressif/2026-09-23/catalog.sha256
 Embedra/docs/
 Embedra/docs/architecture.md
 Embedra/docs/fixture-policy.md
@@ -77,7 +82,11 @@ Embedra/packs/espressif.esp32s3.peripherals/1.0.0/peripherals.json
 Embedra/packs/espressif.esp32s3.rom/
 Embedra/packs/espressif.esp32s3.rom/1.0.0/
 Embedra/packs/espressif.esp32s3.rom/1.0.0/pack.json
-Embedra/packs/espressif.esp32s3.rom/1.0.0/rom-symbols.json'
+Embedra/packs/espressif.esp32s3.rom/1.0.0/rom-symbols.json
+Embedra/packs/espressif.esp32s3.svd/
+Embedra/packs/espressif.esp32s3.svd/1.0.0/
+Embedra/packs/espressif.esp32s3.svd/1.0.0/pack.json
+Embedra/packs/espressif.esp32s3.svd/1.0.0/registers.json'
 if find src/main/java -type f -name '*.java' -print -quit | grep -q .; then
     expected_entries="${expected_entries}
 Embedra/lib/Embedra-src.zip"
