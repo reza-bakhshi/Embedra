@@ -214,6 +214,25 @@ class EspApplicationImageLoaderTest {
     }
 
     @Test
+    void fullFlashImportLogDoesNotExposeInputFilename() throws Exception {
+        EspApplicationImageLoader loader = new EspApplicationImageLoader();
+        ByteArrayProvider provider = new ByteArrayProvider("neutral",
+            fullFlashFixture("default-factory.bin"));
+        LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
+        MessageLog log = new MessageLog();
+        ImporterSettings settings = new ImporterSettings(provider,
+            "esp32s3_ctf_dump_4MB.bin", null, "/", false, spec,
+            loader.getDefaultOptions(provider, spec, null, false, false),
+            new Object(), log, TaskMonitor.DUMMY);
+
+        try (LoadResults<? extends DomainObject> results = loader.load(settings)) {
+            assertEquals(2, results.size());
+        }
+        assertFalse(log.toString().contains("esp32s3_ctf_dump_4MB"));
+        assertTrue(log.toString().contains(EspApplicationImageLoader.ENRICHMENT_DISABLED_CODE));
+    }
+
+    @Test
     void rejectsFullFlashWithInvalidPartitionMd5() throws Exception {
         EspApplicationImageLoader loader = new EspApplicationImageLoader();
 

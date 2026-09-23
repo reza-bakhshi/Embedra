@@ -175,7 +175,9 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
                     }
                     settings.log().appendMsg(getName(), "Mapped "
                         + result.importReport().segments().size() + " validated segments for "
-                        + childName + " from flash offset 0x"
+                        + "ESP32-S3 "
+                        + executable.role().name().toLowerCase(Locale.ROOT)
+                        + " image from flash offset 0x"
                         + Long.toHexString(executable.flashRange().offset()));
                     applySelectedEnrichment(program, childSettings);
                     loadedPrograms.add(new Loaded<>(program, childSettings));

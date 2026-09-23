@@ -263,9 +263,9 @@
     },
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
-      "sha256": "08dc73d461e2510a87001d043f3c415455d23795f33e44f2005104c2bfcf0c4f",
-      "sizeBytes": 882151,
-      "status": "PRE_T027_REMEDIATION_REPRODUCIBLE_ARTIFACT"
+      "sha256": "0e28b05738b45d02086d7527a93d78b3f5f881628705f1658d08bf3dd18d8e82",
+      "sizeBytes": 882187,
+      "status": "PRE_T027_LOG_REVIEW_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [

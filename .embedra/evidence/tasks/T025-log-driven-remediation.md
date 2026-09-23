@@ -92,3 +92,30 @@ SoC or exact silicon revision.
 Full ESP32-S3 ISA coverage, exact silicon/revision selection, other PNG color
 forms, general media scanning, filesystem extraction, arbitrary stripped
 function identification, and later shared analysis tasks remain unclaimed.
+
+## Post-commit log review (2026-09-24)
+
+The later GUI auto-analysis log selected `Xtensa:LE:32:esp32s3` and showed no
+SALT/SALTU constructor errors in the supplied interval. The local application
+log recorded `ESP32S3_ENRICHMENT_DISABLED` for both application and bootloader,
+so the absent Embedra crypto analyzer entry is expected for that import. The
+PNG warning remains correct. Ghidra reported no applicable FID library for
+the new variant, matching the documented arbitrary-function naming limit.
+
+Ghidra's `ClearFlowAndRepairCmd` logged three function-body repairs. Its pinned
+12.1.3 source emits this warning when a recalculated function body differs
+from the old body; the supplied log contains no `function body repair failed`
+message. The warnings alone do not establish an invalid function boundary.
+
+The same local application log exposed the user-supplied dump basename in
+Embedra's mapped-segment messages. A failing synthetic full-flash integration
+test reproduced this. The loader now logs a fixed ESP32-S3 image role and flash
+offset, while the test asserts the basename is absent from Embedra's import
+message log. Historical host logs are not modified.
+
+The follow-up clean JDK 21 verification passed two uncached builds: 142 unit,
+29 real-Ghidra, and 4 Python generator tests, with zero failures or local skips.
+The new ZIP is 882,187 bytes with reproducible SHA-256
+`0e28b05738b45d02086d7527a93d78b3f5f881628705f1658d08bf3dd18d8e82`.
+Its exact 45-entry inventory contains the language files and no restricted
+dump, restricted filename, or absolute host path.

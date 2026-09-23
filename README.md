@@ -36,8 +36,9 @@ why revision-dependent register/ROM names and Embedra crypto analysis are
 unavailable. To use those packs, confirm applicability and select the option
 explicitly during import.
 
-Ghidra may report `No FID Libraries apply for language Xtensa:LE:32:default`
-for older generic-language imports. SVD packs name registers and ROM packs name
+Ghidra may report `No FID Libraries apply for language Xtensa:LE:32:esp32s3`
+for new Embedra imports (or `Xtensa:LE:32:default` for older imports).
+SVD packs name registers and ROM packs name
 verified ROM APIs; neither names arbitrary stripped ESP-IDF application
 functions. Embedra does not claim that an unavailable FID or versioned
 application-signature detector ran. For the unrelated Linux drag-and-drop

@@ -61,9 +61,14 @@ filesystem work has begun.
 - Pre-T027 remediation added the ESP32-S3 language, SALT/SALTU assembler
   fixture, decompiler and real-dump tests, explicit enrichment status, PNG
   candidate classifier, ADR 0020, and gate addendum.
-- Clean uncached verification passed 142 unit and 28 real-Ghidra tests plus
+- Clean uncached verification passed 142 unit and 29 real-Ghidra tests plus
   4 Python generator tests; reproducible ZIP SHA-256 is
-  `08dc73d461e2510a87001d043f3c415455d23795f33e44f2005104c2bfcf0c4f`.
+  `0e28b05738b45d02086d7527a93d78b3f5f881628705f1658d08bf3dd18d8e82`.
+- Post-commit GUI log review confirmed enrichment was disabled for both
+  programs, the PNG and FID messages were expected, and Ghidra repaired three
+  function bodies without a reported repair failure. The mapped-segment log
+  now omits the user-supplied input basename; a red-to-green integration test
+  covers that privacy fix.
 - T001-T026 implementation and gate evidence are committed. Restricted
   `esp32s3_ctf_dump_4MB.bin` remains ignored and untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
