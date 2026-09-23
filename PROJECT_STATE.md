@@ -6,7 +6,7 @@
 - Current task: **T025 — IN PROGRESS**.
 - Last completed task: **T024**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved on 2026-09-23.
-- Version control: T014-T022 are committed on branch `main` at `ca1a55f194c41dbc16614b840a681884ac94cda4`, with continuity commit `4a61a48`; completed T023-T024 and the T025 start checkpoint are uncommitted.
+- Version control: T023-T024 are committed on branch `main` at `a3faf81`; T025 has no uncommitted implementation yet.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -35,7 +35,7 @@ T001 through T024 are complete. T024 adds a bounded ESP32-S3 security summary fo
 - Added T022 content schemas, pinned deterministic generator, ROM/peripheral packs, integrity-first loaders/models, transactional Ghidra applicator/removal receipts, real-Ghidra tests, ADR, notices, and documentation.
 - Added T023 immutable enrichment facts/results, metadata/log/FreeRTOS/signature analyzer, strict evidence distinctions, limits/cancellation tests, ADR, and support documentation.
 - Added T024 immutable security evidence/results, ESP32-S3 RSA V2 structure scanner, image-hash and partition/NVS indicators, unavailable-eFuse safeguards, tests, ADR, and documentation.
-- T001-T022 implementation is committed; completed T023 is uncommitted and the restricted local dump remains ignored and untracked.
+- T001-T024 implementation is committed; the restricted local dump remains ignored and untracked.
 
 No complete device catalog, exact variant, board, or hardware support claim was added.
 
