@@ -1,0 +1,9 @@
+# SALT and SALTU: Xtensa ISA Summary, sections 8.3.288 and 8.3.289.
+# The RRR opcode fields are independently confirmed by the ESP32-S3 assembler.
+:salt ar, as, at is op2 = 0b0111 & op1 = 0b0010 & ar & as & at & op0 = 0 {
+    ar = zext(as s< at);
+}
+
+:saltu ar, as, at is op2 = 0b0110 & op1 = 0b0010 & ar & as & at & op0 = 0 {
+    ar = zext(as < at);
+}

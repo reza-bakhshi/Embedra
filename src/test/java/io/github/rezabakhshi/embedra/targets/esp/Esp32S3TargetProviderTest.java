@@ -57,7 +57,7 @@ class Esp32S3TargetProviderTest {
     void selectsTheVerifiedGhidraXtensaLittleEndianLanguageAndCompiler() {
         LanguageSelection language = provider.language();
 
-        assertEquals("Xtensa:LE:32:default", language.languageId());
+        assertEquals("Xtensa:LE:32:esp32s3", language.languageId());
         assertEquals("default", language.compilerSpecId());
         assertEquals("Xtensa", language.instructionSet());
         assertEquals(32, language.addressSizeBits());

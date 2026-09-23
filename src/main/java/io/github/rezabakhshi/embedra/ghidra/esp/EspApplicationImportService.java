@@ -33,7 +33,7 @@ public final class EspApplicationImportService {
     private static final String PROVIDER_VERSION = "esptool-v5.4.0+esp-idf-v6.0";
 
     private static final String PROVIDER_IDENTITY =
-        "esp32s3|chip-id-9|Xtensa:LE:32:default|default|" + PROVIDER_VERSION;
+        "esp32s3|chip-id-9|Xtensa:LE:32:esp32s3|default|" + PROVIDER_VERSION;
 
     private static final Evidence STRUCTURE_EVIDENCE = new Evidence(
         EvidenceKind.VERIFIED_CHECKSUM, "validated ESP application image",

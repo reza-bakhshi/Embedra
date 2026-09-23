@@ -247,23 +247,25 @@
     "task": ".embedra/evidence/tasks/T026.md",
     "remediation": ".embedra/evidence/tasks/T025-remediation.md",
     "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
-    "commands": ".embedra/evidence/commands.jsonl"
+    "commands": ".embedra/evidence/commands.jsonl",
+    "logDrivenRemediation": ".embedra/evidence/tasks/T025-log-driven-remediation.md",
+    "gateAddendum": ".embedra/evidence/gates/esp32s3-full-flash-r2-language-addendum.md"
   },
-  "knownFailures": [
-    {
-      "code": "ESP32S3_GHIDRA_XTENSA_SALT_UNSUPPORTED",
-      "status": "REMEDIATION_REQUIRED_BEFORE_T027",
-      "evidence": "The restricted real dump maps the repeated decompiler failures to valid ESP32-S3 executable bytes that Espressif objdump decodes as SALT/SALTU while Ghidra 12.1.3 Xtensa:LE:32:default has no matching constructors."
-    }
-  ],
+  "knownFailures": [],
   "nextTask": "T027",
-  "nextAction": "Before beginning T027, complete and commit the maintainer-requested ESP32-S3 log-driven remediation: evidence-tested SALT/SALTU instruction coverage, explicit disabled-enrichment diagnostics without unsafe default enablement, restricted-real-dump regression coverage, and conservative invalid-media classification. Preserve later-task boundaries for filesystem extraction and versioned ESP-IDF signatures. Then begin T027; do not start T028.",
+  "nextAction": "Begin T027 in the next session; do not start T028 until T027 is complete.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
       "sha256": "5e764521fb3fefb7fdda20256fdb7af4db89a799647b05f22c4f441ac6c51dbc",
       "sizeBytes": 821611,
       "status": "T026_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
+      "sha256": "08dc73d461e2510a87001d043f3c415455d23795f33e44f2005104c2bfcf0c4f",
+      "sizeBytes": 882151,
+      "status": "PRE_T027_REMEDIATION_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -346,6 +348,10 @@
     {
       "code": "ESP32S3_GATE_REVIEW_PACKAGED_LOCAL_FIRMWARE",
       "resolution": "The exact-content oracle caught untracked flash_dump.bin before release. It is now absent; ignore and explicit package-exclusion safeguards remain. The repeated package and restricted-path scan pass."
+    },
+    {
+      "code": "ESP32S3_GHIDRA_XTENSA_SALT_UNSUPPORTED",
+      "resolution": "ESP32-S3 extension language decodes and decompiles SALT/SALTU in Ghidra 12.1.3; fixture and digest-gated real dump tests pass. Comprehensive ISA coverage remains experimental."
     }
   ],
   "mostRecentCommands": [
@@ -371,7 +377,7 @@
     "checkstyle": "14.1.0",
     "dependencyLock": "gradle.lockfile",
     "reproducibilityScript": "scripts/verify-build-quality.sh",
-    "coreBranchThreshold": 0.90,
+    "coreBranchThreshold": 0.9,
     "coreThresholdMeasured": true,
     "coreBranchCoverage": 0.9955,
     "minimumCoreClassBranchCoverage": 0.9286,

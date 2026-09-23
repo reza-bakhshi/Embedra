@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language_definitions>
+  <language processor="Xtensa" endian="little" size="32"
+            variant="esp32s3" version="1.0"
+            slafile="embedra_esp32s3.sla"
+            processorspec="xtensa.pspec"
+            id="Xtensa:LE:32:esp32s3">
+    <description>Embedra ESP32-S3 Xtensa LX7 (Ghidra 12.1.3 base)</description>
+    <compiler name="default" spec="xtensa.cspec" id="default"/>
+  </language>
+</language_definitions>

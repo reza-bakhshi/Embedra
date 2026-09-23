@@ -11,6 +11,11 @@ task_list=$(mktemp)
 work_dir=$(mktemp -d)
 trap 'rm -f "$task_list"; rm -rf "$work_dir"' EXIT HUP INT TERM
 
+"$GHIDRA_INSTALL_DIR/support/sleigh" \
+    data/languages/embedra_esp32s3.slaspec \
+    "$work_dir/embedra_esp32s3.sla" >"$work_dir/sleigh.log" 2>&1
+cmp data/languages/embedra_esp32s3.sla "$work_dir/embedra_esp32s3.sla"
+
 ./gradlew -PGHIDRA_INSTALL_DIR="$GHIDRA_INSTALL_DIR" tasks --all >"$task_list"
 
 for required_task in \
@@ -31,10 +36,12 @@ done
 
 run_build() {
     ./gradlew \
+        --no-build-cache --rerun-tasks \
         -PGHIDRA_INSTALL_DIR="$GHIDRA_INSTALL_DIR" \
         clean check jacocoTestReport jacocoTestCoverageVerification buildExtension
 }
 
+rm -f dist/*_Embedra.zip
 run_build
 artifact=$(find dist -maxdepth 1 -type f -name '*_Embedra.zip' -print)
 if [ -z "$artifact" ] || [ "$(printf '%s\n' "$artifact" | wc -l)" -ne 1 ]; then
@@ -69,6 +76,19 @@ Embedra/catalogs/espressif/
 Embedra/catalogs/espressif/2026-09-23/
 Embedra/catalogs/espressif/2026-09-23/catalog.json
 Embedra/catalogs/espressif/2026-09-23/catalog.sha256
+Embedra/data/
+Embedra/data/languages/
+Embedra/data/languages/cust.sinc
+Embedra/data/languages/embedra_esp32s3.ldefs
+Embedra/data/languages/embedra_esp32s3.sinc
+Embedra/data/languages/embedra_esp32s3.sla
+Embedra/data/languages/embedra_esp32s3.slaspec
+Embedra/data/languages/flix.sinc
+Embedra/data/languages/xtensa.cspec
+Embedra/data/languages/xtensa.pspec
+Embedra/data/languages/xtensaArch.sinc
+Embedra/data/languages/xtensaInstructions.sinc
+Embedra/data/languages/xtensaMain.sinc
 Embedra/docs/
 Embedra/docs/architecture.md
 Embedra/docs/fixture-policy.md

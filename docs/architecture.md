@@ -42,7 +42,7 @@ The generic parser reports the image's encoded chip ID without selecting a targe
 
 The first concrete target provider resolves ESP32-S3 only when image chip ID `9` matches the bundled, provenance-bearing esptool definition. The registry is a generated-data boundary with an intentionally narrow T013 snapshot; the complete Espressif catalog generator remains T026 and future devices are not added as provider branches.
 
-The provider selects Ghidra `Xtensa:LE:32:default` with compiler specification `default`, including the language's one-byte instruction alignment. Address classification uses the half-open ESP-IDF v6.0 DROM, IROM, IRAM, DRAM, and RTC data definitions and refuses ranges spanning a boundary or using another address space. RTC data is read/write but non-executable in the Xtensa program; ULP firmware requires its own architecture-specific program. Entry decisions additionally require containment in an image segment classified executable. The provider returns a pure plan decision and never mutates a Ghidra program.
+The provider selects Embedra's Ghidra `Xtensa:LE:32:esp32s3` extension language with compiler specification `default`, including one-byte instruction alignment and tested SALT/SALTU semantics. Address classification uses the half-open ESP-IDF v6.0 DROM, IROM, IRAM, DRAM, and RTC data definitions and refuses ranges spanning a boundary or using another address space. RTC data is read/write but non-executable in the Xtensa program; ULP firmware requires its own architecture-specific program. Entry decisions additionally require containment in an image segment classified executable. The provider returns a pure plan decision and never mutates a Ghidra program.
 
 ## ESP application loader and mapping transaction
 

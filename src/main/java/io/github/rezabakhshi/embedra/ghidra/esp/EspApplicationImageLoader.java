@@ -25,6 +25,7 @@ import io.github.rezabakhshi.embedra.formats.esp.EspFullFlashWorkspacePlanner;
 import io.github.rezabakhshi.embedra.targets.LanguageSelection;
 import io.github.rezabakhshi.embedra.targets.esp.Esp32S3TargetProvider;
 import io.github.rezabakhshi.embedra.targets.esp.EspressifChipIdRegistry;
+import io.github.rezabakhshi.embedra.ghidra.transaction.GhidraProgramTransaction;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,6 +38,12 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
     public static final String APPLY_ESP32S3_PACKS_OPTION =
         "Apply verified ESP32-S3 ROM, peripheral, and SVD packs"
             + " (explicit revision assertion)";
+
+    public static final String ENRICHMENT_DISABLED_CODE = "ESP32S3_ENRICHMENT_DISABLED";
+
+    public static final String ENRICHMENT_APPLIED_CODE = "ESP32S3_ENRICHMENT_APPLIED";
+
+    public static final String ENRICHMENT_OPTIONS = "Embedra ESP32-S3 Import";
 
     private static final int ESP32_S3_CHIP_ID = 9;
 
@@ -225,6 +232,12 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
             throws IOException, CancelledException {
         Option option = findOption(settings.options());
         if (option == null || !Boolean.TRUE.equals(option.getValue())) {
+            recordEnrichmentSelection(program, false);
+            settings.log().appendMsg(getName(), ENRICHMENT_DISABLED_CODE
+                + ": Raw mapping succeeded. Revision-dependent ROM/peripheral/SVD "
+                + "enrichment was not applied; register names and Embedra crypto "
+                + "analysis are unavailable. Confirm applicability, then explicitly "
+                + "select the ESP32-S3 enrichment import option.");
             return;
         }
         try {
@@ -234,7 +247,9 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
                 packs.svd(), settings.monitor());
             EspPackApplicationReport symbols = new Esp32S3PackApplicator().apply(program,
                 packs.rom(), packs.peripherals(), settings.monitor());
-            settings.log().appendMsg(getName(), "Applied explicit ESP32-S3 enrichment: "
+            recordEnrichmentSelection(program, true);
+            settings.log().appendMsg(getName(), ENRICHMENT_APPLIED_CODE
+                + ": Applied explicit ESP32-S3 enrichment: "
                 + symbols.createdSymbols().size() + " ROM/header symbols, "
                 + svd.createdDataAddresses().size() + " SVD registers, "
                 + svd.createdComments() + " SVD descriptions; provenance stored in program");
@@ -242,6 +257,17 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
         catch (DiagnosticException | EspMappingException exception) {
             throw new IOException("Explicit ESP32-S3 pack application failed: "
                 + exception.getMessage(), exception);
+        }
+    }
+
+    private static void recordEnrichmentSelection(Program program, boolean selected) {
+        try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
+                program, "Record ESP32-S3 enrichment selection")) {
+            var options = program.getOptions(ENRICHMENT_OPTIONS);
+            options.setBoolean("Selected", selected);
+            options.setString("Diagnostic Code", selected
+                ? ENRICHMENT_APPLIED_CODE : ENRICHMENT_DISABLED_CODE);
+            transaction.commit();
         }
     }
 

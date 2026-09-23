@@ -28,6 +28,21 @@ descriptions without replacing user-primary names, comments, or existing types.
 Pack identities, revisions, reconciliation counts, and digests are stored in
 the resulting program.
 
+Validated ESP32-S3 images select Embedra's `Xtensa:LE:32:esp32s3` language,
+which adds tested SALT/SALTU decoding and p-code to Ghidra 12.1.3's Xtensa
+base. The enrichment option remains off by default. After a default import,
+`ESP32S3_ENRICHMENT_DISABLED` in the import log and program options explains
+why revision-dependent register/ROM names and Embedra crypto analysis are
+unavailable. To use those packs, confirm applicability and select the option
+explicitly during import.
+
+Ghidra may report `No FID Libraries apply for language Xtensa:LE:32:default`
+for older generic-language imports. SVD packs name registers and ROM packs name
+verified ROM APIs; neither names arbitrary stripped ESP-IDF application
+functions. Embedra does not claim that an unavailable FID or versioned
+application-signature detector ran. For the unrelated Linux drag-and-drop
+`URI is not absolute` issue, use **File → Import File**.
+
 When the enrichment option is selected, the `Embedra ESP32-S3 Crypto Evidence`
 analyzer runs after reference analysis. It creates `Embedra Crypto` bookmarks
 only for resolved ROM/API callers or supported hardware register sequences and

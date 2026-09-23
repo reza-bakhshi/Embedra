@@ -39,8 +39,8 @@ public final class Esp32S3TargetProvider {
 
     private static final Evidence LANGUAGE_EVIDENCE = new Evidence(
         EvidenceKind.DOCUMENTED_FIELD,
-        "Ghidra 12.1.3 Ghidra/Processors/Xtensa/data/languages/xtensa.ldefs",
-        "Xtensa:LE:32:default language with default compiler specification");
+        "Embedra data/languages/embedra_esp32s3.ldefs",
+        "Xtensa:LE:32:esp32s3 language with default compiler specification");
 
     private final EspressifChipDefinition chipDefinition;
 
@@ -64,7 +64,7 @@ public final class Esp32S3TargetProvider {
     }
 
     public LanguageSelection language() {
-        return new LanguageSelection("Xtensa:LE:32:default", "default", "Xtensa", 32, 1,
+        return new LanguageSelection("Xtensa:LE:32:esp32s3", "default", "Xtensa", 32, 1,
             "little", List.of(LANGUAGE_EVIDENCE));
     }
 

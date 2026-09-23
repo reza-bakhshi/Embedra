@@ -86,6 +86,7 @@ if (!configuredGhidraDir.isBlank()) {
         description = 'Runs tests compiled against the pinned Ghidra API.'
         testClassesDirs = sourceSets.integrationTest.output.classesDirs
         classpath = sourceSets.integrationTest.runtimeClasspath
+        systemProperty 'ghidra.external.modules', project.projectDir.absolutePath
         shouldRunAfter tasks.named('test')
     }
     tasks.named('check') {

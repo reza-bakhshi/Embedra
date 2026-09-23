@@ -32,6 +32,15 @@ official Espressif SVD project.
 
 The complete resolved build-only dependency graph is pinned in `gradle.lockfile`. Full transitive dependency verification metadata and release license review remain assigned to T076 and T078; no completion claim for those later tasks is implied here.
 
+The ESP32-S3 language variant includes byte-identical Xtensa SLEIGH, processor,
+and compiler definitions from Ghidra 12.1.3 PUBLIC (`Ghidra/Processors/Xtensa/
+data/languages`). Ghidra publishes these files under Apache-2.0; the Embedra
+SALT/SALTU additions are original Apache-2.0 work. The Cadence Xtensa ISA
+Summary is used as an instruction-semantics reference and is not redistributed.
+Espressif GNU assembler/objdump 2.45 (`esp-15.2.0_20251204`) is an external
+GPL oracle for the original assembly fixture; no GPL source is copied or
+bundled. See `docs/adr/0020-esp32s3-xtensa-language-and-log-remediation.md`.
+
 T026 bundles normalized factual product metadata from official Espressif
 catalog pages and topology/chip-ID facts derived from ESP-IDF. Vendor HTML,
 images, descriptive prose, and purchase links are not redistributed.
