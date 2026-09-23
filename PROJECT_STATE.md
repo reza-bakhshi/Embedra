@@ -6,7 +6,7 @@
 - Current task: **T022 — COMPLETE; T023 is next**.
 - Last completed task: **T022**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved on 2026-09-23.
-- Version control: T009-T013 are committed on branch `main` with handoff commit `3468842`; T014-T022 are uncommitted.
+- Version control: T014-T022 are committed on branch `main` at `ca1a55f194c41dbc16614b840a681884ac94cda4`, followed only by this continuity update. Working tree is clean.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -33,7 +33,7 @@ T001 through T022 are complete. T022 adds two provenance/integrity-checked offli
 - Added T020 immutable workspace/extraction models, exact embedded-image boundary validation, separate-program loader behavior, persistent flash provenance, tests, ADR, and user documentation.
 - Added T021 handler/inspection/OTA models, explicit registry, erased-slot planning, RTC-data mapping, restricted-dump tests, ADR, and documentation.
 - Added T022 content schemas, pinned deterministic generator, ROM/peripheral packs, integrity-first loaders/models, transactional Ghidra applicator/removal receipts, real-Ghidra tests, ADR, notices, and documentation.
-- T014-T022 changes are uncommitted; T009-T013 remain committed.
+- T001-T022 implementation is committed; the restricted local dump remains ignored and untracked.
 
 No complete device catalog, exact variant, board, or hardware support claim was added.
 

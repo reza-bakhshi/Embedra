@@ -52,13 +52,11 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "346884249170339dd81cc35863e80856c552b268"
+    "commit": "ca1a55f194c41dbc16614b840a681884ac94cda4"
   },
   "workingTree": {
-    "state": "DIRTY",
-    "uncommittedWork": [
-      "T014-T022 ESP32-S3 application/full-flash parsing, partition handling, restricted-dump validation, offline ROM/peripheral packs, Ghidra enrichment, tests, documentation, and evidence"
-    ]
+    "state": "CLEAN",
+    "uncommittedWork": []
   },
   "toolchains": {
     "ghidra": {
