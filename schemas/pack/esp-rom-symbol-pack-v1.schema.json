@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:embedra:schema:esp-rom-symbol-pack:1",
+  "title": "Embedra ESP ROM Symbol Pack v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaId", "deviceId", "sourceRevision", "sourceFiles", "symbols"],
+  "properties": {
+    "schemaId": {"const": "urn:embedra:schema:esp-rom-symbol-pack:1"},
+    "deviceId": {"type": "string", "minLength": 1},
+    "sourceRevision": {"type": "string", "minLength": 1},
+    "sourceFiles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "symbols": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/symbol"}
+    }
+  },
+  "$defs": {
+    "symbol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "address", "kind", "sourceFiles"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "address": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "kind": {"enum": ["FUNCTION", "DATA"]},
+        "sourceFiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

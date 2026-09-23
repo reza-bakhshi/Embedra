@@ -46,3 +46,43 @@ T009 derives eight single-purpose malformed inputs from the pinned T008 images. 
 Run `sh scripts/generate-esp32s3-malformed-fixtures.sh` after the T008 baselines are present. The generator verifies their exact SHA-256 values before mutation and applies a ten-second limit to every esptool oracle invocation.
 
 esptool is an independent format oracle, not the complete Embedra acceptance policy. Version 5.4.0 rejects the truncation and huge-length cases, warns about chip mismatch, reports invalid checksum/digest without a non-zero exit, and does not reject overlap, unaligned entry, or trailing data. The snapshots preserve those behaviors while every malformed expectation still requires Embedra to reject safely. Parser enforcement remains T010/T011.
+
+## ESP32-S3 full-flash and partition fixtures
+
+T018 adds four deterministic 512 KiB synthetic flash images assembled from the
+T008 redistributable application image and repository-authored partition CSVs:
+
+| Fixture | Partition-table evidence |
+|---|---|
+| `default-factory` | Valid MD5 table at default flash offset `0x8000`, factory app, NVS, PHY, and SPIFFS regions |
+| `custom-offset-misleading-magic` | Valid table at `0x10000`; invalid partition magic at `0x6000`/`0x8000` and application magic at `0x7000` |
+| `ota-custom-encrypted` | OTA data, OTA0/OTA1 applications, and encrypted custom type `0x40`/subtype `0x7f` |
+| `invalid-partition-md5` | Exact default image with one partition-table MD5 byte changed |
+
+Generation requires the exact ESP-IDF v6.0 checkout at revision
+`662a3be354759d9487bf4b1a629fadb766cb1800`. Run:
+
+```bash
+IDF_PATH=<esp-idf-v6.0> sh scripts/generate-esp32s3-full-flash-fixtures.sh
+```
+
+The script runs the official Apache-2.0 `gen_esp32part.py` 1.5 tool, assembles
+each flash twice in isolated temporary directories, compares every binary,
+decodes valid tables back to retained CSV oracles, requires the invalid-MD5
+table to be rejected, and writes adjacent manifests plus machine-readable
+expectations. Synthetic data-region markers are not claimed to be valid NVS,
+OTA-state, PHY, or filesystem structures. T021 handler unit tests construct
+minimal bounded structures for those contracts rather than reclassifying the
+T018 markers as vendor fixtures.
+
+## Restricted local ESP32-S3 dump
+
+T021 may additionally exercise a user-supplied 4 MiB flash capture that is
+excluded by exact path in `.gitignore`. The binary is never copied, packaged,
+uploaded, or committed. Tests run only when the local file exists and require
+SHA-256 `837ee155de84403f84330179d52edfd2dba239cc11af5e55c2d0c28bc38a71de`
+before reading it as evidence. Retained metadata records a valid MD5-protected
+table, one populated and one erased OTA slot, OTA selection of `app0`, bounded
+NVS page-state inspection, an erased SPIFFS partition, and a chip-ID-9 coredump.
+The capture's hardware provenance and exact silicon/package variant are unknown,
+so this evidence does not upgrade device support or permit redistribution.

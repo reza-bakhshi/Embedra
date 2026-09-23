@@ -6,5 +6,6 @@ public enum MemoryRegionKind {
     IROM,
     DRAM,
     IRAM,
+    RTC_DATA,
     UNKNOWN
 }

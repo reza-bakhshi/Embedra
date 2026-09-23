@@ -68,7 +68,16 @@ Embedra/docs/
 Embedra/docs/architecture.md
 Embedra/docs/fixture-policy.md
 Embedra/docs/pack-format.md
-Embedra/docs/support-matrix.md'
+Embedra/docs/support-matrix.md
+Embedra/packs/
+Embedra/packs/espressif.esp32s3.peripherals/
+Embedra/packs/espressif.esp32s3.peripherals/1.0.0/
+Embedra/packs/espressif.esp32s3.peripherals/1.0.0/pack.json
+Embedra/packs/espressif.esp32s3.peripherals/1.0.0/peripherals.json
+Embedra/packs/espressif.esp32s3.rom/
+Embedra/packs/espressif.esp32s3.rom/1.0.0/
+Embedra/packs/espressif.esp32s3.rom/1.0.0/pack.json
+Embedra/packs/espressif.esp32s3.rom/1.0.0/rom-symbols.json'
 if find src/main/java -type f -name '*.java' -print -quit | grep -q .; then
     expected_entries="${expected_entries}
 Embedra/lib/Embedra-src.zip"

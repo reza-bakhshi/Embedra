@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "c151f6d453af195ba6935f4479ef02125741b121f0eda56e13f5332b2ad91a19"
+    "sha256": "07da04bc0717a3b92fa48b14bbb3e590df4f220beca2ad06a1eda30038f44a2d"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T013",
+    "id": "T022",
     "status": "COMPLETE",
     "reasonCode": null
   },
@@ -23,7 +23,16 @@
     "T010",
     "T011",
     "T012",
-    "T013"
+    "T013",
+    "T014",
+    "T015",
+    "T016",
+    "T017",
+    "T018",
+    "T019",
+    "T020",
+    "T021",
+    "T022"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -32,16 +41,24 @@
       "approval": "APPROVED",
       "approvedDate": "2026-09-22",
       "evidence": ".embedra/evidence/gates/foundation.md"
+    },
+    "esp32s3Application": {
+      "result": "PASS",
+      "approval": "APPROVED",
+      "approvedDate": "2026-09-23",
+      "evidence": ".embedra/evidence/gates/esp32s3-application.md"
     }
   },
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "c36bc94be5d5634659a24e9bd194d207cfb74c78"
+    "commit": "346884249170339dd81cc35863e80856c552b268"
   },
   "workingTree": {
-    "state": "CLEAN",
-    "uncommittedWork": []
+    "state": "DIRTY",
+    "uncommittedWork": [
+      "T014-T022 ESP32-S3 application/full-flash parsing, partition handling, restricted-dump validation, offline ROM/peripheral packs, Ghidra enrichment, tests, documentation, and evidence"
+    ]
   },
   "toolchains": {
     "ghidra": {
@@ -152,22 +169,66 @@
       "sizeBytes": 404,
       "redistributionStatus": "REDISTRIBUTABLE",
       "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-trailing-data.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.full-flash.default-factory",
+      "path": "src/test/resources/fixtures/esp32s3/full-flash/default-factory.bin",
+      "sha256": "45cac3c72a7c4215cceef05e7b750def8372304586d9d2e022969c48e4963650",
+      "sizeBytes": 524288,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/full-flash/default-factory.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.full-flash.custom-offset-misleading-magic",
+      "path": "src/test/resources/fixtures/esp32s3/full-flash/custom-offset-misleading-magic.bin",
+      "sha256": "7abf06a8e02a1eef3ff71bda02241acdb8fcde0e82e5d4a63f5f3b47d6b4a2b5",
+      "sizeBytes": 524288,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/full-flash/custom-offset-misleading-magic.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.full-flash.ota-custom-encrypted",
+      "path": "src/test/resources/fixtures/esp32s3/full-flash/ota-custom-encrypted.bin",
+      "sha256": "905ef03489998e54539c68733e1b2fb1b89ebdd44319169e2f0c024a44448546",
+      "sizeBytes": 524288,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/full-flash/ota-custom-encrypted.expectations.json"
+    },
+    {
+      "fixtureId": "esp32s3.full-flash.invalid-partition-md5",
+      "path": "src/test/resources/fixtures/esp32s3/full-flash/invalid-partition-md5.bin",
+      "sha256": "7841f56a0ad2af7fc98d987ec3300bcd7c8054dcd02d108397aa57e0f5321ac0",
+      "sizeBytes": 524288,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32s3/full-flash/invalid-partition-md5.expectations.json"
+    }
+  ],
+  "restrictedFixtureEvidence": [
+    {
+      "fixtureId": "esp32s3.user-supplied.4mib-full-flash",
+      "path": "<repository-local-restricted>/esp32s3_ctf_dump_4MB.bin",
+      "sha256": "837ee155de84403f84330179d52edfd2dba239cc11af5e55c2d0c28bc38a71de",
+      "sizeBytes": 4194304,
+      "origin": "USER_SUPPLIED",
+      "provenance": "UNKNOWN",
+      "redistributionStatus": "RESTRICTED_LOCAL",
+      "oracle": ".embedra/evidence/tasks/T021.md"
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T013.md",
-    "gate": ".embedra/evidence/gates/foundation.md",
+    "task": ".embedra/evidence/tasks/T022.md",
+    "gate": ".embedra/evidence/gates/esp32s3-application.md",
     "commands": ".embedra/evidence/commands.jsonl"
   },
   "knownFailures": [],
-  "nextTask": "T014",
-  "nextAction": "Begin T014 by reporting prerequisites and writing failing Ghidra segment-mapping and rollback tests against the T011 parser and T013 provider decisions; do not implement T015.",
+  "nextTask": "T023",
+  "nextAction": "Write failing bounded ESP-IDF metadata, logging-call, FreeRTOS, and versioned library-signature enrichment tests using T022 pack provenance and conflict-preserving application boundaries.",
   "artifacts": [
     {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260922_Embedra.zip",
-      "sha256": "1f48bbb8fed564bb350e7644b3145e154db09730d4ddfb21b3272a69eb6ee983",
-      "sizeBytes": 194328,
-      "status": "T013_REPRODUCIBLE_BUILD_ARTIFACT"
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
+      "sha256": "3d261bfaa9477247c94682229a225c61855aa2a1da15a7530f9e92dc082ad36c",
+      "sizeBytes": 408330,
+      "status": "T022_REPRODUCIBLE_BUILD_ARTIFACT_WITH_VERIFIED_PACKS"
     }
   ],
   "resolvedFailures": [
@@ -250,19 +311,19 @@
   ],
   "mostRecentCommands": [
     {
-      "command": "JAVA_HOME=<jdk21> ./gradlew --offline --no-daemon pureTest",
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> targeted T022 pure and real-Ghidra pack tests",
       "exitStatus": 0,
-      "result": "PASS: 86 unit tests, Checkstyle, formatting, scaffold, JaCoCo report, and coverage verification passed."
+      "result": "PASS: provenance/integrity parsing, 2,197 ROM symbols, 61 peripheral windows/2,173 register addresses, user preservation, idempotence, removal, and cancellation passed."
     },
     {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew ghidraIntegrationTest --tests <ESP32-S3 language integration>",
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew --offline --no-daemon --rerun-tasks clean check jacocoTestReport jacocoTestCoverageVerification buildExtension",
       "exitStatus": 0,
-      "result": "PASS: real Ghidra service resolved Xtensa language, default compiler, little endianness, and alignment 1."
+      "result": "PASS: all 19 actions reran; 118 unit and 17 real-Ghidra integration tests passed."
     },
     {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> sh scripts/verify-build-quality.sh",
       "exitStatus": 0,
-      "result": "PASS: two builds byte-identical; 86 unit and 3 integration tests passed; 194328-byte ZIP SHA-256 1f48bbb8fed564bb350e7644b3145e154db09730d4ddfb21b3272a69eb6ee983."
+      "result": "PASS: two complete builds produced byte-identical 408330-byte ZIPs with SHA-256 3d261bfaa9477247c94682229a225c61855aa2a1da15a7530f9e92dc082ad36c; verified packs are present and restricted bytes are absent."
     }
   ],
   "buildQuality": {
@@ -316,6 +377,24 @@
     "networkRequired": false,
     "publisherAuthentication": false
   },
+  "esp32s3EnrichmentPacks": {
+    "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+    "license": "Apache-2.0",
+    "rom": {
+      "packId": "espressif.esp32s3.rom",
+      "version": "1.0.0",
+      "contentDigest": "1b3e5577500bf2f6ae117ebe9755ce1b09c353ea6869bdbdfc16c635685edbc4",
+      "symbolCount": 2197
+    },
+    "peripherals": {
+      "packId": "espressif.esp32s3.peripherals",
+      "version": "1.0.0",
+      "contentDigest": "311ef2d3a33fa7f1cd302e42fa00ad7f3af972f6b89d4046a9c35e290c9b25ee",
+      "peripheralCount": 61,
+      "registerAddressCount": 2173
+    },
+    "application": "TRANSACTIONAL_IDEMPOTENT_RECEIPT_REMOVABLE_USER_PRESERVING"
+  },
   "targetProviders": {
     "esp32s3": {
       "supportState": "EXPERIMENTAL",
@@ -325,7 +404,12 @@
       "instructionAlignmentBytes": 1,
       "memoryEvidence": "ESP-IDF v6.0 soc.h",
       "chipEvidence": "esptool v5.4.0 targets/esp32s3.py",
-      "mappedProgramVerified": false
+      "mappedProgramVerified": true,
+      "fullFlashWorkspaceVerified": true,
+      "fullFlashFixtureClass": "SYNTHETIC",
+      "partitionPayloadHandling": "EXPLICIT_CONSERVATIVE_HANDLERS",
+      "restrictedFullFlashDigestVerified": true,
+      "restrictedFullFlashRedistributable": false
     }
   },
   "foundationAutomation": {

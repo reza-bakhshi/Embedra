@@ -3,10 +3,10 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T013 — COMPLETE**.
-- Last completed task: **T013**.
-- Acceptance gates: Foundation `PASS`; maintainer approval received on 2026-09-22.
-- Version control: T009-T013 implementation is committed on branch `main` at `c36bc94be5d5634659a24e9bd194d207cfb74c78`, followed only by this continuity update. Working tree is clean.
+- Current task: **T022 — COMPLETE; T023 is next**.
+- Last completed task: **T022**.
+- Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved on 2026-09-23.
+- Version control: T009-T013 are committed on branch `main` with handoff commit `3468842`; T014-T022 are uncommitted.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -21,17 +21,22 @@
 
 ## Completed Work
 
-T001 through T013 are complete and the Foundation gate is `PASS` and approved. T012 retained the expected red provider compilation failure. T013 adds the pure ESP32-S3 target provider, provenance-bearing chip-ID 9 registry snapshot, exact Ghidra language/compiler selection, authoritative DROM/IROM/IRAM/DRAM classification, proposed permissions, and entry decisions requiring selected-language alignment plus containment in a mapped executable segment. The real Ghidra 12.1.3 language service resolves `Xtensa:LE:32:default`, compiler `default`, and instruction alignment 1. The clean regression passed 86 unit and 3 integration tests. Two builds produced the same 194,328-byte ZIP with SHA-256 `1f48bbb8fed564bb350e7644b3145e154db09730d4ddfb21b3272a69eb6ee983`. ESP32-S3 remains `EXPERIMENTAL`; no Ghidra segment mapping, exact silicon variant, board, or hardware claim is made.
+T001 through T022 are complete. T022 adds two provenance/integrity-checked offline ESP32-S3 enrichment packs generated deterministically from pinned ESP-IDF v6.0: 2,197 ROM symbols and 61 peripheral windows with 2,173 register addresses/aliases. The Ghidra applicator is transactional, idempotent, conflict preserving, and receipt-removable. Overall ESP32-S3 support remains `EXPERIMENTAL` because exact catalog variants and physical hardware verification are incomplete.
 
 ## Changed Files
 
-- Added T012 ESP32-S3 provider contract tests and retained their expected red compile result.
-- Added T013 pure target decision models, ESP32-S3 provider, maintained chip-ID resource, malformed registry tests, and real Ghidra language-resolution integration coverage.
-- Added ADR 0010 and an explicit `EXPERIMENTAL` support-matrix entry.
-- T009-T013 fixture, parser/provider, test, documentation, and evidence changes are committed.
+- Added T015 loader, transactional mapper, stable mapping failure codes, entry application, and immutable import report.
+- Added T016 optional app-description model/extractor and golden, absent, truncated, malformed, provenance, and immutability tests.
+- Added T017 shared import service, canonical mapping snapshots/reports, loader delegation, workflow-equivalence and malformed no-mutation tests, deterministic fuzz campaign, ADR, task evidence, and gate evidence.
+- Added T018 CSV sources, deterministic full-flash generator, four fixture/manifests, ESP-IDF oracles, fixture tests, and documentation.
+- Added T019 immutable flash/table/entry models, bounded discovery and validation, stable diagnostics, and malformed/limit/cancellation tests.
+- Added T020 immutable workspace/extraction models, exact embedded-image boundary validation, separate-program loader behavior, persistent flash provenance, tests, ADR, and user documentation.
+- Added T021 handler/inspection/OTA models, explicit registry, erased-slot planning, RTC-data mapping, restricted-dump tests, ADR, and documentation.
+- Added T022 content schemas, pinned deterministic generator, ROM/peripheral packs, integrity-first loaders/models, transactional Ghidra applicator/removal receipts, real-Ghidra tests, ADR, notices, and documentation.
+- T014-T022 changes are uncommitted; T009-T013 remain committed.
 
-No loader, mapped Ghidra program, complete device catalog, exact variant, board, or hardware support claim was added.
+No complete device catalog, exact variant, board, or hardware support claim was added.
 
 ## Exact Next Action
 
-Begin T014 by reporting prerequisites and writing failing Ghidra segment-mapping and rollback tests against the T011 parser and T013 provider decisions. Do not implement T015 during T014.
+Start T023 test-first with ESP-IDF metadata, logging-call, FreeRTOS, and library-signature enrichment contracts. Reuse the T022 pack/provenance and conflict-preserving application boundaries; do not infer an IDF version or signature match without bounded evidence.

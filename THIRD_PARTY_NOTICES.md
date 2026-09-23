@@ -16,4 +16,11 @@ T008 fixture generation also uses the following external tools and source refere
 | Espressif `xtensa-esp-elf` | `esp-15.2.0_20251204` | Compile/link the freestanding project-owned fixture source | GPL toolchain components with applicable runtime exceptions | External development tool; no runtime library is linked or copied |
 | esptool | 5.4.0 | Convert the ELF and independently report image expectations | GPL-2.0-or-later | External development/oracle tool; not copied or bundled |
 
+T022 bundles deterministic derived data from the following authoritative source.
+No ESP-IDF source code or headers are copied into the extension.
+
+| Input | Version/revision | Purpose | License | Disposition |
+|---|---|---|---|---|
+| ESP-IDF ESP32-S3 ROM linker scripts and SoC register headers | v6.0, `662a3be354759d9487bf4b1a629fadb766cb1800` | Generate revision/device-matched ROM symbol and peripheral/register-alias packs | Apache-2.0 | Derived names, addresses, source-relative provenance, manifests, and digests bundled under Apache-2.0 |
+
 The complete resolved build-only dependency graph is pinned in `gradle.lockfile`. Full transitive dependency verification metadata and release license review remain assigned to T076 and T078; no completion claim for those later tasks is implied here.

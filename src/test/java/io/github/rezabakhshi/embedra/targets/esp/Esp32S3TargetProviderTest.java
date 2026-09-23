@@ -76,6 +76,8 @@ class Esp32S3TargetProviderTest {
             MemoryRegionKind.IRAM, true, false, true);
         assertClassification(new AddressRange("default", 0x4200_0000L, 4),
             MemoryRegionKind.IROM, true, false, true);
+        assertClassification(new AddressRange("default", 0x5000_0200L, 4),
+            MemoryRegionKind.RTC_DATA, true, true, false);
 
         MemoryClassification crossing = provider.classify(
             new AddressRange("default", 0x3dff_fff0L, 0x20));
@@ -113,6 +115,12 @@ class Esp32S3TargetProviderTest {
             provider.classify(new AddressRange("default", 0x4400_0000L, 1)).kind());
         assertEquals(MemoryRegionKind.UNKNOWN,
             provider.classify(new AddressRange("default", 0x403d_ffffL, 2)).kind());
+        assertEquals(MemoryRegionKind.RTC_DATA,
+            provider.classify(new AddressRange("default", 0x5000_0000L, 1)).kind());
+        assertEquals(MemoryRegionKind.RTC_DATA,
+            provider.classify(new AddressRange("default", 0x5000_1fffL, 1)).kind());
+        assertEquals(MemoryRegionKind.UNKNOWN,
+            provider.classify(new AddressRange("default", 0x5000_1fffL, 2)).kind());
     }
 
     private void assertClassification(AddressRange range, MemoryRegionKind kind,

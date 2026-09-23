@@ -62,6 +62,7 @@ if (!configuredGhidraDir.isBlank()) {
         integrationTest {
             java.srcDir 'src/integrationTest/java'
             resources.srcDir 'src/integrationTest/resources'
+            resources.srcDir 'src/test/resources'
             compileClasspath += files(sourceSets.main.output, sourceSets.main.compileClasspath,
                 configurations.testRuntimeClasspath)
             runtimeClasspath += output + compileClasspath
@@ -144,6 +145,7 @@ if (!configuredGhidraDir.isBlank()) {
         exclude '.embedra/**'
         exclude 'docs/adr/**'
         exclude 'Embedra-SpecKit.md'
+        exclude 'esp32s3_ctf_dump_4MB.bin'
         exclude 'fixtures/**'
         exclude 'PROJECT_STATE.md'
         exclude 'config/**'

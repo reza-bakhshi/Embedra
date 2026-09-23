@@ -644,18 +644,18 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [x] T011 Implement the pure ESP image detector, parser, validator, and immutable model.
 - [x] T012 Write failing ESP32-S3 chip/language/memory/entry provider tests.
 - [x] T013 Implement the ESP32-S3 provider using maintained chip IDs and address evidence.
-- [ ] T014 Write failing Ghidra segment-mapping and rollback tests.
-- [ ] T015 Implement the ESP application-image loader, transactional mapper, entry application, and import report.
-- [ ] T016 Implement optional `esp_app_desc_t` extraction with bounded strings and non-fatal failure.
-- [ ] T017 Prove GUI/headless equivalence and run deterministic malformed-input fuzzing.
+- [x] T014 Write failing Ghidra segment-mapping and rollback tests.
+- [x] T015 Implement the ESP application-image loader, transactional mapper, entry application, and import report.
+- [x] T016 Implement optional `esp_app_desc_t` extraction with bounded strings and non-fatal failure.
+- [x] T017 Prove GUI/headless equivalence and run deterministic malformed-input fuzzing.
 
 ### ESP32-S3 full flash and enrichment
 
-- [ ] T018 Build partition-table fixtures including default, custom offset, OTA, invalid MD5, custom types, encrypted flags, and misleading magic bytes.
-- [ ] T019 Implement bounded partition-table discovery, validation, and flash-offset model.
-- [ ] T020 Implement bootloader/app/data partition extraction and multi-program workspace planning.
-- [ ] T021 Implement OTA state, NVS/NVS-keys, PHY, coredump, FAT, SPIFFS, LittleFS, and custom partition handler contracts.
-- [ ] T022 Implement provenance-checked ESP32-S3 ROM symbol and peripheral packs.
+- [x] T018 Build partition-table fixtures including default, custom offset, OTA, invalid MD5, custom types, encrypted flags, and misleading magic bytes.
+- [x] T019 Implement bounded partition-table discovery, validation, and flash-offset model.
+- [x] T020 Implement bootloader/app/data partition extraction and multi-program workspace planning.
+- [x] T021 Implement OTA state, NVS/NVS-keys, PHY, coredump, FAT, SPIFFS, LittleFS, and custom partition handler contracts.
+- [x] T022 Implement provenance-checked ESP32-S3 ROM symbol and peripheral packs.
 - [ ] T023 Implement ESP-IDF metadata, logging-call, FreeRTOS, and library-signature enrichments.
 - [ ] T024 Implement ESP security summary that distinguishes image evidence from unavailable eFuse state.
 - [ ] T025 Implement factory/OTA diff and ESP-oriented CTF findings.

@@ -28,12 +28,14 @@ public final class Esp32S3TargetProvider {
         new RegionDefinition(MemoryRegionKind.IRAM, 0x4037_0000L, 0x403e_0000L,
             true, false, true),
         new RegionDefinition(MemoryRegionKind.DRAM, 0x3fc8_8000L, 0x3fd0_0000L,
+            true, true, false),
+        new RegionDefinition(MemoryRegionKind.RTC_DATA, 0x5000_0000L, 0x5000_2000L,
             true, true, false));
 
     private static final Evidence MEMORY_EVIDENCE = new Evidence(
         EvidenceKind.VENDOR_DATA_PACK,
         "ESP-IDF v6.0 components/soc/esp32s3/include/soc/soc.h",
-        "SOC_DROM/IROM/IRAM/DRAM half-open address definitions");
+        "SOC_DROM/IROM/IRAM/DRAM and SOC_RTC_DATA half-open address definitions");
 
     private static final Evidence LANGUAGE_EVIDENCE = new Evidence(
         EvidenceKind.DOCUMENTED_FIELD,

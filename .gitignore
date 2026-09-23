@@ -3,6 +3,7 @@
 /dist/
 /bin/
 /ghidra_12.1.3_PUBLIC_20260817/
+/esp32s3_ctf_dump_4MB.bin
 
 # Local IDE and editor state
 .idea/

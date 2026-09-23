@@ -33,13 +33,87 @@ Execution topology is a validated graph rather than a processor count. Processor
 
 ESP application-image detection and parsing live entirely below `formats.esp` and have no Ghidra dependency. Detection distinguishes non-matches from ESP-magic inputs with malformed structural headers. Parsing retains every encoded load address and source byte range, bounds segment count and allocation, rejects overlapping target ranges, verifies the seeded XOR checksum and optional SHA-256 digest, and requires exact end of input. Parsed segment, padding, and digest arrays are defensively copied.
 
+Optional `esp_app_desc_t` extraction runs only on an already validated immutable image. It scans bounded segment bytes for the versioned magic, requires the complete 256-byte structure, decodes every fixed-width string without reading past its field, and retains exact source and target provenance. Missing metadata is not an error; truncated, malformed UTF-8, control-bearing text, or an invalid MMU exponent produces a stable warning and cannot invalidate the primary image. Digest bytes are defensively copied.
+
 The generic parser reports the image's encoded chip ID without selecting a target. A caller may instead supply an expected chip ID for an explicit mismatch check. The pure layer enforces only architecture-neutral structural entry evidence: even alignment and containment in an encoded segment. Executable-memory classification, exact language alignment, and Ghidra entry creation remain target-provider and loader responsibilities in later tasks; the parser does not guess them.
 
 ## ESP32-S3 target provider
 
 The first concrete target provider resolves ESP32-S3 only when image chip ID `9` matches the bundled, provenance-bearing esptool definition. The registry is a generated-data boundary with an intentionally narrow T013 snapshot; the complete Espressif catalog generator remains T026 and future devices are not added as provider branches.
 
-The provider selects Ghidra `Xtensa:LE:32:default` with compiler specification `default`, including the language's one-byte instruction alignment. Address classification uses the half-open ESP-IDF v6.0 DROM, IROM, IRAM, and DRAM definitions and refuses ranges spanning a boundary or using another address space. Entry decisions additionally require containment in an image segment classified executable. The provider returns a pure plan decision and never mutates a Ghidra program.
+The provider selects Ghidra `Xtensa:LE:32:default` with compiler specification `default`, including the language's one-byte instruction alignment. Address classification uses the half-open ESP-IDF v6.0 DROM, IROM, IRAM, DRAM, and RTC data definitions and refuses ranges spanning a boundary or using another address space. RTC data is read/write but non-executable in the Xtensa program; ULP firmware requires its own architecture-specific program. Entry decisions additionally require containment in an image segment classified executable. The provider returns a pure plan decision and never mutates a Ghidra program.
+
+## ESP application loader and mapping transaction
+
+The Ghidra loader reads a bounded `ByteProvider`, performs complete parser and provider validation without using the filename, and offers only the exact provider-selected language/compiler pair. The mapper preflights every range, permission, existing block conflict, and entry decision before opening one rollback-by-default transaction. It maps segment bytes at encoded addresses, preserves existing primary symbols, and commits only after the external entry point is applied. A failed or cancelled operation returns no committed import report and leaves existing program state unchanged.
+
+GUI and `analyzeHeadless` imports converge on `EspApplicationImportService`; the loader has no mode-dependent parsing, provider, metadata, mapping, or reporting branch. The service emits the committed import record, optional metadata result, canonical report, and canonical mapping snapshot. Equality tests deliberately vary program names, default locales, and time zones and require byte-identical report and snapshot JSON. The snapshot records block names, addresses, lengths, permissions, source ranges, byte digests, language/compiler identity, and entry symbol without timestamps, host paths, or caller identity.
+
+The deterministic ESP mutation campaign uses a fixed recorded seed, 512 bounded truncation, bit-flip, random-byte, and trailing-byte cases, and a review-controlled outcome digest. Every rejection must be a typed diagnostic whose source range stays inside the generated input; accepted mutations must still yield a complete immutable image and safe optional-metadata result. The retained malformed corpus also runs through the shared Ghidra workflow and must leave an empty ProgramDB on every rejection.
+
+## ESP full-flash partition boundary
+
+Physical flash offsets use `EspFlashRange`, never `AddressRange`; a partition's
+storage location is not a CPU virtual/load address. Partition discovery first
+validates the default `0x8000` sector, then scans bounded sector-aligned
+candidates, or validates one explicit user offset without fallback. Candidate
+magic alone is insufficient: entry structure, bounded labels, object limits,
+unique labels, non-overlapping in-flash ranges, table separation, the complete
+MD5 record, and cooperative cancellation must all pass before an immutable
+table exposes any entry. Custom types/subtypes and unknown flag bits remain
+numeric evidence rather than guessed semantics.
+
+Full-flash workspace planning is all-or-nothing and completes before Ghidra
+mutation. A structurally valid ESP32-S3 bootloader is required at the documented
+merged-flash offset zero; application offsets come only from the MD5-validated
+partition table. The planner derives the exact encoded end of each image,
+re-runs the complete application parser on that bounded slice, and translates
+all diagnostic source ranges back to physical flash offsets. Factory, OTA, and
+unknown application subtypes become separate executable plans. Non-application
+and encrypted application partitions are exact opaque payloads; encrypted bytes
+are never offered to the CPU disassembler.
+
+The Ghidra loader uses the same planner for detection and loading. It creates
+one program per extracted executable, prioritizes application programs before
+the bootloader in import results, and maps each with the existing shared
+application workflow. Each program is committed in its own transaction and
+records the source-flash digest, partition-table offset, executable physical
+range, role, and partition label. If a later program fails, only newly created
+unsaved workspace objects are released. Data payloads are not written to disk
+without an explicit extraction destination.
+
+Partition interpretation is a pure, ordered registry. Encryption takes
+precedence over subtype dispatch. OTA-data records are checked independently
+using the ESP-IDF CRC/state rules and select a slot only when that slot contains
+a populated application. NVS inspection reports page-state counts without
+decoding values; NVS-key content is always sensitive and redacted. Coredump
+inspection validates bounded header metadata and reports embedded ELF evidence
+without executing or loading the dump. PHY and custom partitions stay opaque.
+FAT receives only raw boot-signature validation because ESP-IDF wear-leveling
+parameters are external; populated SPIFFS and LittleFS partitions likewise
+report configuration-required instead of guessing. Handler failures are typed,
+non-fatal enrichment diagnostics and do not invalidate an otherwise valid
+full-flash workspace.
+
+## ESP32-S3 offline enrichment packs
+
+ROM and peripheral content remain outside target-provider code. A deterministic
+generator extracts only object-like symbols/registers from the exact pinned
+ESP-IDF revision into two independently versioned, closed JSON contracts. The
+normal pack manifest provides identity, supported device, source URI/revision,
+license, transformation, redistribution state, sizes, and digests; content also
+retains every contributing repository-relative source path. Integrity and
+identity validation complete before any Ghidra transaction begins.
+
+The explicit applicator creates uninitialized ROM/peripheral views rather than
+pretending those bytes came from the imported firmware. ROM code is read/execute,
+ROM data is read-only, and peripheral windows are read/write, volatile, and
+non-executable. Imported function/data/register symbols and 32-bit register data
+use `IMPORTED` provenance. Existing blocks, names at other addresses, user
+primary symbols, instructions, and non-equivalent types are preserved with
+deterministic conflict entries. Reapplication recognizes identical artifacts;
+receipt-scoped removal deletes only artifacts created by that application and
+refuses changed or user-bearing blocks.
 
 ## Canonical reports and catalogs
 

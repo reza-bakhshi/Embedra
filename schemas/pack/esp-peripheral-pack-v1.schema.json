@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:embedra:schema:esp-peripheral-pack:1",
+  "title": "Embedra ESP Peripheral Pack v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaId", "deviceId", "sourceRevision", "sourceFiles", "peripherals"],
+  "properties": {
+    "schemaId": {"const": "urn:embedra:schema:esp-peripheral-pack:1"},
+    "deviceId": {"type": "string", "minLength": 1},
+    "sourceRevision": {"type": "string", "minLength": 1},
+    "sourceFiles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "peripherals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/peripheral"}
+    }
+  },
+  "$defs": {
+    "peripheral": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "aliases", "baseAddress", "endExclusive", "registers"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "baseAddress": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "endExclusive": {"type": "integer", "minimum": 1, "maximum": 4294967296},
+        "registers": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/register"}
+        }
+      }
+    },
+    "register": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["address", "widthBits", "names", "sourceFiles"],
+      "properties": {
+        "address": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+        "widthBits": {"const": 32},
+        "names": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "sourceFiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}
