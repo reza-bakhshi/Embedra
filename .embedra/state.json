@@ -65,13 +65,11 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "42e4369285b70ebd130c6e1cf1b611642bef3aea"
+    "commit": "3263e5dd82c9b379f7746887fa0911cd988df536"
   },
   "workingTree": {
-    "state": "IN_PROGRESS",
-    "uncommittedWork": [
-      "T026A implementation and evidence; commit pending"
-    ]
+    "state": "CLEAN",
+    "uncommittedWork": []
   },
   "toolchains": {
     "ghidra": {

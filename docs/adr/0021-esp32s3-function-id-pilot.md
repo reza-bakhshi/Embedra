@@ -56,8 +56,7 @@ the pinned Ghidra build must remain reproducible and free of host paths.
   `ESP32S3_FID_DATABASE_DIGEST_MISMATCH`, `ESP32S3_FID_DATABASE_CONFLICT`
   (another Xtensa database already attached, refused rather than silently
   mixed), `ESP32S3_FID_PROVENANCE_INVALID`,
-  `ESP32S3_FID_DATABASE_CONFLICT`, `ESP32S3_FID_AMBIGUOUS_MATCHES`,
-  `ESP32S3_FID_MATCHES_APPLIED`,
+  `ESP32S3_FID_AMBIGUOUS_MATCHES`, `ESP32S3_FID_MATCHES_APPLIED`,
   `ESP32S3_FID_ALREADY_APPLIED`, `ESP32S3_FID_NO_MATCHES`,
   `ESP32S3_FID_CANCELLED`, and `ESP32S3_FID_RUN_FAILED`, written together with
   counts and database/library identity to deterministic program options.
