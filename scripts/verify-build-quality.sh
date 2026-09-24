@@ -124,6 +124,14 @@ if [ "$actual_entries" != "$expected_entries" ]; then
     exit 1
 fi
 
+if unzip -p "$artifact" $(printf '%s\n' "$actual_entries" |
+        grep -E '\.(json|md|properties|sha256)$') |
+    grep -qE '/home/|/Users/|/private/var/|esp32s3_ctf_dump_4MB|flash_dump\.bin'
+then
+    echo "Extension ZIP text content contains host paths or restricted capture names." >&2
+    exit 1
+fi
+
 if printf '%s\n' "$actual_entries" | grep -q '^Embedra/lib/Embedra-src.zip$'; then
     unzip -p "$artifact" Embedra/lib/Embedra-src.zip >"$work_dir/source.zip"
     unzip -t "$work_dir/source.zip" >/dev/null

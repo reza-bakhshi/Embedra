@@ -57,8 +57,6 @@ if ! printf '%s\n' "$compiler_line" | grep -Fq "$expected_compiler_version"; the
     echo "Unexpected ESP32-S3 compiler version: $compiler_line" >&2
     exit 1
 fi
-toolchain_root=$(dirname "$(dirname "$(command -v xtensa-esp32s3-elf-gcc)")")
-
 if [ -z "${JAVA_HOME:-}" ]; then
     echo "Set JAVA_HOME to a 64-bit JDK 21 (Ghidra 12.1.3 baseline)." >&2
     exit 1
@@ -183,8 +181,9 @@ write_symbols_oracle "$work_dir/embedra-fid-cross-app-b.elf" \
     "$work_dir/embedra-fid-cross-app-b.bin" "$work_dir/symbols-appb.json"
 
 python3 "$project_root/scripts/audit-fid-license.py" \
-    "$work_dir/app-a/build/embedra_fid_ref.map" "$IDF_PATH" "$toolchain_root" \
-    "$work_dir/app-a" > "$work_dir/audit.json"
+    "$work_dir/app-a/build/embedra_fid_ref.map" "$IDF_PATH" \
+    "xtensa-esp-elf $expected_compiler_version" "$work_dir/app-a" \
+    > "$work_dir/audit.json"
 
 python3 - "$work_dir/audit.json" "$work_dir/components.tsv" <<'PYEOF'
 import json, sys

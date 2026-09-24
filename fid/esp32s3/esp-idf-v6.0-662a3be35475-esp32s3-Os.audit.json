@@ -261,17 +261,17 @@
     "libc.a": {
       "disposition": "EXCLUDED_FROM_FIDB",
       "reason": "toolchain runtime archive; excluded from the ESP-IDF pilot database so only permissively licensed ESP-IDF component functions are named",
-      "source": "/home/rez0x61/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf"
+      "source": "xtensa-esp-elf esp-15.2.0_20251204"
     },
     "libgcc.a": {
       "disposition": "EXCLUDED_FROM_FIDB",
       "reason": "toolchain runtime archive; excluded from the ESP-IDF pilot database so only permissively licensed ESP-IDF component functions are named",
-      "source": "/home/rez0x61/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf"
+      "source": "xtensa-esp-elf esp-15.2.0_20251204"
     },
     "libstdc++.a": {
       "disposition": "EXCLUDED_FROM_FIDB",
       "reason": "toolchain runtime archive; excluded from the ESP-IDF pilot database so only permissively licensed ESP-IDF component functions are named",
-      "source": "/home/rez0x61/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf"
+      "source": "xtensa-esp-elf esp-15.2.0_20251204"
     }
   },
   "idfRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",

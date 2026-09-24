@@ -44,7 +44,9 @@ A run revalidates the descriptor, the database SHA-256, the exact
 `Xtensa:LE:32:esp32s3` language variant, and the program's validated
 ESP-IDF version; names only audited permissively licensed ESP-IDF component
 functions; preserves user and imported names; reports ambiguous candidates
-without choosing one; and records a stable `ESP32S3_FID_*` status code,
+without choosing one; refuses rather than silently mixing when a different
+Xtensa database is already attached (`ESP32S3_FID_DATABASE_CONFLICT`); and
+records a stable `ESP32S3_FID_*` status code,
 counts, and database identity in deterministic program options. It identifies
 functions that hash-match the pinned ESP-IDF v6.0 `-Os` reference build; it
 does not identify arbitrary stripped application functions or other ESP-IDF

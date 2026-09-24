@@ -245,17 +245,22 @@
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T026.md",
+    "task": ".embedra/evidence/tasks/T026A.md",
     "remediation": ".embedra/evidence/tasks/T025-remediation.md",
     "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
     "commands": ".embedra/evidence/commands.jsonl",
     "logDrivenRemediation": ".embedra/evidence/tasks/T025-log-driven-remediation.md",
     "gateAddendum": ".embedra/evidence/gates/esp32s3-full-flash-r2-language-addendum.md",
-    "nextTaskPrompt": ".embedra/prompts/T026A-esp32s3-fidb.md",
+    "nextTaskPrompt": ".embedra/prompts/T027-shared-xtensa-riscv-services.md",
     "taskT026A": ".embedra/evidence/tasks/T026A.md",
     "adrT026A": "docs/adr/0021-esp32s3-function-id-pilot.md",
     "fidbT026A": "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb",
-    "specification": "Embedra-SpecKit.md"
+    "specification": "Embedra-SpecKit.md",
+    "fidArtifacts": [
+      "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb",
+      "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.json",
+      "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.audit.json"
+    ]
   },
   "knownFailures": [],
   "nextTask": "T027",
@@ -269,8 +274,8 @@
     },
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
-      "sha256": "ffbc60b9c17fb66747a1adecc8d45cbd6267591038ce6eaf283fea82664ac57c",
-      "sizeBytes": 1005330,
+      "sha256": "fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb",
+      "sizeBytes": 1005367,
       "status": "T026A_REPRODUCIBLE_ARTIFACT"
     }
   ],
@@ -358,6 +363,10 @@
     {
       "code": "ESP32S3_GHIDRA_XTENSA_SALT_UNSUPPORTED",
       "resolution": "ESP32-S3 extension language decodes and decompiles SALT/SALTU in Ghidra 12.1.3; fixture and digest-gated real dump tests pass. Comprehensive ISA coverage remains experimental."
+    },
+    {
+      "code": "T026A_AUDIT_HOST_PATH_PACKAGED",
+      "resolution": "The FID license audit recorded an absolute toolchain path. The committed audit now stores the pinned toolchain identifier, the generator records identifiers only, and verify-build-quality.sh fails on host paths or restricted capture names in extension ZIP text content. Reverified reproducible ZIP SHA-256 fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb."
     }
   ],
   "mostRecentCommands": [
@@ -369,7 +378,7 @@
     {
       "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
       "exitStatus": 0,
-      "result": "PASS: two complete uncached clean builds, all 20 quality actions each; 152 unit, 53 real-Ghidra, and 4 Python tests; byte-identical ZIP, SHA-256 ffbc60b9c17fb66747a1adecc8d45cbd6267591038ce6eaf283fea82664ac57c."
+      "result": "PASS: two complete uncached clean builds, all 20 quality actions each; 152 unit, 53 real-Ghidra, and 4 Python tests; byte-identical ZIP, SHA-256 fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb. The first packaged license audit had embedded the host toolchain path; the audit tool now records a host-independent toolchain identifier and the package gate scans archive text content for host paths and restricted capture names."
     }
   ],
   "buildQuality": {

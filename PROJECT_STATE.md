@@ -92,4 +92,8 @@ not start T028 until T027 is complete.
 
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
 Two clean quality-script builds produced identical extension ZIPs with SHA-256
-`ffbc60b9c17fb66747a1adecc8d45cbd6267591038ce6eaf283fea82664ac57c`.
+`fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb`. The first
+packaged license audit had embedded the host toolchain path; the audit now
+stores only the pinned toolchain identifier and `verify-build-quality.sh`
+additionally fails on host paths or restricted capture names in extension ZIP
+text content.

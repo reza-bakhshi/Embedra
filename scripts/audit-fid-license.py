@@ -11,7 +11,9 @@ contributing archive, the license disposition of the linked sources:
   are not needed for ESP-IDF function naming.
 
 Output: canonical JSON on stdout. Exit non-zero when an unexpected archive or a
-non-permissive component license would block redistribution.
+non-permissive component license would block redistribution. The toolchain
+identifier is recorded verbatim; archive paths and host paths never enter the
+audit.
 """
 
 import json
@@ -66,10 +68,11 @@ def spdx_tally(directory: Path) -> Counter:
 
 def main() -> int:
     if len(sys.argv) != 5:
-        print("usage: audit-fid-license.py <map-file> <idf-path> <toolchain-root>"
+        print("usage: audit-fid-license.py <map-file> <idf-path> <toolchain-id>"
               " <project-dir>", file=sys.stderr)
         return 2
-    map_path, idf_path, toolchain_root, project_dir = map(Path, sys.argv[1:5])
+    map_path, idf_path, project_dir = map(Path, (sys.argv[1], sys.argv[2], sys.argv[4]))
+    toolchain_id = sys.argv[3]
     map_text = map_path.read_text(errors="replace")
 
     components: dict = {}
@@ -97,7 +100,7 @@ def main() -> int:
                 unexpected.append(archive)
                 continue
             excluded_archives[name] = {
-                "source": str(toolchain_root),
+                "source": toolchain_id,
                 "disposition": "EXCLUDED_FROM_FIDB",
                 "reason": "toolchain runtime archive; excluded from the ESP-IDF pilot "
                           "database so only permissively licensed ESP-IDF component "
