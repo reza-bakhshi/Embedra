@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate deterministic ESP32-S3 ROM and peripheral packs from pinned ESP-IDF."""
+"""Generate deterministic ESP Xtensa ROM and peripheral packs from pinned ESP-IDF."""
 
 from __future__ import annotations
 
@@ -14,18 +14,26 @@ import sys
 REVISION = "662a3be354759d9487bf4b1a629fadb766cb1800"
 SOURCE_URI = "https://github.com/espressif/esp-idf"
 VERSION = "1.0.0"
-ROM_ID = "espressif.esp32s3.rom"
-PERIPHERAL_ID = "espressif.esp32s3.peripherals"
-ROM_FILES = (
-    "esp32s3.rom.ld",
-    "esp32s3.rom.bt_funcs.ld",
-    "esp32s3.rom.libc.ld",
-    "esp32s3.rom.libgcc.ld",
-    "esp32s3.rom.newlib.ld",
-    "esp32s3.rom.newlib-nano.ld",
-    "esp32s3.rom.newlib-time.ld",
-    "esp32s3.rom.version.ld",
-)
+TARGETS = {
+    "esp32": (
+        "esp32.rom.ld", "esp32.rom.libc-funcs.ld", "esp32.rom.libgcc.ld",
+        "esp32.rom.newlib-data.ld", "esp32.rom.newlib-locale.ld",
+        "esp32.rom.newlib-nano.ld", "esp32.rom.newlib-reent-funcs.ld",
+        "esp32.rom.newlib-time.ld", "esp32.rom.syscalls.ld",
+    ),
+    "esp32s2": (
+        "esp32s2.rom.ld", "esp32s2.rom.libc-funcs.ld",
+        "esp32s2.rom.libgcc.ld", "esp32s2.rom.newlib-data.ld",
+        "esp32s2.rom.newlib-nano.ld", "esp32s2.rom.newlib-reent-funcs.ld",
+        "esp32s2.rom.newlib-time.ld", "esp32s2.rom.spiflash_legacy.ld",
+    ),
+    "esp32s3": (
+        "esp32s3.rom.ld", "esp32s3.rom.bt_funcs.ld", "esp32s3.rom.libc.ld",
+        "esp32s3.rom.libgcc.ld", "esp32s3.rom.newlib.ld",
+        "esp32s3.rom.newlib-nano.ld", "esp32s3.rom.newlib-time.ld",
+        "esp32s3.rom.version.ld",
+    ),
+}
 ASSIGNMENT = re.compile(
     r"^(?:PROVIDE\s*\(\s*)?([A-Za-z_$][A-Za-z0-9_$]*)\s*=\s*"
     r"(0x[0-9A-Fa-f]+)\s*\)?\s*;"
@@ -67,11 +75,12 @@ def source_revision(idf: Path) -> str:
     return result.stdout.strip()
 
 
-def generate_rom(idf: Path) -> dict[str, object]:
-    directory = idf / "components/esp_rom/esp32s3/ld"
+def generate_rom(idf: Path, target: str,
+                 rom_files: tuple[str, ...]) -> dict[str, object]:
+    directory = idf / f"components/esp_rom/{target}/ld"
     symbols: dict[str, dict[str, object]] = {}
     source_files: list[str] = []
-    for filename in ROM_FILES:
+    for filename in rom_files:
         path = directory / filename
         source = relative(path, idf)
         source_files.append(source)
@@ -94,14 +103,14 @@ def generate_rom(idf: Path) -> dict[str, object]:
                     "name": name,
                     "sourceFiles": [source],
                 }
-    if len(symbols) < 1500:
+    if len(symbols) < 500:
         fail(f"unexpectedly small ROM symbol set: {len(symbols)}")
     ordered = sorted(symbols.values(), key=lambda item: (item["address"], item["name"]))
     for symbol in ordered:
         symbol["sourceFiles"] = sorted(set(symbol["sourceFiles"]))
     return {
         "schemaId": "urn:embedra:schema:esp-rom-symbol-pack:1",
-        "deviceId": "esp32s3",
+        "deviceId": target,
         "sourceRevision": REVISION,
         "sourceFiles": source_files,
         "symbols": ordered,
@@ -112,10 +121,10 @@ def macro_alias(macro: str) -> str:
     return macro.removeprefix("DR_REG_").removesuffix("_BASE")
 
 
-def generate_peripherals(idf: Path) -> dict[str, object]:
-    register_directory = idf / "components/soc/esp32s3/register/soc"
+def generate_peripherals(idf: Path, target: str) -> dict[str, object]:
+    register_directory = idf / f"components/soc/{target}/register/soc"
     reg_base = register_directory / "reg_base.h"
-    peripheral_ld = idf / "components/soc/esp32s3/ld/esp32s3.peripherals.ld"
+    peripheral_ld = idf / f"components/soc/{target}/ld/{target}.peripherals.ld"
     base_macros: dict[str, int] = {}
     aliases_by_address: dict[int, set[str]] = {}
     preferred_by_address: dict[int, list[str]] = {}
@@ -150,7 +159,8 @@ def generate_peripherals(idf: Path) -> dict[str, object]:
             if not match:
                 continue
             name, base_macro, encoded_offset = match.groups()
-            if base_macro == "DR_REG_I2C_BASE":
+            if base_macro == "DR_REG_I2C_BASE" and all(name in base_macros for name in
+                    ("DR_REG_I2C_EXT_BASE", "DR_REG_I2C1_EXT_BASE")):
                 bases = [base_macros["DR_REG_I2C_EXT_BASE"],
                          base_macros["DR_REG_I2C1_EXT_BASE"]]
             elif base_macro in local_bases:
@@ -168,7 +178,7 @@ def generate_peripherals(idf: Path) -> dict[str, object]:
                 register["names"].append(name)
                 register["sourceFiles"].append(source)
     count = sum(len(registers) for registers in registers_by_base.values())
-    if count < 1500:
+    if count < 500:
         fail(f"unexpectedly small peripheral register set: {count}")
 
     peripherals: list[dict[str, object]] = []
@@ -193,15 +203,15 @@ def generate_peripherals(idf: Path) -> dict[str, object]:
         })
     return {
         "schemaId": "urn:embedra:schema:esp-peripheral-pack:1",
-        "deviceId": "esp32s3",
+        "deviceId": target,
         "sourceRevision": REVISION,
         "sourceFiles": sorted(set(source_files)),
         "peripherals": peripherals,
     }
 
 
-def write_pack(root: Path, pack_id: str, filename: str, content: dict[str, object],
-               transformation: str) -> None:
+def write_pack(root: Path, pack_id: str, device_id: str, filename: str,
+               content: dict[str, object], transformation: str) -> None:
     directory = root / "packs" / pack_id / VERSION
     directory.mkdir(parents=True, exist_ok=True)
     payload = canonical_bytes(content)
@@ -227,7 +237,7 @@ def write_pack(root: Path, pack_id: str, filename: str, content: dict[str, objec
             "transformation": transformation,
         },
         "schemaId": "urn:embedra:schema:pack-manifest:1",
-        "supportedDevices": ["esp32s3"],
+        "supportedDevices": [device_id],
         "version": VERSION,
     }
     (directory / "pack.json").write_bytes(canonical_bytes(manifest))
@@ -243,12 +253,15 @@ def main() -> None:
     if "Apache License" not in license_text or "Version 2.0" not in license_text:
         fail("ESP-IDF Apache-2.0 license evidence is missing")
     root = Path(__file__).resolve().parent.parent
-    write_pack(root, ROM_ID, "rom-symbols.json", generate_rom(idf),
-               "Deterministic extraction of linker-script symbol assignments; "
-               "address classifies ROM function versus data")
-    write_pack(root, PERIPHERAL_ID, "peripherals.json", generate_peripherals(idf),
-               "Deterministic extraction and alias grouping of peripheral base and "
-               "object-like 32-bit register macros")
+    for target, rom_files in TARGETS.items():
+        write_pack(root, f"espressif.{target}.rom", target, "rom-symbols.json",
+                   generate_rom(idf, target, rom_files),
+                   "Deterministic extraction of linker-script symbol assignments; "
+                   "address classifies ROM function versus data")
+        write_pack(root, f"espressif.{target}.peripherals", target,
+                   "peripherals.json", generate_peripherals(idf, target),
+                   "Deterministic extraction and alias grouping of peripheral base and "
+                   "object-like 32-bit register macros")
 
 
 if __name__ == "__main__":

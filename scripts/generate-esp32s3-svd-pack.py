@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a deterministic ESP32-S3 register pack from pinned Espressif SVD."""
+"""Generate deterministic ESP32-family register packs from pinned Espressif SVD."""
 
 from __future__ import annotations
 
@@ -12,11 +12,15 @@ import xml.etree.ElementTree as element_tree
 
 REVISION = "be20aa12560889d6125d144cdb48cf615ac17628"
 SOURCE_URI = "https://github.com/espressif/svd"
-PACK_ID = "espressif.esp32s3.svd"
 VERSION = "1.0.0"
 MAX_INPUT_BYTES = 8 * 1024 * 1024
 MAX_ELEMENTS = 100_000
 MAX_DEPTH = 32
+TARGETS = {
+    "esp32": "ESP32",
+    "esp32s2": "ESP32-S2",
+    "esp32s3": "ESP32-S3",
+}
 
 
 def fail(message: str) -> None:
@@ -102,12 +106,25 @@ def register_values(register: element_tree.Element, base: int,
     increment = number(child_text(register, "dimIncrement", "0"))
     if dimension <= 0 or dimension > 65536 or (dimension > 1 and increment <= 0):
         fail(f"invalid SVD dimension for {template}")
+    indices = list(range(dimension))
+    index_text = child_text(register, "dimIndex", "")
+    if index_text:
+        if "," in index_text:
+            indices = [number(item) for item in index_text.split(",")]
+        elif "-" in index_text:
+            first, last = (number(item) for item in index_text.split("-", 1))
+            indices = list(range(first, last + 1))
+        else:
+            indices = [number(index_text)]
+        if len(indices) != dimension:
+            fail(f"invalid SVD dimension indices for {template}")
     result = []
-    for index in range(dimension):
-        name = template if dimension == 1 else template.replace("%s", str(index))
+    for offset_index, display_index in enumerate(indices):
+        name = template if dimension == 1 else template.replace(
+            "%s", str(display_index))
         result.append({
             "access": access,
-            "address": base + offset + index * increment,
+            "address": base + offset + offset_index * increment,
             "description": child_text(register, "description", ""),
             "fields": fields,
             "name": name,
@@ -188,13 +205,15 @@ def reconcile(peripherals: list[dict[str, object]], header_pack: Path) -> dict[s
     }
 
 
-def generate(repository: Path, header_pack: Path) -> dict[str, object]:
+def generate(repository: Path, header_pack: Path, device_id: str,
+             device_name: str) -> dict[str, object]:
     if git_revision(repository) != REVISION:
         fail("Espressif SVD checkout is not at the pinned revision")
     license_text = (repository / "LICENSE").read_text(encoding="utf-8")
     if "Apache License" not in license_text or "Version 2.0" not in license_text:
         fail("Espressif SVD Apache-2.0 license evidence is missing")
-    source = repository / "svd/esp32s3.svd"
+    source_relative = f"svd/{device_id}.svd"
+    source = repository / source_relative
     data = source.read_bytes()
     if len(data) > MAX_INPUT_BYTES:
         fail("SVD input exceeds configured byte limit")
@@ -203,8 +222,8 @@ def generate(repository: Path, header_pack: Path) -> dict[str, object]:
         fail("SVD document types and entities are forbidden")
     root = element_tree.fromstring(data)
     validate_xml_budget(root)
-    if root.tag != "device" or child_text(root, "name") != "ESP32-S3":
-        fail("SVD identity is not ESP32-S3")
+    if root.tag != "device" or child_text(root, "name") != device_name:
+        fail(f"SVD identity is not {device_name}")
     peripheral_root = root.find("peripherals")
     if peripheral_root is None:
         fail("SVD has no peripherals")
@@ -214,18 +233,19 @@ def generate(repository: Path, header_pack: Path) -> dict[str, object]:
                    for item in peripheral_root.findall("peripheral")]
     peripherals.sort(key=lambda item: (item["baseAddress"], item["name"]))
     return {
-        "deviceId": "esp32s3",
-        "deviceName": "ESP32-S3",
+        "deviceId": device_id,
+        "deviceName": device_name,
         "peripherals": peripherals,
         "reconciliation": reconcile(peripherals, header_pack),
         "schemaId": "urn:embedra:schema:esp-svd-pack:1",
-        "sourceFiles": ["svd/esp32s3.svd"],
+        "sourceFiles": [source_relative],
         "sourceRevision": REVISION,
     }
 
 
-def write_pack(root: Path, content: dict[str, object]) -> None:
-    directory = root / "packs" / PACK_ID / VERSION
+def write_pack(root: Path, device_id: str, content: dict[str, object]) -> None:
+    pack_id = f"espressif.{device_id}.svd"
+    directory = root / "packs" / pack_id / VERSION
     directory.mkdir(parents=True, exist_ok=True)
     payload = canonical_bytes(content)
     content_path = directory / "registers.json"
@@ -238,7 +258,7 @@ def write_pack(root: Path, content: dict[str, object]) -> None:
         "contentDigest": aggregate,
         "files": [{"path": "registers.json", "sha256": digest,
                    "size": len(payload)}],
-        "packId": PACK_ID,
+        "packId": pack_id,
         "provenance": {
             "license": "Apache-2.0",
             "redistribution": "ALLOWED",
@@ -248,7 +268,7 @@ def write_pack(root: Path, content: dict[str, object]) -> None:
                               "ESP-IDF header-pack address reconciliation",
         },
         "schemaId": "urn:embedra:schema:pack-manifest:1",
-        "supportedDevices": ["esp32s3"],
+        "supportedDevices": [device_id],
         "version": VERSION,
     }
     (directory / "pack.json").write_bytes(canonical_bytes(manifest))
@@ -258,8 +278,12 @@ def main() -> None:
     if len(sys.argv) != 2:
         fail("usage: generate-esp32s3-svd-pack.py <espressif-svd-checkout>")
     root = Path(__file__).resolve().parent.parent
-    header_pack = root / "packs/espressif.esp32s3.peripherals/1.0.0/peripherals.json"
-    write_pack(root, generate(Path(sys.argv[1]).resolve(), header_pack))
+    repository = Path(sys.argv[1]).resolve()
+    for device_id, device_name in TARGETS.items():
+        header_pack = root / "packs" / f"espressif.{device_id}.peripherals" \
+            / VERSION / "peripherals.json"
+        write_pack(root, device_id,
+                   generate(repository, header_pack, device_id, device_name))
 
 
 if __name__ == "__main__":

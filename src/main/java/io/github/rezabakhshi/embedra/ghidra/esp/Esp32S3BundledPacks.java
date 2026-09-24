@@ -5,11 +5,10 @@ import ghidra.framework.Application;
 import io.github.rezabakhshi.embedra.core.CancellationToken;
 import io.github.rezabakhshi.embedra.core.ParserLimits;
 import io.github.rezabakhshi.embedra.core.diagnostic.DiagnosticException;
-import io.github.rezabakhshi.embedra.pack.Esp32S3PackLoader;
 import io.github.rezabakhshi.embedra.pack.EspPeripheralPack;
 import io.github.rezabakhshi.embedra.pack.EspRomSymbolPack;
 import io.github.rezabakhshi.embedra.pack.EspSvdPack;
-import io.github.rezabakhshi.embedra.pack.EspSvdPackLoader;
+import io.github.rezabakhshi.embedra.pack.EspTargetPackLoader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,14 +21,19 @@ record Esp32S3BundledPacks(
         EspSvdPack svd) {
     static Esp32S3BundledPacks load(CancellationToken token)
             throws IOException, DiagnosticException {
+        return load("esp32s3", token);
+    }
+
+    static Esp32S3BundledPacks load(String deviceId, CancellationToken token)
+            throws IOException, DiagnosticException {
         ParserLimits limits = ParserLimits.defaults();
         return new Esp32S3BundledPacks(
-            Esp32S3PackLoader.loadRom(packDirectory("espressif.esp32s3.rom"),
-                limits, token),
-            Esp32S3PackLoader.loadPeripherals(
-                packDirectory("espressif.esp32s3.peripherals"), limits, token),
-            EspSvdPackLoader.load(packDirectory("espressif.esp32s3.svd"),
-                limits, token));
+            EspTargetPackLoader.loadRom(packDirectory("espressif." + deviceId + ".rom"),
+                deviceId, limits, token),
+            EspTargetPackLoader.loadPeripherals(packDirectory(
+                "espressif." + deviceId + ".peripherals"), deviceId, limits, token),
+            EspTargetPackLoader.loadSvd(packDirectory("espressif." + deviceId + ".svd"),
+                deviceId, limits, token));
     }
 
     private static Path packDirectory(String packId) throws IOException {
@@ -50,6 +54,6 @@ record Esp32S3BundledPacks(
                 return directory;
             }
         }
-        throw new IOException("Bundled ESP32-S3 pack is unavailable: " + packId);
+        throw new IOException("Bundled ESP pack is unavailable: " + packId);
     }
 }

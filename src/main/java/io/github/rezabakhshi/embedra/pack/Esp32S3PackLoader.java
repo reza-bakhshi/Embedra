@@ -18,10 +18,6 @@ import java.util.Set;
 public final class Esp32S3PackLoader {
     private static final String DEVICE_ID = "esp32s3";
 
-    private static final String ROM_PACK_ID = "espressif.esp32s3.rom";
-
-    private static final String PERIPHERAL_PACK_ID = "espressif.esp32s3.peripherals";
-
     private static final String ROM_SCHEMA = "urn:embedra:schema:esp-rom-symbol-pack:1";
 
     private static final String PERIPHERAL_SCHEMA =
@@ -32,13 +28,18 @@ public final class Esp32S3PackLoader {
 
     public static EspRomSymbolPack loadRom(Path directory, ParserLimits limits,
             CancellationToken cancellation) throws DiagnosticException {
-        LoadedContent loaded = loadVerified(directory, ROM_PACK_ID,
-            "rom-symbols.json", limits, cancellation);
+        return loadRom(directory, DEVICE_ID, limits, cancellation);
+    }
+
+    static EspRomSymbolPack loadRom(Path directory, String deviceId, ParserLimits limits,
+            CancellationToken cancellation) throws DiagnosticException {
+        LoadedContent loaded = loadVerified(directory, "espressif." + deviceId + ".rom",
+            deviceId, "rom-symbols.json", limits, cancellation);
         Map<String, Object> root = object(StrictJsonParser.parse(loaded.bytes(), limits,
             cancellation), "ROM pack root must be an object");
         exact(root, Set.of("schemaId", "deviceId", "sourceRevision", "sourceFiles",
             "symbols"));
-        requireIdentity(root, ROM_SCHEMA, loaded.manifest());
+        requireIdentity(root, ROM_SCHEMA, deviceId, loaded.manifest());
         List<EspRomSymbol> symbols = new ArrayList<>();
         for (Object value : array(root.get("symbols"), "ROM symbols must be an array")) {
             cancellation.throwIfCancellationRequested();
@@ -55,7 +56,7 @@ public final class Esp32S3PackLoader {
             }
         }
         try {
-            return new EspRomSymbolPack(loaded.manifest(), DEVICE_ID, symbols);
+            return new EspRomSymbolPack(loaded.manifest(), deviceId, symbols);
         }
         catch (IllegalArgumentException exception) {
             throw invalid("Invalid ROM symbol pack: " + safeMessage(exception));
@@ -64,13 +65,19 @@ public final class Esp32S3PackLoader {
 
     public static EspPeripheralPack loadPeripherals(Path directory, ParserLimits limits,
             CancellationToken cancellation) throws DiagnosticException {
-        LoadedContent loaded = loadVerified(directory, PERIPHERAL_PACK_ID,
-            "peripherals.json", limits, cancellation);
+        return loadPeripherals(directory, DEVICE_ID, limits, cancellation);
+    }
+
+    static EspPeripheralPack loadPeripherals(Path directory, String deviceId,
+            ParserLimits limits, CancellationToken cancellation) throws DiagnosticException {
+        LoadedContent loaded = loadVerified(directory,
+            "espressif." + deviceId + ".peripherals", deviceId, "peripherals.json",
+            limits, cancellation);
         Map<String, Object> root = object(StrictJsonParser.parse(loaded.bytes(), limits,
             cancellation), "Peripheral pack root must be an object");
         exact(root, Set.of("schemaId", "deviceId", "sourceRevision", "sourceFiles",
             "peripherals"));
-        requireIdentity(root, PERIPHERAL_SCHEMA, loaded.manifest());
+        requireIdentity(root, PERIPHERAL_SCHEMA, deviceId, loaded.manifest());
         List<EspPeripheral> peripherals = new ArrayList<>();
         for (Object value : array(root.get("peripherals"),
                 "Peripherals must be an array")) {
@@ -78,7 +85,7 @@ public final class Esp32S3PackLoader {
             peripherals.add(parsePeripheral(value));
         }
         try {
-            return new EspPeripheralPack(loaded.manifest(), DEVICE_ID, peripherals);
+            return new EspPeripheralPack(loaded.manifest(), deviceId, peripherals);
         }
         catch (IllegalArgumentException exception) {
             throw invalid("Invalid peripheral pack: " + safeMessage(exception));
@@ -120,13 +127,14 @@ public final class Esp32S3PackLoader {
     }
 
     private static LoadedContent loadVerified(Path directory, String expectedPackId,
-            String expectedFile, ParserLimits limits, CancellationToken cancellation)
+            String deviceId, String expectedFile, ParserLimits limits,
+            CancellationToken cancellation)
             throws DiagnosticException {
         cancellation.throwIfCancellationRequested();
         PackManifest manifest = PackManifest.read(directory.resolve("pack.json"), limits,
             cancellation);
         if (!manifest.packId().equals(expectedPackId)
-            || !manifest.supportedDevices().equals(List.of(DEVICE_ID))
+            || !manifest.supportedDevices().equals(List.of(deviceId))
             || manifest.files().size() != 1
             || !manifest.files().get(0).path().equals(expectedFile)) {
             throw PackDiagnostics.failure(DiagnosticCode.PACK_INCOMPATIBLE,
@@ -143,9 +151,9 @@ public final class Esp32S3PackLoader {
     }
 
     private static void requireIdentity(Map<String, Object> root, String schema,
-            PackManifest manifest) throws DiagnosticException {
+            String deviceId, PackManifest manifest) throws DiagnosticException {
         if (!string(root, "schemaId").equals(schema)
-            || !string(root, "deviceId").equals(DEVICE_ID)
+            || !string(root, "deviceId").equals(deviceId)
             || !string(root, "sourceRevision").equals(manifest.provenance().revision())) {
             throw PackDiagnostics.failure(DiagnosticCode.PACK_INCOMPATIBLE,
                 "Pack content identity does not match its manifest");

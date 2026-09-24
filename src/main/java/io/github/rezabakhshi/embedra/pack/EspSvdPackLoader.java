@@ -20,10 +20,8 @@ import java.util.Map;
 import java.util.OptionalLong;
 import java.util.Set;
 
-/** Integrity-first loader for the generated ESP32-S3 SVD pack. */
+/** Integrity-first loader for generated ESP-family SVD packs. */
 public final class EspSvdPackLoader {
-    private static final String PACK_ID = "espressif.esp32s3.svd";
-
     private static final String CONTENT_FILE = "registers.json";
 
     private static final String CONTENT_SCHEMA = "urn:embedra:schema:esp-svd-pack:1";
@@ -33,11 +31,17 @@ public final class EspSvdPackLoader {
 
     public static EspSvdPack load(Path directory, ParserLimits limits,
             CancellationToken token) throws DiagnosticException {
+        return load(directory, "esp32s3", limits, token);
+    }
+
+    public static EspSvdPack load(Path directory, String deviceId, ParserLimits limits,
+            CancellationToken token) throws DiagnosticException {
         token.throwIfCancellationRequested();
+        String expectedPackId = "espressif." + deviceId + ".svd";
         PackManifest manifest = PackManifest.read(directory.resolve("pack.json"), limits,
             token);
-        if (!manifest.packId().equals(PACK_ID)
-            || !manifest.supportedDevices().equals(List.of("esp32s3"))
+        if (!manifest.packId().equals(expectedPackId)
+            || !manifest.supportedDevices().equals(List.of(deviceId))
             || manifest.files().size() != 1
             || !manifest.files().get(0).path().equals(CONTENT_FILE)) {
             throw failure(DiagnosticCode.PACK_INCOMPATIBLE,
@@ -57,7 +61,7 @@ public final class EspSvdPackLoader {
         exact(root, Set.of("schemaId", "deviceId", "deviceName", "sourceRevision",
             "sourceFiles", "peripherals", "reconciliation"));
         if (!string(root, "schemaId").equals(CONTENT_SCHEMA)
-            || !string(root, "deviceId").equals("esp32s3")
+            || !string(root, "deviceId").equals(deviceId)
             || !string(root, "sourceRevision").equals(manifest.provenance().revision())) {
             throw failure(DiagnosticCode.PACK_INCOMPATIBLE,
                 "SVD content identity does not match its manifest");
@@ -65,7 +69,7 @@ public final class EspSvdPackLoader {
         List<Object> sourceFiles = array(root.get("sourceFiles"),
             "SVD source files must be an array");
         if (sourceFiles.size() != 1 || !(sourceFiles.get(0) instanceof String sourceFile)
-            || !sourceFile.equals("svd/esp32s3.svd")) {
+            || !sourceFile.equals("svd/" + deviceId + ".svd")) {
             throw invalid("SVD source-file provenance is invalid");
         }
         List<EspSvdPeripheral> peripherals = new ArrayList<>();

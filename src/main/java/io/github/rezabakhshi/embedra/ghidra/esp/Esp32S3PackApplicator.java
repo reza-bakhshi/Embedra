@@ -35,11 +35,29 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
-/** Transactional, idempotent, user-preserving application of ESP32-S3 packs. */
+/** Transactional, idempotent, user-preserving application of ESP-family packs. */
 public final class Esp32S3PackApplicator {
     private static final long ROM_CODE_START = 0x4000_0000L;
 
-    private static final long ROM_CODE_LENGTH = 0x60000L;
+    private final String deviceId;
+
+    private final String displayName;
+
+    private final long romCodeLength;
+
+    public Esp32S3PackApplicator() {
+        this("esp32s3", "ESP32-S3", 0x60000L);
+    }
+
+    public Esp32S3PackApplicator(String deviceId, String displayName,
+            long romCodeLength) {
+        this.deviceId = Objects.requireNonNull(deviceId, "deviceId");
+        this.displayName = Objects.requireNonNull(displayName, "displayName");
+        if (deviceId.isBlank() || displayName.isBlank() || romCodeLength <= 0) {
+            throw new IllegalArgumentException("ESP pack target configuration is invalid");
+        }
+        this.romCodeLength = romCodeLength;
+    }
 
     public EspPackApplicationReport apply(Program program, EspRomSymbolPack rom,
             EspPeripheralPack peripherals, TaskMonitor monitor)
@@ -49,10 +67,10 @@ public final class Esp32S3PackApplicator {
         Objects.requireNonNull(peripherals, "peripherals");
         Objects.requireNonNull(monitor, "monitor");
         monitor.checkCancelled();
-        if (!rom.deviceId().equals("esp32s3")
-            || !peripherals.deviceId().equals("esp32s3")) {
+        if (!rom.deviceId().equals(deviceId)
+            || !peripherals.deviceId().equals(deviceId)) {
             throw new EspMappingException(DiagnosticCode.PACK_APPLICATION_FAILED,
-                "Pack device identity is not ESP32-S3");
+                "Pack device identity is not " + displayName);
         }
 
         List<EspCreatedBlock> blocks = new ArrayList<>();
@@ -60,9 +78,9 @@ public final class Esp32S3PackApplicator {
         List<Long> dataAddresses = new ArrayList<>();
         List<EspPackConflict> conflicts = new ArrayList<>();
         try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
-                program, "Apply verified ESP32-S3 enrichment packs")) {
-            ensureBlock(program, new BlockPlan("embedra_esp32s3_rom_code",
-                ROM_CODE_START, ROM_CODE_LENGTH, true, false, true, false),
+                program, "Apply verified " + displayName + " enrichment packs")) {
+            ensureBlock(program, new BlockPlan("embedra_" + deviceId + "_rom_code",
+                ROM_CODE_START, romCodeLength, true, false, true, false),
                 blocks, conflicts);
             for (long address : romDataAddresses(rom)) {
                 monitor.checkCancelled();
@@ -107,7 +125,7 @@ public final class Esp32S3PackApplicator {
                 | InvalidInputException | CodeUnitInsertionException
                 | OverlappingFunctionException exception) {
             throw new EspMappingException(DiagnosticCode.PACK_APPLICATION_FAILED,
-                "Ghidra rejected verified ESP32-S3 enrichment", exception);
+                "Ghidra rejected verified " + displayName + " enrichment", exception);
         }
         return new EspPackApplicationReport(true, rom.manifest().contentDigest(),
             peripherals.manifest().contentDigest(), blocks, symbols, dataAddresses,
@@ -126,7 +144,7 @@ public final class Esp32S3PackApplicator {
         int removedData = 0;
         int removedBlocks = 0;
         try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
-                program, "Remove receipt-scoped ESP32-S3 enrichment")) {
+                program, "Remove receipt-scoped " + displayName + " enrichment")) {
             for (EspAppliedSymbol applied : receipt.createdSymbols()) {
                 monitor.checkCancelled();
                 if (applied.function()) {
@@ -276,7 +294,7 @@ public final class Esp32S3PackApplicator {
             List<Long> created, List<EspPackConflict> conflicts)
             throws CodeUnitInsertionException, EspMappingException {
         Address target = address(program, offset);
-        Data existing = program.getListing().getDefinedDataAt(target);
+        Data existing = program.getListing().getDefinedDataContaining(target);
         if (existing != null) {
             if (!existing.getDataType().isEquivalent(DWordDataType.dataType)) {
                 conflicts.add(new EspPackConflict(offset, "TYPE_PRESERVED",
@@ -284,7 +302,7 @@ public final class Esp32S3PackApplicator {
             }
             return;
         }
-        if (program.getListing().getInstructionAt(target) != null) {
+        if (program.getListing().getInstructionContaining(target) != null) {
             conflicts.add(new EspPackConflict(offset, "INSTRUCTION_PRESERVED",
                 "Existing instruction was not overwritten"));
             return;
@@ -295,9 +313,9 @@ public final class Esp32S3PackApplicator {
         }
     }
 
-    private static void recordPackIdentity(Program program, EspRomSymbolPack rom,
+    private void recordPackIdentity(Program program, EspRomSymbolPack rom,
             EspPeripheralPack peripherals) {
-        var options = program.getOptions("Embedra ESP32-S3 Packs");
+        var options = program.getOptions("Embedra " + displayName + " Packs");
         options.setString("ROM Pack ID", rom.manifest().packId());
         options.setString("ROM Pack Version", rom.manifest().version().toString());
         options.setString("ROM Pack Digest", rom.manifest().contentDigest());

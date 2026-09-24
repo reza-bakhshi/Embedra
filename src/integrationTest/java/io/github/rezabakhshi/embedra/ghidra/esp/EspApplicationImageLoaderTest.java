@@ -65,6 +65,68 @@ class EspApplicationImageLoaderTest {
     }
 
     @Test
+    void detectsAndImportsOriginalEsp32AndEsp32S2WithIndependentTargets()
+            throws Exception {
+        for (String deviceId : List.of("esp32", "esp32s2")) {
+            EspApplicationImageLoader loader = new EspApplicationImageLoader();
+            ByteArrayProvider provider = new ByteArrayProvider("neutral.dat",
+                familyFixture(deviceId));
+            LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
+            assertEquals("Xtensa:LE:32:default",
+                spec.getLanguageCompilerSpec().getLanguageID().getIdAsString());
+            ImporterSettings settings = new ImporterSettings(provider,
+                deviceId + ".bin", null, "/", false, spec,
+                loader.getDefaultOptions(provider, spec, null, false, false),
+                new Object(), new MessageLog(), TaskMonitor.DUMMY);
+
+            try (LoadResults<? extends DomainObject> results = loader.load(settings)) {
+                results.getPrimary().apply(domainObject -> {
+                    Program program = (Program) domainObject;
+                    assertEquals("Xtensa:LE:32:default",
+                        program.getLanguageID().getIdAsString());
+                    assertEquals(3, program.getMemory().getBlocks().length);
+                    assertEquals("target." + deviceId, program.getOptions(
+                        EspApplicationImageLoader.ENRICHMENT_OPTIONS).getString(
+                            "Target Provider", ""));
+                });
+            }
+        }
+    }
+
+    @Test
+    void appliesMatchingOriginalEsp32AndEsp32S2PacksWhenSelected() throws Exception {
+        for (String deviceId : List.of("esp32", "esp32s2")) {
+            String displayName = deviceId.equals("esp32") ? "ESP32" : "ESP32-S2";
+            EspApplicationImageLoader loader = new EspApplicationImageLoader();
+            ByteArrayProvider provider = new ByteArrayProvider("neutral.dat",
+                familyFixture(deviceId));
+            LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
+            List<Option> options = loader.getDefaultOptions(provider, spec, null,
+                false, false);
+            options.stream().filter(option -> option.getName().equals(
+                EspApplicationImageLoader.APPLY_ESP32S3_PACKS_OPTION)).findFirst()
+                .orElseThrow().setValue(Boolean.TRUE);
+            ImporterSettings settings = new ImporterSettings(provider,
+                deviceId + ".bin", null, "/", false, spec, options, new Object(),
+                new MessageLog(), TaskMonitor.DUMMY);
+
+            try (LoadResults<? extends DomainObject> results = loader.load(settings)) {
+                results.getPrimary().apply(domainObject -> {
+                    Program program = (Program) domainObject;
+                    assertEquals("espressif." + deviceId + ".rom", program.getOptions(
+                        "Embedra " + displayName + " Packs").getString(
+                            "ROM Pack ID", ""));
+                    assertEquals("espressif." + deviceId + ".svd", program.getOptions(
+                        "Embedra " + displayName + " SVD").getString("Pack ID", ""));
+                    assertTrue(program.getOptions(
+                        EspApplicationImageLoader.ENRICHMENT_OPTIONS).getBoolean(
+                            "Selected", false));
+                });
+            }
+        }
+    }
+
+    @Test
     void exposesConservativeOptInForBundledRegisterAndRomEnrichment()
             throws Exception {
         EspApplicationImageLoader loader = new EspApplicationImageLoader();
@@ -453,6 +515,18 @@ class EspApplicationImageLoaderTest {
                 "/fixtures/esp32s3/" + name)) {
             if (input == null) {
                 throw new IOException("Missing fixture " + name);
+            }
+            return input.readAllBytes();
+        }
+    }
+
+    private static byte[] familyFixture(String deviceId) throws IOException {
+        String resource = "/fixtures/" + deviceId + "/" + deviceId
+            + "-freestanding-minimal.bin";
+        try (InputStream input = EspApplicationImageLoaderTest.class
+                .getResourceAsStream(resource)) {
+            if (input == null) {
+                throw new IOException("Missing fixture " + resource);
             }
             return input.readAllBytes();
         }

@@ -38,11 +38,19 @@ Optional `esp_app_desc_t` extraction runs only on an already validated immutable
 
 The generic parser reports the image's encoded chip ID without selecting a target. A caller may instead supply an expected chip ID for an explicit mismatch check. The pure layer enforces only architecture-neutral structural entry evidence: even alignment and containment in an encoded segment. Executable-memory classification, exact language alignment, and Ghidra entry creation remain target-provider and loader responsibilities in later tasks; the parser does not guess them.
 
-## ESP32-S3 target provider
+## Implemented ESP target providers
 
-The first concrete target provider resolves ESP32-S3 only when image chip ID `9` matches the bundled, provenance-bearing esptool definition. The registry is a generated-data boundary with an intentionally narrow T013 snapshot; the complete Espressif catalog generator remains T026 and future devices are not added as provider branches.
+The implemented providers resolve original ESP32 chip ID `0`, ESP32-S2 chip ID
+`2`, and ESP32-S3 chip ID `9` only when the bundled provenance-bearing esptool
+definitions match. Catalog records do not become provider branches.
 
-The provider selects Embedra's Ghidra `Xtensa:LE:32:esp32s3` extension language with compiler specification `default`, including one-byte instruction alignment and tested SALT/SALTU semantics. Address classification uses the half-open ESP-IDF v6.0 DROM, IROM, IRAM, DRAM, and RTC data definitions and refuses ranges spanning a boundary or using another address space. RTC data is read/write but non-executable in the Xtensa program; ULP firmware requires its own architecture-specific program. Entry decisions additionally require containment in an image segment classified executable. The provider returns a pure plan decision and never mutates a Ghidra program.
+ESP32 and ESP32-S2 select Ghidra's built-in `Xtensa:LE:32:default` language;
+ESP32-S3 selects Embedra's `Xtensa:LE:32:esp32s3` extension language with tested
+SALT/SALTU semantics. Each provider owns its half-open ESP-IDF v6.0 DROM, IROM,
+IRAM, DRAM, and RTC-data definitions. Entry decisions require containment in an
+image segment classified executable. ESP32 records two symmetric LX6 cores
+sharing application memory; ESP32-S2 records one LX7 application core. The
+providers do not create ULP nodes without ULP firmware evidence.
 
 ## Shared ESP target services
 
@@ -117,11 +125,12 @@ report configuration-required instead of guessing. Handler failures are typed,
 non-fatal enrichment diagnostics and do not invalidate an otherwise valid
 full-flash workspace.
 
-## ESP32-S3 offline enrichment packs
+## ESP-family offline enrichment packs
 
-ROM and peripheral content remain outside target-provider code. A deterministic
-generator extracts only object-like symbols/registers from the exact pinned
-ESP-IDF revision into two independently versioned, closed JSON contracts. The
+ROM and peripheral content remain outside target-provider code. Deterministic
+generators create target-specific ESP32, ESP32-S2, and ESP32-S3 pack sets from
+the exact pinned ESP-IDF and Espressif SVD revisions. They extract only
+object-like symbols/registers into independently versioned, closed JSON contracts. The
 normal pack manifest provides identity, supported device, source URI/revision,
 license, transformation, redistribution state, sizes, and digests; content also
 retains every contributing repository-relative source path. Integrity and

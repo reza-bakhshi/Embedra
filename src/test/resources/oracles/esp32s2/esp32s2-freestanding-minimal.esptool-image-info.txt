@@ -1,0 +1,44 @@
+esptool v5.4.0
+Image size: 416 bytes
+
+ESP32-S2 Image Header
+=====================
+Image version: 1
+Entry point: 0x40020008
+Segments: 3
+Flash size: 2MB
+Flash freq: 40m
+Flash mode: DIO
+
+ESP32-S2 Extended Image Header
+==============================
+WP pin: 0xee (disabled)
+Flash pins drive settings: clk_drv: 0x0, q_drv: 0x0, d_drv: 0x0, cs0_drv: 0x0, hd_drv: 0x0, wp_drv: 0x0
+Chip ID: 2 (ESP32-S2)
+Minimal chip revision: v0.0, (legacy min_rev = 0)
+Maximal chip revision: v655.35
+
+Segments Information
+====================
+Segment   Length   Load addr   File offs  Memory types
+-------  -------  ----------  ----------  ------------
+      0  0x00120  0x3f000020  0x00000018  DROM
+      1  0x00004  0x3ffb0000  0x00000140  BYTE_ACCESSIBLE, MEM_INTERNAL, DRAM
+      2  0x00024  0x40020000  0x0000014c  MEM_INTERNAL, IRAM
+
+ESP32-S2 Image Footer
+=====================
+Checksum: 0xb8 (valid)
+Validation hash: 7e650fb75bd5009a7e8adb3eb7900c280f4566f9e8d015da8e6ab8b4f214b104 (valid)
+
+Application Information
+=======================
+Project name: embedra_t028_esp32s2
+App version: 1.0.0
+Compile time:
+ELF file SHA256: 0000000000000000000000000000000000000000000000000000000000000000
+ESP-IDF: fixture-no-idf-runtime
+Minimal eFuse block revision: 0.0
+Maximal eFuse block revision: 1.99
+MMU page size: 64 KB
+Secure version: 0

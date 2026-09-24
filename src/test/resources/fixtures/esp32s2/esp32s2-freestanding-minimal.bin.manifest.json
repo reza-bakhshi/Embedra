@@ -1,0 +1,34 @@
+{
+  "fixtureId": "esp32s2.esptool-v5.4.0.esp32s2-freestanding-minimal",
+  "sha256": "79e6befbb34c2f1fbbf1a5ed5d03ec9d4290e56d6d7a08fa5ff38f9c992d19d7",
+  "target": "ESP32-S2",
+  "device": "ESP32-S2 (chip ID 2; no exact part claim)",
+  "inputFormat": "Espressif application image v1",
+  "origin": "Generated from repository freestanding C and linker sources",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "sourceProvenance": [
+    {
+      "name": "ESP-IDF memory and application-image definitions",
+      "revision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+      "license": "Apache-2.0",
+      "url": "https://github.com/espressif/esp-idf/tree/v6.0/components/soc"
+    }
+  ],
+  "generatorRevision": "sha256:14fd1a05e43210f1256f45233177e5412ce29ca7a1ca62dcf675d796cbef95ed",
+  "generationCommand": "source ESP-IDF v6.0 export.sh; scripts/generate-esp32-esp32s2-golden-fixtures.sh",
+  "toolchain": "Espressif xtensa-esp-elf esp-15.2.0_20251204; esptool 5.4.0",
+  "oracleCommands": [
+    "esptool --chip ESP32-S2 image-info <fixture>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/esp32s2/esp32s2-freestanding-minimal.expectations.json",
+  "requirements": [
+    "T028",
+    "ESP-001",
+    "ESP-002",
+    "ESP-003",
+    "ESP-004",
+    "ESP-005",
+    "TOPO-006"
+  ]
+}

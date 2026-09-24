@@ -3,10 +3,11 @@
 Embedra is an open-source Ghidra extension for embedded-firmware reverse engineering and hardware CTF analysis.
 
 `Embedra-SpecKit.md` is the single authoritative project specification. The
-current experimental support is deliberately narrow: structurally validated
-ESP32-S3 application images and merged full-flash captures whose partition
-table and MD5 record validate. Exact silicon/package variants and real-device
-hardware verification are not yet claimed; see `docs/support-matrix.md`.
+current experimental support includes structurally validated original ESP32,
+ESP32-S2, and ESP32-S3 application images. Merged full-flash capture support
+remains proven for ESP32-S3 when its partition table and MD5 record validate.
+Exact silicon/package variants and real-device hardware verification are not
+yet claimed; see `docs/support-matrix.md`.
 
 The full-flash loader identifies input from bytes, not its filename. It creates
 independent Ghidra programs for the validated bootloader and every unencrypted
@@ -18,11 +19,11 @@ redacted. Filesystems that require build-time configuration are not guessed.
 Imported programs retain the source-flash SHA-256, partition-table offset,
 physical image range, role, and partition label under program options.
 
-The distribution also carries offline ESP32-S3 ROM-symbol, ESP-IDF peripheral,
-and official Espressif SVD packs. In Ghidra's import-options screen, select
-`Apply verified ESP32-S3 ROM, peripheral, and SVD packs` only after confirming
-that common ESP32-S3 data is appropriate for the capture; Embedra does not infer
-the exact silicon revision. The integrity-first applicators add ROM names,
+The distribution also carries independent offline ROM-symbol, ESP-IDF
+peripheral, and official Espressif SVD packs for ESP32, ESP32-S2, and ESP32-S3.
+In Ghidra's import-options screen, select `Apply verified target ROM, peripheral,
+and SVD packs` only after confirming that the target data is appropriate for the
+capture; Embedra does not infer the exact silicon revision. The integrity-first applicators add ROM names,
 volatile peripheral windows, register labels, field-aware structures, and SVD
 descriptions without replacing user-primary names, comments, or existing types.
 Pack identities, revisions, reconciliation counts, and digests are stored in
@@ -38,10 +39,11 @@ explicitly during import.
 
 ESP image parsing, provider resolution, memory classification, entry
 validation, and execution-topology results use ISA-neutral ESP contracts.
-ESP32-S3 remains the only implemented provider: other catalog entries remain
-`PLANNED` until their own providers, fixtures, packs, and acceptance evidence
-land. The current ESP32-S3 topology reports the single application CPU shape
-proven by the import fixture and does not infer additional execution units.
+ESP32, ESP32-S2, and ESP32-S3 are implemented providers; other catalog entries
+remain `PLANNED` until their own providers, fixtures, packs, and acceptance
+evidence land. ESP32 topology records two symmetric LX6 application cores with
+shared image memory, while ESP32-S2 and the currently proven ESP32-S3 shape each
+record one application CPU. ULP firmware is not inferred from these fixtures.
 
 Embedra also ships one provenance-verified ESP32-S3 ESP-IDF Function ID
 pilot database under `fid/esp32s3/`. Ghidra does not attach it automatically.

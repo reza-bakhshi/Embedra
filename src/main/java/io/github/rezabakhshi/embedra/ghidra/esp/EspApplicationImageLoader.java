@@ -23,8 +23,9 @@ import io.github.rezabakhshi.embedra.formats.esp.EspExecutableRole;
 import io.github.rezabakhshi.embedra.formats.esp.EspFullFlashWorkspace;
 import io.github.rezabakhshi.embedra.formats.esp.EspFullFlashWorkspacePlanner;
 import io.github.rezabakhshi.embedra.targets.LanguageSelection;
-import io.github.rezabakhshi.embedra.targets.esp.Esp32S3TargetProvider;
-import io.github.rezabakhshi.embedra.targets.esp.EspressifChipIdRegistry;
+import io.github.rezabakhshi.embedra.targets.esp.EspTargetProvider;
+import io.github.rezabakhshi.embedra.targets.esp.EspTargetProviders;
+import io.github.rezabakhshi.embedra.targets.esp.EspTargetResolution;
 import io.github.rezabakhshi.embedra.ghidra.transaction.GhidraProgramTransaction;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,11 +33,12 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
-/** Ghidra loader entry point for validated ESP32-S3 application images. */
+/** Ghidra loader entry point for validated, independently supported ESP images. */
 public final class EspApplicationImageLoader extends AbstractLibrarySupportLoader {
     public static final String APPLY_ESP32S3_PACKS_OPTION =
-        "Apply verified ESP32-S3 ROM, peripheral, and SVD packs"
+        "Apply verified target ROM, peripheral, and SVD packs"
             + " (explicit revision assertion)";
 
     public static final String ENRICHMENT_DISABLED_CODE = "ESP32S3_ENRICHMENT_DISABLED";
@@ -44,11 +46,6 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
     public static final String ENRICHMENT_APPLIED_CODE = "ESP32S3_ENRICHMENT_APPLIED";
 
     public static final String ENRICHMENT_OPTIONS = "Embedra ESP32-S3 Import";
-
-    private static final int ESP32_S3_CHIP_ID = 9;
-
-    private final Esp32S3TargetProvider targetProvider = new Esp32S3TargetProvider(
-        EspressifChipIdRegistry.loadBundled());
 
     @Override
     public String getName() {
@@ -62,8 +59,8 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
         List<Option> options = new ArrayList<>(super.getDefaultOptions(provider, loadSpec,
             domainObject, loadIntoProgram, mirrorFsLayout));
         options.add(new Option(APPLY_ESP32S3_PACKS_OPTION, Boolean.class,
-            Boolean.FALSE, "Embedra ESP32-S3 enrichment",
-            "Explicitly apply provenance-checked common ESP32-S3 data; "
+            Boolean.FALSE, "Embedra ESP enrichment",
+            "Explicitly apply provenance-checked common target data; "
                 + "silicon revision is not inferred"));
         return options;
     }
@@ -77,7 +74,7 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
         }
         Option selected = findOption(options);
         if (selected == null || !(selected.getValue() instanceof Boolean)) {
-            return "ESP32-S3 pack option must have a Boolean value";
+            return "ESP pack option must have a Boolean value";
         }
         return null;
     }
@@ -87,23 +84,27 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
             throws IOException {
         byte[] input = readBounded(provider);
         try {
-            if (isStandaloneImage(input)) {
-                EspImage image = EspImageParser.parseForChip(input, ESP32_S3_CHIP_ID,
+            EspTargetResolution target;
+            Optional<EspTargetResolution> standalone = standaloneTarget(input);
+            if (standalone.isPresent()) {
+                target = standalone.orElseThrow();
+            }
+            else {
+                EspFullFlashWorkspace workspace = EspFullFlashWorkspacePlanner.plan(input,
                     ParserLimits.defaults(), CancellationToken.none());
-                if (!targetProvider.supports(image).supported()) {
+                target = resolveTarget(workspace.executables().get(0).image());
+                boolean mixedTargets = workspace.executables().stream().anyMatch(executable ->
+                    executable.image().header().chipId() != target.provider().chipId());
+                if (mixedTargets) {
                     return List.of();
                 }
             }
-            else {
-                EspFullFlashWorkspacePlanner.plan(input, ParserLimits.defaults(),
-                    CancellationToken.none());
-            }
-            LanguageSelection language = targetProvider.language();
+            LanguageSelection language = target.provider().language();
             return List.of(new LoadSpec(this, 0,
                 new LanguageCompilerSpecPair(language.languageId(),
                     language.compilerSpecId()), true));
         }
-        catch (DiagnosticException exception) {
+        catch (DiagnosticException | IllegalArgumentException exception) {
             return List.of();
         }
     }
@@ -112,7 +113,7 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
     protected List<Loaded<Program>> loadProgram(ImporterSettings settings)
             throws CancelledException, IOException {
         byte[] input = readBounded(settings.provider());
-        if (isStandaloneImage(input)) {
+        if (standaloneTarget(input).isPresent()) {
             return super.loadProgram(settings);
         }
         try {
@@ -132,12 +133,14 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
         CancellationToken cancellation = settings.monitor()::isCancelled;
         try {
             cancellation.throwIfCancellationRequested();
-            EspImportWorkflowResult result = new EspApplicationImportService().importImage(
-                program, input, settings.monitor());
+            EspTargetProvider target = resolveTarget(EspImageParser.parse(input,
+                ParserLimits.defaults(), cancellation)).provider();
+            EspImportWorkflowResult result = new EspApplicationImportService(target)
+                .importImage(program, input, settings.monitor());
             settings.log().appendMsg(getName(), "Mapped "
                 + result.importReport().segments().size() + " validated segments for "
                 + result.importReport().deviceId());
-            applySelectedEnrichment(program, settings);
+            applySelectedEnrichment(program, target, settings);
         }
         catch (DiagnosticException exception) {
             throw diagnosticIOException(exception);
@@ -164,9 +167,10 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
                 Program program = createProgram(childSettings);
                 boolean retained = false;
                 try {
+                    EspTargetProvider target = resolveTarget(executable.image()).provider();
                     EspImportWorkflowResult result;
                     try {
-                        result = new EspApplicationImportService().importImage(program,
+                        result = new EspApplicationImportService(target).importImage(program,
                             executable.bytes(), settings.monitor(),
                             EspFlashProgramProvenance.from(workspace, executable));
                     }
@@ -175,11 +179,11 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
                     }
                     settings.log().appendMsg(getName(), "Mapped "
                         + result.importReport().segments().size() + " validated segments for "
-                        + "ESP32-S3 "
+                        + target.providerId() + " "
                         + executable.role().name().toLowerCase(Locale.ROOT)
                         + " image from flash offset 0x"
                         + Long.toHexString(executable.flashRange().offset()));
-                    applySelectedEnrichment(program, childSettings);
+                    applySelectedEnrichment(program, target, childSettings);
                     loadedPrograms.add(new Loaded<>(program, childSettings));
                     retained = true;
                 }
@@ -200,17 +204,31 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
         }
     }
 
-    private static boolean isStandaloneImage(byte[] input) {
+    private static EspTargetResolution resolveTarget(EspImage image) {
+        EspTargetResolution resolution = EspTargetProviders.resolver().resolve(image)
+            .orElseThrow(() ->
+            new IllegalArgumentException("ESP image has no supported target provider"));
+        boolean segmentsMappable = image.segments().stream().allMatch(segment ->
+            resolution.provider().classify(segment.targetRange()).mappable());
+        if (!segmentsMappable || !resolution.provider().validateEntry(
+                image.header().entryPoint(), image).accepted()) {
+            throw new IllegalArgumentException(
+                "ESP image ranges do not match the selected target provider");
+        }
+        return resolution;
+    }
+
+    private static Optional<EspTargetResolution> standaloneTarget(byte[] input) {
         if (EspImageDetector.detect(input) != EspImageDetection.MATCH) {
-            return false;
+            return Optional.empty();
         }
         try {
-            EspImageParser.parseForChip(input, ESP32_S3_CHIP_ID,
-                ParserLimits.defaults(), CancellationToken.none());
-            return true;
+            EspImage image = EspImageParser.parse(input, ParserLimits.defaults(),
+                CancellationToken.none());
+            return Optional.of(resolveTarget(image));
         }
-        catch (DiagnosticException failure) {
-            return false;
+        catch (DiagnosticException | IllegalArgumentException failure) {
+            return Optional.empty();
         }
     }
 
@@ -230,43 +248,51 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
             + exception.getMessage(), exception);
     }
 
-    private void applySelectedEnrichment(Program program, ImporterSettings settings)
+    private void applySelectedEnrichment(Program program, EspTargetProvider target,
+            ImporterSettings settings)
             throws IOException, CancelledException {
         Option option = findOption(settings.options());
         if (option == null || !Boolean.TRUE.equals(option.getValue())) {
-            recordEnrichmentSelection(program, false);
+            recordEnrichmentSelection(program, target, false);
             settings.log().appendMsg(getName(), ENRICHMENT_DISABLED_CODE
                 + ": Raw mapping succeeded. Revision-dependent ROM/peripheral/SVD "
                 + "enrichment was not applied; register names and Embedra crypto "
                 + "analysis are unavailable. Confirm applicability, then explicitly "
-                + "select the ESP32-S3 enrichment import option.");
+                + "select the ESP enrichment import option.");
             return;
         }
         try {
             CancellationToken cancellation = settings.monitor()::isCancelled;
-            Esp32S3BundledPacks packs = Esp32S3BundledPacks.load(cancellation);
-            EspSvdApplicationReport svd = new Esp32S3SvdApplicator().apply(program,
-                packs.svd(), settings.monitor());
-            EspPackApplicationReport symbols = new Esp32S3PackApplicator().apply(program,
-                packs.rom(), packs.peripherals(), settings.monitor());
-            recordEnrichmentSelection(program, true);
+            TargetPackConfiguration configuration = packConfiguration(target);
+            Esp32S3BundledPacks packs = Esp32S3BundledPacks.load(
+                configuration.deviceId(), cancellation);
+            EspSvdApplicationReport svd = new Esp32S3SvdApplicator(
+                configuration.deviceId(), configuration.displayName()).apply(program,
+                    packs.svd(), settings.monitor());
+            EspPackApplicationReport symbols = new Esp32S3PackApplicator(
+                configuration.deviceId(), configuration.displayName(),
+                configuration.romCodeLength()).apply(program, packs.rom(),
+                    packs.peripherals(), settings.monitor());
+            recordEnrichmentSelection(program, target, true);
             settings.log().appendMsg(getName(), ENRICHMENT_APPLIED_CODE
-                + ": Applied explicit ESP32-S3 enrichment: "
+                + ": Applied explicit " + configuration.displayName() + " enrichment: "
                 + symbols.createdSymbols().size() + " ROM/header symbols, "
                 + svd.createdDataAddresses().size() + " SVD registers, "
                 + svd.createdComments() + " SVD descriptions; provenance stored in program");
         }
         catch (DiagnosticException | EspMappingException exception) {
-            throw new IOException("Explicit ESP32-S3 pack application failed: "
+            throw new IOException("Explicit ESP pack application failed: "
                 + exception.getMessage(), exception);
         }
     }
 
-    private static void recordEnrichmentSelection(Program program, boolean selected) {
+    private static void recordEnrichmentSelection(Program program,
+            EspTargetProvider target, boolean selected) {
         try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
-                program, "Record ESP32-S3 enrichment selection")) {
+                program, "Record ESP enrichment selection")) {
             var options = program.getOptions(ENRICHMENT_OPTIONS);
             options.setBoolean("Selected", selected);
+            options.setString("Target Provider", target.providerId());
             options.setString("Diagnostic Code", selected
                 ? ENRICHMENT_APPLIED_CODE : ENRICHMENT_DISABLED_CODE);
             transaction.commit();
@@ -278,11 +304,25 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
             APPLY_ESP32S3_PACKS_OPTION.equals(option.getName())).findFirst().orElse(null);
     }
 
+    private static TargetPackConfiguration packConfiguration(EspTargetProvider target) {
+        return switch (target.chipId()) {
+            case 0 -> new TargetPackConfiguration("esp32", "ESP32", 0x70000L);
+            case 2 -> new TargetPackConfiguration("esp32s2", "ESP32-S2", 0x20000L);
+            case 9 -> new TargetPackConfiguration("esp32s3", "ESP32-S3", 0x60000L);
+            default -> throw new IllegalArgumentException(
+                "No enrichment packs exist for chip ID " + target.chipId());
+        };
+    }
+
     private static byte[] readBounded(ByteProvider provider) throws IOException {
         long length = provider.length();
         if (length > ParserLimits.defaults().maxInputBytes() || length > Integer.MAX_VALUE) {
             throw new IOException("ESP image exceeds the configured input-byte limit");
         }
         return provider.readBytes(0, length);
+    }
+
+    private record TargetPackConfiguration(
+            String deviceId, String displayName, long romCodeLength) {
     }
 }

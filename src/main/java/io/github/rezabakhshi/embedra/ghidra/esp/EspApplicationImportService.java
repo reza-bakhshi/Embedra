@@ -32,8 +32,6 @@ import java.util.Optional;
 
 /** One shared deterministic import workflow for Ghidra GUI and headless callers. */
 public final class EspApplicationImportService {
-    private static final int ESP32_S3_CHIP_ID = 9;
-
     private static final Evidence STRUCTURE_EVIDENCE = new Evidence(
         EvidenceKind.VERIFIED_CHECKSUM, "validated ESP application image",
         "Header, segments, checksum, optional digest, and entry were validated");
@@ -42,8 +40,15 @@ public final class EspApplicationImportService {
         EvidenceKind.DOCUMENTED_FIELD, "ESP application segment header",
         "Encoded load address and length were retained exactly");
 
-    private final EspTargetResolver targetResolver = new EspTargetResolver(List.of(
-        new Esp32S3TargetProvider(EspressifChipIdRegistry.loadBundled())));
+    private final EspTargetProvider targetProvider;
+
+    public EspApplicationImportService() {
+        this(new Esp32S3TargetProvider(EspressifChipIdRegistry.loadBundled()));
+    }
+
+    public EspApplicationImportService(EspTargetProvider targetProvider) {
+        this.targetProvider = Objects.requireNonNull(targetProvider, "targetProvider");
+    }
 
     public EspImportWorkflowResult importImage(Program program, byte[] input,
             TaskMonitor monitor) throws DiagnosticException, EspMappingException,
@@ -65,10 +70,11 @@ public final class EspApplicationImportService {
         Objects.requireNonNull(input, "input");
         Objects.requireNonNull(monitor, "monitor");
         CancellationToken cancellation = monitor::isCancelled;
-        EspImage image = EspImageParser.parseForChip(input, ESP32_S3_CHIP_ID,
+        EspImage image = EspImageParser.parseForChip(input, targetProvider.chipId(),
             ParserLimits.defaults(), cancellation);
-        EspTargetResolution target = targetResolver.resolve(image).orElseThrow(() ->
-            new IllegalStateException("Validated ESP32-S3 image has no target provider"));
+        EspTargetResolution target = new EspTargetResolver(List.of(targetProvider))
+            .resolve(image).orElseThrow(() -> new IllegalStateException(
+                "Validated ESP image has no selected target provider"));
         EspAppDescriptionResult appDescription = EspAppDescriptionExtractor.extract(image);
         EspImportReport importReport = new EspApplicationImageMapper().map(program, image,
             target.provider(), monitor, provenance);
@@ -87,7 +93,7 @@ public final class EspApplicationImportService {
         }
         var description = appDescription.description().get();
         try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(program,
-                "Record ESP32-S3 application description")) {
+                "Record ESP application description")) {
             var options = program.getOptions(
                 EspProgramOptions.APP_DESCRIPTION);
             options.setString(

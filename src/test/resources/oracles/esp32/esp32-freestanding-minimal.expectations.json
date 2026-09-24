@@ -1,0 +1,22 @@
+{
+  "fixtureId": "esp32.esptool-v5.4.0.esp32-freestanding-minimal",
+  "imageSha256": "6bd5981e4c4ae4a245d41cd9ffcd27bb1b24f11210220b785db9cfc79bb4895d",
+  "imageSize": 416,
+  "esptoolVersion": "5.4.0",
+  "chipId": 0,
+  "target": "ESP32",
+  "entryPoint": "0x40080008",
+  "segmentCount": 3,
+  "loadAddresses": [
+    "0x3f400020",
+    "0x3ffae000",
+    "0x40080000"
+  ],
+  "checksum": "0x37",
+  "checksumValid": true,
+  "digestAppended": true,
+  "digest": "918766ea9f6eef5fcef009b78c295edfc7c25307c794f1d2f64bb1cc549ac0e6",
+  "digestValid": true,
+  "elfSha256": "c916aef1c31922055f547472688414f80fa12f95073ad901e183ed8ab4b33b63",
+  "elfMachine": "Tensilica Xtensa Processor"
+}

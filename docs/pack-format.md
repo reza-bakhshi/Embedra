@@ -26,22 +26,22 @@ Offline selection requires a pack ID and may require an exact version and exact 
 
 Redistribution status is evidence, not an override: locally installed restricted/prohibited packs remain usable when lawfully supplied, but must not be copied into public artifacts. T006 includes no vendor pack, catalog, or compatibility claim.
 
-## ESP32-S3 enrichment content
+## ESP-family enrichment content
 
-T022 adds two bundled offline packs, `espressif.esp32s3.rom` and
-`espressif.esp32s3.peripherals`, version `1.0.0`. Both target only exact device
-ID `esp32s3`, cite ESP-IDF v6.0 revision
+T022 and T028 add target-specific bundled ROM and peripheral packs for device
+IDs `esp32`, `esp32s2`, and `esp32s3`, version `1.0.0`. Each pack supports only
+its exact device ID, cites ESP-IDF v6.0 revision
 `662a3be354759d9487bf4b1a629fadb766cb1800`, declare Apache-2.0, and retain the
 deterministic transformation plus per-file and aggregate SHA-256 digests.
 
 ROM content conforms to `urn:embedra:schema:esp-rom-symbol-pack:1` and retains
-2,197 unique common/core, Bluetooth, libc, libgcc, and newlib symbol names,
-addresses, function/data category, and exact source-relative linker scripts.
+1,997 ESP32, 1,014 ESP32-S2, and 2,197 ESP32-S3 symbol names, addresses,
+function/data category, and exact source-relative linker scripts.
 Mutually conflicting optional BLE test/overlay scripts are deliberately not
 merged into the common pack. Peripheral content conforms to
-`urn:embedra:schema:esp-peripheral-pack:1` and retains 61 address windows and
-2,173 unique 32-bit register addresses with base and register aliases from the
-SoC linker/header sources.
+`urn:embedra:schema:esp-peripheral-pack:1`; ESP32 retains 52 windows and 1,418
+register addresses, ESP32-S2 retains 53 and 1,286, and ESP32-S3 retains 61 and
+2,173, with base and register aliases from the SoC linker/header sources.
 
 `scripts/generate-esp32s3-enrichment-packs.py <esp-idf-v6.0>` refuses any
 checkout except the pinned revision and requires repository Apache-license
@@ -53,18 +53,19 @@ conflicts. An application receipt identifies only created artifacts so they can
 be removed without remapping firmware bytes; changed/user-bearing blocks are
 left in place.
 
-Gate remediation adds `espressif.esp32s3.svd` version `1.0.0`, conforming to
+Gate remediation and T028 add matching target-specific SVD packs conforming to
 `urn:embedra:schema:esp-svd-pack:1`. It cites the official Apache-2.0
 Espressif SVD repository at immutable revision
 `be20aa12560889d6125d144cdb48cf615ac17628`. Its canonical content expands SVD
 register arrays and retains peripheral ranges, register access/reset metadata,
-descriptions, fields, and enumerated values when present. The current ESP32-S3
-source has no enumerated values; none are inferred from prose.
+descriptions, fields, and enumerated values when present. Values absent from
+the source are not inferred from prose.
 
 `scripts/generate-esp32s3-svd-pack.py <espressif-svd-checkout>` rejects another
 revision, missing license evidence, oversized/deep XML, and DTD/entity input.
-Generation cross-checks shared names against the existing ESP-IDF peripheral
-pack and fails on an address disagreement. The checked-in reconciliation
-records the source pack digest, 42 matching peripheral bases, 1,530 matching
-register addresses, and the fail-on-conflict policy. Installed operation uses
-only these bundled, integrity-checked files and performs no network access.
+Generation honors CMSIS `dimIndex`, cross-checks shared names against the
+matching ESP-IDF peripheral pack, and fails on an address disagreement. Each
+checked-in reconciliation records the source pack digest, matching peripheral
+bases and register addresses, and the fail-on-conflict policy. Installed
+operation uses only these bundled, integrity-checked files and performs no
+network access.

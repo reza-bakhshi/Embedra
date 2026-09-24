@@ -1,4 +1,6 @@
 # schema: embedra-espressif-chip-ids-v1
-# generated-scope: T013 ESP32-S3 only; complete catalog generation is T026
+# generated-scope: T028 implemented ESP32, ESP32-S2, and ESP32-S3 providers
 # chip-id	device-id	display-name	upstream-path	upstream-revision	upstream-license
+0	esp32	ESP32	esptool/targets/esp32.py	v5.4.0	GPL-2.0-or-later
+2	esp32s2	ESP32-S2	esptool/targets/esp32s2.py	v5.4.0	GPL-2.0-or-later
 9	esp32s3	ESP32-S3	esptool/targets/esp32s3.py	v5.4.0	GPL-2.0-or-later

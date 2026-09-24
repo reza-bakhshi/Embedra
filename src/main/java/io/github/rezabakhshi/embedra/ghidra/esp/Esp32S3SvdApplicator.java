@@ -34,9 +34,26 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-/** Applies ESP32-S3 SVD blocks, labels, field types, and descriptions safely. */
+/** Applies ESP-family SVD blocks, labels, field types, and descriptions safely. */
 public final class Esp32S3SvdApplicator {
-    private static final CategoryPath CATEGORY = new CategoryPath("/Embedra/ESP32-S3/SVD");
+    private final String deviceId;
+
+    private final String displayName;
+
+    private final CategoryPath category;
+
+    public Esp32S3SvdApplicator() {
+        this("esp32s3", "ESP32-S3");
+    }
+
+    public Esp32S3SvdApplicator(String deviceId, String displayName) {
+        this.deviceId = Objects.requireNonNull(deviceId, "deviceId");
+        this.displayName = Objects.requireNonNull(displayName, "displayName");
+        if (deviceId.isBlank() || displayName.isBlank()) {
+            throw new IllegalArgumentException("ESP SVD target configuration is invalid");
+        }
+        category = new CategoryPath("/Embedra/" + displayName + "/SVD");
+    }
 
     public EspSvdApplicationReport apply(Program program, EspSvdPack pack,
             TaskMonitor monitor) throws EspMappingException, CancelledException {
@@ -44,10 +61,10 @@ public final class Esp32S3SvdApplicator {
         Objects.requireNonNull(pack, "pack");
         Objects.requireNonNull(monitor, "monitor");
         monitor.checkCancelled();
-        if (!pack.manifest().supportedDevices().equals(List.of("esp32s3"))
-            || !pack.device().name().equals("ESP32-S3")) {
+        if (!pack.manifest().supportedDevices().equals(List.of(deviceId))
+            || !pack.device().name().equals(displayName)) {
             throw new EspMappingException(DiagnosticCode.PACK_APPLICATION_FAILED,
-                "SVD pack identity is not ESP32-S3");
+                "SVD pack identity is not " + displayName);
         }
         List<EspCreatedBlock> blocks = new ArrayList<>();
         List<EspAppliedSymbol> symbols = new ArrayList<>();
@@ -55,7 +72,7 @@ public final class Esp32S3SvdApplicator {
         List<EspPackConflict> conflicts = new ArrayList<>();
         int comments = 0;
         try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
-                program, "Apply verified ESP32-S3 SVD enrichment")) {
+                program, "Apply verified " + displayName + " SVD enrichment")) {
             for (EspSvdPeripheral peripheral : pack.device().peripherals()) {
                 monitor.checkCancelled();
                 ensureBlock(program, peripheral, blocks, conflicts);
@@ -79,7 +96,7 @@ public final class Esp32S3SvdApplicator {
                 | InvalidInputException | CodeUnitInsertionException
                 | InvalidDataTypeException exception) {
             throw new EspMappingException(DiagnosticCode.PACK_APPLICATION_FAILED,
-                "Ghidra rejected verified ESP32-S3 SVD enrichment", exception);
+                "Ghidra rejected verified " + displayName + " SVD enrichment", exception);
         }
         return new EspSvdApplicationReport(true, pack.manifest().contentDigest(), blocks,
             symbols, dataAddresses, comments, conflicts);
@@ -144,7 +161,7 @@ public final class Esp32S3SvdApplicator {
         created.add(new EspAppliedSymbol(name, offset, false));
     }
 
-    private static void applyType(Program program, EspSvdPeripheral peripheral,
+    private void applyType(Program program, EspSvdPeripheral peripheral,
             EspSvdRegister register, List<Long> created,
             List<EspPackConflict> conflicts) throws EspMappingException,
             CodeUnitInsertionException, InvalidDataTypeException {
@@ -153,7 +170,7 @@ public final class Esp32S3SvdApplicator {
             return;
         }
         DataType proposed = registerType(program, peripheral, register);
-        Data existing = program.getListing().getDefinedDataAt(target);
+        Data existing = program.getListing().getDefinedDataContaining(target);
         if (existing != null) {
             if (!existing.getDataType().isEquivalent(proposed)) {
                 conflicts.add(new EspPackConflict(register.address(), "TYPE_PRESERVED",
@@ -161,7 +178,7 @@ public final class Esp32S3SvdApplicator {
             }
             return;
         }
-        if (program.getListing().getInstructionAt(target) != null) {
+        if (program.getListing().getInstructionContaining(target) != null) {
             conflicts.add(new EspPackConflict(register.address(),
                 "INSTRUCTION_PRESERVED", "Existing instruction was not overwritten"));
             return;
@@ -170,13 +187,13 @@ public final class Esp32S3SvdApplicator {
         created.add(register.address());
     }
 
-    private static DataType registerType(Program program, EspSvdPeripheral peripheral,
+    private DataType registerType(Program program, EspSvdPeripheral peripheral,
             EspSvdRegister register) throws InvalidDataTypeException {
         if (register.sizeBits() != 32 || register.fields().isEmpty()) {
             return DWordDataType.dataType;
         }
         String typeName = registerLabel(peripheral.name(), register.name()) + "_t";
-        StructureDataType structure = new StructureDataType(CATEGORY, typeName, 4,
+        StructureDataType structure = new StructureDataType(category, typeName, 4,
             program.getDataTypeManager());
         for (EspSvdField field : register.fields()) {
             DataType fieldType = fieldType(program, typeName, field);
@@ -188,12 +205,12 @@ public final class Esp32S3SvdApplicator {
             DataTypeConflictHandler.KEEP_HANDLER);
     }
 
-    private static DataType fieldType(Program program, String registerType,
+    private DataType fieldType(Program program, String registerType,
             EspSvdField field) {
         if (field.enumeratedValues().isEmpty()) {
             return UnsignedIntegerDataType.dataType;
         }
-        EnumDataType enumeration = new EnumDataType(CATEGORY,
+        EnumDataType enumeration = new EnumDataType(category,
             registerType + "_" + safeName(field.name()) + "_e", 4,
             program.getDataTypeManager());
         for (EspSvdEnumeratedValue value : field.enumeratedValues()) {
@@ -219,8 +236,8 @@ public final class Esp32S3SvdApplicator {
         return 1;
     }
 
-    private static void recordIdentity(Program program, EspSvdPack pack) {
-        var options = program.getOptions("Embedra ESP32-S3 SVD");
+    private void recordIdentity(Program program, EspSvdPack pack) {
+        var options = program.getOptions("Embedra " + displayName + " SVD");
         options.setString("Pack ID", pack.manifest().packId());
         options.setString("Pack Version", pack.manifest().version().toString());
         options.setString("Pack Digest", pack.manifest().contentDigest());
