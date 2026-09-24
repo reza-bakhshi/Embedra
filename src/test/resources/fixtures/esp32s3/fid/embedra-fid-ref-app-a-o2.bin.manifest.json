@@ -1,0 +1,22 @@
+{
+  "fixtureId": "esp32s3.idf-v6.0.embedra-fid-ref-app-a-o2-image",
+  "sha256": "de473683131f42d8f8a895e17b1741dafe69e5866a817427ccffce961894c70d",
+  "target": "ESP32-S3",
+  "device": "ESP32-S3 (chip ID 9; no package or embedded-memory variant claim)",
+  "inputFormat": "Espressif application image v1 (inherently stripped)",
+  "origin": "esptool elf2image of the committed debug-stripped reference ELF at the pinned revision; the application description embeds the ELF digest",
+  "license": "Apache-2.0 sources and audited ESP-IDF components; linked toolchain runtime conveyed under its runtime exception (see THIRD_PARTY_NOTICES.md)",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:4b8aa27398da69c9f15934f2e5b74c019564915899f3cde53db5c88d221690c7",
+  "generationCommand": "source the ESP-IDF v6.0 export environment and run scripts/generate-esp32s3-fid-ref.sh (Ghidra 12.1.3 required for the database step only)",
+  "toolchain": "Espressif xtensa-esp-elf esp-15.2.0_20251204 (gcc 15.2.0, binutils 2.45); ESP-IDF v6.0 662a3be354759d9487bf4b1a629fadb766cb1800; esptool 5.4.0",
+  "oracleCommands": [
+    "esptool --chip esp32s3 image-info <fixture>",
+    "xtensa-esp32s3-elf-nm --defined-only --print-size <fixture>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/esp32s3/fid/esp32s3-fid-reference-digests.json",
+  "requirements": [
+    "T026A",
+    "ESP-021"
+  ]
+}

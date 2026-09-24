@@ -3,8 +3,8 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T026 — authoritative ESP catalog (`COMPLETE`)**.
-- Last completed task: **T026**.
+- Current task: **T027 — shared Xtensa/RISC-V-neutral services (`NEXT`)**.
+- Last completed task: **T026A — ESP32-S3 ESP-IDF Function ID pilot**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
@@ -39,9 +39,11 @@ digest-gated restricted-capture regression, and a bounded pure PNG candidate
 classifier. The restricted candidate is invalid, and no generalized media or
 filesystem work has begun.
 
-SpecKit now schedules **T026A**, a bounded ESP32-S3 ESP-IDF FIDB pilot, before
-T027. This is a planned task; no FIDB has been generated or attached by
-Embedra. The handoff prompt is `.embedra/prompts/T026A-esp32s3-fidb.md`.
+T026A completed an opt-in, default-off ESP32-S3 ESP-IDF v6.0 Function ID
+pilot. Its license-audited FIDB, exact provenance descriptor, and artifact
+hashes are recorded in `.embedra/evidence/tasks/T026A.md` and ADR 0021. It
+names only matching functions from the pinned reference identity; it does not
+claim arbitrary stripped application or cross-version coverage.
 
 ## Changed Files
 
@@ -73,8 +75,9 @@ Embedra. The handoff prompt is `.embedra/prompts/T026A-esp32s3-fidb.md`.
   function bodies without a reported repair failure. The mapped-segment log
   now omits the user-supplied input basename; a red-to-green integration test
   covers that privacy fix.
-- T001-T026 implementation and gate evidence are committed. Restricted
-  `esp32s3_ctf_dump_4MB.bin` remains ignored and untracked. The
+- T001-T026A implementation and gate evidence are committed. T027 is next;
+  T064 remains unstarted. Restricted local firmware remains ignored and
+  untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
   absent; its ignore and package-exclusion safeguards remain.
 
@@ -82,5 +85,10 @@ No complete device catalog, exact variant, board, or hardware support claim was 
 
 ## Exact Next Action
 
-Begin T026A using `.embedra/prompts/T026A-esp32s3-fidb.md`. Complete and
-commit its evidence before T027; do not start T028 until T027 is complete.
+Begin T027: refactor only proven shared ESP behavior into common
+Xtensa/RISC-V-neutral services and the common execution-topology contract. Do
+not start T028 until T027 is complete.
+
+T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
+Two clean quality-script builds produced identical extension ZIPs with SHA-256
+`ffbc60b9c17fb66747a1adecc8d45cbd6267591038ce6eaf283fea82664ac57c`.

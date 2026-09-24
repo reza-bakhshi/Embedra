@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "ff5f7dc5371dadb25fc6ccac22a18957c2c6fdbf4c0e62e9e00f3efcc2176ad2"
+    "sha256": "13d6db0f5efd5683e99416e8b1c29b36afd07bf94d9f96d99e7cc287796fc4e4"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T026",
+    "id": "T026A",
     "status": "COMPLETE",
-    "reasonCode": "ESP_CATALOG_GENERATED_AND_VERIFIED"
+    "reasonCode": "ESP32S3_FID_PILOT_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -36,7 +36,8 @@
     "T023",
     "T024",
     "T025",
-    "T026"
+    "T026",
+    "T026A"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -67,8 +68,10 @@
     "commit": "42e4369285b70ebd130c6e1cf1b611642bef3aea"
   },
   "workingTree": {
-    "state": "CLEAN",
-    "uncommittedWork": []
+    "state": "IN_PROGRESS",
+    "uncommittedWork": [
+      "T026A implementation and evidence; commit pending"
+    ]
   },
   "toolchains": {
     "ghidra": {
@@ -250,11 +253,15 @@
     "commands": ".embedra/evidence/commands.jsonl",
     "logDrivenRemediation": ".embedra/evidence/tasks/T025-log-driven-remediation.md",
     "gateAddendum": ".embedra/evidence/gates/esp32s3-full-flash-r2-language-addendum.md",
-    "nextTaskPrompt": ".embedra/prompts/T026A-esp32s3-fidb.md"
+    "nextTaskPrompt": ".embedra/prompts/T026A-esp32s3-fidb.md",
+    "taskT026A": ".embedra/evidence/tasks/T026A.md",
+    "adrT026A": "docs/adr/0021-esp32s3-function-id-pilot.md",
+    "fidbT026A": "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb",
+    "specification": "Embedra-SpecKit.md"
   },
   "knownFailures": [],
-  "nextTask": "T026A",
-  "nextAction": "Begin the ESP32-S3 ESP-IDF Function ID pilot T026A using .embedra/prompts/T026A-esp32s3-fidb.md; complete and commit its evidence before T027. Do not start T028 until T027 is complete.",
+  "nextTask": "T027",
+  "nextAction": "Begin T027: refactor only proven shared ESP behavior into common Xtensa/RISC-V-neutral services and the common execution-topology contract. Do not start T028 until T027 is complete.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -264,9 +271,9 @@
     },
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
-      "sha256": "0e28b05738b45d02086d7527a93d78b3f5f881628705f1658d08bf3dd18d8e82",
-      "sizeBytes": 882187,
-      "status": "PRE_T027_LOG_REVIEW_REPRODUCIBLE_ARTIFACT"
+      "sha256": "ffbc60b9c17fb66747a1adecc8d45cbd6267591038ce6eaf283fea82664ac57c",
+      "sizeBytes": 1005330,
+      "status": "T026A_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -357,19 +364,14 @@
   ],
   "mostRecentCommands": [
     {
-      "command": "JAVA_HOME=<jdk21> ./gradlew --offline --no-daemon pureTest; python3 -m unittest scripts/tests/test_generate_esp_catalog.py",
-      "exitStatus": 1,
-      "result": "EXPECTED FAIL: Java compilation reported absent ESP catalog/resolver symbols and Python reported the absent generator."
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew test --tests *Esp32S3FidProvenanceTest ghidraIntegrationTest --tests *Esp32S3FunctionIdAnalyzerTest --tests *Esp32S3FunctionIdPilotFixturesTest --max-workers=1",
+      "exitStatus": 0,
+      "result": "PASS: focused FID provenance and real-Ghidra analyzer/fixture tests."
     },
     {
-      "command": "python3 scripts/generate-esp-catalog.py ingest/generate/check/drift <pinned-official-inputs>",
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
       "exitStatus": 0,
-      "result": "PASS: 53 silicon, 161 module, and 58 board records generated deterministically; identical-input drift reported no additions, removals, or changes."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> verify reproducibility, then rerun clean check/buildExtension uncached",
-      "exitStatus": 0,
-      "result": "PASS: 140 unit, 22 real-Ghidra, and 4 Python generator tests; two byte-identical builds followed by all 20 actions executed uncached; 821611-byte ZIP SHA-256 5e764521fb3fefb7fdda20256fdb7af4db89a799647b05f22c4f441ac6c51dbc."
+      "result": "PASS: two complete uncached clean builds, all 20 quality actions each; 152 unit, 53 real-Ghidra, and 4 Python tests; byte-identical ZIP, SHA-256 ffbc60b9c17fb66747a1adecc8d45cbd6267591038ce6eaf283fea82664ac57c."
     }
   ],
   "buildQuality": {

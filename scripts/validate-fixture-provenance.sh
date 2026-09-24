@@ -16,7 +16,7 @@ if find "$fixture_root" -type l -print -quit | grep -q .; then
     exit 1
 fi
 
-find "$fixture_root" -type f ! -name '*.manifest.json' -print | sort |
+find "$fixture_root" -type f ! -name '*.manifest.json' ! -name 'README.md' -print | sort |
 while IFS= read -r fixture
 do
     manifest="${fixture}.manifest.json"

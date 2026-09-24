@@ -15,6 +15,7 @@ import io.github.rezabakhshi.embedra.formats.esp.EspAppDescriptionExtractor;
 import io.github.rezabakhshi.embedra.formats.esp.EspAppDescriptionResult;
 import io.github.rezabakhshi.embedra.formats.esp.EspImage;
 import io.github.rezabakhshi.embedra.formats.esp.EspImageParser;
+import io.github.rezabakhshi.embedra.ghidra.transaction.GhidraProgramTransaction;
 import io.github.rezabakhshi.embedra.targets.esp.Esp32S3TargetProvider;
 import io.github.rezabakhshi.embedra.targets.esp.EspressifChipIdRegistry;
 import java.security.MessageDigest;
@@ -71,10 +72,30 @@ public final class EspApplicationImportService {
         EspAppDescriptionResult appDescription = EspAppDescriptionExtractor.extract(image);
         EspImportReport importReport = new EspApplicationImageMapper().map(program, image,
             targetProvider, monitor, provenance);
+        recordAppDescription(program, appDescription);
         CanonicalReport canonicalReport = report(input, importReport, appDescription);
         EspProgramSnapshot snapshot = EspProgramSnapshot.from(image, importReport);
         return new EspImportWorkflowResult(importReport, appDescription, canonicalReport,
             snapshot);
+    }
+
+    private static void recordAppDescription(Program program,
+            EspAppDescriptionResult appDescription) {
+        if (appDescription.description().isEmpty()) {
+            return;
+        }
+        var description = appDescription.description().get();
+        try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(program,
+                "Record ESP32-S3 application description")) {
+            var options = program.getOptions(
+                EmbedraEsp32S3FunctionIdAnalyzer.APP_DESCRIPTION_OPTIONS);
+            options.setString(
+                EmbedraEsp32S3FunctionIdAnalyzer.APP_DESCRIPTION_IDF_VERSION_KEY,
+                description.idfVersion());
+            options.setString("Project Name", description.projectName());
+            options.setString("App Version", description.version());
+            transaction.commit();
+        }
     }
 
     private static CanonicalReport report(byte[] input, EspImportReport imported,

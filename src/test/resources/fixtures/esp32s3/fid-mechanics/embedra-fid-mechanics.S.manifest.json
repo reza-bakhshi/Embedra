@@ -1,0 +1,19 @@
+{
+  "fixtureId": "esp32s3.assembler-2.45.embedra-fid-mechanics.source",
+  "sha256": "1990d3dd46447abbe47b1bb64b4d8874aa34cc92fb97565ba313b22633aa5746",
+  "target": "ESP32-S3",
+  "device": "ESP32-S3 (chip ID 9; no package or embedded-memory variant claim)",
+  "inputFormat": "Original Embedra assembler source",
+  "origin": "Original Embedra test source authored for T026A Function ID mechanics; no ESP-IDF or runtime library code",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:1990d3dd46447abbe47b1bb64b4d8874aa34cc92fb97565ba313b22633aa5746",
+  "generationCommand": "git checkout of this file; no generation step",
+  "toolchain": "None (hand-written source); assembled by Espressif xtensa-esp-elf esp-15.2.0_20251204",
+  "oracleCommands": [
+    "xtensa-esp32s3-elf-nm --print-size embedra-fid-mechanics.o",
+    "xtensa-esp32s3-elf-objdump -d embedra-fid-mechanics.o"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/esp32s3/fid-mechanics.expectations.json",
+  "requirements": ["T026A", "ESP-021"]
+}

@@ -1,0 +1,280 @@
+{
+  "components": {
+    "app_update": {
+      "licenses": {
+        "Apache-2.0": 768,
+        "Unlicense": 96
+      }
+    },
+    "bootloader_support": {
+      "licenses": {
+        "Apache-2.0": 47029
+      }
+    },
+    "cxx": {
+      "licenses": {
+        "Apache-2.0": 749
+      }
+    },
+    "efuse": {
+      "licenses": {
+        "Apache-2.0": 96516,
+        "Unlicense": 766
+      }
+    },
+    "esp_app_format": {
+      "licenses": {
+        "Apache-2.0": 81
+      }
+    },
+    "esp_common": {
+      "licenses": {
+        "Apache-2.0": 299,
+        "Unlicense": 23
+      }
+    },
+    "esp_driver_dma": {
+      "licenses": {
+        "Apache-2.0": 2442
+      }
+    },
+    "esp_driver_gpio": {
+      "licenses": {
+        "Apache-2.0": 6432,
+        "Unlicense": 268
+      }
+    },
+    "esp_driver_spi": {
+      "licenses": {
+        "Apache-2.0": 2184
+      }
+    },
+    "esp_driver_uart": {
+      "licenses": {
+        "Apache-2.0": 7260,
+        "Unlicense": 660
+      }
+    },
+    "esp_driver_usb_serial_jtag": {
+      "licenses": {
+        "Apache-2.0": 1460,
+        "Unlicense": 146
+      }
+    },
+    "esp_hal_ana_conv": {
+      "licenses": {
+        "Apache-2.0": 3819
+      }
+    },
+    "esp_hal_clock": {
+      "licenses": {
+        "Apache-2.0": 1485
+      }
+    },
+    "esp_hal_dma": {
+      "licenses": {
+        "Apache-2.0": 5056
+      }
+    },
+    "esp_hal_gpio": {
+      "licenses": {
+        "Apache-2.0": 10350
+      }
+    },
+    "esp_hal_gpspi": {
+      "licenses": {
+        "Apache-2.0": 576
+      }
+    },
+    "esp_hal_mspi": {
+      "licenses": {
+        "Apache-2.0": 9198
+      }
+    },
+    "esp_hal_pmu": {
+      "licenses": {
+        "Apache-2.0": 1350
+      }
+    },
+    "esp_hal_security": {
+      "licenses": {
+        "Apache-2.0": 26180,
+        "CC0-1.0": 1122,
+        "Unlicense": 2805
+      }
+    },
+    "esp_hal_touch_sens": {
+      "licenses": {
+        "Apache-2.0": 483
+      }
+    },
+    "esp_hal_uart": {
+      "licenses": {
+        "Apache-2.0": 3485
+      }
+    },
+    "esp_hw_support": {
+      "licenses": {
+        "Apache-2.0": 594396,
+        "CC0-1.0": 1422,
+        "Unlicense": 9954
+      }
+    },
+    "esp_libc": {
+      "licenses": {
+        "Apache-2.0": 30039,
+        "BSD-2-Clause-FreeBSD": 4743,
+        "CC0-1.0": 527,
+        "MIT": 2635,
+        "Unlicense": 4743
+      }
+    },
+    "esp_mm": {
+      "licenses": {
+        "Apache-2.0": 5440
+      }
+    },
+    "esp_partition": {
+      "licenses": {
+        "Apache-2.0": 1428,
+        "Unlicense": 119
+      }
+    },
+    "esp_phy": {
+      "licenses": {
+        "Apache-2.0": 1530
+      }
+    },
+    "esp_ringbuf": {
+      "licenses": {
+        "Apache-2.0": 948
+      }
+    },
+    "esp_rom": {
+      "licenses": {
+        "Apache-2.0": 28025,
+        "BSD-3-Clause": 1520,
+        "Unlicense": 665
+      }
+    },
+    "esp_security": {
+      "licenses": {
+        "Apache-2.0": 4158,
+        "Unlicense": 126
+      }
+    },
+    "esp_stdio": {
+      "licenses": {
+        "Apache-2.0": 534
+      }
+    },
+    "esp_system": {
+      "licenses": {
+        "Apache-2.0": 139268,
+        "Unlicense": 5646
+      }
+    },
+    "esp_timer": {
+      "licenses": {
+        "Apache-2.0": 1728,
+        "Unlicense": 108
+      }
+    },
+    "freertos": {
+      "licenses": {
+        "Apache-2.0": 58240,
+        "MIT": 54600
+      }
+    },
+    "hal": {
+      "licenses": {
+        "Apache-2.0": 58512
+      }
+    },
+    "heap": {
+      "licenses": {
+        "Apache-2.0": 13468,
+        "BSD-3-Clause": 1456,
+        "Unlicense": 4004
+      }
+    },
+    "log": {
+      "licenses": {
+        "Apache-2.0": 9246,
+        "Unlicense": 201
+      }
+    },
+    "main": {
+      "licenses": {
+        "Apache-2.0": 21
+      }
+    },
+    "mbedtls": {
+      "licenses": {
+        "Apache-2.0": 1571688,
+        "BSD-3-Clause": 3156,
+        "Unlicense": 34716
+      }
+    },
+    "nvs_flash": {
+      "licenses": {
+        "Apache-2.0": 25578,
+        "Unlicense": 1218
+      }
+    },
+    "nvs_sec_provider": {
+      "licenses": {
+        "Apache-2.0": 120
+      }
+    },
+    "pthread": {
+      "licenses": {
+        "Apache-2.0": 2367,
+        "Unlicense": 2630
+      }
+    },
+    "soc": {
+      "licenses": {
+        "Apache-2.0": 104436
+      }
+    },
+    "spi_flash": {
+      "licenses": {
+        "Apache-2.0": 56210,
+        "Unlicense": 6930
+      }
+    },
+    "vfs": {
+      "licenses": {
+        "Apache-2.0": 5538,
+        "Unlicense": 639
+      }
+    },
+    "xtensa": {
+      "licenses": {
+        "Apache-2.0": 1526,
+        "MIT": 1308
+      }
+    }
+  },
+  "excludedToolchainArchives": {
+    "libc.a": {
+      "disposition": "EXCLUDED_FROM_FIDB",
+      "reason": "toolchain runtime archive; excluded from the ESP-IDF pilot database so only permissively licensed ESP-IDF component functions are named",
+      "source": "/home/rez0x61/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf"
+    },
+    "libgcc.a": {
+      "disposition": "EXCLUDED_FROM_FIDB",
+      "reason": "toolchain runtime archive; excluded from the ESP-IDF pilot database so only permissively licensed ESP-IDF component functions are named",
+      "source": "/home/rez0x61/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf"
+    },
+    "libstdc++.a": {
+      "disposition": "EXCLUDED_FROM_FIDB",
+      "reason": "toolchain runtime archive; excluded from the ESP-IDF pilot database so only permissively licensed ESP-IDF component functions are named",
+      "source": "/home/rez0x61/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf"
+    }
+  },
+  "idfRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+  "redistribution": "ALLOWED",
+  "schemaId": "urn:embedra:schema:esp32s3-fid-license-audit:1"
+}

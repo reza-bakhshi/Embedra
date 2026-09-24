@@ -1,0 +1,18 @@
+{
+  "fixtureId": "esp32s3.assembler-2.45.salt-saltu.source",
+  "sha256": "3dfac01628f2e64f8cd8daa5c2e9117e557048c71da206f8ea66b784d7c963fa",
+  "target": "ESP32-S3",
+  "device": "ESP32-S3 (chip ID 9; no package or embedded-memory variant claim)",
+  "inputFormat": "Original Embedra assembler source",
+  "origin": "Original Embedra test source for SALT/SALTU language coverage; no runtime library code",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:3dfac01628f2e64f8cd8daa5c2e9117e557048c71da206f8ea66b784d7c963fa",
+  "generationCommand": "git checkout of this file; no generation step",
+  "toolchain": "None (hand-written source); assembled by Espressif xtensa-esp-elf esp-15.2.0_20251204",
+  "oracleCommands": [
+    "xtensa-esp32s3-elf-objdump -d salt-saltu.o"
+  ],
+  "expectedSnapshot": "src/test/resources/fixtures/esp32s3/language/README.md",
+  "requirements": ["T025", "ESP-005"]
+}

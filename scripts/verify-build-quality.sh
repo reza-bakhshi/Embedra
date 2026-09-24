@@ -94,6 +94,12 @@ Embedra/docs/architecture.md
 Embedra/docs/fixture-policy.md
 Embedra/docs/pack-format.md
 Embedra/docs/support-matrix.md
+Embedra/fid/
+Embedra/fid/esp32s3/
+Embedra/fid/esp32s3/README.md
+Embedra/fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.audit.json
+Embedra/fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb
+Embedra/fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.json
 Embedra/packs/
 Embedra/packs/espressif.esp32s3.peripherals/
 Embedra/packs/espressif.esp32s3.peripherals/1.0.0/

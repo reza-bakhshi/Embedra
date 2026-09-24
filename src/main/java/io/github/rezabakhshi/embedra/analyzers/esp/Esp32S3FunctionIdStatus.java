@@ -1,0 +1,27 @@
+package io.github.rezabakhshi.embedra.analyzers.esp;
+
+/** Stable machine-readable ESP32-S3 Function ID run and refusal statuses. */
+public enum Esp32S3FunctionIdStatus {
+    DATABASE_ABSENT("ESP32S3_FID_DATABASE_ABSENT"),
+    TARGET_INCOMPATIBLE("ESP32S3_FID_TARGET_INCOMPATIBLE"),
+    VERSION_INCOMPATIBLE("ESP32S3_FID_VERSION_INCOMPATIBLE"),
+    DATABASE_DIGEST_MISMATCH("ESP32S3_FID_DATABASE_DIGEST_MISMATCH"),
+    DATABASE_CONFLICT("ESP32S3_FID_DATABASE_CONFLICT"),
+    PROVENANCE_INVALID("ESP32S3_FID_PROVENANCE_INVALID"),
+    AMBIGUOUS_MATCHES("ESP32S3_FID_AMBIGUOUS_MATCHES"),
+    MATCHES_APPLIED("ESP32S3_FID_MATCHES_APPLIED"),
+    ALREADY_APPLIED("ESP32S3_FID_ALREADY_APPLIED"),
+    NO_MATCHES("ESP32S3_FID_NO_MATCHES"),
+    CANCELLED("ESP32S3_FID_CANCELLED"),
+    RUN_FAILED("ESP32S3_FID_RUN_FAILED");
+
+    private final String code;
+
+    Esp32S3FunctionIdStatus(String code) {
+        this.code = code;
+    }
+
+    public String code() {
+        return code;
+    }
+}

@@ -1,0 +1,25 @@
+{
+  "fixtureId": "esp32s3.assembler-2.45.embedra-fid-mechanics",
+  "sha256": "cebe3e400b9070ed08ab8d7205baed1745fd88eb6e2d25f7d8e6459e8d4b83b6",
+  "toolchain": "Espressif xtensa-esp-elf esp-15.2.0_20251204 (GNU assembler 2.45)",
+  "targetLanguage": "Xtensa:LE:32:esp32s3",
+  "functions": [
+    {
+      "name": "embedra_fid_alpha",
+      "offset": 0,
+      "sizeBytes": 62,
+      "instructionCount": 31,
+      "firstMnemonic": "add.n",
+      "lastMnemonic": "ret.n"
+    },
+    {
+      "name": "embedra_fid_beta",
+      "offset": 62,
+      "sizeBytes": 62,
+      "instructionCount": 31,
+      "firstMnemonic": "addi.n",
+      "lastMnemonic": "ret.n"
+    }
+  ],
+  "requirements": ["T026A", "ESP-021"]
+}

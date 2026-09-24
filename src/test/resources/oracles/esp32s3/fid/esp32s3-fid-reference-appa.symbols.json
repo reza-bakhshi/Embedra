@@ -1,0 +1,5623 @@
+{
+ "binSha256": "fd124758ae6e9ef11fd5804c990869dead66cdc405acea5fb4f3f5592e308a6c",
+ "elfSha256": "acd6fb53b2f55fc4bda05fa11315a1392c880d291a4bc1befc7ecd0c1339eab2",
+ "functions": [
+  {
+   "address": 1077384196,
+   "linkage": "T",
+   "name": "abort",
+   "size": 130
+  },
+  {
+   "address": 1107323664,
+   "linkage": "T",
+   "name": "access",
+   "size": 95
+  },
+  {
+   "address": 1107329088,
+   "linkage": "t",
+   "name": "add_entry",
+   "size": 258
+  },
+  {
+   "address": 1107316844,
+   "linkage": "t",
+   "name": "adjust_boot_time",
+   "size": 219
+  },
+  {
+   "address": 1077368100,
+   "linkage": "t",
+   "name": "apb_backup_dma_lock",
+   "size": 18
+  },
+  {
+   "address": 1077368084,
+   "linkage": "t",
+   "name": "apb_backup_dma_unlock",
+   "size": 14
+  },
+  {
+   "address": 1107324560,
+   "linkage": "T",
+   "name": "app_main",
+   "size": 120
+  },
+  {
+   "address": 1077384328,
+   "linkage": "T",
+   "name": "__assert_func",
+   "size": 228
+  },
+  {
+   "address": 1077392696,
+   "linkage": "t",
+   "name": "assert_valid_block",
+   "size": 39
+  },
+  {
+   "address": 1077384640,
+   "linkage": "T",
+   "name": "__atomic_fetch_or_8",
+   "size": 60
+  },
+  {
+   "address": 1077374668,
+   "linkage": "T",
+   "name": "bootloader_execute_flash_command",
+   "size": 32
+  },
+  {
+   "address": 1077374068,
+   "linkage": "T",
+   "name": "bootloader_flash_execute_command_common",
+   "size": 598
+  },
+  {
+   "address": 1077374892,
+   "linkage": "T",
+   "name": "bootloader_flash_is_octal_mode_enabled",
+   "size": 16
+  },
+  {
+   "address": 1077374740,
+   "linkage": "T",
+   "name": "bootloader_flash_reset_chip",
+   "size": 149
+  },
+  {
+   "address": 1107328820,
+   "linkage": "T",
+   "name": "bootloader_flash_update_id",
+   "size": 18
+  },
+  {
+   "address": 1107328812,
+   "linkage": "T",
+   "name": "bootloader_init_mem",
+   "size": 8
+  },
+  {
+   "address": 1077374700,
+   "linkage": "T",
+   "name": "bootloader_read_flash_id",
+   "size": 38
+  },
+  {
+   "address": 1107330960,
+   "linkage": "T",
+   "name": "brownout_hal_config",
+   "size": 293
+  },
+  {
+   "address": 1107332572,
+   "linkage": "T",
+   "name": "__bufio_buffer_allocate_locked",
+   "size": 68
+  },
+  {
+   "address": 1107333064,
+   "linkage": "T",
+   "name": "__bufio_close",
+   "size": 60
+  },
+  {
+   "address": 1107332640,
+   "linkage": "T",
+   "name": "__bufio_fill_locked",
+   "size": 64
+  },
+  {
+   "address": 1107332704,
+   "linkage": "T",
+   "name": "__bufio_flush",
+   "size": 16
+  },
+  {
+   "address": 1107339912,
+   "linkage": "T",
+   "name": "__bufio_flush_locked",
+   "size": 107
+  },
+  {
+   "address": 1107332848,
+   "linkage": "T",
+   "name": "__bufio_get",
+   "size": 108
+  },
+  {
+   "address": 1107332752,
+   "linkage": "T",
+   "name": "__bufio_put",
+   "size": 94
+  },
+  {
+   "address": 1107332956,
+   "linkage": "T",
+   "name": "__bufio_seek",
+   "size": 108
+  },
+  {
+   "address": 1107332720,
+   "linkage": "T",
+   "name": "__bufio_setdir_locked",
+   "size": 31
+  },
+  {
+   "address": 1107340020,
+   "linkage": "T",
+   "name": "__bufio_setvbuf",
+   "size": 56
+  },
+  {
+   "address": 1077366372,
+   "linkage": "t",
+   "name": "cache_disable$constprop$0",
+   "size": 8
+  },
+  {
+   "address": 1077366396,
+   "linkage": "t",
+   "name": "cache_enable$constprop$0",
+   "size": 8
+  },
+  {
+   "address": 1077385036,
+   "linkage": "T",
+   "name": "Cache_Freeze_DCache_Enable",
+   "size": 35
+  },
+  {
+   "address": 1077385008,
+   "linkage": "T",
+   "name": "Cache_Freeze_ICache_Enable",
+   "size": 27
+  },
+  {
+   "address": 1077391108,
+   "linkage": "T",
+   "name": "cache_hal_disable",
+   "size": 52
+  },
+  {
+   "address": 1077391160,
+   "linkage": "T",
+   "name": "cache_hal_enable",
+   "size": 67
+  },
+  {
+   "address": 1077391416,
+   "linkage": "T",
+   "name": "cache_hal_freeze",
+   "size": 46
+  },
+  {
+   "address": 1077391516,
+   "linkage": "T",
+   "name": "cache_hal_get_cache_line_size",
+   "size": 70
+  },
+  {
+   "address": 1077390984,
+   "linkage": "T",
+   "name": "cache_hal_init",
+   "size": 123
+  },
+  {
+   "address": 1077391380,
+   "linkage": "T",
+   "name": "cache_hal_invalidate_addr",
+   "size": 35
+  },
+  {
+   "address": 1077391340,
+   "linkage": "T",
+   "name": "cache_hal_is_cache_enabled",
+   "size": 40
+  },
+  {
+   "address": 1077391272,
+   "linkage": "T",
+   "name": "cache_hal_resume",
+   "size": 67
+  },
+  {
+   "address": 1077391228,
+   "linkage": "T",
+   "name": "cache_hal_suspend",
+   "size": 42
+  },
+  {
+   "address": 1077391464,
+   "linkage": "T",
+   "name": "cache_hal_unfreeze",
+   "size": 52
+  },
+  {
+   "address": 1077390856,
+   "linkage": "t",
+   "name": "cache_hal_vaddr_to_cache_level_id$part$0",
+   "size": 66
+  },
+  {
+   "address": 1077384972,
+   "linkage": "T",
+   "name": "Cache_Suspend_DCache",
+   "size": 35
+  },
+  {
+   "address": 1077384944,
+   "linkage": "T",
+   "name": "Cache_Suspend_ICache",
+   "size": 27
+  },
+  {
+   "address": 1107308452,
+   "linkage": "t",
+   "name": "calc_checksum",
+   "size": 28
+  },
+  {
+   "address": 1077384592,
+   "linkage": "T",
+   "name": "calloc",
+   "size": 40
+  },
+  {
+   "address": 1077367684,
+   "linkage": "T",
+   "name": "call_start_cpu0",
+   "size": 215
+  },
+  {
+   "address": 1077367436,
+   "linkage": "T",
+   "name": "call_start_cpu1",
+   "size": 136
+  },
+  {
+   "address": 1077384580,
+   "linkage": "T",
+   "name": "cfree",
+   "size": 10
+  },
+  {
+   "address": 1077397384,
+   "linkage": "t",
+   "name": "check_chip_pointer_default",
+   "size": 33
+  },
+  {
+   "address": 1077371188,
+   "linkage": "t",
+   "name": "check_lock_nonzero",
+   "size": 22
+  },
+  {
+   "address": 1107317340,
+   "linkage": "T",
+   "name": "close",
+   "size": 17
+  },
+  {
+   "address": 1107323320,
+   "linkage": "T",
+   "name": "_close_r",
+   "size": 88
+  },
+  {
+   "address": 1107300796,
+   "linkage": "T",
+   "name": "console_access",
+   "size": 18
+  },
+  {
+   "address": 1107300668,
+   "linkage": "T",
+   "name": "console_close",
+   "size": 52
+  },
+  {
+   "address": 1107300588,
+   "linkage": "T",
+   "name": "console_end_select",
+   "size": 26
+  },
+  {
+   "address": 1107300744,
+   "linkage": "T",
+   "name": "console_fcntl",
+   "size": 22
+  },
+  {
+   "address": 1107300648,
+   "linkage": "T",
+   "name": "console_fstat",
+   "size": 20
+  },
+  {
+   "address": 1107300768,
+   "linkage": "T",
+   "name": "console_fsync",
+   "size": 25
+  },
+  {
+   "address": 1107300816,
+   "linkage": "T",
+   "name": "console_open",
+   "size": 55
+  },
+  {
+   "address": 1107300720,
+   "linkage": "T",
+   "name": "console_read",
+   "size": 22
+  },
+  {
+   "address": 1107300540,
+   "linkage": "t",
+   "name": "console_start_select",
+   "size": 45
+  },
+  {
+   "address": 1107300616,
+   "linkage": "T",
+   "name": "console_write",
+   "size": 30
+  },
+  {
+   "address": 1107302920,
+   "linkage": "t",
+   "name": "core_intr_matrix_clear",
+   "size": 37
+  },
+  {
+   "address": 1107339684,
+   "linkage": "T",
+   "name": "__cxa_guard_dummy",
+   "size": 5
+  },
+  {
+   "address": 1107339692,
+   "linkage": "T",
+   "name": "__cxx_init_dummy",
+   "size": 5
+  },
+  {
+   "address": 1107350568,
+   "linkage": "t",
+   "name": "default_walker",
+   "size": 31
+  },
+  {
+   "address": 1077404912,
+   "linkage": "t",
+   "name": "delay_us",
+   "size": 15
+  },
+  {
+   "address": 1077405156,
+   "linkage": "t",
+   "name": "delay_us",
+   "size": 15
+  },
+  {
+   "address": 1077397420,
+   "linkage": "t",
+   "name": "detect_spi_flash_chip",
+   "size": 122
+  },
+  {
+   "address": 1107337076,
+   "linkage": "t",
+   "name": "div10",
+   "size": 36
+  },
+  {
+   "address": 1077367584,
+   "linkage": "T",
+   "name": "do_multicore_settings",
+   "size": 99
+  },
+  {
+   "address": 1107305448,
+   "linkage": "t",
+   "name": "do_system_init_fn",
+   "size": 106
+  },
+  {
+   "address": 1107338732,
+   "linkage": "T",
+   "name": "__double_computeInvPow5",
+   "size": 250
+  },
+  {
+   "address": 1107338492,
+   "linkage": "T",
+   "name": "__double_computePow5",
+   "size": 239
+  },
+  {
+   "address": 1107337112,
+   "linkage": "T",
+   "name": "__dtoa_engine",
+   "size": 1284
+  },
+  {
+   "address": 1107339028,
+   "linkage": "T",
+   "name": "__dtox_engine",
+   "size": 307
+  },
+  {
+   "address": 1107333792,
+   "linkage": "T",
+   "name": "__d_vfprintf",
+   "size": 2825
+  },
+  {
+   "address": 1077368948,
+   "linkage": "T",
+   "name": "efuse_hal_chip_revision",
+   "size": 24
+  },
+  {
+   "address": 1077368992,
+   "linkage": "T",
+   "name": "efuse_hal_flash_encryption_enabled",
+   "size": 32
+  },
+  {
+   "address": 1077368972,
+   "linkage": "T",
+   "name": "efuse_hal_get_disable_wafer_version_major",
+   "size": 17
+  },
+  {
+   "address": 1077369024,
+   "linkage": "T",
+   "name": "efuse_hal_get_major_chip_version",
+   "size": 63
+  },
+  {
+   "address": 1077369088,
+   "linkage": "T",
+   "name": "efuse_hal_get_minor_chip_version",
+   "size": 57
+  },
+  {
+   "address": 1107324524,
+   "linkage": "T",
+   "name": "embedra_fid_checksum",
+   "size": 34
+  },
+  {
+   "address": 1077384064,
+   "linkage": "t",
+   "name": "enable_timer_group0_for_calibration",
+   "size": 97
+  },
+  {
+   "address": 1077366424,
+   "linkage": "t",
+   "name": "end",
+   "size": 17
+  },
+  {
+   "address": 1107325296,
+   "linkage": "t",
+   "name": "ensure_partitions_loaded$part$0",
+   "size": 400
+  },
+  {
+   "address": 1107305200,
+   "linkage": "T",
+   "name": "esp_apb_backup_dma_lock_init",
+   "size": 17
+  },
+  {
+   "address": 1107300916,
+   "linkage": "t",
+   "name": "esp_app_format_init_elf_sha256$part$0",
+   "size": 72
+  },
+  {
+   "address": 1107300988,
+   "linkage": "T",
+   "name": "esp_app_get_elf_sha256",
+   "size": 99
+  },
+  {
+   "address": 1077368532,
+   "linkage": "T",
+   "name": "esp_backtrace_get_next_frame",
+   "size": 90
+  },
+  {
+   "address": 1077368876,
+   "linkage": "T",
+   "name": "esp_backtrace_print",
+   "size": 39
+  },
+  {
+   "address": 1077368624,
+   "linkage": "T",
+   "name": "esp_backtrace_print_from_frame",
+   "size": 250
+  },
+  {
+   "address": 1107310724,
+   "linkage": "T",
+   "name": "esp_brownout_init",
+   "size": 74
+  },
+  {
+   "address": 1107304776,
+   "linkage": "T",
+   "name": "esp_cache_err_acs_save_and_clr",
+   "size": 129
+  },
+  {
+   "address": 1107305188,
+   "linkage": "T",
+   "name": "esp_cache_err_get_cpuid",
+   "size": 10
+  },
+  {
+   "address": 1107304724,
+   "linkage": "T",
+   "name": "esp_cache_err_get_panic_info",
+   "size": 49
+  },
+  {
+   "address": 1107304908,
+   "linkage": "T",
+   "name": "esp_cache_err_int_init",
+   "size": 279
+  },
+  {
+   "address": 1077384856,
+   "linkage": "T",
+   "name": "esp_cache_freeze_caches_disable_interrupts",
+   "size": 66
+  },
+  {
+   "address": 1077384824,
+   "linkage": "T",
+   "name": "esp_cache_freeze_ext_mem_cache",
+   "size": 15
+  },
+  {
+   "address": 1077384736,
+   "linkage": "T",
+   "name": "esp_cache_get_alignment",
+   "size": 56
+  },
+  {
+   "address": 1077384808,
+   "linkage": "T",
+   "name": "esp_cache_resume_ext_mem_cache",
+   "size": 15
+  },
+  {
+   "address": 1077384792,
+   "linkage": "T",
+   "name": "esp_cache_suspend_ext_mem_cache",
+   "size": 15
+  },
+  {
+   "address": 1077384700,
+   "linkage": "T",
+   "name": "esp_cache_sync_ops_enter_critical_section",
+   "size": 18
+  },
+  {
+   "address": 1077384720,
+   "linkage": "T",
+   "name": "esp_cache_sync_ops_exit_critical_section",
+   "size": 14
+  },
+  {
+   "address": 1077384924,
+   "linkage": "T",
+   "name": "esp_cache_unfreeze_caches_enable_interrupts",
+   "size": 20
+  },
+  {
+   "address": 1077384840,
+   "linkage": "T",
+   "name": "esp_cache_unfreeze_ext_mem_cache",
+   "size": 15
+  },
+  {
+   "address": 1107310800,
+   "linkage": "T",
+   "name": "esp_chip_info",
+   "size": 39
+  },
+  {
+   "address": 1107339628,
+   "linkage": "t",
+   "name": "esp_cleanup_r",
+   "size": 5
+  },
+  {
+   "address": 1077369924,
+   "linkage": "T",
+   "name": "esp_clk_apb_freq",
+   "size": 26
+  },
+  {
+   "address": 1077369904,
+   "linkage": "T",
+   "name": "esp_clk_cpu_freq",
+   "size": 20
+  },
+  {
+   "address": 1107308656,
+   "linkage": "T",
+   "name": "esp_clk_slowclk_cal_set",
+   "size": 16
+  },
+  {
+   "address": 1107340180,
+   "linkage": "T",
+   "name": "esp_clk_tree_initialize",
+   "size": 5
+  },
+  {
+   "address": 1077369952,
+   "linkage": "T",
+   "name": "esp_clk_xtal_freq",
+   "size": 17
+  },
+  {
+   "address": 1077380064,
+   "linkage": "T",
+   "name": "esp_cpu_compare_and_set",
+   "size": 20
+  },
+  {
+   "address": 1107331256,
+   "linkage": "T",
+   "name": "esp_cpu_configure_region_protection",
+   "size": 45
+  },
+  {
+   "address": 1107315868,
+   "linkage": "T",
+   "name": "esp_cpu_intr_get_desc",
+   "size": 65
+  },
+  {
+   "address": 1107340144,
+   "linkage": "T",
+   "name": "esp_cpu_set_breakpoint",
+   "size": 36
+  },
+  {
+   "address": 1077380084,
+   "linkage": "T",
+   "name": "esp_cpu_stall",
+   "size": 133
+  },
+  {
+   "address": 1077380220,
+   "linkage": "T",
+   "name": "esp_cpu_unstall",
+   "size": 82
+  },
+  {
+   "address": 1077380304,
+   "linkage": "T",
+   "name": "esp_cpu_wait_for_intr",
+   "size": 8
+  },
+  {
+   "address": 1107328840,
+   "linkage": "T",
+   "name": "esp_crosscore_int_init",
+   "size": 102
+  },
+  {
+   "address": 1077374996,
+   "linkage": "t",
+   "name": "esp_crosscore_int_send",
+   "size": 72
+  },
+  {
+   "address": 1077375084,
+   "linkage": "T",
+   "name": "esp_crosscore_int_send_print_backtrace",
+   "size": 15
+  },
+  {
+   "address": 1077375100,
+   "linkage": "T",
+   "name": "esp_crosscore_int_send_twdt_abort",
+   "size": 15
+  },
+  {
+   "address": 1077375068,
+   "linkage": "T",
+   "name": "esp_crosscore_int_send_yield",
+   "size": 15
+  },
+  {
+   "address": 1077374908,
+   "linkage": "t",
+   "name": "esp_crosscore_isr",
+   "size": 87
+  },
+  {
+   "address": 1107310616,
+   "linkage": "T",
+   "name": "esp_deep_sleep_wakeup_io_reset",
+   "size": 107
+  },
+  {
+   "address": 1107342856,
+   "linkage": "T",
+   "name": "esp_deregister_freertos_idle_hook_for_cpu",
+   "size": 52
+  },
+  {
+   "address": 1107301448,
+   "linkage": "T",
+   "name": "esp_efuse_check_errors",
+   "size": 10
+  },
+  {
+   "address": 1107339352,
+   "linkage": "T",
+   "name": "esp_efuse_startup_include_func",
+   "size": 5
+  },
+  {
+   "address": 1107339360,
+   "linkage": "T",
+   "name": "esp_efuse_utility_check_errors",
+   "size": 7
+  },
+  {
+   "address": 1077385408,
+   "linkage": "T",
+   "name": "_esp_error_check_failed",
+   "size": 41
+  },
+  {
+   "address": 1077385332,
+   "linkage": "t",
+   "name": "esp_error_check_failed_print",
+   "size": 76
+  },
+  {
+   "address": 1107306724,
+   "linkage": "T",
+   "name": "esp_err_to_name",
+   "size": 38
+  },
+  {
+   "address": 1107351516,
+   "linkage": "T",
+   "name": "esp_flash_app_enable_os_functions",
+   "size": 36
+  },
+  {
+   "address": 1107301840,
+   "linkage": "T",
+   "name": "esp_flash_app_init",
+   "size": 27
+  },
+  {
+   "address": 1077397544,
+   "linkage": "T",
+   "name": "esp_flash_chip_driver_initialized",
+   "size": 12
+  },
+  {
+   "address": 1077374056,
+   "linkage": "T",
+   "name": "esp_flash_encryption_enabled",
+   "size": 10
+  },
+  {
+   "address": 1077397556,
+   "linkage": "T",
+   "name": "esp_flash_get_physical_size",
+   "size": 89
+  },
+  {
+   "address": 1107301520,
+   "linkage": "T",
+   "name": "esp_flash_init_default_chip",
+   "size": 317
+  },
+  {
+   "address": 1077397648,
+   "linkage": "T",
+   "name": "esp_flash_init_main",
+   "size": 334
+  },
+  {
+   "address": 1077397984,
+   "linkage": "T",
+   "name": "esp_flash_is_quad_mode",
+   "size": 30
+  },
+  {
+   "address": 1107351496,
+   "linkage": "T",
+   "name": "esp_flash_read_chip_id",
+   "size": 19
+  },
+  {
+   "address": 1107339384,
+   "linkage": "T",
+   "name": "esp_flash_spi_init_include_func",
+   "size": 5
+  },
+  {
+   "address": 1107310264,
+   "linkage": "T",
+   "name": "esp_gpio_reserve",
+   "size": 24
+  },
+  {
+   "address": 1077373928,
+   "linkage": "T",
+   "name": "esp_heap_adjust_alignment_to_hw",
+   "size": 127
+  },
+  {
+   "address": 1107310064,
+   "linkage": "T",
+   "name": "esp_intr_alloc",
+   "size": 27
+  },
+  {
+   "address": 1107310028,
+   "linkage": "T",
+   "name": "esp_intr_alloc_intrstatus",
+   "size": 33
+  },
+  {
+   "address": 1107309068,
+   "linkage": "T",
+   "name": "esp_intr_alloc_intrstatus_bind",
+   "size": 958
+  },
+  {
+   "address": 1077370212,
+   "linkage": "T",
+   "name": "esp_intr_disable",
+   "size": 167
+  },
+  {
+   "address": 1077370196,
+   "linkage": "T",
+   "name": "esp_intr_disable_source",
+   "size": 16
+  },
+  {
+   "address": 1077370180,
+   "linkage": "T",
+   "name": "esp_intr_enable_source",
+   "size": 16
+  },
+  {
+   "address": 1107339560,
+   "linkage": "T",
+   "name": "esp_intr_get_cpu",
+   "size": 20
+  },
+  {
+   "address": 1077370028,
+   "linkage": "T",
+   "name": "esp_intr_noniram_disable",
+   "size": 83
+  },
+  {
+   "address": 1077370112,
+   "linkage": "T",
+   "name": "esp_intr_noniram_enable",
+   "size": 66
+  },
+  {
+   "address": 1107309016,
+   "linkage": "T",
+   "name": "esp_intr_ptr_in_isr_region",
+   "size": 52
+  },
+  {
+   "address": 1107305396,
+   "linkage": "T",
+   "name": "esp_int_wdt_cpu_init",
+   "size": 52
+  },
+  {
+   "address": 1107305220,
+   "linkage": "T",
+   "name": "esp_int_wdt_init",
+   "size": 176
+  },
+  {
+   "address": 1107302536,
+   "linkage": "T",
+   "name": "esp_ipc_call_nonblocking",
+   "size": 148
+  },
+  {
+   "address": 1107302404,
+   "linkage": "t",
+   "name": "esp_ipc_init",
+   "size": 132
+  },
+  {
+   "address": 1107303812,
+   "linkage": "T",
+   "name": "esp_ipc_isr_init",
+   "size": 33
+  },
+  {
+   "address": 1107303848,
+   "linkage": "T",
+   "name": "esp_ipc_isr_port_init",
+   "size": 34
+  },
+  {
+   "address": 1077367900,
+   "linkage": "T",
+   "name": "esp_ipc_isr_stall_abort",
+   "size": 15
+  },
+  {
+   "address": 1077384556,
+   "linkage": "T",
+   "name": "esp_libc_include_assert_impl",
+   "size": 5
+  },
+  {
+   "address": 1107339604,
+   "linkage": "T",
+   "name": "esp_libc_include_getentropy_impl",
+   "size": 5
+  },
+  {
+   "address": 1077384632,
+   "linkage": "T",
+   "name": "esp_libc_include_heap_impl",
+   "size": 5
+  },
+  {
+   "address": 1107339636,
+   "linkage": "T",
+   "name": "esp_libc_include_init_funcs",
+   "size": 5
+  },
+  {
+   "address": 1107339596,
+   "linkage": "T",
+   "name": "esp_libc_include_pthread_impl",
+   "size": 5
+  },
+  {
+   "address": 1107339620,
+   "linkage": "T",
+   "name": "esp_libc_include_reent_syscalls_impl",
+   "size": 5
+  },
+  {
+   "address": 1107339612,
+   "linkage": "T",
+   "name": "esp_libc_include_syscalls_impl",
+   "size": 5
+  },
+  {
+   "address": 1107317748,
+   "linkage": "T",
+   "name": "esp_libc_init",
+   "size": 44
+  },
+  {
+   "address": 1107339588,
+   "linkage": "T",
+   "name": "esp_libc_init_funcs",
+   "size": 5
+  },
+  {
+   "address": 1107317792,
+   "linkage": "T",
+   "name": "esp_libc_init_global_stdio",
+   "size": 67
+  },
+  {
+   "address": 1107316748,
+   "linkage": "T",
+   "name": "esp_libc_locks_init",
+   "size": 94
+  },
+  {
+   "address": 1107317284,
+   "linkage": "T",
+   "name": "esp_libc_time_init",
+   "size": 8
+  },
+  {
+   "address": 1077397056,
+   "linkage": "T",
+   "name": "esp_log",
+   "size": 67
+  },
+  {
+   "address": 1107307152,
+   "linkage": "T",
+   "name": "esp_log_cache_add",
+   "size": 79
+  },
+  {
+   "address": 1107307000,
+   "linkage": "T",
+   "name": "esp_log_cache_get_level",
+   "size": 151
+  },
+  {
+   "address": 1077397252,
+   "linkage": "T",
+   "name": "esp_log_early_timestamp",
+   "size": 29
+  },
+  {
+   "address": 1077397124,
+   "linkage": "T",
+   "name": "esp_log_impl_lock",
+   "size": 41
+  },
+  {
+   "address": 1077397168,
+   "linkage": "T",
+   "name": "esp_log_impl_lock_timeout",
+   "size": 51
+  },
+  {
+   "address": 1077397220,
+   "linkage": "T",
+   "name": "esp_log_impl_unlock",
+   "size": 31
+  },
+  {
+   "address": 1107306824,
+   "linkage": "T",
+   "name": "esp_log_is_tag_loggable",
+   "size": 18
+  },
+  {
+   "address": 1077397352,
+   "linkage": "T",
+   "name": "esp_log_level_get_timeout",
+   "size": 17
+  },
+  {
+   "address": 1107306844,
+   "linkage": "T",
+   "name": "esp_log_linked_list_get_level",
+   "size": 38
+  },
+  {
+   "address": 1077397284,
+   "linkage": "T",
+   "name": "esp_log_timestamp",
+   "size": 68
+  },
+  {
+   "address": 1077397372,
+   "linkage": "T",
+   "name": "esp_log_util_set_cache_enabled_cb",
+   "size": 10
+  },
+  {
+   "address": 1107332416,
+   "linkage": "T",
+   "name": "esp_mbedtls_mem_calloc",
+   "size": 22
+  },
+  {
+   "address": 1107332440,
+   "linkage": "T",
+   "name": "esp_mbedtls_mem_free",
+   "size": 13
+  },
+  {
+   "address": 1107327464,
+   "linkage": "T",
+   "name": "esp_mmu_map",
+   "size": 882
+  },
+  {
+   "address": 1107327168,
+   "linkage": "T",
+   "name": "esp_mmu_map_init",
+   "size": 294
+  },
+  {
+   "address": 1077373840,
+   "linkage": "T",
+   "name": "esp_mmu_paddr_find_caps",
+   "size": 87
+  },
+  {
+   "address": 1107328348,
+   "linkage": "T",
+   "name": "esp_mmu_unmap",
+   "size": 256
+  },
+  {
+   "address": 1107328604,
+   "linkage": "T",
+   "name": "esp_mmu_vaddr_to_paddr",
+   "size": 205
+  },
+  {
+   "address": 1107311316,
+   "linkage": "t",
+   "name": "esp_mprot_cpuid_valid",
+   "size": 35
+  },
+  {
+   "address": 1107313208,
+   "linkage": "T",
+   "name": "esp_mprot_get_monitor_en",
+   "size": 109
+  },
+  {
+   "address": 1107312936,
+   "linkage": "T",
+   "name": "esp_mprot_get_monitor_lock",
+   "size": 139
+  },
+  {
+   "address": 1107312392,
+   "linkage": "T",
+   "name": "esp_mprot_get_pms_area",
+   "size": 431
+  },
+  {
+   "address": 1107311648,
+   "linkage": "T",
+   "name": "esp_mprot_get_pms_lock",
+   "size": 131
+  },
+  {
+   "address": 1107313584,
+   "linkage": "T",
+   "name": "esp_mprot_is_conf_locked_any",
+   "size": 342
+  },
+  {
+   "address": 1107315812,
+   "linkage": "T",
+   "name": "esp_mprot_ll_err_to_esp_err",
+   "size": 53
+  },
+  {
+   "address": 1107313320,
+   "linkage": "T",
+   "name": "esp_mprot_monitor_clear_intr",
+   "size": 264
+  },
+  {
+   "address": 1107313076,
+   "linkage": "T",
+   "name": "esp_mprot_set_monitor_en",
+   "size": 131
+  },
+  {
+   "address": 1107312824,
+   "linkage": "T",
+   "name": "esp_mprot_set_monitor_lock",
+   "size": 110
+  },
+  {
+   "address": 1107311780,
+   "linkage": "T",
+   "name": "esp_mprot_set_pms_area",
+   "size": 612
+  },
+  {
+   "address": 1107311552,
+   "linkage": "T",
+   "name": "esp_mprot_set_pms_lock",
+   "size": 94
+  },
+  {
+   "address": 1107313928,
+   "linkage": "T",
+   "name": "esp_mprot_set_prot",
+   "size": 1883
+  },
+  {
+   "address": 1107311352,
+   "linkage": "T",
+   "name": "esp_mprot_set_split_addr",
+   "size": 198
+  },
+  {
+   "address": 1077375184,
+   "linkage": "T",
+   "name": "esp_mspi_32bit_address_flash_feature_check",
+   "size": 7
+  },
+  {
+   "address": 1107302228,
+   "linkage": "T",
+   "name": "esp_mspi_get_io",
+   "size": 98
+  },
+  {
+   "address": 1077367060,
+   "linkage": "T",
+   "name": "esp_mspi_pin_init",
+   "size": 21
+  },
+  {
+   "address": 1107302328,
+   "linkage": "T",
+   "name": "esp_mspi_pin_reserve",
+   "size": 73
+  },
+  {
+   "address": 1107317748,
+   "linkage": "T",
+   "name": "esp_newlib_init",
+   "size": 44
+  },
+  {
+   "address": 1107316748,
+   "linkage": "T",
+   "name": "esp_newlib_locks_init",
+   "size": 94
+  },
+  {
+   "address": 1107317284,
+   "linkage": "T",
+   "name": "esp_newlib_time_init",
+   "size": 8
+  },
+  {
+   "address": 1077404808,
+   "linkage": "T",
+   "name": "esp_opiflash_init",
+   "size": 102
+  },
+  {
+   "address": 1107332296,
+   "linkage": "T",
+   "name": "esp_ota_get_running_partition",
+   "size": 117
+  },
+  {
+   "address": 1107343508,
+   "linkage": "T",
+   "name": "esp_panic_handler",
+   "size": 321
+  },
+  {
+   "address": 1107343152,
+   "linkage": "T",
+   "name": "esp_panic_handler_disable_timg_wdts",
+   "size": 75
+  },
+  {
+   "address": 1107343228,
+   "linkage": "T",
+   "name": "esp_panic_handler_enable_rtc_wdt",
+   "size": 86
+  },
+  {
+   "address": 1107343316,
+   "linkage": "T",
+   "name": "esp_panic_handler_feed_wdts",
+   "size": 150
+  },
+  {
+   "address": 1107343468,
+   "linkage": "T",
+   "name": "esp_panic_handler_increment_entry_count",
+   "size": 37
+  },
+  {
+   "address": 1107325924,
+   "linkage": "T",
+   "name": "esp_partition_find",
+   "size": 25
+  },
+  {
+   "address": 1107325820,
+   "linkage": "T",
+   "name": "esp_partition_find_err",
+   "size": 102
+  },
+  {
+   "address": 1107325968,
+   "linkage": "T",
+   "name": "esp_partition_get",
+   "size": 27
+  },
+  {
+   "address": 1107325996,
+   "linkage": "T",
+   "name": "esp_partition_is_flash_region_writable",
+   "size": 72
+  },
+  {
+   "address": 1107325952,
+   "linkage": "T",
+   "name": "esp_partition_iterator_release",
+   "size": 13
+  },
+  {
+   "address": 1107326068,
+   "linkage": "T",
+   "name": "esp_partition_main_flash_region_safe",
+   "size": 48
+  },
+  {
+   "address": 1107325696,
+   "linkage": "T",
+   "name": "esp_partition_next",
+   "size": 121
+  },
+  {
+   "address": 1077380408,
+   "linkage": "T",
+   "name": "esp_ptr_byte_accessible",
+   "size": 45
+  },
+  {
+   "address": 1077380312,
+   "linkage": "T",
+   "name": "esp_ptr_executable",
+   "size": 93
+  },
+  {
+   "address": 1107342664,
+   "linkage": "T",
+   "name": "esp_register_freertos_idle_hook_for_cpu",
+   "size": 82
+  },
+  {
+   "address": 1107342832,
+   "linkage": "T",
+   "name": "esp_register_freertos_tick_hook",
+   "size": 21
+  },
+  {
+   "address": 1107342748,
+   "linkage": "T",
+   "name": "esp_register_freertos_tick_hook_for_cpu",
+   "size": 82
+  },
+  {
+   "address": 1107302684,
+   "linkage": "T",
+   "name": "esp_register_shutdown_handler",
+   "size": 48
+  },
+  {
+   "address": 1107343832,
+   "linkage": "T",
+   "name": "esp_reset_reason",
+   "size": 10
+  },
+  {
+   "address": 1107343844,
+   "linkage": "T",
+   "name": "esp_reset_reason_get_hint",
+   "size": 27
+  },
+  {
+   "address": 1107343872,
+   "linkage": "t",
+   "name": "esp_reset_reason_init",
+   "size": 183
+  },
+  {
+   "address": 1077385520,
+   "linkage": "T",
+   "name": "esp_reset_reason_set_hint",
+   "size": 49
+  },
+  {
+   "address": 1107302732,
+   "linkage": "T",
+   "name": "esp_restart",
+   "size": 35
+  },
+  {
+   "address": 1077385572,
+   "linkage": "T",
+   "name": "esp_restart_noos",
+   "size": 310
+  },
+  {
+   "address": 1107306764,
+   "linkage": "T",
+   "name": "esp_rom_efuse_get_opiconfig",
+   "size": 58
+  },
+  {
+   "address": 1077385296,
+   "linkage": "T",
+   "name": "esp_rom_install_uart_printf",
+   "size": 33
+  },
+  {
+   "address": 1077385072,
+   "linkage": "T",
+   "name": "esp_rom_opiflash_cache_mode_config",
+   "size": 222
+  },
+  {
+   "address": 1107332076,
+   "linkage": "t",
+   "name": "esp_rsa_ds_conn_lock",
+   "size": 47
+  },
+  {
+   "address": 1107308480,
+   "linkage": "T",
+   "name": "esp_rtc_get_time_us",
+   "size": 175
+  },
+  {
+   "address": 1107304040,
+   "linkage": "T",
+   "name": "esp_rtc_init",
+   "size": 42
+  },
+  {
+   "address": 1107339376,
+   "linkage": "T",
+   "name": "esp_security_init_include_impl",
+   "size": 5
+  },
+  {
+   "address": 1107317624,
+   "linkage": "T",
+   "name": "esp_set_time_from_rtc",
+   "size": 39
+  },
+  {
+   "address": 1107317748,
+   "linkage": "T",
+   "name": "esp_setup_newlib_syscalls",
+   "size": 44
+  },
+  {
+   "address": 1107310288,
+   "linkage": "T",
+   "name": "esp_sleep_config_gpio_isolate",
+   "size": 186
+  },
+  {
+   "address": 1107310476,
+   "linkage": "T",
+   "name": "esp_sleep_enable_gpio_switch",
+   "size": 120
+  },
+  {
+   "address": 1107339580,
+   "linkage": "T",
+   "name": "esp_sleep_gpio_include",
+   "size": 5
+  },
+  {
+   "address": 1107316040,
+   "linkage": "T",
+   "name": "esp_sleep_sub_mode_config",
+   "size": 26
+  },
+  {
+   "address": 1107315936,
+   "linkage": "t",
+   "name": "esp_sleep_sub_mode_config$part$0",
+   "size": 103
+  },
+  {
+   "address": 1107316128,
+   "linkage": "T",
+   "name": "esp_sleep_sub_mode_dump_config",
+   "size": 54
+  },
+  {
+   "address": 1107316068,
+   "linkage": "T",
+   "name": "esp_sleep_sub_mode_force_disable",
+   "size": 59
+  },
+  {
+   "address": 1107316392,
+   "linkage": "T",
+   "name": "esp_startup_start_app",
+   "size": 72
+  },
+  {
+   "address": 1107316464,
+   "linkage": "T",
+   "name": "esp_startup_start_app_other_cores",
+   "size": 44
+  },
+  {
+   "address": 1107300872,
+   "linkage": "T",
+   "name": "esp_stdio_register",
+   "size": 32
+  },
+  {
+   "address": 1107317664,
+   "linkage": "T",
+   "name": "esp_sync_timekeeping_timers",
+   "size": 83
+  },
+  {
+   "address": 1077385452,
+   "linkage": "T",
+   "name": "esp_system_abort",
+   "size": 8
+  },
+  {
+   "address": 1077371916,
+   "linkage": "T",
+   "name": "esp_system_get_time",
+   "size": 27
+  },
+  {
+   "address": 1107339400,
+   "linkage": "T",
+   "name": "esp_system_include_startup_funcs",
+   "size": 5
+  },
+  {
+   "address": 1107339368,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_esp_security_init",
+   "size": 7
+  },
+  {
+   "address": 1107310596,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_esp_sleep_startup_init",
+   "size": 17
+  },
+  {
+   "address": 1107318260,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_esp_timer_init_nonos",
+   "size": 15
+  },
+  {
+   "address": 1107302868,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_apb_dma",
+   "size": 10
+  },
+  {
+   "address": 1107302840,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_brownout",
+   "size": 16
+  },
+  {
+   "address": 1107302880,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_disable_rtc_wdt",
+   "size": 40
+  },
+  {
+   "address": 1107339344,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_efuse",
+   "size": 7
+  },
+  {
+   "address": 1107301288,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_efuse_check",
+   "size": 18
+  },
+  {
+   "address": 1107301308,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_efuse_show_app_info",
+   "size": 139
+  },
+  {
+   "address": 1107301868,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_flash",
+   "size": 50
+  },
+  {
+   "address": 1107307996,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_heap",
+   "size": 10
+  },
+  {
+   "address": 1107316720,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_libc",
+   "size": 10
+  },
+  {
+   "address": 1107316732,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_libc_stdio",
+   "size": 13
+  },
+  {
+   "address": 1107302856,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_newlib_time",
+   "size": 10
+  },
+  {
+   "address": 1107301088,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_show_app_info",
+   "size": 197
+  },
+  {
+   "address": 1107302768,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_show_cpu_freq",
+   "size": 70
+  },
+  {
+   "address": 1107300904,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_vfs_console",
+   "size": 10
+  },
+  {
+   "address": 1107324512,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_vfs_nullfs",
+   "size": 10
+  },
+  {
+   "address": 1107320268,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_vfs_uart",
+   "size": 10
+  },
+  {
+   "address": 1107321176,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_init_vfs_usj_sec",
+   "size": 23
+  },
+  {
+   "address": 1107331304,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_mbedtls_psa_crypto_init_fn",
+   "size": 16
+  },
+  {
+   "address": 1107320460,
+   "linkage": "t",
+   "name": "__esp_system_init_fn_usb_serial_jtag_conn_status_init",
+   "size": 40
+  },
+  {
+   "address": 1077385884,
+   "linkage": "T",
+   "name": "esp_system_reset_modules_on_exit",
+   "size": 164
+  },
+  {
+   "address": 1107329516,
+   "linkage": "T",
+   "name": "esp_task_wdt_add",
+   "size": 71
+  },
+  {
+   "address": 1107330880,
+   "linkage": "T",
+   "name": "esp_task_wdt_impl_timeout_triggered",
+   "size": 31
+  },
+  {
+   "address": 1107330616,
+   "linkage": "T",
+   "name": "esp_task_wdt_impl_timer_allocate",
+   "size": 222
+  },
+  {
+   "address": 1107330840,
+   "linkage": "T",
+   "name": "esp_task_wdt_impl_timer_feed",
+   "size": 38
+  },
+  {
+   "address": 1107330912,
+   "linkage": "T",
+   "name": "esp_task_wdt_impl_timer_restart",
+   "size": 46
+  },
+  {
+   "address": 1107329680,
+   "linkage": "T",
+   "name": "esp_task_wdt_init",
+   "size": 220
+  },
+  {
+   "address": 1107330056,
+   "linkage": "T",
+   "name": "esp_task_wdt_print_triggered_tasks",
+   "size": 208
+  },
+  {
+   "address": 1107329900,
+   "linkage": "T",
+   "name": "esp_task_wdt_reset",
+   "size": 144
+  },
+  {
+   "address": 1107317584,
+   "linkage": "T",
+   "name": "esp_time_impl_get_boot_time",
+   "size": 39
+  },
+  {
+   "address": 1107317516,
+   "linkage": "T",
+   "name": "esp_time_impl_get_time_since_boot",
+   "size": 27
+  },
+  {
+   "address": 1107317544,
+   "linkage": "T",
+   "name": "esp_time_impl_set_boot_time",
+   "size": 39
+  },
+  {
+   "address": 1077371944,
+   "linkage": "T",
+   "name": "esp_timer_get_time",
+   "size": 25
+  },
+  {
+   "address": 1107318368,
+   "linkage": "T",
+   "name": "esp_timer_impl_early_init",
+   "size": 168
+  },
+  {
+   "address": 1077371944,
+   "linkage": "T",
+   "name": "esp_timer_impl_get_time",
+   "size": 25
+  },
+  {
+   "address": 1107318276,
+   "linkage": "T",
+   "name": "esp_timer_impl_init_system_time",
+   "size": 92
+  },
+  {
+   "address": 1107339700,
+   "linkage": "T",
+   "name": "esp_timer_init_include_func",
+   "size": 5
+  },
+  {
+   "address": 1107342616,
+   "linkage": "T",
+   "name": "esp_vApplicationIdleHook",
+   "size": 48
+  },
+  {
+   "address": 1077385460,
+   "linkage": "T",
+   "name": "esp_vApplicationTickHook",
+   "size": 35
+  },
+  {
+   "address": 1107323664,
+   "linkage": "T",
+   "name": "esp_vfs_access",
+   "size": 95
+  },
+  {
+   "address": 1107323320,
+   "linkage": "T",
+   "name": "esp_vfs_close",
+   "size": 88
+  },
+  {
+   "address": 1107323492,
+   "linkage": "T",
+   "name": "esp_vfs_fcntl_r",
+   "size": 88
+  },
+  {
+   "address": 1107321952,
+   "linkage": "t",
+   "name": "esp_vfs_free_fs_ops",
+   "size": 29
+  },
+  {
+   "address": 1107323408,
+   "linkage": "T",
+   "name": "esp_vfs_fstat",
+   "size": 84
+  },
+  {
+   "address": 1107323580,
+   "linkage": "T",
+   "name": "esp_vfs_fsync",
+   "size": 82
+  },
+  {
+   "address": 1107339336,
+   "linkage": "T",
+   "name": "esp_vfs_include_console_register",
+   "size": 5
+  },
+  {
+   "address": 1107339764,
+   "linkage": "T",
+   "name": "esp_vfs_include_nullfs_register",
+   "size": 5
+  },
+  {
+   "address": 1107323144,
+   "linkage": "T",
+   "name": "esp_vfs_lseek",
+   "size": 88
+  },
+  {
+   "address": 1107324488,
+   "linkage": "T",
+   "name": "esp_vfs_null_register",
+   "size": 23
+  },
+  {
+   "address": 1107322880,
+   "linkage": "T",
+   "name": "esp_vfs_open",
+   "size": 173
+  },
+  {
+   "address": 1107323232,
+   "linkage": "T",
+   "name": "esp_vfs_read",
+   "size": 88
+  },
+  {
+   "address": 1107322188,
+   "linkage": "T",
+   "name": "esp_vfs_register_fs",
+   "size": 236
+  },
+  {
+   "address": 1107321984,
+   "linkage": "t",
+   "name": "esp_vfs_register_fs_common",
+   "size": 203
+  },
+  {
+   "address": 1107323760,
+   "linkage": "T",
+   "name": "esp_vfs_select_triggered",
+   "size": 70
+  },
+  {
+   "address": 1107323832,
+   "linkage": "T",
+   "name": "esp_vfs_select_triggered_isr",
+   "size": 68
+  },
+  {
+   "address": 1107320216,
+   "linkage": "T",
+   "name": "esp_vfs_uart_get_vfs",
+   "size": 8
+  },
+  {
+   "address": 1107321848,
+   "linkage": "T",
+   "name": "esp_vfs_usb_serial_jtag_get_vfs",
+   "size": 8
+  },
+  {
+   "address": 1107323056,
+   "linkage": "T",
+   "name": "esp_vfs_write",
+   "size": 88
+  },
+  {
+   "address": 1107317452,
+   "linkage": "T",
+   "name": "fcntl",
+   "size": 43
+  },
+  {
+   "address": 1107323492,
+   "linkage": "T",
+   "name": "_fcntl_r",
+   "size": 88
+  },
+  {
+   "address": 1107333124,
+   "linkage": "T",
+   "name": "fflush",
+   "size": 60
+  },
+  {
+   "address": 1107308672,
+   "linkage": "t",
+   "name": "find_desc_for_int",
+   "size": 33
+  },
+  {
+   "address": 1107328944,
+   "linkage": "t",
+   "name": "find_entry_and_check_all_reset",
+   "size": 52
+  },
+  {
+   "address": 1107328996,
+   "linkage": "t",
+   "name": "find_entry_from_task_handle_and_check_all_reset",
+   "size": 54
+  },
+  {
+   "address": 1107306884,
+   "linkage": "t",
+   "name": "fix_cache_generation_overflow",
+   "size": 43
+  },
+  {
+   "address": 1077398016,
+   "linkage": "t",
+   "name": "flash_end_flush_cache",
+   "size": 69
+  },
+  {
+   "address": 1077367572,
+   "linkage": "t",
+   "name": "flash_init_state",
+   "size": 11
+  },
+  {
+   "address": 1107333184,
+   "linkage": "T",
+   "name": "__flockfile_init",
+   "size": 36
+  },
+  {
+   "address": 1107333220,
+   "linkage": "T",
+   "name": "fprintf",
+   "size": 41
+  },
+  {
+   "address": 1077384580,
+   "linkage": "T",
+   "name": "free",
+   "size": 10
+  },
+  {
+   "address": 1107317496,
+   "linkage": "T",
+   "name": "fstat",
+   "size": 19
+  },
+  {
+   "address": 1107323408,
+   "linkage": "T",
+   "name": "_fstat_r",
+   "size": 84
+  },
+  {
+   "address": 1107323580,
+   "linkage": "T",
+   "name": "fsync",
+   "size": 82
+  },
+  {
+   "address": 1077404928,
+   "linkage": "t",
+   "name": "get_buffer_malloc",
+   "size": 58
+  },
+  {
+   "address": 1107339408,
+   "linkage": "t",
+   "name": "get_cache_error",
+   "size": 59
+  },
+  {
+   "address": 1107308860,
+   "linkage": "t",
+   "name": "get_desc_for_int",
+   "size": 155
+  },
+  {
+   "address": 1107324680,
+   "linkage": "t",
+   "name": "get_flash_clock_divider",
+   "size": 97
+  },
+  {
+   "address": 1107322656,
+   "linkage": "T",
+   "name": "get_local_fd",
+   "size": 38
+  },
+  {
+   "address": 1107340556,
+   "linkage": "t",
+   "name": "get_rtc_dbias_by_efuse$constprop$0",
+   "size": 169
+  },
+  {
+   "address": 1107317432,
+   "linkage": "T",
+   "name": "gettimeofday",
+   "size": 19
+  },
+  {
+   "address": 1107317252,
+   "linkage": "T",
+   "name": "_gettimeofday_r",
+   "size": 14
+  },
+  {
+   "address": 1107317064,
+   "linkage": "t",
+   "name": "_gettimeofday_r$part$0",
+   "size": 83
+  },
+  {
+   "address": 1107322868,
+   "linkage": "T",
+   "name": "get_vfs_count",
+   "size": 10
+  },
+  {
+   "address": 1107322620,
+   "linkage": "T",
+   "name": "get_vfs_for_fd",
+   "size": 36
+  },
+  {
+   "address": 1107322424,
+   "linkage": "T",
+   "name": "get_vfs_for_index",
+   "size": 28
+  },
+  {
+   "address": 1107322752,
+   "linkage": "T",
+   "name": "get_vfs_for_path",
+   "size": 115
+  },
+  {
+   "address": 1107332492,
+   "linkage": "t",
+   "name": "_GLOBAL__sub_I__ZN17__eh_globals_init7_S_initE",
+   "size": 29
+  },
+  {
+   "address": 1107326116,
+   "linkage": "t",
+   "name": "gpio_sleep_pulldown_dis$isra$0",
+   "size": 112
+  },
+  {
+   "address": 1107326228,
+   "linkage": "t",
+   "name": "gpio_sleep_pulldown_en$isra$0",
+   "size": 112
+  },
+  {
+   "address": 1107326340,
+   "linkage": "t",
+   "name": "gpio_sleep_pullup_dis$isra$0",
+   "size": 112
+  },
+  {
+   "address": 1107326452,
+   "linkage": "t",
+   "name": "gpio_sleep_pullup_en$isra$0",
+   "size": 112
+  },
+  {
+   "address": 1107326968,
+   "linkage": "T",
+   "name": "gpio_sleep_sel_dis",
+   "size": 117
+  },
+  {
+   "address": 1107326848,
+   "linkage": "T",
+   "name": "gpio_sleep_sel_en",
+   "size": 117
+  },
+  {
+   "address": 1107326564,
+   "linkage": "T",
+   "name": "gpio_sleep_set_direction",
+   "size": 134
+  },
+  {
+   "address": 1107326700,
+   "linkage": "T",
+   "name": "gpio_sleep_set_pull_mode",
+   "size": 146
+  },
+  {
+   "address": 1077375396,
+   "linkage": "t",
+   "name": "gpspi_flash_ll_get_buffer_data",
+   "size": 82
+  },
+  {
+   "address": 1107306928,
+   "linkage": "t",
+   "name": "heap_bubble_down",
+   "size": 71
+  },
+  {
+   "address": 1077369428,
+   "linkage": "T",
+   "name": "heap_caps_aligned_alloc_base",
+   "size": 130
+  },
+  {
+   "address": 1077369148,
+   "linkage": "t",
+   "name": "heap_caps_alloc_failed",
+   "size": 21
+  },
+  {
+   "address": 1077369320,
+   "linkage": "T",
+   "name": "heap_caps_calloc",
+   "size": 35
+  },
+  {
+   "address": 1077369860,
+   "linkage": "T",
+   "name": "heap_caps_calloc_base",
+   "size": 42
+  },
+  {
+   "address": 1107307408,
+   "linkage": "T",
+   "name": "heap_caps_enable_nonos_stack_heaps",
+   "size": 42
+  },
+  {
+   "address": 1077369356,
+   "linkage": "T",
+   "name": "heap_caps_free",
+   "size": 71
+  },
+  {
+   "address": 1107307232,
+   "linkage": "T",
+   "name": "heap_caps_get_info",
+   "size": 107
+  },
+  {
+   "address": 1107307340,
+   "linkage": "T",
+   "name": "heap_caps_get_largest_free_block",
+   "size": 17
+  },
+  {
+   "address": 1107307452,
+   "linkage": "T",
+   "name": "heap_caps_init",
+   "size": 542
+  },
+  {
+   "address": 1077369172,
+   "linkage": "T",
+   "name": "heap_caps_malloc",
+   "size": 34
+  },
+  {
+   "address": 1077369560,
+   "linkage": "T",
+   "name": "heap_caps_malloc_base",
+   "size": 19
+  },
+  {
+   "address": 1077369208,
+   "linkage": "T",
+   "name": "heap_caps_malloc_default",
+   "size": 80
+  },
+  {
+   "address": 1107339508,
+   "linkage": "T",
+   "name": "heap_caps_match",
+   "size": 37
+  },
+  {
+   "address": 1077369288,
+   "linkage": "T",
+   "name": "heap_caps_realloc",
+   "size": 32
+  },
+  {
+   "address": 1077369580,
+   "linkage": "T",
+   "name": "heap_caps_realloc_base",
+   "size": 279
+  },
+  {
+   "address": 1107330044,
+   "linkage": "t",
+   "name": "idle_hook_cb",
+   "size": 10
+  },
+  {
+   "address": 1107339724,
+   "linkage": "T",
+   "name": "include_esp_phy_override",
+   "size": 5
+  },
+  {
+   "address": 1077363712,
+   "linkage": "T",
+   "name": "_invalid_pc_placeholder",
+   "size": 3
+  },
+  {
+   "address": 1077367216,
+   "linkage": "t",
+   "name": "ipc_task",
+   "size": 218
+  },
+  {
+   "address": 1077366892,
+   "linkage": "t",
+   "name": "is_page_mapped_in_cache",
+   "size": 60
+  },
+  {
+   "address": 1107325216,
+   "linkage": "t",
+   "name": "is_partition_encrypted",
+   "size": 77
+  },
+  {
+   "address": 1107308708,
+   "linkage": "t",
+   "name": "is_vect_desc_usable",
+   "size": 150
+  },
+  {
+   "address": 1107332548,
+   "linkage": "T",
+   "name": "__libc_init_array",
+   "size": 24
+  },
+  {
+   "address": 1077371524,
+   "linkage": "T",
+   "name": "_lock_acquire",
+   "size": 17
+  },
+  {
+   "address": 1077371212,
+   "linkage": "t",
+   "name": "lock_acquire_generic",
+   "size": 151
+  },
+  {
+   "address": 1077371544,
+   "linkage": "T",
+   "name": "_lock_acquire_recursive",
+   "size": 17
+  },
+  {
+   "address": 1077371456,
+   "linkage": "T",
+   "name": "_lock_close",
+   "size": 65
+  },
+  {
+   "address": 1077371456,
+   "linkage": "T",
+   "name": "_lock_close_recursive",
+   "size": 65
+  },
+  {
+   "address": 1077371148,
+   "linkage": "t",
+   "name": "lock_init_generic",
+   "size": 40
+  },
+  {
+   "address": 1077371604,
+   "linkage": "T",
+   "name": "_lock_release",
+   "size": 15
+  },
+  {
+   "address": 1077371364,
+   "linkage": "t",
+   "name": "lock_release_generic",
+   "size": 90
+  },
+  {
+   "address": 1077371620,
+   "linkage": "T",
+   "name": "_lock_release_recursive",
+   "size": 15
+  },
+  {
+   "address": 1077371564,
+   "linkage": "T",
+   "name": "_lock_try_acquire",
+   "size": 19
+  },
+  {
+   "address": 1077371584,
+   "linkage": "T",
+   "name": "_lock_try_acquire_recursive",
+   "size": 19
+  },
+  {
+   "address": 1107338396,
+   "linkage": "T",
+   "name": "__log10Pow2",
+   "size": 14
+  },
+  {
+   "address": 1107338412,
+   "linkage": "T",
+   "name": "__log10Pow5",
+   "size": 14
+  },
+  {
+   "address": 1107351424,
+   "linkage": "t",
+   "name": "log_level_get",
+   "size": 69
+  },
+  {
+   "address": 1107317408,
+   "linkage": "T",
+   "name": "lseek",
+   "size": 21
+  },
+  {
+   "address": 1107323144,
+   "linkage": "T",
+   "name": "_lseek_r",
+   "size": 88
+  },
+  {
+   "address": 1077404988,
+   "linkage": "t",
+   "name": "main_flash_op_status",
+   "size": 11
+  },
+  {
+   "address": 1077405000,
+   "linkage": "t",
+   "name": "main_flash_region_protected",
+   "size": 44
+  },
+  {
+   "address": 1107316204,
+   "linkage": "t",
+   "name": "main_task",
+   "size": 188
+  },
+  {
+   "address": 1077384564,
+   "linkage": "T",
+   "name": "malloc",
+   "size": 15
+  },
+  {
+   "address": 1107332124,
+   "linkage": "T",
+   "name": "mbedtls_calloc",
+   "size": 19
+  },
+  {
+   "address": 1107332144,
+   "linkage": "T",
+   "name": "mbedtls_free",
+   "size": 15
+  },
+  {
+   "address": 1107332248,
+   "linkage": "T",
+   "name": "mbedtls_mutex_lock",
+   "size": 24
+  },
+  {
+   "address": 1107332272,
+   "linkage": "T",
+   "name": "mbedtls_mutex_unlock",
+   "size": 24
+  },
+  {
+   "address": 1107332160,
+   "linkage": "T",
+   "name": "mbedtls_platform_zeroize",
+   "size": 24
+  },
+  {
+   "address": 1107331480,
+   "linkage": "T",
+   "name": "mbedtls_psa_crypto_free",
+   "size": 129
+  },
+  {
+   "address": 1107339852,
+   "linkage": "T",
+   "name": "mbedtls_psa_crypto_init_include_impl",
+   "size": 5
+  },
+  {
+   "address": 1107332184,
+   "linkage": "T",
+   "name": "mbedtls_zeroize_and_free",
+   "size": 21
+  },
+  {
+   "address": 1107311096,
+   "linkage": "t",
+   "name": "memprot_ll_prepare_dram0_split_line_regval",
+   "size": 176
+  },
+  {
+   "address": 1107310884,
+   "linkage": "t",
+   "name": "memprot_ll_prepare_iram0_split_line_regval",
+   "size": 168
+  },
+  {
+   "address": 1107311272,
+   "linkage": "t",
+   "name": "memprot_ll_set_dram0_split_line",
+   "size": 44
+  },
+  {
+   "address": 1107311052,
+   "linkage": "t",
+   "name": "memprot_ll_set_iram0_split_line",
+   "size": 44
+  },
+  {
+   "address": 1077398644,
+   "linkage": "T",
+   "name": "memspi_host_erase_block",
+   "size": 67
+  },
+  {
+   "address": 1077398328,
+   "linkage": "T",
+   "name": "memspi_host_erase_chip",
+   "size": 34
+  },
+  {
+   "address": 1077398576,
+   "linkage": "T",
+   "name": "memspi_host_erase_sector",
+   "size": 66
+  },
+  {
+   "address": 1077398548,
+   "linkage": "T",
+   "name": "memspi_host_flush_cache",
+   "size": 25
+  },
+  {
+   "address": 1077398788,
+   "linkage": "T",
+   "name": "memspi_host_init_pointers",
+   "size": 100
+  },
+  {
+   "address": 1077398712,
+   "linkage": "T",
+   "name": "memspi_host_program_page",
+   "size": 73
+  },
+  {
+   "address": 1077398940,
+   "linkage": "T",
+   "name": "memspi_host_read_data_slicer",
+   "size": 40
+  },
+  {
+   "address": 1077398408,
+   "linkage": "T",
+   "name": "memspi_host_read_id_hs",
+   "size": 137
+  },
+  {
+   "address": 1077398272,
+   "linkage": "T",
+   "name": "memspi_host_read_status_hs",
+   "size": 56
+  },
+  {
+   "address": 1077398364,
+   "linkage": "T",
+   "name": "memspi_host_set_write_protect",
+   "size": 43
+  },
+  {
+   "address": 1077398888,
+   "linkage": "T",
+   "name": "memspi_host_write_data_slicer",
+   "size": 49
+  },
+  {
+   "address": 1077391716,
+   "linkage": "T",
+   "name": "mmu_hal_check_valid_ext_vaddr_region",
+   "size": 79
+  },
+  {
+   "address": 1077391588,
+   "linkage": "T",
+   "name": "mmu_hal_ctx_init",
+   "size": 14
+  },
+  {
+   "address": 1077391796,
+   "linkage": "T",
+   "name": "mmu_hal_map_region",
+   "size": 163
+  },
+  {
+   "address": 1077391604,
+   "linkage": "T",
+   "name": "mmu_hal_paddr_to_vaddr",
+   "size": 110
+  },
+  {
+   "address": 1077391960,
+   "linkage": "T",
+   "name": "mmu_hal_unmap_region",
+   "size": 98
+  },
+  {
+   "address": 1077392060,
+   "linkage": "T",
+   "name": "mmu_hal_vaddr_to_paddr",
+   "size": 88
+  },
+  {
+   "address": 1107339860,
+   "linkage": "T",
+   "name": "mpu_hal_set_region_access",
+   "size": 51
+  },
+  {
+   "address": 1107302960,
+   "linkage": "t",
+   "name": "mspi_init",
+   "size": 23
+  },
+  {
+   "address": 1077380688,
+   "linkage": "T",
+   "name": "mspi_timing_change_speed_mode_cache_safe",
+   "size": 28
+  },
+  {
+   "address": 1077380456,
+   "linkage": "T",
+   "name": "mspi_timing_config_set_flash_clock",
+   "size": 98
+  },
+  {
+   "address": 1077380556,
+   "linkage": "T",
+   "name": "mspi_timing_config_set_psram_clock",
+   "size": 82
+  },
+  {
+   "address": 1077380668,
+   "linkage": "T",
+   "name": "mspi_timing_enter_high_speed_mode",
+   "size": 18
+  },
+  {
+   "address": 1077380640,
+   "linkage": "T",
+   "name": "mspi_timing_enter_low_speed_mode",
+   "size": 28
+  },
+  {
+   "address": 1077380820,
+   "linkage": "T",
+   "name": "mspi_timing_flash_tuning",
+   "size": 5
+  },
+  {
+   "address": 1077380724,
+   "linkage": "T",
+   "name": "mspi_timing_set_pin_drive_strength",
+   "size": 95
+  },
+  {
+   "address": 1107336648,
+   "linkage": "t",
+   "name": "mulShiftAll64",
+   "size": 427
+  },
+  {
+   "address": 1077392736,
+   "linkage": "T",
+   "name": "multi_heap_aligned_alloc_impl_offs",
+   "size": 103
+  },
+  {
+   "address": 1077392840,
+   "linkage": "T",
+   "name": "multi_heap_aligned_alloc_offs",
+   "size": 21
+  },
+  {
+   "address": 1077392864,
+   "linkage": "T",
+   "name": "multi_heap_aligned_free",
+   "size": 68
+  },
+  {
+   "address": 1077392864,
+   "linkage": "T",
+   "name": "multi_heap_free",
+   "size": 68
+  },
+  {
+   "address": 1077392864,
+   "linkage": "T",
+   "name": "multi_heap_free_impl",
+   "size": 68
+  },
+  {
+   "address": 1077392932,
+   "linkage": "T",
+   "name": "multi_heap_get_allocated_size",
+   "size": 15
+  },
+  {
+   "address": 1077392932,
+   "linkage": "T",
+   "name": "multi_heap_get_allocated_size_impl",
+   "size": 15
+  },
+  {
+   "address": 1107350424,
+   "linkage": "T",
+   "name": "multi_heap_get_info",
+   "size": 103
+  },
+  {
+   "address": 1107350424,
+   "linkage": "T",
+   "name": "multi_heap_get_info_impl",
+   "size": 103
+  },
+  {
+   "address": 1107350528,
+   "linkage": "t",
+   "name": "multi_heap_get_info_tlsf",
+   "size": 37
+  },
+  {
+   "address": 1077392948,
+   "linkage": "T",
+   "name": "multi_heap_internal_lock",
+   "size": 21
+  },
+  {
+   "address": 1077392972,
+   "linkage": "T",
+   "name": "multi_heap_internal_unlock",
+   "size": 19
+  },
+  {
+   "address": 1077392992,
+   "linkage": "T",
+   "name": "multi_heap_malloc",
+   "size": 80
+  },
+  {
+   "address": 1077392992,
+   "linkage": "T",
+   "name": "multi_heap_malloc_impl",
+   "size": 80
+  },
+  {
+   "address": 1077393072,
+   "linkage": "T",
+   "name": "multi_heap_realloc",
+   "size": 106
+  },
+  {
+   "address": 1077393072,
+   "linkage": "T",
+   "name": "multi_heap_realloc_impl",
+   "size": 106
+  },
+  {
+   "address": 1107350348,
+   "linkage": "T",
+   "name": "multi_heap_register",
+   "size": 75
+  },
+  {
+   "address": 1107350348,
+   "linkage": "T",
+   "name": "multi_heap_register_impl",
+   "size": 75
+  },
+  {
+   "address": 1077393180,
+   "linkage": "T",
+   "name": "multi_heap_set_lock",
+   "size": 7
+  },
+  {
+   "address": 1107339716,
+   "linkage": "T",
+   "name": "nvs_sec_provider_include_impl",
+   "size": 5
+  },
+  {
+   "address": 1107317292,
+   "linkage": "T",
+   "name": "open",
+   "size": 48
+  },
+  {
+   "address": 1107322880,
+   "linkage": "T",
+   "name": "_open_r",
+   "size": 173
+  },
+  {
+   "address": 1107316184,
+   "linkage": "t",
+   "name": "other_cpu_startup_idle_hook_cb",
+   "size": 18
+  },
+  {
+   "address": 1077385496,
+   "linkage": "T",
+   "name": "panic_abort",
+   "size": 22
+  },
+  {
+   "address": 1107306548,
+   "linkage": "T",
+   "name": "panic_arch_fill_info",
+   "size": 52
+  },
+  {
+   "address": 1107339500,
+   "linkage": "T",
+   "name": "panic_clear_active_interrupts",
+   "size": 5
+  },
+  {
+   "address": 1077368268,
+   "linkage": "t",
+   "name": "panic_enable_cache",
+   "size": 31
+  },
+  {
+   "address": 1107339476,
+   "linkage": "T",
+   "name": "panic_get_address",
+   "size": 7
+  },
+  {
+   "address": 1107339484,
+   "linkage": "T",
+   "name": "panic_get_cause",
+   "size": 8
+  },
+  {
+   "address": 1107305684,
+   "linkage": "t",
+   "name": "panic_handler",
+   "size": 295
+  },
+  {
+   "address": 1077368300,
+   "linkage": "T",
+   "name": "panicHandler",
+   "size": 21
+  },
+  {
+   "address": 1107306692,
+   "linkage": "T",
+   "name": "panic_print_backtrace",
+   "size": 32
+  },
+  {
+   "address": 1107342908,
+   "linkage": "T",
+   "name": "panic_print_char",
+   "size": 111
+  },
+  {
+   "address": 1107343096,
+   "linkage": "T",
+   "name": "panic_print_dec",
+   "size": 55
+  },
+  {
+   "address": 1107343056,
+   "linkage": "T",
+   "name": "panic_print_hex",
+   "size": 38
+  },
+  {
+   "address": 1107306336,
+   "linkage": "T",
+   "name": "panic_print_registers",
+   "size": 210
+  },
+  {
+   "address": 1107343020,
+   "linkage": "T",
+   "name": "panic_print_str",
+   "size": 20
+  },
+  {
+   "address": 1107306088,
+   "linkage": "T",
+   "name": "panic_restart",
+   "size": 9
+  },
+  {
+   "address": 1107339492,
+   "linkage": "T",
+   "name": "panic_set_address",
+   "size": 7
+  },
+  {
+   "address": 1107339468,
+   "linkage": "T",
+   "name": "panic_soc_check_pseudo_cause",
+   "size": 7
+  },
+  {
+   "address": 1107306600,
+   "linkage": "T",
+   "name": "panic_soc_fill_info",
+   "size": 89
+  },
+  {
+   "address": 1107347488,
+   "linkage": "T",
+   "name": "pcTaskGetName",
+   "size": 41
+  },
+  {
+   "address": 1107340276,
+   "linkage": "t",
+   "name": "periph_ll_enable_clk_clear_rst",
+   "size": 98
+  },
+  {
+   "address": 1107340188,
+   "linkage": "t",
+   "name": "periph_ll_get_clk_en_mask",
+   "size": 87
+  },
+  {
+   "address": 1107340464,
+   "linkage": "t",
+   "name": "periph_ll_get_rst_en_mask$isra$0",
+   "size": 89
+  },
+  {
+   "address": 1107340376,
+   "linkage": "T",
+   "name": "periph_module_enable",
+   "size": 87
+  },
+  {
+   "address": 1077380836,
+   "linkage": "T",
+   "name": "periph_rcc_acquire_enter",
+   "size": 16
+  },
+  {
+   "address": 1077380852,
+   "linkage": "T",
+   "name": "periph_rcc_acquire_exit",
+   "size": 21
+  },
+  {
+   "address": 1077380876,
+   "linkage": "T",
+   "name": "periph_rcc_enter",
+   "size": 18
+  },
+  {
+   "address": 1077380896,
+   "linkage": "T",
+   "name": "periph_rcc_exit",
+   "size": 14
+  },
+  {
+   "address": 1107338428,
+   "linkage": "T",
+   "name": "__pow5bits",
+   "size": 16
+  },
+  {
+   "address": 1107338444,
+   "linkage": "T",
+   "name": "__pow5Factor",
+   "size": 48
+  },
+  {
+   "address": 1107343040,
+   "linkage": "t",
+   "name": "print_abort_details",
+   "size": 13
+  },
+  {
+   "address": 1107306264,
+   "linkage": "t",
+   "name": "print_cache_err_details",
+   "size": 71
+  },
+  {
+   "address": 1107306100,
+   "linkage": "t",
+   "name": "print_debug_exception_details",
+   "size": 80
+  },
+  {
+   "address": 1077368448,
+   "linkage": "t",
+   "name": "print_entry",
+   "size": 57
+  },
+  {
+   "address": 1107333264,
+   "linkage": "T",
+   "name": "printf",
+   "size": 46
+  },
+  {
+   "address": 1107306180,
+   "linkage": "t",
+   "name": "print_illegal_instruction_details",
+   "size": 81
+  },
+  {
+   "address": 1107306020,
+   "linkage": "t",
+   "name": "print_state",
+   "size": 65
+  },
+  {
+   "address": 1107305980,
+   "linkage": "t",
+   "name": "print_state_for_core",
+   "size": 38
+  },
+  {
+   "address": 1077368508,
+   "linkage": "t",
+   "name": "print_str",
+   "size": 24
+  },
+  {
+   "address": 1107345764,
+   "linkage": "t",
+   "name": "prvAddCurrentTaskToDelayedList",
+   "size": 242
+  },
+  {
+   "address": 1107346008,
+   "linkage": "t",
+   "name": "prvAddNewTaskToReadyList",
+   "size": 439
+  },
+  {
+   "address": 1077388340,
+   "linkage": "t",
+   "name": "prvCheckTaskCanBeScheduledSMP",
+   "size": 55
+  },
+  {
+   "address": 1077387780,
+   "linkage": "t",
+   "name": "prvCopyDataFromQueue",
+   "size": 33
+  },
+  {
+   "address": 1077387816,
+   "linkage": "t",
+   "name": "prvCopyDataToQueue",
+   "size": 125
+  },
+  {
+   "address": 1107346448,
+   "linkage": "t",
+   "name": "prvDeleteTCB",
+   "size": 56
+  },
+  {
+   "address": 1107346504,
+   "linkage": "t",
+   "name": "prvIdleTask",
+   "size": 149
+  },
+  {
+   "address": 1107346656,
+   "linkage": "t",
+   "name": "prvInitialiseNewTask$constprop$0",
+   "size": 141
+  },
+  {
+   "address": 1077388396,
+   "linkage": "t",
+   "name": "prvIsYieldRequiredSMP",
+   "size": 143
+  },
+  {
+   "address": 1077387944,
+   "linkage": "t",
+   "name": "prvNotifyQueueSetContainer",
+   "size": 122
+  },
+  {
+   "address": 1077388540,
+   "linkage": "t",
+   "name": "prvResetNextTaskUnblockTime",
+   "size": 48
+  },
+  {
+   "address": 1107331612,
+   "linkage": "T",
+   "name": "psa_crypto_init",
+   "size": 213
+  },
+  {
+   "address": 1107331972,
+   "linkage": "T",
+   "name": "psa_free_key_slot",
+   "size": 101
+  },
+  {
+   "address": 1107331320,
+   "linkage": "t",
+   "name": "psa_get_initialized",
+   "size": 55
+  },
+  {
+   "address": 1107331828,
+   "linkage": "T",
+   "name": "psa_initialize_key_slots",
+   "size": 33
+  },
+  {
+   "address": 1107331376,
+   "linkage": "T",
+   "name": "psa_remove_key_data_from_memory",
+   "size": 25
+  },
+  {
+   "address": 1107331864,
+   "linkage": "T",
+   "name": "psa_wipe_all_key_slots",
+   "size": 107
+  },
+  {
+   "address": 1107331404,
+   "linkage": "T",
+   "name": "psa_wipe_key_slot",
+   "size": 75
+  },
+  {
+   "address": 1107339652,
+   "linkage": "T",
+   "name": "pthread_include_pthread_cond_var_impl",
+   "size": 5
+  },
+  {
+   "address": 1107339644,
+   "linkage": "T",
+   "name": "pthread_include_pthread_impl",
+   "size": 5
+  },
+  {
+   "address": 1107339660,
+   "linkage": "T",
+   "name": "pthread_include_pthread_local_storage_impl",
+   "size": 5
+  },
+  {
+   "address": 1107339668,
+   "linkage": "T",
+   "name": "pthread_include_pthread_rwlock_impl",
+   "size": 5
+  },
+  {
+   "address": 1107339676,
+   "linkage": "T",
+   "name": "pthread_include_pthread_semaphore_impl",
+   "size": 5
+  },
+  {
+   "address": 1107318192,
+   "linkage": "T",
+   "name": "pthread_key_create",
+   "size": 68
+  },
+  {
+   "address": 1107317940,
+   "linkage": "T",
+   "name": "pthread_mutex_init",
+   "size": 78
+  },
+  {
+   "address": 1107318020,
+   "linkage": "t",
+   "name": "pthread_mutex_init_if_static",
+   "size": 51
+  },
+  {
+   "address": 1107318072,
+   "linkage": "T",
+   "name": "pthread_mutex_lock",
+   "size": 31
+  },
+  {
+   "address": 1107317860,
+   "linkage": "t",
+   "name": "pthread_mutex_lock_internal",
+   "size": 79
+  },
+  {
+   "address": 1107318104,
+   "linkage": "T",
+   "name": "pthread_mutex_unlock",
+   "size": 86
+  },
+  {
+   "address": 1077384564,
+   "linkage": "T",
+   "name": "pvalloc",
+   "size": 15
+  },
+  {
+   "address": 1107316508,
+   "linkage": "T",
+   "name": "pvPortMalloc",
+   "size": 20
+  },
+  {
+   "address": 1107349024,
+   "linkage": "T",
+   "name": "pvTaskIncrementMutexHeldCount",
+   "size": 66
+  },
+  {
+   "address": 1107344192,
+   "linkage": "T",
+   "name": "pxPortInitialiseStack",
+   "size": 142
+  },
+  {
+   "address": 1107317360,
+   "linkage": "T",
+   "name": "read",
+   "size": 21
+  },
+  {
+   "address": 1077367116,
+   "linkage": "t",
+   "name": "read_id_core",
+   "size": 97
+  },
+  {
+   "address": 1107323232,
+   "linkage": "T",
+   "name": "_read_r",
+   "size": 88
+  },
+  {
+   "address": 1077368060,
+   "linkage": "t",
+   "name": "recalib_bbpll",
+   "size": 24
+  },
+  {
+   "address": 1077380912,
+   "linkage": "T",
+   "name": "regi2c_ctrl_read_reg_mask",
+   "size": 58
+  },
+  {
+   "address": 1077380972,
+   "linkage": "T",
+   "name": "regi2c_ctrl_write_reg",
+   "size": 51
+  },
+  {
+   "address": 1077381024,
+   "linkage": "T",
+   "name": "regi2c_ctrl_write_reg_mask",
+   "size": 61
+  },
+  {
+   "address": 1107322452,
+   "linkage": "T",
+   "name": "register_fd",
+   "size": 89
+  },
+  {
+   "address": 1107307360,
+   "linkage": "t",
+   "name": "register_heap",
+   "size": 45
+  },
+  {
+   "address": 1077405044,
+   "linkage": "t",
+   "name": "release_buffer_malloc",
+   "size": 10
+  },
+  {
+   "address": 1077371708,
+   "linkage": "T",
+   "name": "__retarget_lock_acquire",
+   "size": 37
+  },
+  {
+   "address": 1077371748,
+   "linkage": "T",
+   "name": "__retarget_lock_acquire_recursive",
+   "size": 37
+  },
+  {
+   "address": 1077371676,
+   "linkage": "T",
+   "name": "__retarget_lock_close",
+   "size": 15
+  },
+  {
+   "address": 1077371692,
+   "linkage": "T",
+   "name": "__retarget_lock_close_recursive",
+   "size": 15
+  },
+  {
+   "address": 1077371636,
+   "linkage": "T",
+   "name": "__retarget_lock_init",
+   "size": 19
+  },
+  {
+   "address": 1077371656,
+   "linkage": "T",
+   "name": "__retarget_lock_init_recursive",
+   "size": 19
+  },
+  {
+   "address": 1077371876,
+   "linkage": "T",
+   "name": "__retarget_lock_release",
+   "size": 19
+  },
+  {
+   "address": 1077371896,
+   "linkage": "T",
+   "name": "__retarget_lock_release_recursive",
+   "size": 19
+  },
+  {
+   "address": 1077371788,
+   "linkage": "T",
+   "name": "__retarget_lock_try_acquire",
+   "size": 42
+  },
+  {
+   "address": 1077371832,
+   "linkage": "T",
+   "name": "__retarget_lock_try_acquire_recursive",
+   "size": 42
+  },
+  {
+   "address": 1077370544,
+   "linkage": "t",
+   "name": "rtc_brownout_isr_handler",
+   "size": 146
+  },
+  {
+   "address": 1077381328,
+   "linkage": "T",
+   "name": "rtc_clk_32k_disable_external",
+   "size": 80
+  },
+  {
+   "address": 1077381120,
+   "linkage": "T",
+   "name": "rtc_clk_32k_enable",
+   "size": 205
+  },
+  {
+   "address": 1077381540,
+   "linkage": "T",
+   "name": "rtc_clk_8md256_enabled",
+   "size": 24
+  },
+  {
+   "address": 1077381408,
+   "linkage": "T",
+   "name": "rtc_clk_8m_enable",
+   "size": 131
+  },
+  {
+   "address": 1077370928,
+   "linkage": "T",
+   "name": "rtc_clk_apb_freq_update",
+   "size": 10
+  },
+  {
+   "address": 1077381088,
+   "linkage": "T",
+   "name": "rtc_clk_bbpll_add_consumer",
+   "size": 14
+  },
+  {
+   "address": 1077381104,
+   "linkage": "T",
+   "name": "rtc_clk_bbpll_remove_consumer",
+   "size": 14
+  },
+  {
+   "address": 1077383716,
+   "linkage": "T",
+   "name": "rtc_clk_cal",
+   "size": 171
+  },
+  {
+   "address": 1077383164,
+   "linkage": "t",
+   "name": "rtc_clk_cal_internal",
+   "size": 552
+  },
+  {
+   "address": 1077370760,
+   "linkage": "T",
+   "name": "rtc_clk_cpu_freq_get_config",
+   "size": 166
+  },
+  {
+   "address": 1077381852,
+   "linkage": "T",
+   "name": "rtc_clk_cpu_freq_mhz_to_config",
+   "size": 85
+  },
+  {
+   "address": 1077382288,
+   "linkage": "T",
+   "name": "rtc_clk_cpu_freq_set_config",
+   "size": 468
+  },
+  {
+   "address": 1077382756,
+   "linkage": "T",
+   "name": "rtc_clk_cpu_freq_set_xtal",
+   "size": 37
+  },
+  {
+   "address": 1077381940,
+   "linkage": "t",
+   "name": "rtc_clk_cpu_freq_to_pll_mhz",
+   "size": 348
+  },
+  {
+   "address": 1077370940,
+   "linkage": "T",
+   "name": "rtc_clk_cpu_freq_to_xtal",
+   "size": 191
+  },
+  {
+   "address": 1077371132,
+   "linkage": "T",
+   "name": "rtc_clk_cpu_set_to_default_config",
+   "size": 15
+  },
+  {
+   "address": 1077381792,
+   "linkage": "T",
+   "name": "rtc_clk_fast_src_set",
+   "size": 59
+  },
+  {
+   "address": 1077381764,
+   "linkage": "T",
+   "name": "rtc_clk_slow_freq_get_hz",
+   "size": 28
+  },
+  {
+   "address": 1077381720,
+   "linkage": "T",
+   "name": "rtc_clk_slow_src_get",
+   "size": 42
+  },
+  {
+   "address": 1077381564,
+   "linkage": "T",
+   "name": "rtc_clk_slow_src_set",
+   "size": 153
+  },
+  {
+   "address": 1077370692,
+   "linkage": "T",
+   "name": "rtc_clk_xtal_freq_get",
+   "size": 66
+  },
+  {
+   "address": 1077370692,
+   "linkage": "T",
+   "name": "rtc_get_xtal",
+   "size": 66
+  },
+  {
+   "address": 1107340728,
+   "linkage": "T",
+   "name": "rtc_init",
+   "size": 1732
+  },
+  {
+   "address": 1077370380,
+   "linkage": "t",
+   "name": "rtc_isr",
+   "size": 77
+  },
+  {
+   "address": 1077370460,
+   "linkage": "T",
+   "name": "rtc_isr_noniram_disable",
+   "size": 52
+  },
+  {
+   "address": 1077370512,
+   "linkage": "T",
+   "name": "rtc_isr_noniram_enable",
+   "size": 31
+  },
+  {
+   "address": 1107310092,
+   "linkage": "T",
+   "name": "rtc_isr_register",
+   "size": 169
+  },
+  {
+   "address": 1077382796,
+   "linkage": "T",
+   "name": "rtc_sleep_pu",
+   "size": 368
+  },
+  {
+   "address": 1077384020,
+   "linkage": "T",
+   "name": "rtc_time_get",
+   "size": 42
+  },
+  {
+   "address": 1077383888,
+   "linkage": "T",
+   "name": "rtc_time_us_to_slowclk",
+   "size": 130
+  },
+  {
+   "address": 1107310840,
+   "linkage": "T",
+   "name": "sar_periph_ctrl_init",
+   "size": 44
+  },
+  {
+   "address": 1077390924,
+   "linkage": "T",
+   "name": "s_cache_hal_init_ctx",
+   "size": 58
+  },
+  {
+   "address": 1107339548,
+   "linkage": "t",
+   "name": "s_compare_reserved_regions",
+   "size": 12
+  },
+  {
+   "address": 1077373592,
+   "linkage": "t",
+   "name": "s_do_cache_invalidate",
+   "size": 19
+  },
+  {
+   "address": 1077373620,
+   "linkage": "t",
+   "name": "s_do_mapping",
+   "size": 196
+  },
+  {
+   "address": 1077373816,
+   "linkage": "t",
+   "name": "s_do_unmapping",
+   "size": 21
+  },
+  {
+   "address": 1107319240,
+   "linkage": "t",
+   "name": "select_notif_callback_isr",
+   "size": 182
+  },
+  {
+   "address": 1107320972,
+   "linkage": "t",
+   "name": "select_notif_callback_isr",
+   "size": 113
+  },
+  {
+   "address": 1107303884,
+   "linkage": "t",
+   "name": "select_rtc_slow_clk",
+   "size": 153
+  },
+  {
+   "address": 1107301460,
+   "linkage": "t",
+   "name": "s_esp_flash_choose_correct_mode",
+   "size": 58
+  },
+  {
+   "address": 1107317268,
+   "linkage": "T",
+   "name": "settimeofday",
+   "size": 14
+  },
+  {
+   "address": 1107317148,
+   "linkage": "t",
+   "name": "settimeofday$part$0",
+   "size": 101
+  },
+  {
+   "address": 1077404492,
+   "linkage": "t",
+   "name": "s_flash_init_mxic",
+   "size": 316
+  },
+  {
+   "address": 1107327088,
+   "linkage": "t",
+   "name": "s_get_bus_mask",
+   "size": 77
+  },
+  {
+   "address": 1077369972,
+   "linkage": "t",
+   "name": "shared_intr_isr",
+   "size": 56
+  },
+  {
+   "address": 1107338984,
+   "linkage": "T",
+   "name": "__shiftright128",
+   "size": 44
+  },
+  {
+   "address": 1107333412,
+   "linkage": "t",
+   "name": "skip_to_arg",
+   "size": 379
+  },
+  {
+   "address": 1107339828,
+   "linkage": "t",
+   "name": "s_mem_caps_check",
+   "size": 23
+  },
+  {
+   "address": 1077404460,
+   "linkage": "t",
+   "name": "s_mxic_set_required_regs",
+   "size": 29
+  },
+  {
+   "address": 1107308008,
+   "linkage": "T",
+   "name": "soc_get_available_memory_region_max_count",
+   "size": 26
+  },
+  {
+   "address": 1107308036,
+   "linkage": "T",
+   "name": "soc_get_available_memory_regions",
+   "size": 416
+  },
+  {
+   "address": 1077366404,
+   "linkage": "t",
+   "name": "spi1_end",
+   "size": 17
+  },
+  {
+   "address": 1077366380,
+   "linkage": "t",
+   "name": "spi1_start",
+   "size": 15
+  },
+  {
+   "address": 1077398252,
+   "linkage": "T",
+   "name": "spi_flash_brownout_need_reset",
+   "size": 19
+  },
+  {
+   "address": 1107302192,
+   "linkage": "T",
+   "name": "spi_flash_cache2phys",
+   "size": 35
+  },
+  {
+   "address": 1077366872,
+   "linkage": "T",
+   "name": "spi_flash_cache_enabled",
+   "size": 17
+  },
+  {
+   "address": 1077366952,
+   "linkage": "T",
+   "name": "spi_flash_check_and_flush_cache",
+   "size": 93
+  },
+  {
+   "address": 1077399008,
+   "linkage": "T",
+   "name": "spi_flash_chip_boya_get_caps",
+   "size": 7
+  },
+  {
+   "address": 1077398980,
+   "linkage": "T",
+   "name": "spi_flash_chip_boya_probe",
+   "size": 25
+  },
+  {
+   "address": 1077399160,
+   "linkage": "T",
+   "name": "spi_flash_chip_gd_detect_size",
+   "size": 50
+  },
+  {
+   "address": 1077399140,
+   "linkage": "T",
+   "name": "spi_flash_chip_gd_get_caps",
+   "size": 20
+  },
+  {
+   "address": 1077399048,
+   "linkage": "T",
+   "name": "spi_flash_chip_gd_get_io_mode",
+   "size": 29
+  },
+  {
+   "address": 1077399212,
+   "linkage": "T",
+   "name": "spi_flash_chip_gd_probe",
+   "size": 59
+  },
+  {
+   "address": 1077399080,
+   "linkage": "T",
+   "name": "spi_flash_chip_gd_set_io_mode",
+   "size": 59
+  },
+  {
+   "address": 1077399016,
+   "linkage": "T",
+   "name": "spi_flash_chip_gd_suspend_cmd_conf",
+   "size": 29
+  },
+  {
+   "address": 1077399356,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_config_host_io_mode",
+   "size": 252
+  },
+  {
+   "address": 1077401464,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_detect_size",
+   "size": 66
+  },
+  {
+   "address": 1077400640,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_erase_block",
+   "size": 189
+  },
+  {
+   "address": 1077401540,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_erase_chip",
+   "size": 134
+  },
+  {
+   "address": 1077400832,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_erase_sector",
+   "size": 188
+  },
+  {
+   "address": 1077399608,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_get_caps",
+   "size": 105
+  },
+  {
+   "address": 1077401200,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_get_io_mode",
+   "size": 29
+  },
+  {
+   "address": 1077400408,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_get_write_protect",
+   "size": 56
+  },
+  {
+   "address": 1077401020,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_page_program",
+   "size": 160
+  },
+  {
+   "address": 1077401532,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_probe",
+   "size": 7
+  },
+  {
+   "address": 1077399748,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_read",
+   "size": 160
+  },
+  {
+   "address": 1077401756,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_read_reg",
+   "size": 18
+  },
+  {
+   "address": 1077400120,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_read_unique_id",
+   "size": 122
+  },
+  {
+   "address": 1077401900,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_read_unique_id_none",
+   "size": 8
+  },
+  {
+   "address": 1077399272,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_reset",
+   "size": 83
+  },
+  {
+   "address": 1077401440,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_set_io_mode",
+   "size": 24
+  },
+  {
+   "address": 1077401676,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_set_write_protect",
+   "size": 77
+  },
+  {
+   "address": 1077399716,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_suspend_cmd_conf",
+   "size": 29
+  },
+  {
+   "address": 1077401776,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_wait_idle",
+   "size": 123
+  },
+  {
+   "address": 1077399908,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_write",
+   "size": 145
+  },
+  {
+   "address": 1077400244,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_write_encrypted",
+   "size": 163
+  },
+  {
+   "address": 1077400056,
+   "linkage": "T",
+   "name": "spi_flash_chip_generic_yield",
+   "size": 61
+  },
+  {
+   "address": 1077401992,
+   "linkage": "T",
+   "name": "spi_flash_chip_issi_get_caps",
+   "size": 7
+  },
+  {
+   "address": 1077401932,
+   "linkage": "T",
+   "name": "spi_flash_chip_issi_get_io_mode",
+   "size": 29
+  },
+  {
+   "address": 1077401964,
+   "linkage": "T",
+   "name": "spi_flash_chip_issi_probe",
+   "size": 27
+  },
+  {
+   "address": 1077401908,
+   "linkage": "T",
+   "name": "spi_flash_chip_issi_set_io_mode",
+   "size": 23
+  },
+  {
+   "address": 1107339392,
+   "linkage": "T",
+   "name": "spi_flash_chip_list_check",
+   "size": 5
+  },
+  {
+   "address": 1077402028,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_detect_size",
+   "size": 66
+  },
+  {
+   "address": 1077402096,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_get_caps",
+   "size": 7
+  },
+  {
+   "address": 1077403404,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_detect_size",
+   "size": 50
+  },
+  {
+   "address": 1077402480,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_erase_block",
+   "size": 134
+  },
+  {
+   "address": 1077402208,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_erase_chip",
+   "size": 133
+  },
+  {
+   "address": 1077402344,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_erase_sector",
+   "size": 133
+  },
+  {
+   "address": 1077403456,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_get_caps",
+   "size": 7
+  },
+  {
+   "address": 1077402896,
+   "linkage": "t",
+   "name": "spi_flash_chip_mxic_opi_get_data_length_zoom",
+   "size": 37
+  },
+  {
+   "address": 1077403216,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_get_io_mode",
+   "size": 104
+  },
+  {
+   "address": 1077403320,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_get_write_protect",
+   "size": 56
+  },
+  {
+   "address": 1077402764,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_page_program",
+   "size": 131
+  },
+  {
+   "address": 1077403376,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_probe",
+   "size": 28
+  },
+  {
+   "address": 1077402936,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_read_id",
+   "size": 198
+  },
+  {
+   "address": 1077403136,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_read_reg",
+   "size": 80
+  },
+  {
+   "address": 1077402104,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_set_write_protect",
+   "size": 103
+  },
+  {
+   "address": 1077402616,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_opi_write",
+   "size": 145
+  },
+  {
+   "address": 1077402000,
+   "linkage": "T",
+   "name": "spi_flash_chip_mxic_probe",
+   "size": 28
+  },
+  {
+   "address": 1077403556,
+   "linkage": "T",
+   "name": "spi_flash_chip_th_get_caps",
+   "size": 7
+  },
+  {
+   "address": 1077403528,
+   "linkage": "T",
+   "name": "spi_flash_chip_th_probe",
+   "size": 25
+  },
+  {
+   "address": 1077403756,
+   "linkage": "T",
+   "name": "spi_flash_chip_winbond_erase_block",
+   "size": 217
+  },
+  {
+   "address": 1077403976,
+   "linkage": "T",
+   "name": "spi_flash_chip_winbond_erase_sector",
+   "size": 214
+  },
+  {
+   "address": 1077404360,
+   "linkage": "T",
+   "name": "spi_flash_chip_winbond_get_caps",
+   "size": 20
+  },
+  {
+   "address": 1077404192,
+   "linkage": "T",
+   "name": "spi_flash_chip_winbond_page_program",
+   "size": 145
+  },
+  {
+   "address": 1077404340,
+   "linkage": "T",
+   "name": "spi_flash_chip_winbond_probe",
+   "size": 19
+  },
+  {
+   "address": 1077403596,
+   "linkage": "T",
+   "name": "spi_flash_chip_winbond_read",
+   "size": 160
+  },
+  {
+   "address": 1077403564,
+   "linkage": "T",
+   "name": "spi_flash_chip_winbond_suspend_cmd_conf",
+   "size": 29
+  },
+  {
+   "address": 1077403472,
+   "linkage": "T",
+   "name": "spi_flash_chip_xmic_opi_config_host_io_mode",
+   "size": 55
+  },
+  {
+   "address": 1077403464,
+   "linkage": "T",
+   "name": "spi_flash_chip_xmic_opi_set_io_mode",
+   "size": 7
+  },
+  {
+   "address": 1077400464,
+   "linkage": "t",
+   "name": "spi_flash_common_read_qe_sr$constprop$0$isra$0",
+   "size": 51
+  },
+  {
+   "address": 1077400516,
+   "linkage": "T",
+   "name": "spi_flash_common_read_status_16b_rdsr_rdsr2",
+   "size": 51
+  },
+  {
+   "address": 1077401232,
+   "linkage": "T",
+   "name": "spi_flash_common_read_status_8b_rdsr",
+   "size": 19
+  },
+  {
+   "address": 1077401180,
+   "linkage": "T",
+   "name": "spi_flash_common_read_status_8b_rdsr2",
+   "size": 19
+  },
+  {
+   "address": 1077401300,
+   "linkage": "T",
+   "name": "spi_flash_common_set_io_mode",
+   "size": 137
+  },
+  {
+   "address": 1077400568,
+   "linkage": "t",
+   "name": "spi_flash_common_write_qe_sr$isra$0",
+   "size": 46
+  },
+  {
+   "address": 1077400616,
+   "linkage": "T",
+   "name": "spi_flash_common_write_status_16b_wrsr",
+   "size": 21
+  },
+  {
+   "address": 1077401252,
+   "linkage": "T",
+   "name": "spi_flash_common_write_status_8b_wrsr",
+   "size": 21
+  },
+  {
+   "address": 1077401276,
+   "linkage": "T",
+   "name": "spi_flash_common_write_status_8b_wrsr2",
+   "size": 21
+  },
+  {
+   "address": 1077366472,
+   "linkage": "T",
+   "name": "spi_flash_disable_cache",
+   "size": 8
+  },
+  {
+   "address": 1077366464,
+   "linkage": "t",
+   "name": "spi_flash_disable_cache$constprop$0",
+   "size": 8
+  },
+  {
+   "address": 1077366560,
+   "linkage": "T",
+   "name": "spi_flash_disable_interrupts_caches_and_other_cpu",
+   "size": 189
+  },
+  {
+   "address": 1077366864,
+   "linkage": "T",
+   "name": "spi_flash_enable_cache",
+   "size": 8
+  },
+  {
+   "address": 1077404380,
+   "linkage": "T",
+   "name": "spi_flash_enable_high_performance_mode",
+   "size": 7
+  },
+  {
+   "address": 1077366752,
+   "linkage": "T",
+   "name": "spi_flash_enable_interrupts_caches_and_other_cpu",
+   "size": 112
+  },
+  {
+   "address": 1077375380,
+   "linkage": "T",
+   "name": "spi_flash_encryption_hal_check",
+   "size": 14
+  },
+  {
+   "address": 1077375364,
+   "linkage": "T",
+   "name": "spi_flash_encryption_hal_destroy",
+   "size": 15
+  },
+  {
+   "address": 1077375228,
+   "linkage": "T",
+   "name": "spi_flash_encryption_hal_disable",
+   "size": 23
+  },
+  {
+   "address": 1077375328,
+   "linkage": "T",
+   "name": "spi_flash_encryption_hal_done",
+   "size": 34
+  },
+  {
+   "address": 1077375192,
+   "linkage": "T",
+   "name": "spi_flash_encryption_hal_enable",
+   "size": 33
+  },
+  {
+   "address": 1077375252,
+   "linkage": "T",
+   "name": "spi_flash_encryption_hal_prepare",
+   "size": 76
+  },
+  {
+   "address": 1077398088,
+   "linkage": "t",
+   "name": "spiflash_end_default",
+   "size": 29
+  },
+  {
+   "address": 1077367048,
+   "linkage": "T",
+   "name": "spi_flash_guard_set",
+   "size": 10
+  },
+  {
+   "address": 1077379960,
+   "linkage": "T",
+   "name": "spi_flash_hal_check_status",
+   "size": 32
+  },
+  {
+   "address": 1077377928,
+   "linkage": "T",
+   "name": "spi_flash_hal_common_command",
+   "size": 411
+  },
+  {
+   "address": 1077377128,
+   "linkage": "T",
+   "name": "spi_flash_hal_configure_host_io_mode",
+   "size": 798
+  },
+  {
+   "address": 1077379364,
+   "linkage": "T",
+   "name": "spi_flash_hal_device_config",
+   "size": 267
+  },
+  {
+   "address": 1077379228,
+   "linkage": "T",
+   "name": "spi_flash_hal_disable_auto_suspend_mode",
+   "size": 134
+  },
+  {
+   "address": 1077379804,
+   "linkage": "T",
+   "name": "spi_flash_hal_erase_block",
+   "size": 108
+  },
+  {
+   "address": 1077379648,
+   "linkage": "T",
+   "name": "spi_flash_hal_erase_chip",
+   "size": 40
+  },
+  {
+   "address": 1077379688,
+   "linkage": "T",
+   "name": "spi_flash_hal_erase_sector",
+   "size": 115
+  },
+  {
+   "address": 1077377068,
+   "linkage": "T",
+   "name": "spi_flash_hal_gpspi_check_status",
+   "size": 20
+  },
+  {
+   "address": 1077376412,
+   "linkage": "T",
+   "name": "spi_flash_hal_gpspi_common_command",
+   "size": 418
+  },
+  {
+   "address": 1077375804,
+   "linkage": "T",
+   "name": "spi_flash_hal_gpspi_configure_host_io_mode",
+   "size": 607
+  },
+  {
+   "address": 1077375480,
+   "linkage": "T",
+   "name": "spi_flash_hal_gpspi_device_config",
+   "size": 322
+  },
+  {
+   "address": 1077377036,
+   "linkage": "T",
+   "name": "spi_flash_hal_gpspi_poll_cmd_done",
+   "size": 15
+  },
+  {
+   "address": 1077376832,
+   "linkage": "T",
+   "name": "spi_flash_hal_gpspi_read",
+   "size": 203
+  },
+  {
+   "address": 1077377060,
+   "linkage": "T",
+   "name": "spi_flash_hal_gpspi_supports_direct_read",
+   "size": 7
+  },
+  {
+   "address": 1077377052,
+   "linkage": "T",
+   "name": "spi_flash_hal_gpspi_supports_direct_write",
+   "size": 7
+  },
+  {
+   "address": 1107324780,
+   "linkage": "T",
+   "name": "spi_flash_hal_init",
+   "size": 394
+  },
+  {
+   "address": 1077379632,
+   "linkage": "T",
+   "name": "spi_flash_hal_poll_cmd_done",
+   "size": 15
+  },
+  {
+   "address": 1077378528,
+   "linkage": "T",
+   "name": "spi_flash_hal_program_page",
+   "size": 185
+  },
+  {
+   "address": 1077378340,
+   "linkage": "T",
+   "name": "spi_flash_hal_read",
+   "size": 187
+  },
+  {
+   "address": 1077379992,
+   "linkage": "T",
+   "name": "spi_flash_hal_resume",
+   "size": 34
+  },
+  {
+   "address": 1077378832,
+   "linkage": "T",
+   "name": "spi_flash_hal_setup_auto_suspend_mode",
+   "size": 395
+  },
+  {
+   "address": 1077378716,
+   "linkage": "T",
+   "name": "spi_flash_hal_setup_read_suspend",
+   "size": 116
+  },
+  {
+   "address": 1077379912,
+   "linkage": "T",
+   "name": "spi_flash_hal_set_write_protect",
+   "size": 47
+  },
+  {
+   "address": 1107325196,
+   "linkage": "T",
+   "name": "spi_flash_hal_supports_direct_read",
+   "size": 18
+  },
+  {
+   "address": 1107325176,
+   "linkage": "T",
+   "name": "spi_flash_hal_supports_direct_write",
+   "size": 18
+  },
+  {
+   "address": 1077380028,
+   "linkage": "T",
+   "name": "spi_flash_hal_suspend",
+   "size": 34
+  },
+  {
+   "address": 1077367084,
+   "linkage": "T",
+   "name": "spi_flash_init_chip_state",
+   "size": 30
+  },
+  {
+   "address": 1107301920,
+   "linkage": "T",
+   "name": "spi_flash_init_lock",
+   "size": 37
+  },
+  {
+   "address": 1107301996,
+   "linkage": "T",
+   "name": "spi_flash_mmap",
+   "size": 128
+  },
+  {
+   "address": 1107302124,
+   "linkage": "T",
+   "name": "spi_flash_munmap",
+   "size": 65
+  },
+  {
+   "address": 1077398216,
+   "linkage": "T",
+   "name": "spi_flash_needs_reset_check",
+   "size": 24
+  },
+  {
+   "address": 1077366496,
+   "linkage": "T",
+   "name": "spi_flash_op_block_func",
+   "size": 63
+  },
+  {
+   "address": 1107301960,
+   "linkage": "T",
+   "name": "spi_flash_op_lock",
+   "size": 18
+  },
+  {
+   "address": 1107301980,
+   "linkage": "T",
+   "name": "spi_flash_op_unlock",
+   "size": 13
+  },
+  {
+   "address": 1077405056,
+   "linkage": "t",
+   "name": "spi_flash_os_check_yield",
+   "size": 69
+  },
+  {
+   "address": 1077405128,
+   "linkage": "t",
+   "name": "spi_flash_os_yield",
+   "size": 28
+  },
+  {
+   "address": 1077366488,
+   "linkage": "T",
+   "name": "spi_flash_restore_cache",
+   "size": 8
+  },
+  {
+   "address": 1077366480,
+   "linkage": "t",
+   "name": "spi_flash_restore_cache$constprop$0",
+   "size": 8
+  },
+  {
+   "address": 1077398240,
+   "linkage": "T",
+   "name": "spi_flash_set_erasing_flag",
+   "size": 11
+  },
+  {
+   "address": 1077398120,
+   "linkage": "t",
+   "name": "spiflash_start_core",
+   "size": 74
+  },
+  {
+   "address": 1077398196,
+   "linkage": "t",
+   "name": "spiflash_start_default",
+   "size": 17
+  },
+  {
+   "address": 1077380828,
+   "linkage": "T",
+   "name": "spi_flash_timing_is_tuned",
+   "size": 7
+  },
+  {
+   "address": 1077377088,
+   "linkage": "t",
+   "name": "spimem_flash_ll_get_source_freq_mhz",
+   "size": 37
+  },
+  {
+   "address": 1077380716,
+   "linkage": "T",
+   "name": "spi_timing_get_flash_timing_param",
+   "size": 6
+  },
+  {
+   "address": 1077404388,
+   "linkage": "t",
+   "name": "s_probe_mxic_chip",
+   "size": 69
+  },
+  {
+   "address": 1077373612,
+   "linkage": "t",
+   "name": "s_start_cache",
+   "size": 8
+  },
+  {
+   "address": 1077373584,
+   "linkage": "t",
+   "name": "s_stop_cache",
+   "size": 8
+  },
+  {
+   "address": 1077366444,
+   "linkage": "t",
+   "name": "start",
+   "size": 17
+  },
+  {
+   "address": 1107305556,
+   "linkage": "t",
+   "name": "start_cpu0_default",
+   "size": 126
+  },
+  {
+   "address": 1077368224,
+   "linkage": "t",
+   "name": "start_cpu_other_cores_default",
+   "size": 43
+  },
+  {
+   "address": 1107303796,
+   "linkage": "T",
+   "name": "startup_resume_other_cores",
+   "size": 16
+  },
+  {
+   "address": 1107329588,
+   "linkage": "t",
+   "name": "subscribe_idle",
+   "size": 91
+  },
+  {
+   "address": 1107303788,
+   "linkage": "t",
+   "name": "sys_rtc_init$isra$0",
+   "size": 8
+  },
+  {
+   "address": 1107302984,
+   "linkage": "t",
+   "name": "system_early_init",
+   "size": 802
+  },
+  {
+   "address": 1077387124,
+   "linkage": "T",
+   "name": "SysTickIsrHandler",
+   "size": 124
+  },
+  {
+   "address": 1077392608,
+   "linkage": "T",
+   "name": "systimer_hal_connect_alarm_counter",
+   "size": 33
+  },
+  {
+   "address": 1077392644,
+   "linkage": "T",
+   "name": "systimer_hal_counter_can_stall_by_cpu",
+   "size": 51
+  },
+  {
+   "address": 1077392304,
+   "linkage": "T",
+   "name": "systimer_hal_counter_value_advance",
+   "size": 88
+  },
+  {
+   "address": 1077392540,
+   "linkage": "T",
+   "name": "systimer_hal_enable_alarm_int",
+   "size": 30
+  },
+  {
+   "address": 1077392572,
+   "linkage": "T",
+   "name": "systimer_hal_enable_counter",
+   "size": 34
+  },
+  {
+   "address": 1077392468,
+   "linkage": "T",
+   "name": "systimer_hal_get_counter_value",
+   "size": 72
+  },
+  {
+   "address": 1077392148,
+   "linkage": "T",
+   "name": "systimer_hal_init",
+   "size": 28
+  },
+  {
+   "address": 1077392392,
+   "linkage": "T",
+   "name": "systimer_hal_select_alarm_mode",
+   "size": 59
+  },
+  {
+   "address": 1077392176,
+   "linkage": "T",
+   "name": "systimer_hal_set_alarm_period",
+   "size": 127
+  },
+  {
+   "address": 1077392452,
+   "linkage": "T",
+   "name": "systimer_hal_set_tick_rate_ops",
+   "size": 13
+  },
+  {
+   "address": 1077384164,
+   "linkage": "T",
+   "name": "systimer_ticks_to_us",
+   "size": 14
+  },
+  {
+   "address": 1077384180,
+   "linkage": "T",
+   "name": "systimer_us_to_ticks",
+   "size": 16
+  },
+  {
+   "address": 1107330264,
+   "linkage": "t",
+   "name": "task_wdt_isr",
+   "size": 350
+  },
+  {
+   "address": 1107329348,
+   "linkage": "T",
+   "name": "task_wdt_timeout_abort",
+   "size": 166
+  },
+  {
+   "address": 1107329052,
+   "linkage": "t",
+   "name": "task_wdt_timer_feed",
+   "size": 34
+  },
+  {
+   "address": 1107332208,
+   "linkage": "t",
+   "name": "threading_mutex_lock_pthread",
+   "size": 20
+  },
+  {
+   "address": 1107332228,
+   "linkage": "t",
+   "name": "threading_mutex_unlock_pthread",
+   "size": 20
+  },
+  {
+   "address": 1077368120,
+   "linkage": "t",
+   "name": "tick_hook",
+   "size": 104
+  },
+  {
+   "address": 1107350684,
+   "linkage": "T",
+   "name": "tlsf_add_pool",
+   "size": 341
+  },
+  {
+   "address": 1077393188,
+   "linkage": "T",
+   "name": "tlsf_alloc_overhead",
+   "size": 7
+  },
+  {
+   "address": 1077393196,
+   "linkage": "T",
+   "name": "tlsf_block_size",
+   "size": 21
+  },
+  {
+   "address": 1107351028,
+   "linkage": "T",
+   "name": "tlsf_create",
+   "size": 266
+  },
+  {
+   "address": 1107351296,
+   "linkage": "T",
+   "name": "tlsf_create_with_pool",
+   "size": 33
+  },
+  {
+   "address": 1107351332,
+   "linkage": "T",
+   "name": "tlsf_fit_size",
+   "size": 89
+  },
+  {
+   "address": 1077393220,
+   "linkage": "T",
+   "name": "tlsf_free",
+   "size": 781
+  },
+  {
+   "address": 1077394004,
+   "linkage": "T",
+   "name": "tlsf_get_pool",
+   "size": 13
+  },
+  {
+   "address": 1077394020,
+   "linkage": "T",
+   "name": "tlsf_malloc",
+   "size": 797
+  },
+  {
+   "address": 1077394820,
+   "linkage": "T",
+   "name": "tlsf_memalign_offs",
+   "size": 1248
+  },
+  {
+   "address": 1077396068,
+   "linkage": "T",
+   "name": "tlsf_realloc",
+   "size": 969
+  },
+  {
+   "address": 1077397040,
+   "linkage": "T",
+   "name": "tlsf_size",
+   "size": 13
+  },
+  {
+   "address": 1107350600,
+   "linkage": "T",
+   "name": "tlsf_walk_pool",
+   "size": 82
+  },
+  {
+   "address": 1107322696,
+   "linkage": "T",
+   "name": "translate_path",
+   "size": 56
+  },
+  {
+   "address": 1107319424,
+   "linkage": "t",
+   "name": "uart_access",
+   "size": 87
+  },
+  {
+   "address": 1107319808,
+   "linkage": "t",
+   "name": "uart_close",
+   "size": 28
+  },
+  {
+   "address": 1107318672,
+   "linkage": "t",
+   "name": "uart_end_select",
+   "size": 192
+  },
+  {
+   "address": 1107319716,
+   "linkage": "t",
+   "name": "uart_fcntl",
+   "size": 89
+  },
+  {
+   "address": 1107320168,
+   "linkage": "t",
+   "name": "uart_fstat",
+   "size": 47
+  },
+  {
+   "address": 1107320104,
+   "linkage": "t",
+   "name": "uart_fsync",
+   "size": 62
+  },
+  {
+   "address": 1107318536,
+   "linkage": "t",
+   "name": "uart_get_avail_data_len",
+   "size": 23
+  },
+  {
+   "address": 1107320280,
+   "linkage": "T",
+   "name": "uart_get_buffered_data_len",
+   "size": 118
+  },
+  {
+   "address": 1107320452,
+   "linkage": "T",
+   "name": "uart_get_selectlock",
+   "size": 8
+  },
+  {
+   "address": 1107339772,
+   "linkage": "T",
+   "name": "uart_hal_write_txfifo",
+   "size": 55
+  },
+  {
+   "address": 1107320400,
+   "linkage": "T",
+   "name": "uart_is_driver_installed",
+   "size": 25
+  },
+  {
+   "address": 1107319512,
+   "linkage": "t",
+   "name": "uart_open",
+   "size": 83
+  },
+  {
+   "address": 1107319876,
+   "linkage": "t",
+   "name": "uart_read",
+   "size": 227
+  },
+  {
+   "address": 1107318636,
+   "linkage": "t",
+   "name": "uart_read_char",
+   "size": 34
+  },
+  {
+   "address": 1107319836,
+   "linkage": "t",
+   "name": "uart_return_char",
+   "size": 38
+  },
+  {
+   "address": 1107318600,
+   "linkage": "t",
+   "name": "uart_rx_char",
+   "size": 35
+  },
+  {
+   "address": 1107320428,
+   "linkage": "T",
+   "name": "uart_set_select_notif_callback",
+   "size": 21
+  },
+  {
+   "address": 1107318864,
+   "linkage": "t",
+   "name": "uart_start_select",
+   "size": 374
+  },
+  {
+   "address": 1107318560,
+   "linkage": "t",
+   "name": "uart_tx_char",
+   "size": 40
+  },
+  {
+   "address": 1107320224,
+   "linkage": "T",
+   "name": "uart_vfs_dev_register",
+   "size": 41
+  },
+  {
+   "address": 1107339708,
+   "linkage": "T",
+   "name": "uart_vfs_include_dev_init",
+   "size": 5
+  },
+  {
+   "address": 1107319596,
+   "linkage": "t",
+   "name": "uart_write",
+   "size": 120
+  },
+  {
+   "address": 1077386048,
+   "linkage": "T",
+   "name": "__ubsan_include",
+   "size": 5
+  },
+  {
+   "address": 1107349092,
+   "linkage": "T",
+   "name": "ulTaskGenericNotifyTake",
+   "size": 191
+  },
+  {
+   "address": 1107333312,
+   "linkage": "t",
+   "name": "__ultoa_invert",
+   "size": 97
+  },
+  {
+   "address": 1107340076,
+   "linkage": "T",
+   "name": "__umul128",
+   "size": 67
+  },
+  {
+   "address": 1107322544,
+   "linkage": "T",
+   "name": "unregister_fd",
+   "size": 74
+  },
+  {
+   "address": 1107339740,
+   "linkage": "t",
+   "name": "usb_serial_jtag_close",
+   "size": 7
+  },
+  {
+   "address": 1107339732,
+   "linkage": "T",
+   "name": "usb_serial_jtag_connection_monitor_include",
+   "size": 5
+  },
+  {
+   "address": 1107320536,
+   "linkage": "t",
+   "name": "usb_serial_jtag_end_select",
+   "size": 163
+  },
+  {
+   "address": 1107321200,
+   "linkage": "t",
+   "name": "usb_serial_jtag_fcntl",
+   "size": 58
+  },
+  {
+   "address": 1107321148,
+   "linkage": "t",
+   "name": "usb_serial_jtag_fstat",
+   "size": 26
+  },
+  {
+   "address": 1107321088,
+   "linkage": "t",
+   "name": "usb_serial_jtag_fsync",
+   "size": 57
+  },
+  {
+   "address": 1107321888,
+   "linkage": "T",
+   "name": "usb_serial_jtag_get_read_bytes_available",
+   "size": 38
+  },
+  {
+   "address": 1107320500,
+   "linkage": "T",
+   "name": "usb_serial_jtag_is_connected",
+   "size": 17
+  },
+  {
+   "address": 1107321856,
+   "linkage": "T",
+   "name": "usb_serial_jtag_is_driver_installed",
+   "size": 15
+  },
+  {
+   "address": 1107320520,
+   "linkage": "t",
+   "name": "usb_serial_jtag_open",
+   "size": 16
+  },
+  {
+   "address": 1107321516,
+   "linkage": "t",
+   "name": "usb_serial_jtag_read",
+   "size": 199
+  },
+  {
+   "address": 1107321484,
+   "linkage": "t",
+   "name": "usb_serial_jtag_read_char$constprop$0",
+   "size": 29
+  },
+  {
+   "address": 1107321448,
+   "linkage": "t",
+   "name": "usb_serial_jtag_return_char$constprop$0",
+   "size": 33
+  },
+  {
+   "address": 1107321716,
+   "linkage": "t",
+   "name": "usb_serial_jtag_rx_char_no_driver",
+   "size": 26
+  },
+  {
+   "address": 1107321872,
+   "linkage": "T",
+   "name": "usb_serial_jtag_set_select_notif_callback",
+   "size": 15
+  },
+  {
+   "address": 1077371972,
+   "linkage": "t",
+   "name": "usb_serial_jtag_sof_tick_hook",
+   "size": 90
+  },
+  {
+   "address": 1107320700,
+   "linkage": "t",
+   "name": "usb_serial_jtag_start_select",
+   "size": 270
+  },
+  {
+   "address": 1107321744,
+   "linkage": "t",
+   "name": "usb_serial_jtag_tx_char_no_driver",
+   "size": 101
+  },
+  {
+   "address": 1107339748,
+   "linkage": "T",
+   "name": "usb_serial_jtag_vfs_include_dev_init",
+   "size": 5
+  },
+  {
+   "address": 1107321260,
+   "linkage": "t",
+   "name": "usb_serial_jtag_wait_tx_done_no_driver",
+   "size": 98
+  },
+  {
+   "address": 1107321360,
+   "linkage": "t",
+   "name": "usb_serial_jtag_write",
+   "size": 87
+  },
+  {
+   "address": 1107321928,
+   "linkage": "T",
+   "name": "usb_serial_jtag_write_ready",
+   "size": 23
+  },
+  {
+   "address": 1077386056,
+   "linkage": "T",
+   "name": "uxListRemove",
+   "size": 82
+  },
+  {
+   "address": 1077384564,
+   "linkage": "T",
+   "name": "valloc",
+   "size": 15
+  },
+  {
+   "address": 1107316652,
+   "linkage": "T",
+   "name": "vApplicationGetIdleTaskMemory",
+   "size": 68
+  },
+  {
+   "address": 1107333792,
+   "linkage": "T",
+   "name": "vfprintf",
+   "size": 2825
+  },
+  {
+   "address": 1107339756,
+   "linkage": "T",
+   "name": "vfs_include_syscalls_impl",
+   "size": 5
+  },
+  {
+   "address": 1107324120,
+   "linkage": "t",
+   "name": "vfs_null_close",
+   "size": 28
+  },
+  {
+   "address": 1107324148,
+   "linkage": "t",
+   "name": "vfs_null_fcntl",
+   "size": 26
+  },
+  {
+   "address": 1107324396,
+   "linkage": "t",
+   "name": "vfs_null_fstat",
+   "size": 62
+  },
+  {
+   "address": 1107324460,
+   "linkage": "t",
+   "name": "vfs_null_fsync",
+   "size": 28
+  },
+  {
+   "address": 1107324176,
+   "linkage": "t",
+   "name": "vfs_null_ioctl",
+   "size": 26
+  },
+  {
+   "address": 1107323944,
+   "linkage": "t",
+   "name": "vfs_null_lseek",
+   "size": 60
+  },
+  {
+   "address": 1107324204,
+   "linkage": "t",
+   "name": "vfs_null_open",
+   "size": 122
+  },
+  {
+   "address": 1107324040,
+   "linkage": "t",
+   "name": "vfs_null_pread",
+   "size": 36
+  },
+  {
+   "address": 1107324076,
+   "linkage": "t",
+   "name": "vfs_null_pwrite",
+   "size": 44
+  },
+  {
+   "address": 1107324004,
+   "linkage": "t",
+   "name": "vfs_null_read",
+   "size": 36
+  },
+  {
+   "address": 1107324328,
+   "linkage": "t",
+   "name": "vfs_null_stat",
+   "size": 66
+  },
+  {
+   "address": 1107323900,
+   "linkage": "t",
+   "name": "vfs_null_write",
+   "size": 44
+  },
+  {
+   "address": 1107344056,
+   "linkage": "T",
+   "name": "vListInitialise",
+   "size": 36
+  },
+  {
+   "address": 1107344092,
+   "linkage": "T",
+   "name": "vListInitialiseItem",
+   "size": 12
+  },
+  {
+   "address": 1107344104,
+   "linkage": "T",
+   "name": "vListInsert",
+   "size": 88
+  },
+  {
+   "address": 1077386140,
+   "linkage": "T",
+   "name": "vListInsertEnd",
+   "size": 57
+  },
+  {
+   "address": 1077386200,
+   "linkage": "T",
+   "name": "vPortExitCritical",
+   "size": 148
+  },
+  {
+   "address": 1107316528,
+   "linkage": "T",
+   "name": "vPortFree",
+   "size": 13
+  },
+  {
+   "address": 1077387080,
+   "linkage": "T",
+   "name": "vPortSetupTimer",
+   "size": 8
+  },
+  {
+   "address": 1107344396,
+   "linkage": "T",
+   "name": "vPortTCBPreDeleteHook",
+   "size": 89
+  },
+  {
+   "address": 1077386348,
+   "linkage": "T",
+   "name": "vPortYieldOtherCore",
+   "size": 10
+  },
+  {
+   "address": 1107336620,
+   "linkage": "T",
+   "name": "vprintf",
+   "size": 26
+  },
+  {
+   "address": 1107345724,
+   "linkage": "T",
+   "name": "vQueueDelete",
+   "size": 40
+  },
+  {
+   "address": 1107342516,
+   "linkage": "T",
+   "name": "vRingbufferGetInfo",
+   "size": 100
+  },
+  {
+   "address": 1077386788,
+   "linkage": "T",
+   "name": "vSystimerSetup",
+   "size": 292
+  },
+  {
+   "address": 1107347804,
+   "linkage": "T",
+   "name": "vTaskDelay",
+   "size": 75
+  },
+  {
+   "address": 1107347532,
+   "linkage": "T",
+   "name": "vTaskDelete",
+   "size": 272
+  },
+  {
+   "address": 1077388588,
+   "linkage": "T",
+   "name": "vTaskGenericNotifyGiveFromISR",
+   "size": 378
+  },
+  {
+   "address": 1077388968,
+   "linkage": "T",
+   "name": "vTaskGetSnapshot",
+   "size": 48
+  },
+  {
+   "address": 1107346936,
+   "linkage": "T",
+   "name": "vTaskInternalSetTimeOutState",
+   "size": 25
+  },
+  {
+   "address": 1107346852,
+   "linkage": "T",
+   "name": "vTaskPlaceOnEventList",
+   "size": 82
+  },
+  {
+   "address": 1107348788,
+   "linkage": "T",
+   "name": "vTaskPriorityDisinheritAfterTimeout",
+   "size": 233
+  },
+  {
+   "address": 1107347176,
+   "linkage": "T",
+   "name": "vTaskPrioritySet",
+   "size": 310
+  },
+  {
+   "address": 1107350020,
+   "linkage": "T",
+   "name": "vTaskStartScheduler",
+   "size": 211
+  },
+  {
+   "address": 1107346800,
+   "linkage": "T",
+   "name": "vTaskSuspendAll",
+   "size": 49
+  },
+  {
+   "address": 1077389016,
+   "linkage": "T",
+   "name": "vTaskSwitchContext",
+   "size": 550
+  },
+  {
+   "address": 1107332536,
+   "linkage": "T",
+   "name": "__wrap___gxx_personality_v0",
+   "size": 9
+  },
+  {
+   "address": 1107332524,
+   "linkage": "T",
+   "name": "__wrap__Unwind_DeleteException",
+   "size": 9
+  },
+  {
+   "address": 1107317384,
+   "linkage": "T",
+   "name": "write",
+   "size": 21
+  },
+  {
+   "address": 1107323056,
+   "linkage": "T",
+   "name": "_write_r",
+   "size": 88
+  },
+  {
+   "address": 1107316544,
+   "linkage": "T",
+   "name": "xPortCheckValidListMem",
+   "size": 75
+  },
+  {
+   "address": 1107316636,
+   "linkage": "T",
+   "name": "xPortcheckValidStackMem",
+   "size": 15
+  },
+  {
+   "address": 1107316620,
+   "linkage": "T",
+   "name": "xPortCheckValidTCBMem",
+   "size": 15
+  },
+  {
+   "address": 1077386360,
+   "linkage": "T",
+   "name": "xPortEnterCriticalTimeout",
+   "size": 323
+  },
+  {
+   "address": 1077386684,
+   "linkage": "T",
+   "name": "xPortInIsrContext",
+   "size": 33
+  },
+  {
+   "address": 1077386720,
+   "linkage": "T",
+   "name": "xPortInterruptedFromISRContext",
+   "size": 24
+  },
+  {
+   "address": 1077386744,
+   "linkage": "T",
+   "name": "xPortStartScheduler",
+   "size": 41
+  },
+  {
+   "address": 1077387088,
+   "linkage": "T",
+   "name": "xPortSysTickHandler",
+   "size": 33
+  },
+  {
+   "address": 1107345336,
+   "linkage": "T",
+   "name": "xQueueCreateMutex",
+   "size": 47
+  },
+  {
+   "address": 1107345216,
+   "linkage": "T",
+   "name": "xQueueCreateMutexStatic",
+   "size": 49
+  },
+  {
+   "address": 1107344792,
+   "linkage": "T",
+   "name": "xQueueGenericCreate",
+   "size": 86
+  },
+  {
+   "address": 1107344656,
+   "linkage": "T",
+   "name": "xQueueGenericCreateStatic",
+   "size": 134
+  },
+  {
+   "address": 1107344488,
+   "linkage": "T",
+   "name": "xQueueGenericReset",
+   "size": 167
+  },
+  {
+   "address": 1107344936,
+   "linkage": "T",
+   "name": "xQueueGenericSend",
+   "size": 277
+  },
+  {
+   "address": 1107344880,
+   "linkage": "T",
+   "name": "xQueueGetMutexHolder",
+   "size": 56
+  },
+  {
+   "address": 1077388068,
+   "linkage": "T",
+   "name": "xQueueGiveFromISR",
+   "size": 151
+  },
+  {
+   "address": 1107345268,
+   "linkage": "T",
+   "name": "xQueueGiveMutexRecursive",
+   "size": 67
+  },
+  {
+   "address": 1077388220,
+   "linkage": "T",
+   "name": "xQueueReceiveFromISR",
+   "size": 119
+  },
+  {
+   "address": 1107345384,
+   "linkage": "T",
+   "name": "xQueueSemaphoreTake",
+   "size": 274
+  },
+  {
+   "address": 1107345660,
+   "linkage": "T",
+   "name": "xQueueTakeMutexRecursive",
+   "size": 62
+  },
+  {
+   "address": 1107342460,
+   "linkage": "T",
+   "name": "xRingbufferGetCurFreeSize",
+   "size": 55
+  },
+  {
+   "address": 1107346964,
+   "linkage": "T",
+   "name": "xTaskCheckForTimeOut",
+   "size": 178
+  },
+  {
+   "address": 1107349680,
+   "linkage": "T",
+   "name": "xTaskCreatePinnedToCore",
+   "size": 140
+  },
+  {
+   "address": 1107349820,
+   "linkage": "T",
+   "name": "xTaskCreateStaticPinnedToCore",
+   "size": 198
+  },
+  {
+   "address": 1107349284,
+   "linkage": "T",
+   "name": "xTaskGenericNotify",
+   "size": 393
+  },
+  {
+   "address": 1107350232,
+   "linkage": "T",
+   "name": "xTaskGetCoreID",
+   "size": 18
+  },
+  {
+   "address": 1107347144,
+   "linkage": "T",
+   "name": "xTaskGetCurrentTaskHandle",
+   "size": 31
+  },
+  {
+   "address": 1107350300,
+   "linkage": "T",
+   "name": "xTaskGetCurrentTaskHandleForCore",
+   "size": 37
+  },
+  {
+   "address": 1107350252,
+   "linkage": "T",
+   "name": "xTaskGetIdleTaskHandleForCore",
+   "size": 48
+  },
+  {
+   "address": 1077389568,
+   "linkage": "T",
+   "name": "xTaskGetSchedulerState",
+   "size": 50
+  },
+  {
+   "address": 1077389620,
+   "linkage": "T",
+   "name": "xTaskGetTickCount",
+   "size": 13
+  },
+  {
+   "address": 1077389636,
+   "linkage": "T",
+   "name": "xTaskGetTickCountFromISR",
+   "size": 29
+  },
+  {
+   "address": 1077389668,
+   "linkage": "T",
+   "name": "xTaskIncrementTick",
+   "size": 633
+  },
+  {
+   "address": 1077390304,
+   "linkage": "T",
+   "name": "xTaskIncrementTickOtherCores",
+   "size": 109
+  },
+  {
+   "address": 1107348576,
+   "linkage": "T",
+   "name": "xTaskPriorityDisinherit",
+   "size": 212
+  },
+  {
+   "address": 1107348340,
+   "linkage": "T",
+   "name": "xTaskPriorityInherit",
+   "size": 234
+  },
+  {
+   "address": 1077390416,
+   "linkage": "T",
+   "name": "xTaskRemoveFromEventList",
+   "size": 439
+  },
+  {
+   "address": 1107347880,
+   "linkage": "T",
+   "name": "xTaskResumeAll",
+   "size": 460
+  },
+  {
+   "address": 1077405484,
+   "linkage": "T",
+   "name": "xthal_restore_extra_nw",
+   "size": 47
+  },
+  {
+   "address": 1077405532,
+   "linkage": "T",
+   "name": "xthal_save_extra_nw",
+   "size": 47
+  },
+  {
+   "address": 1077405448,
+   "linkage": "T",
+   "name": "xthal_window_spill",
+   "size": 35
+  },
+  {
+   "address": 1077405172,
+   "linkage": "T",
+   "name": "xthal_window_spill_nw",
+   "size": 273
+  },
+  {
+   "address": 1107351552,
+   "linkage": "T",
+   "name": "xt_int_has_handler",
+   "size": 27
+  },
+  {
+   "address": 1077406020,
+   "linkage": "T",
+   "name": "xt_ints_off",
+   "size": 27
+  },
+  {
+   "address": 1077405996,
+   "linkage": "T",
+   "name": "xt_ints_on",
+   "size": 24
+  },
+  {
+   "address": 1107351580,
+   "linkage": "T",
+   "name": "xt_set_interrupt_handler",
+   "size": 60
+  },
+  {
+   "address": 1077368324,
+   "linkage": "T",
+   "name": "xt_unhandled_exception",
+   "size": 21
+  },
+  {
+   "address": 1077372064,
+   "linkage": "T",
+   "name": "xt_unhandled_interrupt",
+   "size": 22
+  },
+  {
+   "address": 1107332456,
+   "linkage": "t",
+   "name": "_ZL15eh_globals_dtorPv",
+   "size": 36
+  }
+ ],
+ "schemaId": "urn:embedra:schema:esp32s3-fid-symbol-ranges:1"
+}

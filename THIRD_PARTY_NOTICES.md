@@ -41,6 +41,23 @@ Espressif GNU assembler/objdump 2.45 (`esp-15.2.0_20251204`) is an external
 GPL oracle for the original assembly fixture; no GPL source is copied or
 bundled. See `docs/adr/0020-esp32s3-xtensa-language-and-log-remediation.md`.
 
+T026A adds the ESP32-S3 ESP-IDF Function ID pilot. The reference application
+source is original Embedra work under Apache-2.0; the linked ESP-IDF components
+were audited per component from the build map, and only permissively licensed
+ESP-IDF component functions (Apache-2.0 with small MIT/BSD/ISC/Unlicense/CC0
+shares) enter the pilot database. Toolchain runtime archives (picolibc,
+libstdc++, libgcc) are excluded from the database rather than redistributed
+by it. The `.fidb` contains function names, hashes, and call relations derived
+from the audited reference build; the matching symbolized stripped ELF and
+stripped application images are committed with digests and manifests. External
+GPL tools below are development-only oracles.
+
+| Input | Version/revision | Purpose | License/disposition |
+|---|---|---|---|
+| ESP-IDF v6.0 components linked into the reference ELF | `662a3be354759d9487bf4b1a629fadb766cb1800` | Symbolized ESP32-S3 Function ID reference build and stripped pilot images | Apache-2.0 per-component audit bundled; toolchain archives excluded from the database |
+| Espressif `xtensa-esp-elf` | `esp-15.2.0_20251204` | Compile/link the reference build and assemble the original mechanics fixture | GPL-toolchain components with runtime exceptions; archives excluded from the pilot database; not bundled |
+| Ghidra 12.1.3 FunctionID ingest | `8b4c91d4d5bd1549622bfbade0df199585b98365` | Official library population used to produce the pilot `.fidb` | Apache-2.0; used as an external tool, no Ghidra files modified |
+
 T026 bundles normalized factual product metadata from official Espressif
 catalog pages and topology/chip-ID facts derived from ESP-IDF. Vendor HTML,
 images, descriptive prose, and purchase links are not redistributed.

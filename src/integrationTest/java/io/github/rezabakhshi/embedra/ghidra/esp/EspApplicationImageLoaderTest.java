@@ -388,6 +388,66 @@ class EspApplicationImageLoaderTest {
         assertTrue(log.toString().contains(EspApplicationImageLoader.ENRICHMENT_DISABLED_CODE));
     }
 
+    @Test
+    void importPersistsValidatedAppDescriptionEvidenceForVersionGating()
+            throws Exception {
+        EspApplicationImageLoader loader = new EspApplicationImageLoader();
+        ByteArrayProvider provider = new ByteArrayProvider("firmware.bin", fixture(
+            "esp32s3-freestanding-minimal.bin"));
+        LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
+        ImporterSettings settings = new ImporterSettings(provider, "firmware.bin",
+            null, "/", false, spec,
+            loader.getDefaultOptions(provider, spec, null, false, false),
+            new Object(), new MessageLog(), TaskMonitor.DUMMY);
+
+        try (LoadResults<? extends DomainObject> results = loader.load(settings)) {
+            results.getPrimary().apply(domainObject -> {
+                Program program = (Program) domainObject;
+                var options = program.getOptions(EmbedraEsp32S3FunctionIdAnalyzer
+                    .APP_DESCRIPTION_OPTIONS);
+                assertEquals("fixture-no-idf-runtime", options.getString(
+                    EmbedraEsp32S3FunctionIdAnalyzer.APP_DESCRIPTION_IDF_VERSION_KEY, ""));
+                assertEquals("embedra_t008_fixture",
+                    options.getString("Project Name", ""));
+                assertEquals("1.0.0", options.getString("App Version", ""));
+            });
+        }
+    }
+
+    @Test
+    void everyFullFlashProgramRecordsOnlyValidatedDescriptorEvidence() throws Exception {
+        EspApplicationImageLoader loader = new EspApplicationImageLoader();
+        byte[] flash = fullFlashFixture("default-factory.bin");
+        ByteArrayProvider provider = new ByteArrayProvider("flash.raw", flash);
+        LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
+        Object consumer = new Object();
+        ImporterSettings settings = new ImporterSettings(provider, "flash.raw",
+            null, "/", false, spec,
+            loader.getDefaultOptions(provider, spec, null, false, false), consumer,
+            new MessageLog(), TaskMonitor.DUMMY);
+
+        java.util.Set<String> versions = new java.util.HashSet<>();
+        try (LoadResults<? extends DomainObject> results = loader.load(settings)) {
+            assertEquals(2, results.size());
+            for (var loaded : results) {
+                loaded.apply(domainObject -> {
+                    Program program = (Program) domainObject;
+                    String version = program.getOptions(EmbedraEsp32S3FunctionIdAnalyzer
+                        .APP_DESCRIPTION_OPTIONS).getString(
+                            EmbedraEsp32S3FunctionIdAnalyzer
+                                .APP_DESCRIPTION_IDF_VERSION_KEY, "");
+                    // The default-factory fixture overlays the same validated golden
+                    // image (containing esp_app_desc with this literal version string)
+                    // in both executable regions; a region without a valid descriptor
+                    // would record nothing rather than an invented value.
+                    assertEquals("fixture-no-idf-runtime", version);
+                    versions.add(version);
+                });
+            }
+        }
+        assertEquals(1, versions.size());
+    }
+
     private static byte[] fixture(String name) throws IOException {
         try (InputStream input = EspApplicationImageLoaderTest.class.getResourceAsStream(
                 "/fixtures/esp32s3/" + name)) {

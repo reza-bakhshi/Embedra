@@ -36,13 +36,24 @@ why revision-dependent register/ROM names and Embedra crypto analysis are
 unavailable. To use those packs, confirm applicability and select the option
 explicitly during import.
 
-Ghidra may report `No FID Libraries apply for language Xtensa:LE:32:esp32s3`
-for new Embedra imports (or `Xtensa:LE:32:default` for older imports).
-SVD packs name registers and ROM packs name
-verified ROM APIs; neither names arbitrary stripped ESP-IDF application
-functions. Embedra does not claim that an unavailable FID or versioned
-application-signature detector ran. For the unrelated Linux drag-and-drop
-`URI is not absolute` issue, use **File → Import File**.
+Embedra also ships one provenance-verified ESP32-S3 ESP-IDF Function ID
+pilot database under `fid/esp32s3/`. Ghidra does not attach it automatically.
+Enable the `Embedra ESP32-S3 Function ID` analyzer (off by default) and
+configure its database and provenance-descriptor program options to opt in.
+A run revalidates the descriptor, the database SHA-256, the exact
+`Xtensa:LE:32:esp32s3` language variant, and the program's validated
+ESP-IDF version; names only audited permissively licensed ESP-IDF component
+functions; preserves user and imported names; reports ambiguous candidates
+without choosing one; and records a stable `ESP32S3_FID_*` status code,
+counts, and database identity in deterministic program options. It identifies
+functions that hash-match the pinned ESP-IDF v6.0 `-Os` reference build; it
+does not identify arbitrary stripped application functions or other ESP-IDF
+versions. Ghidra's generic
+`No FID Libraries apply for language Xtensa:LE:32:esp32s3` auto-analysis
+debug message is not an Embedra Function ID run. SVD packs name registers
+and ROM packs name verified ROM APIs; neither names stripped application
+functions. For the unrelated Linux drag-and-drop `URI is not absolute`
+issue, use **File → Import File**.
 
 When the enrichment option is selected, the `Embedra ESP32-S3 Crypto Evidence`
 analyzer runs after reference analysis. It creates `Embedra Crypto` bookmarks

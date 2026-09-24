@@ -1,0 +1,17 @@
+{
+  "artifactId": "esp32s3-fid-reference-digests",
+  "appA": {
+    "elfSha256": "acd6fb53b2f55fc4bda05fa11315a1392c880d291a4bc1befc7ecd0c1339eab2",
+    "binSha256": "fd124758ae6e9ef11fd5804c990869dead66cdc405acea5fb4f3f5592e308a6c",
+    "sdkconfigSha256": "01eaa17676462f732f58b007a56877ca65a2506ca1ca141e29596b158420015e"
+  },
+  "appAO2": {
+    "binSha256": "de473683131f42d8f8a895e17b1741dafe69e5866a817427ccffce961894c70d"
+  },
+  "appB": {
+    "binSha256": "e7ef4111bcc62e0577dfb29a7a5bdd784ec663d60579607e3cd8a01d638f0640"
+  },
+  "database": {
+    "fidbSha256": "1c5c9509f0660b9a76c28a21fa8619aecc5d6e2d34d50818a9128b1f2a3b082b"
+  }
+}

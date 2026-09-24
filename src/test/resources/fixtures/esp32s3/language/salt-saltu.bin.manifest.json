@@ -1,0 +1,18 @@
+{
+  "fixtureId": "esp32s3.assembler-2.45.salt-saltu.text",
+  "sha256": "f0d4082842fa3d7473eb08812399a299ea6be7a67344ca1cf5372ab698f55f12",
+  "target": "ESP32-S3",
+  "device": "ESP32-S3 (chip ID 9; no package or embedded-memory variant claim)",
+  "inputFormat": "Raw Xtensa code",
+  "origin": "objcopy of repository-original assembled object; no runtime library code",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:3dfac01628f2e64f8cd8daa5c2e9117e557048c71da206f8ea66b784d7c963fa",
+  "generationCommand": "xtensa-esp32s3-elf-as -o salt-saltu.o salt-saltu.S && xtensa-esp32s3-elf-objcopy -O binary salt-saltu.o salt-saltu.bin",
+  "toolchain": "Espressif xtensa-esp-elf esp-15.2.0_20251204 (GNU assembler/objcopy 2.45)",
+  "oracleCommands": [
+    "xtensa-esp32s3-elf-objdump -d salt-saltu.o"
+  ],
+  "expectedSnapshot": "src/test/resources/fixtures/esp32s3/language/README.md",
+  "requirements": ["T025", "ESP-005"]
+}
