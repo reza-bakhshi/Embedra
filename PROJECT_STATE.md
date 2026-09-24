@@ -9,8 +9,8 @@
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
   T026A is committed at `3263e5d` with its checkpoint `5af60b0` and the
-  audit host-path remediation `d3a833b`. T027 is complete and awaiting its
-  implementation checkpoint below.
+  audit host-path remediation `d3a833b`. T027 is committed at `155e140`;
+  this file and machine state form its continuity checkpoint.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
