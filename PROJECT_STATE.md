@@ -3,13 +3,14 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T028 — original ESP32 and ESP32-S2 support (`NEXT`)**.
-- Last completed task: **T027 — shared Xtensa/RISC-V-neutral ESP services**.
+- Current task: **T028 — original ESP32 and ESP32-S2 support (`COMPLETE`)**.
+- Last completed task: **T028 — original ESP32 and ESP32-S2 support**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
   T026A is committed at `3263e5d` with its checkpoint `5af60b0` and the
   audit host-path remediation `d3a833b`. T027 is committed at `155e140`;
+  its continuity checkpoint is `12d6f66`. T028 is committed at `9470010`;
   this file and machine state form its continuity checkpoint.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
@@ -54,6 +55,13 @@ pack, and FID-specific fact. GUI and headless workflow results now carry the
 same proven single-application-CPU topology without changing canonical mapping
 reports or program snapshots. No catalog-only target was promoted.
 
+T028 added independently generated original ESP32 and ESP32-S2 fixtures,
+providers, ROM/peripheral/SVD packs, target-aware loader selection, and raw plus
+explicitly enriched real-Ghidra import coverage. ESP32 records two symmetric
+LX6 application cores; ESP32-S2 records one LX7 application core. Both use the
+built-in Ghidra Xtensa language. Exact variants, ULP firmware, target-specific
+full-flash workflows, and hardware verification remain unclaimed.
+
 ## Changed Files
 
 - Added T015 loader, transactional mapper, stable mapping failure codes, entry application, and immutable import report.
@@ -79,6 +87,9 @@ reports or program snapshots. No catalog-only target was promoted.
 - Added T027 neutral ESP provider/resolver contracts, provider-owned memory
   and entry services, proven execution topology propagation, tests, ADR 0022,
   and support documentation.
+- Added T028 ESP32/ESP32-S2 fixtures and oracles, providers and topology,
+  independent ROM/peripheral/SVD packs, target-aware Ghidra import/enrichment,
+  tests, ADR 0023, and support documentation.
 - Clean uncached verification passed 142 unit and 29 real-Ghidra tests plus
   4 Python generator tests; reproducible ZIP SHA-256 is
   `0e28b05738b45d02086d7527a93d78b3f5f881628705f1658d08bf3dd18d8e82`.
@@ -87,7 +98,7 @@ reports or program snapshots. No catalog-only target was promoted.
   function bodies without a reported repair failure. The mapped-segment log
   now omits the user-supplied input basename; a red-to-green integration test
   covers that privacy fix.
-- T001-T027 implementation and evidence are complete. T028 is next;
+- T001-T028 implementation and evidence are complete. T029 is next;
   T064 remains unstarted. Restricted local firmware remains ignored and
   untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
@@ -97,9 +108,9 @@ No complete device catalog, exact variant, board, or hardware support claim was 
 
 ## Exact Next Action
 
-Begin T028: add original ESP32 and ESP32-S2 fixtures, providers, and packs
-independently and pass their full relevant suites. Do not start T029 until T028
-is complete.
+Begin T029: add ESP32-C3 as the first RISC-V ESP provider and prove that common
+ESP code contains no Xtensa assumptions. Do not start T030 until T029 is
+complete.
 
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
 Two clean quality-script builds produced identical extension ZIPs with SHA-256
@@ -113,3 +124,8 @@ T027 completed with 156 unit, 53 real-Ghidra, and 4 Python tests passing with
 no failures or skips. Two clean quality-script builds passed all 20 actions
 and produced identical 1,017,483-byte extension ZIPs with SHA-256
 `e7a44da789159dd00a6d50dabf73a7c2fa5b590720f2c837f645b41751e5604e`.
+
+T028 completed with 162 unit, 55 real-Ghidra, and 4 Python tests passing with
+no failures or skips. Two clean quality-script builds passed all 20 actions
+and produced identical 1,413,370-byte extension ZIPs with SHA-256
+`288bad7a1ea4334c46bbfdf44eebc18576bfd50348d8d33958329d9be99bca0d`.
