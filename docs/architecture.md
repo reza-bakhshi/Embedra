@@ -44,6 +44,27 @@ The first concrete target provider resolves ESP32-S3 only when image chip ID `9`
 
 The provider selects Embedra's Ghidra `Xtensa:LE:32:esp32s3` extension language with compiler specification `default`, including one-byte instruction alignment and tested SALT/SALTU semantics. Address classification uses the half-open ESP-IDF v6.0 DROM, IROM, IRAM, DRAM, and RTC data definitions and refuses ranges spanning a boundary or using another address space. RTC data is read/write but non-executable in the Xtensa program; ULP firmware requires its own architecture-specific program. Entry decisions additionally require containment in an image segment classified executable. The provider returns a pure plan decision and never mutates a Ghidra program.
 
+## Shared ESP target services
+
+ESP target selection is expressed through the pure `EspTargetProvider`
+contract and `EspTargetResolver`. The resolver indexes only implemented
+providers by the chip ID encoded in a validated ESP image. Catalog records do
+not become providers automatically.
+
+Memory classification and entry validation are shared only at the structural
+level. `EspMemoryMap` consumes provider-owned address ranges and evidence;
+`EspEntryPointValidator` consumes a provider-selected language, address space,
+and classifier. Neither service selects an ISA or contains an ESP32-S3 branch.
+The ESP32-S3 provider continues to own chip ID 9, its language, memory ranges,
+and all pack and Function ID applicability policy.
+
+The resolved provider also returns an `ExecutionTopology`. Current ESP32-S3
+evidence supports one application CPU node associated with the validated image
+entry. Additional physical cores, ULP processors, and ROM nodes remain absent
+until target-specific fixtures prove their recoverable execution behavior.
+The topology is returned identically by GUI and headless import workflows while
+the established canonical mapping report and program snapshot stay stable.
+
 ## ESP application loader and mapping transaction
 
 The Ghidra loader reads a bounded `ByteProvider`, performs complete parser and provider validation without using the filename, and offers only the exact provider-selected language/compiler pair. The mapper preflights every range, permission, existing block conflict, and entry decision before opening one rollback-by-default transaction. It maps segment bytes at encoded addresses, preserves existing primary symbols, and commits only after the external entry point is applied. A failed or cancelled operation returns no committed import report and leaves existing program state unchanged.

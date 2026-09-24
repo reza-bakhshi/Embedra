@@ -3,14 +3,14 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T027 — shared Xtensa/RISC-V-neutral services (`NEXT`)**.
-- Last completed task: **T026A — ESP32-S3 ESP-IDF Function ID pilot**.
+- Current task: **T028 — original ESP32 and ESP32-S2 support (`NEXT`)**.
+- Last completed task: **T027 — shared Xtensa/RISC-V-neutral ESP services**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
   T026A is committed at `3263e5d` with its checkpoint `5af60b0` and the
-  audit host-path remediation `d3a833b`; the pre-T027 notes are recorded in this
-  checkpoint.
+  audit host-path remediation `d3a833b`. T027 is complete and awaiting its
+  implementation checkpoint below.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -47,6 +47,13 @@ hashes are recorded in `.embedra/evidence/tasks/T026A.md` and ADR 0021. It
 names only matching functions from the pinned reference identity; it does not
 claim arbitrary stripped application or cross-version coverage.
 
+T027 added the pure ESP target-provider contract, exact chip-ID resolver,
+data-driven memory classifier, shared language-aware entry validation, and
+provider-owned execution topology. ESP32-S3 retains every chip/language/map,
+pack, and FID-specific fact. GUI and headless workflow results now carry the
+same proven single-application-CPU topology without changing canonical mapping
+reports or program snapshots. No catalog-only target was promoted.
+
 ## Changed Files
 
 - Added T015 loader, transactional mapper, stable mapping failure codes, entry application, and immutable import report.
@@ -69,6 +76,9 @@ claim arbitrary stripped application or cross-version coverage.
 - Pre-T027 remediation added the ESP32-S3 language, SALT/SALTU assembler
   fixture, decompiler and real-dump tests, explicit enrichment status, PNG
   candidate classifier, ADR 0020, and gate addendum.
+- Added T027 neutral ESP provider/resolver contracts, provider-owned memory
+  and entry services, proven execution topology propagation, tests, ADR 0022,
+  and support documentation.
 - Clean uncached verification passed 142 unit and 29 real-Ghidra tests plus
   4 Python generator tests; reproducible ZIP SHA-256 is
   `0e28b05738b45d02086d7527a93d78b3f5f881628705f1658d08bf3dd18d8e82`.
@@ -77,7 +87,7 @@ claim arbitrary stripped application or cross-version coverage.
   function bodies without a reported repair failure. The mapped-segment log
   now omits the user-supplied input basename; a red-to-green integration test
   covers that privacy fix.
-- T001-T026A implementation and gate evidence are committed. T027 is next;
+- T001-T027 implementation and evidence are complete. T028 is next;
   T064 remains unstarted. Restricted local firmware remains ignored and
   untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
@@ -87,9 +97,9 @@ No complete device catalog, exact variant, board, or hardware support claim was 
 
 ## Exact Next Action
 
-Begin T027: refactor only proven shared ESP behavior into common
-Xtensa/RISC-V-neutral services and the common execution-topology contract. Do
-not start T028 until T027 is complete.
+Begin T028: add original ESP32 and ESP32-S2 fixtures, providers, and packs
+independently and pass their full relevant suites. Do not start T029 until T028
+is complete.
 
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
 Two clean quality-script builds produced identical extension ZIPs with SHA-256
@@ -98,3 +108,8 @@ packaged license audit had embedded the host toolchain path; the audit now
 stores only the pinned toolchain identifier and `verify-build-quality.sh`
 additionally fails on host paths or restricted capture names in extension ZIP
 text content.
+
+T027 completed with 156 unit, 53 real-Ghidra, and 4 Python tests passing with
+no failures or skips. Two clean quality-script builds passed all 20 actions
+and produced identical 1,017,483-byte extension ZIPs with SHA-256
+`e7a44da789159dd00a6d50dabf73a7c2fa5b590720f2c837f645b41751e5604e`.

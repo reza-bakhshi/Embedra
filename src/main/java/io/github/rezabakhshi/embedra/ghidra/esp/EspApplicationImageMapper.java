@@ -19,7 +19,7 @@ import io.github.rezabakhshi.embedra.targets.EntryPointDecision;
 import io.github.rezabakhshi.embedra.targets.LanguageSelection;
 import io.github.rezabakhshi.embedra.targets.MemoryClassification;
 import io.github.rezabakhshi.embedra.targets.SupportDecision;
-import io.github.rezabakhshi.embedra.targets.esp.Esp32S3TargetProvider;
+import io.github.rezabakhshi.embedra.targets.esp.EspTargetProvider;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +31,13 @@ import java.util.OptionalLong;
 /** Transactional translation of validated ESP models into one Ghidra program. */
 public final class EspApplicationImageMapper {
     public EspImportReport map(Program program, EspImage image,
-            Esp32S3TargetProvider provider, TaskMonitor monitor)
+            EspTargetProvider provider, TaskMonitor monitor)
             throws EspMappingException, CancelledException {
         return map(program, image, provider, monitor, Optional.empty());
     }
 
     public EspImportReport map(Program program, EspImage image,
-            Esp32S3TargetProvider provider, TaskMonitor monitor,
+            EspTargetProvider provider, TaskMonitor monitor,
             Optional<EspFlashProgramProvenance> flashProvenance)
             throws EspMappingException, CancelledException {
         Objects.requireNonNull(program, "program");
@@ -121,7 +121,7 @@ public final class EspApplicationImageMapper {
     }
 
     private static List<SegmentPlan> planSegments(Program program, EspImage image,
-            Esp32S3TargetProvider provider) throws EspMappingException {
+            EspTargetProvider provider) throws EspMappingException {
         List<SegmentPlan> plans = new ArrayList<>(image.segments().size());
         for (EspImageSegment segment : image.segments()) {
             MemoryClassification classification = provider.classify(segment.targetRange());

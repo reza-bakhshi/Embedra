@@ -36,6 +36,13 @@ why revision-dependent register/ROM names and Embedra crypto analysis are
 unavailable. To use those packs, confirm applicability and select the option
 explicitly during import.
 
+ESP image parsing, provider resolution, memory classification, entry
+validation, and execution-topology results use ISA-neutral ESP contracts.
+ESP32-S3 remains the only implemented provider: other catalog entries remain
+`PLANNED` until their own providers, fixtures, packs, and acceptance evidence
+land. The current ESP32-S3 topology reports the single application CPU shape
+proven by the import fixture and does not infer additional execution units.
+
 Embedra also ships one provenance-verified ESP32-S3 ESP-IDF Function ID
 pilot database under `fid/esp32s3/`. Ghidra does not attach it automatically.
 Enable the `Embedra ESP32-S3 Function ID` analyzer (off by default) and

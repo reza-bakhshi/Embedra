@@ -18,6 +18,9 @@ import io.github.rezabakhshi.embedra.formats.esp.EspImageParser;
 import io.github.rezabakhshi.embedra.ghidra.transaction.GhidraProgramTransaction;
 import io.github.rezabakhshi.embedra.targets.esp.Esp32S3TargetProvider;
 import io.github.rezabakhshi.embedra.targets.esp.EspressifChipIdRegistry;
+import io.github.rezabakhshi.embedra.targets.esp.EspTargetProvider;
+import io.github.rezabakhshi.embedra.targets.esp.EspTargetResolution;
+import io.github.rezabakhshi.embedra.targets.esp.EspTargetResolver;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
@@ -31,11 +34,6 @@ import java.util.Optional;
 public final class EspApplicationImportService {
     private static final int ESP32_S3_CHIP_ID = 9;
 
-    private static final String PROVIDER_VERSION = "esptool-v5.4.0+esp-idf-v6.0";
-
-    private static final String PROVIDER_IDENTITY =
-        "esp32s3|chip-id-9|Xtensa:LE:32:esp32s3|default|" + PROVIDER_VERSION;
-
     private static final Evidence STRUCTURE_EVIDENCE = new Evidence(
         EvidenceKind.VERIFIED_CHECKSUM, "validated ESP application image",
         "Header, segments, checksum, optional digest, and entry were validated");
@@ -44,8 +42,8 @@ public final class EspApplicationImportService {
         EvidenceKind.DOCUMENTED_FIELD, "ESP application segment header",
         "Encoded load address and length were retained exactly");
 
-    private final Esp32S3TargetProvider targetProvider = new Esp32S3TargetProvider(
-        EspressifChipIdRegistry.loadBundled());
+    private final EspTargetResolver targetResolver = new EspTargetResolver(List.of(
+        new Esp32S3TargetProvider(EspressifChipIdRegistry.loadBundled())));
 
     public EspImportWorkflowResult importImage(Program program, byte[] input,
             TaskMonitor monitor) throws DiagnosticException, EspMappingException,
@@ -69,14 +67,17 @@ public final class EspApplicationImportService {
         CancellationToken cancellation = monitor::isCancelled;
         EspImage image = EspImageParser.parseForChip(input, ESP32_S3_CHIP_ID,
             ParserLimits.defaults(), cancellation);
+        EspTargetResolution target = targetResolver.resolve(image).orElseThrow(() ->
+            new IllegalStateException("Validated ESP32-S3 image has no target provider"));
         EspAppDescriptionResult appDescription = EspAppDescriptionExtractor.extract(image);
         EspImportReport importReport = new EspApplicationImageMapper().map(program, image,
-            targetProvider, monitor, provenance);
+            target.provider(), monitor, provenance);
         recordAppDescription(program, appDescription);
-        CanonicalReport canonicalReport = report(input, importReport, appDescription);
+        CanonicalReport canonicalReport = report(input, importReport, appDescription,
+            target.provider());
         EspProgramSnapshot snapshot = EspProgramSnapshot.from(image, importReport);
-        return new EspImportWorkflowResult(importReport, appDescription, canonicalReport,
-            snapshot);
+        return new EspImportWorkflowResult(importReport, appDescription, target.topology(),
+            canonicalReport, snapshot);
     }
 
     private static void recordAppDescription(Program program,
@@ -88,9 +89,9 @@ public final class EspApplicationImportService {
         try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(program,
                 "Record ESP32-S3 application description")) {
             var options = program.getOptions(
-                EmbedraEsp32S3FunctionIdAnalyzer.APP_DESCRIPTION_OPTIONS);
+                EspProgramOptions.APP_DESCRIPTION);
             options.setString(
-                EmbedraEsp32S3FunctionIdAnalyzer.APP_DESCRIPTION_IDF_VERSION_KEY,
+                EspProgramOptions.APP_DESCRIPTION_IDF_VERSION,
                 description.idfVersion());
             options.setString("Project Name", description.projectName());
             options.setString("App Version", description.version());
@@ -99,7 +100,7 @@ public final class EspApplicationImportService {
     }
 
     private static CanonicalReport report(byte[] input, EspImportReport imported,
-            EspAppDescriptionResult appDescription) {
+            EspAppDescriptionResult appDescription, EspTargetProvider provider) {
         List<CanonicalReport.Mapping> mappings = imported.segments().stream()
             .map(segment -> new CanonicalReport.Mapping(
                 "segment-" + segment.index(), segment.sourceRange(),
@@ -113,19 +114,20 @@ public final class EspApplicationImportService {
         metadata.put("compilerSpecId", imported.compilerSpecId());
         appDescription.description().ifPresent(description -> addMetadata(metadata,
             description));
-        CanonicalReport.Component provider = new CanonicalReport.Component(
-            "target.esp32s3", PROVIDER_VERSION,
-            sha256(PROVIDER_IDENTITY.getBytes(java.nio.charset.StandardCharsets.UTF_8)));
+        CanonicalReport.Component providerComponent = new CanonicalReport.Component(
+            provider.providerId(), provider.providerVersion(),
+            sha256(provider.canonicalIdentity().getBytes(
+                java.nio.charset.StandardCharsets.UTF_8)));
         CanonicalReport.Validation validation = new CanonicalReport.Validation(
             "ESP_IMAGE_VALID", "PASS", "ESP application image is structurally valid",
             List.of(STRUCTURE_EVIDENCE));
         CanonicalReport.AppliedSymbol entry = new CanonicalReport.AppliedSymbol(
             "entry", "global", "default", imported.entryPoint().orElseThrow(),
-            "target.esp32s3");
+            provider.providerId());
         return CanonicalReport.create("embedra-development",
             List.of(new CanonicalReport.Input("esp-application-image", sha256(input),
                 input.length)),
-            List.of(provider), List.of(), List.of(validation), mappings,
+            List.of(providerComponent), List.of(), List.of(validation), mappings,
             List.of(entry), List.of(), metadata, Optional.empty(), List.of(),
             appDescription.diagnostics(),
             new CanonicalReport.Reproducibility(true, List.of("esp_app_desc")));

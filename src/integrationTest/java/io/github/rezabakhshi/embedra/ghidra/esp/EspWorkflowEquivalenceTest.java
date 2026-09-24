@@ -84,6 +84,8 @@ class EspWorkflowEquivalenceTest {
 
             assertEquals(gui.canonicalReportJson(), headless.canonicalReportJson());
             assertEquals(gui.programSnapshotJson(), headless.programSnapshotJson());
+            assertEquals(gui.executionTopology(), headless.executionTopology());
+            assertEquals(1, gui.executionTopology().processors().size());
             assertEquals(3, gui.importReport().segments().size());
             assertEquals("embedra_t008_fixture",
                 gui.appDescription().description().orElseThrow().projectName());

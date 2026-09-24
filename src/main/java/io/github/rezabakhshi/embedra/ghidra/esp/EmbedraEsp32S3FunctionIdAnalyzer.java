@@ -98,9 +98,10 @@ public final class EmbedraEsp32S3FunctionIdAnalyzer extends AbstractAnalyzer {
 
     public static final String GENERATOR_COMMAND_KEY = "Generator Command";
 
-    public static final String APP_DESCRIPTION_OPTIONS = "Embedra ESP32-S3 App Description";
+    public static final String APP_DESCRIPTION_OPTIONS = EspProgramOptions.APP_DESCRIPTION;
 
-    public static final String APP_DESCRIPTION_IDF_VERSION_KEY = "IDF Version";
+    public static final String APP_DESCRIPTION_IDF_VERSION_KEY =
+        EspProgramOptions.APP_DESCRIPTION_IDF_VERSION;
 
     private static final String NAME = "Embedra ESP32-S3 Function ID";
 

@@ -1,5 +1,6 @@
 package io.github.rezabakhshi.embedra.ghidra.esp;
 
+import io.github.rezabakhshi.embedra.core.model.ExecutionTopology;
 import io.github.rezabakhshi.embedra.core.report.CanonicalReport;
 import io.github.rezabakhshi.embedra.formats.esp.EspAppDescriptionResult;
 import java.util.Objects;
@@ -8,11 +9,13 @@ import java.util.Objects;
 public record EspImportWorkflowResult(
         EspImportReport importReport,
         EspAppDescriptionResult appDescription,
+        ExecutionTopology executionTopology,
         CanonicalReport canonicalReport,
         EspProgramSnapshot programSnapshot) {
     public EspImportWorkflowResult {
         Objects.requireNonNull(importReport, "importReport");
         Objects.requireNonNull(appDescription, "appDescription");
+        Objects.requireNonNull(executionTopology, "executionTopology");
         Objects.requireNonNull(canonicalReport, "canonicalReport");
         Objects.requireNonNull(programSnapshot, "programSnapshot");
     }

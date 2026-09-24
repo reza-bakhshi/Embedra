@@ -1,10 +1,17 @@
 package io.github.rezabakhshi.embedra.targets.esp;
 
 import io.github.rezabakhshi.embedra.core.io.AddressRange;
+import io.github.rezabakhshi.embedra.core.model.Confidence;
 import io.github.rezabakhshi.embedra.core.model.Evidence;
 import io.github.rezabakhshi.embedra.core.model.EvidenceKind;
+import io.github.rezabakhshi.embedra.core.model.ExecutionTopology;
+import io.github.rezabakhshi.embedra.core.model.FirmwareSource;
+import io.github.rezabakhshi.embedra.core.model.ProcessorKind;
+import io.github.rezabakhshi.embedra.core.model.ProcessorNode;
+import io.github.rezabakhshi.embedra.core.model.ProgramStrategy;
+import io.github.rezabakhshi.embedra.core.model.ResetEntry;
+import io.github.rezabakhshi.embedra.core.model.SecurityDomain;
 import io.github.rezabakhshi.embedra.formats.esp.EspImage;
-import io.github.rezabakhshi.embedra.formats.esp.EspImageSegment;
 import io.github.rezabakhshi.embedra.targets.EntryPointDecision;
 import io.github.rezabakhshi.embedra.targets.LanguageSelection;
 import io.github.rezabakhshi.embedra.targets.MemoryClassification;
@@ -13,24 +20,15 @@ import io.github.rezabakhshi.embedra.targets.SupportDecision;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /** Pure ESP32-S3 identity, language, memory, and entry provider. */
-public final class Esp32S3TargetProvider {
+public final class Esp32S3TargetProvider implements EspTargetProvider {
     private static final int CHIP_ID = 9;
 
     private static final String ADDRESS_SPACE = "default";
 
-    private static final List<RegionDefinition> REGIONS = List.of(
-        new RegionDefinition(MemoryRegionKind.DROM, 0x3c00_0000L, 0x3e00_0000L,
-            true, false, false),
-        new RegionDefinition(MemoryRegionKind.IROM, 0x4200_0000L, 0x4400_0000L,
-            true, false, true),
-        new RegionDefinition(MemoryRegionKind.IRAM, 0x4037_0000L, 0x403e_0000L,
-            true, false, true),
-        new RegionDefinition(MemoryRegionKind.DRAM, 0x3fc8_8000L, 0x3fd0_0000L,
-            true, true, false),
-        new RegionDefinition(MemoryRegionKind.RTC_DATA, 0x5000_0000L, 0x5000_2000L,
-            true, true, false));
+    private static final String PROVIDER_VERSION = "esptool-v5.4.0+esp-idf-v6.0";
 
     private static final Evidence MEMORY_EVIDENCE = new Evidence(
         EvidenceKind.VENDOR_DATA_PACK,
@@ -42,6 +40,18 @@ public final class Esp32S3TargetProvider {
         "Embedra data/languages/embedra_esp32s3.ldefs",
         "Xtensa:LE:32:esp32s3 language with default compiler specification");
 
+    private static final EspMemoryMap MEMORY_MAP = new EspMemoryMap(ADDRESS_SPACE, List.of(
+        new EspMemoryRegion(MemoryRegionKind.DROM, 0x3c00_0000L, 0x3e00_0000L,
+            true, false, false, MEMORY_EVIDENCE),
+        new EspMemoryRegion(MemoryRegionKind.IROM, 0x4200_0000L, 0x4400_0000L,
+            true, false, true, MEMORY_EVIDENCE),
+        new EspMemoryRegion(MemoryRegionKind.IRAM, 0x4037_0000L, 0x403e_0000L,
+            true, false, true, MEMORY_EVIDENCE),
+        new EspMemoryRegion(MemoryRegionKind.DRAM, 0x3fc8_8000L, 0x3fd0_0000L,
+            true, true, false, MEMORY_EVIDENCE),
+        new EspMemoryRegion(MemoryRegionKind.RTC_DATA, 0x5000_0000L, 0x5000_2000L,
+            true, true, false, MEMORY_EVIDENCE)));
+
     private final EspressifChipDefinition chipDefinition;
 
     public Esp32S3TargetProvider(EspressifChipIdRegistry chipIds) {
@@ -51,6 +61,27 @@ public final class Esp32S3TargetProvider {
         }
     }
 
+    @Override
+    public String providerId() {
+        return "target.esp32s3";
+    }
+
+    @Override
+    public String providerVersion() {
+        return PROVIDER_VERSION;
+    }
+
+    @Override
+    public String canonicalIdentity() {
+        return "esp32s3|chip-id-9|Xtensa:LE:32:esp32s3|default|" + PROVIDER_VERSION;
+    }
+
+    @Override
+    public int chipId() {
+        return CHIP_ID;
+    }
+
+    @Override
     public SupportDecision supports(EspImage image) {
         Objects.requireNonNull(image, "image");
         Evidence evidence = chipEvidence(image.header().chipId());
@@ -63,56 +94,38 @@ public final class Esp32S3TargetProvider {
             List.of(evidence));
     }
 
+    @Override
     public LanguageSelection language() {
         return new LanguageSelection("Xtensa:LE:32:esp32s3", "default", "Xtensa", 32, 1,
             "little", List.of(LANGUAGE_EVIDENCE));
     }
 
+    @Override
     public MemoryClassification classify(AddressRange range) {
-        Objects.requireNonNull(range, "range");
-        if (!range.addressSpace().equals(ADDRESS_SPACE) || range.length() == 0) {
-            return unknown(range);
-        }
-        for (RegionDefinition region : REGIONS) {
-            if (region.contains(range)) {
-                return new MemoryClassification(range, region.kind(), true,
-                    region.readable(), region.writable(), region.executable(),
-                    List.of(MEMORY_EVIDENCE));
-            }
-        }
-        return unknown(range);
+        return MEMORY_MAP.classify(range);
     }
 
+    @Override
     public EntryPointDecision validateEntry(long address, EspImage image) {
+        return EspEntryPointValidator.validate(address, image, language(), ADDRESS_SPACE,
+            this::classify);
+    }
+
+    @Override
+    public ExecutionTopology topology(EspImage image) {
         Objects.requireNonNull(image, "image");
-        if (address < 0 || address > 0xffff_ffffL) {
-            throw new IllegalArgumentException("Entry address must be an unsigned 32-bit value");
-        }
-        MemoryClassification addressClass = classify(
-            new AddressRange(ADDRESS_SPACE, address, 1));
-        if (!addressClass.mappable()) {
-            return rejected(address, "Entry address is outside recognized memory",
-                Optional.of(addressClass), addressClass.evidence());
-        }
-        if (!addressClass.executable()) {
-            return rejected(address, "Entry address is not in executable memory",
-                Optional.of(addressClass), addressClass.evidence());
-        }
-        Optional<EspImageSegment> containingSegment = image.segments().stream()
-            .filter(segment -> contains(segment.targetRange(), address))
-            .findFirst();
-        if (containingSegment.isEmpty()) {
-            return rejected(address, "Entry address is not inside a mapped segment",
-                Optional.of(addressClass), addressClass.evidence());
-        }
-        MemoryClassification segmentClass = classify(containingSegment.orElseThrow().targetRange());
-        if (!segmentClass.executable()) {
-            return rejected(address, "Mapped segment is not executable",
-                Optional.of(segmentClass), segmentClass.evidence());
-        }
-        return new EntryPointDecision(true, address,
-            "Entry address satisfies language alignment and is inside a mapped executable segment",
-            Optional.of(segmentClass), combineEvidence(LANGUAGE_EVIDENCE, MEMORY_EVIDENCE));
+        Evidence chip = chipEvidence(image.header().chipId());
+        ResetEntry entry = new ResetEntry("image-entry", ADDRESS_SPACE,
+            image.header().entryPoint(), Confidence.DERIVED,
+            List.of(LANGUAGE_EVIDENCE, MEMORY_EVIDENCE));
+        ProcessorNode applicationCpu = new ProcessorNode("application-cpu",
+            ProcessorKind.CPU_CORE, Optional.of("Xtensa LX7"),
+            Optional.of(language().languageId()), Optional.of(language().compilerSpecId()),
+            "ESP application processor", SecurityDomain.unknown(), "esp32s3",
+            Set.of(ADDRESS_SPACE), List.of(entry), FirmwareSource.SHARED_IMAGE,
+            Confidence.DERIVED, List.of(chip, LANGUAGE_EVIDENCE, MEMORY_EVIDENCE));
+        return new ExecutionTopology(List.of(applicationCpu), List.of(), List.of(),
+            List.of(), List.of(), ProgramStrategy.SHARED_PROGRAM);
     }
 
     private Evidence chipEvidence(int observedChipId) {
@@ -122,33 +135,4 @@ public final class Esp32S3TargetProvider {
                 + "; observed image chip ID " + observedChipId);
     }
 
-    private static EntryPointDecision rejected(long address, String reason,
-            Optional<MemoryClassification> classification, List<Evidence> evidence) {
-        return new EntryPointDecision(false, address, reason, classification, evidence);
-    }
-
-    private static List<Evidence> combineEvidence(Evidence first, Evidence second) {
-        return List.of(first, second);
-    }
-
-    private static boolean contains(AddressRange range, long address) {
-        return address >= range.start() && address < range.endExclusive();
-    }
-
-    private static MemoryClassification unknown(AddressRange range) {
-        return new MemoryClassification(range, MemoryRegionKind.UNKNOWN, false,
-            false, false, false, List.of(MEMORY_EVIDENCE));
-    }
-
-    private record RegionDefinition(
-            MemoryRegionKind kind,
-            long start,
-            long endExclusive,
-            boolean readable,
-            boolean writable,
-            boolean executable) {
-        private boolean contains(AddressRange range) {
-            return range.start() >= start && range.endExclusive() <= endExclusive;
-        }
-    }
 }

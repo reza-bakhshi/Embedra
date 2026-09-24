@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "13d6db0f5efd5683e99416e8b1c29b36afd07bf94d9f96d99e7cc287796fc4e4"
+    "sha256": "31457aec074a80429b3e881f25f45d4b26c4b5dcdaf9262c256b09370485c09b"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T026A",
+    "id": "T027",
     "status": "COMPLETE",
-    "reasonCode": "ESP32S3_FID_PILOT_VERIFIED"
+    "reasonCode": "SHARED_ESP_TARGET_SERVICES_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -37,7 +37,8 @@
     "T024",
     "T025",
     "T026",
-    "T026A"
+    "T026A",
+    "T027"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -245,13 +246,15 @@
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T026A.md",
+    "task": ".embedra/evidence/tasks/T027.md",
     "remediation": ".embedra/evidence/tasks/T025-remediation.md",
     "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
     "commands": ".embedra/evidence/commands.jsonl",
     "logDrivenRemediation": ".embedra/evidence/tasks/T025-log-driven-remediation.md",
     "gateAddendum": ".embedra/evidence/gates/esp32s3-full-flash-r2-language-addendum.md",
     "nextTaskPrompt": ".embedra/prompts/T027-shared-xtensa-riscv-services.md",
+    "taskT027": ".embedra/evidence/tasks/T027.md",
+    "adrT027": "docs/adr/0022-shared-esp-target-services.md",
     "taskT026A": ".embedra/evidence/tasks/T026A.md",
     "adrT026A": "docs/adr/0021-esp32s3-function-id-pilot.md",
     "fidbT026A": "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb",
@@ -263,8 +266,8 @@
     ]
   },
   "knownFailures": [],
-  "nextTask": "T027",
-  "nextAction": "Begin T027: refactor only proven shared ESP behavior into common Xtensa/RISC-V-neutral services and the common execution-topology contract. Do not start T028 until T027 is complete.",
+  "nextTask": "T028",
+  "nextAction": "Begin T028: add original ESP32 and ESP32-S2 fixtures, providers, and packs independently, then pass their relevant suites. Do not start T029 until T028 is complete.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -277,6 +280,12 @@
       "sha256": "fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb",
       "sizeBytes": 1005367,
       "status": "T026A_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
+      "sha256": "e7a44da789159dd00a6d50dabf73a7c2fa5b590720f2c837f645b41751e5604e",
+      "sizeBytes": 1017483,
+      "status": "T027_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -379,6 +388,11 @@
       "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
       "exitStatus": 0,
       "result": "PASS: two complete uncached clean builds, all 20 quality actions each; 152 unit, 53 real-Ghidra, and 4 Python tests; byte-identical ZIP, SHA-256 fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb. The first packaged license audit had embedded the host toolchain path; the audit tool now records a host-independent toolchain identifier and the package gate scans archive text content for host paths and restricted capture names."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T027 PASS: two complete uncached clean builds, all 20 quality actions each; 156 unit, 53 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 1,017,483-byte ZIP, SHA-256 e7a44da789159dd00a6d50dabf73a7c2fa5b590720f2c837f645b41751e5604e."
     }
   ],
   "buildQuality": {
@@ -392,7 +406,10 @@
     "coreBranchCoverage": 0.9955,
     "minimumCoreClassBranchCoverage": 0.9286,
     "packInstructionCoverage": 0.9226,
-    "packBranchCoverage": 0.7759
+    "packBranchCoverage": 0.7759,
+    "unitTests": 156,
+    "ghidraIntegrationTests": 53,
+    "pythonGeneratorTests": 4
   },
   "architecture": {
     "pureBoundaries": [
