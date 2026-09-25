@@ -1,0 +1,15 @@
+{
+  "fixtureId": "esp32h2.esptool-v5.4.0.esp32h2-freestanding-minimal",
+  "imageSha256": "1dc73a5fa6b018918c630386fffd311e770e6d4d2aff3af42a40069e46edb84d",
+  "imageSize": 65600,
+  "esptoolVersion": "5.4.0",
+  "chipId": 16,
+  "target": "ESP32-H2",
+  "entryPoint": "0x42010000",
+  "projectName": "embedra_t030_esp32h2",
+  "checksumValid": true,
+  "digestAppended": true,
+  "digestValid": true,
+  "elfSha256": "8f339d7c615a9a995951ace197676f3c4b279ed25f5000b88c55e13b8f8cd353",
+  "elfMachine": "RISC-V"
+}

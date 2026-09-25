@@ -1,0 +1,35 @@
+{
+  "fixtureId": "esp32c5.esptool-v5.4.0.esp32c5-freestanding-minimal",
+  "sha256": "4e109884e2b4f489838daf35a9dbe81f6679e587b7555baaa557bbd070d3d772",
+  "target": "ESP32-C5",
+  "device": "ESP32-C5 (chip ID 23; no exact part claim)",
+  "inputFormat": "Espressif application image v1",
+  "origin": "Generated independently for this target from repository freestanding C and target linker addresses",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "sourceProvenance": [
+    {
+      "name": "Pinned target memory and application-image definitions",
+      "revision": "esptool-v5.4.0+esp-idf-662a3be",
+      "license": "Apache-2.0 AND GPL-2.0-or-later",
+      "url": "https://github.com/espressif"
+    }
+  ],
+  "generatorRevision": "sha256:19573a9623ac55ab0a55cdfea1bee9f2ba58fd5fc32d51c0742c571b79c23ea8",
+  "generationCommand": "scripts/generate-remaining-esp-golden-fixtures.sh",
+  "toolchain": "Espressif riscv32-esp-elf esp-15.2.0_20251204; esptool 5.4.0",
+  "oracleCommands": [
+    "esptool --chip esp32c5 image-info <fixture>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/esp32c5/esp32c5-freestanding-minimal.expectations.json",
+  "requirements": [
+    "T030",
+    "ESP-001",
+    "ESP-002",
+    "ESP-003",
+    "ESP-004",
+    "ESP-005",
+    "ESP-016",
+    "TOPO-006"
+  ]
+}

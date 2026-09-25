@@ -1,0 +1,15 @@
+{
+  "fixtureId": "esp32h21.esptool-v5.4.0.esp32h21-freestanding-minimal",
+  "imageSha256": "82a27aa9ae9968fcc8cb77cb674a8c2e0d53cb2ef02a1f8ef271a130cffb74d1",
+  "imageSize": 65600,
+  "esptoolVersion": "5.4.0",
+  "chipId": 25,
+  "target": "ESP32-H21",
+  "entryPoint": "0x42010000",
+  "projectName": "embedra_t030_esp32h21",
+  "checksumValid": true,
+  "digestAppended": true,
+  "digestValid": true,
+  "elfSha256": "6f603b7606be3a05a82add7398d50c2a9ece544bd1253180e540177f110c4950",
+  "elfMachine": "RISC-V"
+}

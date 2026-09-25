@@ -8,6 +8,9 @@ import io.github.rezabakhshi.embedra.core.ParserLimits;
 import io.github.rezabakhshi.embedra.formats.esp.EspImage;
 import io.github.rezabakhshi.embedra.formats.esp.EspImageParser;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.HexFormat;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -33,7 +36,7 @@ class RemainingEspTargetProvidersTest {
     @MethodSource("providers")
     void resolvesIndependentIdentityLanguageAndTopology(EspTargetProvider provider,
             int chipId, String deviceId, int processorCount) throws Exception {
-        EspImage image = imageWithChipId(chipId);
+        EspImage image = fixture(deviceId);
 
         assertEquals(chipId, provider.chipId());
         assertEquals("target." + deviceId, provider.providerId());
@@ -43,21 +46,31 @@ class RemainingEspTargetProvidersTest {
         assertEquals("gcc", provider.language().compilerSpecId());
         assertEquals(2, provider.language().instructionAlignmentBytes());
         assertEquals(processorCount, provider.topology(image).processors().size());
+        assertTrue(provider.validateEntry(image.header().entryPoint(), image).accepted());
         assertEquals(provider.providerId(),
             EspTargetProviders.resolver().resolve(image).orElseThrow().provider().providerId());
+
+        byte[] binary = resource("/fixtures/" + deviceId + "/" + deviceId
+            + "-freestanding-minimal.bin");
+        String manifest = new String(resource("/fixtures/" + deviceId + "/" + deviceId
+            + "-freestanding-minimal.bin.manifest.json"), StandardCharsets.UTF_8);
+        String oracle = new String(resource("/oracles/" + deviceId + "/" + deviceId
+            + "-freestanding-minimal.expectations.json"), StandardCharsets.UTF_8);
+        assertTrue(manifest.contains(HexFormat.of().formatHex(
+            MessageDigest.getInstance("SHA-256").digest(binary))));
+        assertTrue(oracle.contains("\"projectName\": \"embedra_t030_" + deviceId + "\""));
+        assertTrue(oracle.contains("\"elfMachine\": \"RISC-V\""));
     }
 
-    private static EspImage imageWithChipId(int chipId) throws Exception {
-        byte[] bytes;
-        try (InputStream input = RemainingEspTargetProvidersTest.class.getResourceAsStream(
-                "/fixtures/esp32c3/esp32c3-freestanding-minimal.bin")) {
-            assertTrue(input != null);
-            bytes = input.readAllBytes();
+    private static EspImage fixture(String deviceId) throws Exception {
+        return EspImageParser.parse(resource("/fixtures/" + deviceId + "/" + deviceId
+            + "-freestanding-minimal.bin"), ParserLimits.defaults(), CancellationToken.none());
+    }
+
+    private static byte[] resource(String name) throws Exception {
+        try (InputStream input = RemainingEspTargetProvidersTest.class.getResourceAsStream(name)) {
+            assertTrue(input != null, "missing fixture resource " + name);
+            return input.readAllBytes();
         }
-        bytes[12] = (byte) chipId;
-        bytes[13] = (byte) (chipId >>> 8);
-        bytes[23] = 0;
-        bytes = java.util.Arrays.copyOf(bytes, bytes.length - 32);
-        return EspImageParser.parse(bytes, ParserLimits.defaults(), CancellationToken.none());
     }
 }

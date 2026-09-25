@@ -1,0 +1,15 @@
+{
+  "fixtureId": "esp32e22.esptool-v5.4.0.esp32e22-freestanding-minimal",
+  "imageSha256": "b8fb13d926f16693bc61c27759ad09be139a40ec6ffe7ba7a5c062c468ef5f6d",
+  "imageSize": 65600,
+  "esptoolVersion": "5.4.0",
+  "chipId": 31,
+  "target": "ESP32-E22",
+  "entryPoint": "0x3c010000",
+  "projectName": "embedra_t030_esp32e22",
+  "checksumValid": true,
+  "digestAppended": true,
+  "digestValid": true,
+  "elfSha256": "681e8d25314500865a466e954fb969e39dc4547eeaa00b2f2c003fa1edc2eb41",
+  "elfMachine": "RISC-V"
+}

@@ -1,0 +1,15 @@
+{
+  "fixtureId": "esp32c61.esptool-v5.4.0.esp32c61-freestanding-minimal",
+  "imageSha256": "1c3a3b4a942545d90e627e2525eb48da54e0662711a9936f2185bf0fc7ec7835",
+  "imageSize": 65600,
+  "esptoolVersion": "5.4.0",
+  "chipId": 20,
+  "target": "ESP32-C61",
+  "entryPoint": "0x42010000",
+  "projectName": "embedra_t030_esp32c61",
+  "checksumValid": true,
+  "digestAppended": true,
+  "digestValid": true,
+  "elfSha256": "4557cb831d8b09a10d397f69ae4c616ac7852692e7d9cb2ad14c9a74590282b6",
+  "elfMachine": "RISC-V"
+}

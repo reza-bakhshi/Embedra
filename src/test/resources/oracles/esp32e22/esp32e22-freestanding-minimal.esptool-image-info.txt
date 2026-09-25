@@ -1,0 +1,45 @@
+esptool v5.4.0
+Image size: 65600 bytes
+
+ESP32-E22 Image Header
+======================
+Image version: 1
+Entry point: 0x3c010000
+Segments: 4
+Flash size: 4MB
+Flash freq: 40m
+Flash mode: DIO
+
+ESP32-E22 Extended Image Header
+===============================
+WP pin: 0xee (disabled)
+Flash pins drive settings: clk_drv: 0x0, q_drv: 0x0, d_drv: 0x0, cs0_drv: 0x0, hd_drv: 0x0, wp_drv: 0x0
+Chip ID: 31 (ESP32-E22)
+Minimal chip revision: v0.0, (legacy min_rev = 0)
+Maximal chip revision: v655.35
+
+Segments Information
+====================
+Segment   Length   Load addr   File offs  Memory types
+-------  -------  ----------  ----------  ------------
+      0  0x00120  0x3c000020  0x00000018  DROM, IROM
+      1  0x00004  0x31000000  0x00000140  DRAM, BYTE_ACCESSIBLE, IRAM
+      2  0x0fea4  0x00000000  0x0000014c  PADDING
+      3  0x0001c  0x3c010000  0x0000fff8  DROM, IROM
+
+ESP32-E22 Image Footer
+======================
+Checksum: 0xa3 (valid)
+Validation hash: 1d0ffbcfd56a3e6840a57f0735f3d6e1df3ecbe69781f5825d0b1a49aa2bce82 (valid)
+
+Application Information
+=======================
+Project name: embedra_t030_esp32e22
+App version: 1.0.0
+Compile time:
+ELF file SHA256: 0000000000000000000000000000000000000000000000000000000000000000
+ESP-IDF: fixture-no-idf-runtime
+Minimal eFuse block revision: 0.0
+Maximal eFuse block revision: 1.99
+MMU page size: 64 KB
+Secure version: 0

@@ -1,0 +1,45 @@
+esptool v5.4.0
+Image size: 65600 bytes
+
+ESP32-C5 Image Header
+=====================
+Image version: 1
+Entry point: 0x42010000
+Segments: 4
+Flash size: 4MB
+Flash freq: 40m
+Flash mode: DIO
+
+ESP32-C5 Extended Image Header
+==============================
+WP pin: 0xee (disabled)
+Flash pins drive settings: clk_drv: 0x0, q_drv: 0x0, d_drv: 0x0, cs0_drv: 0x0, hd_drv: 0x0, wp_drv: 0x0
+Chip ID: 23 (ESP32-C5)
+Minimal chip revision: v0.0, (legacy min_rev = 0)
+Maximal chip revision: v655.35
+
+Segments Information
+====================
+Segment   Length   Load addr   File offs  Memory types
+-------  -------  ----------  ----------  ------------
+      0  0x00120  0x42000020  0x00000018  DROM, IROM
+      1  0x00004  0x40800000  0x00000140  DRAM, BYTE_ACCESSIBLE, IRAM
+      2  0x0fea4  0x00000000  0x0000014c  PADDING
+      3  0x0001c  0x42010000  0x0000fff8  DROM, IROM
+
+ESP32-C5 Image Footer
+=====================
+Checksum: 0x67 (valid)
+Validation hash: 9df449c04eae2dde0a21102e1ebe8699d51ea2ed047b5e8fe71cb7d3bd8009be (valid)
+
+Application Information
+=======================
+Project name: embedra_t030_esp32c5
+App version: 1.0.0
+Compile time:
+ELF file SHA256: 0000000000000000000000000000000000000000000000000000000000000000
+ESP-IDF: fixture-no-idf-runtime
+Minimal eFuse block revision: 0.0
+Maximal eFuse block revision: 1.99
+MMU page size: 64 KB
+Secure version: 0

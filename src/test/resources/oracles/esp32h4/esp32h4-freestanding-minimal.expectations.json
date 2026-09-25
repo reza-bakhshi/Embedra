@@ -1,0 +1,15 @@
+{
+  "fixtureId": "esp32h4.esptool-v5.4.0.esp32h4-freestanding-minimal",
+  "imageSha256": "0f121d6e9081aa6ed68ee29e6640e0de3a8f45ec44f19bfbdaca2b975d3a2a17",
+  "imageSize": 65600,
+  "esptoolVersion": "5.4.0",
+  "chipId": 28,
+  "target": "ESP32-H4",
+  "entryPoint": "0x42010000",
+  "projectName": "embedra_t030_esp32h4",
+  "checksumValid": true,
+  "digestAppended": true,
+  "digestValid": true,
+  "elfSha256": "53794010046231375b16279e99fcf9e664d7ee1e5b787c05505bf9be83799787",
+  "elfMachine": "RISC-V"
+}

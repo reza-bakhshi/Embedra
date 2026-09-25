@@ -1,0 +1,15 @@
+{
+  "fixtureId": "esp32c5.esptool-v5.4.0.esp32c5-freestanding-minimal",
+  "imageSha256": "4e109884e2b4f489838daf35a9dbe81f6679e587b7555baaa557bbd070d3d772",
+  "imageSize": 65600,
+  "esptoolVersion": "5.4.0",
+  "chipId": 23,
+  "target": "ESP32-C5",
+  "entryPoint": "0x42010000",
+  "projectName": "embedra_t030_esp32c5",
+  "checksumValid": true,
+  "digestAppended": true,
+  "digestValid": true,
+  "elfSha256": "ee7efa8a4215e89c0920d2ed63d1458a7720d86f8dfb435596d8ba32d15361b6",
+  "elfMachine": "RISC-V"
+}
