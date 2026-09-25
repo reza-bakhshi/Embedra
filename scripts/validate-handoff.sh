@@ -51,9 +51,15 @@ do
         echo "Completed task is not checked in the specification: $task" >&2
         exit 1
     fi
+    task_evidence="$repository/.embedra/evidence/tasks/$task.md"
+    if [ ! -f "$task_evidence" ] || [ -L "$task_evidence" ]; then
+        echo "Completed task has no safe evidence file: $task" >&2
+        exit 1
+    fi
 done
 
 current_task=$(jq -r '.currentTask.id' "$state")
+current_status=$(jq -r '.currentTask.status' "$state")
 case "$current_task" in
     *_GATE)
         gate_name=$(printf '%s' "${current_task%_GATE}" | tr '[:upper:]' '[:lower:]')
@@ -70,3 +76,39 @@ case "$current_task" in
         fi
         ;;
 esac
+
+if [ "$current_status" = "COMPLETE" ]; then
+    if ! jq -e --arg task "$current_task" '.completedTasks | index($task) != null' \
+        "$state" >/dev/null
+    then
+        echo "Complete current task is absent from completedTasks." >&2
+        exit 1
+    fi
+    expected_evidence=".embedra/evidence/tasks/$current_task.md"
+    if [ "$evidence_path" != "$expected_evidence" ]; then
+        echo "Current task evidence does not match the complete current task." >&2
+        exit 1
+    fi
+fi
+
+if ! jq -e '.completedTasks | all(.[]; type == "string") and
+    (length == (unique | length))' "$state" >/dev/null
+then
+    echo "completedTasks must contain unique task identifiers." >&2
+    exit 1
+fi
+
+next_task=$(jq -r '.nextTask' "$state")
+if ! grep -Fq -- "- [ ] $next_task " "$repository/Embedra-SpecKit.md"; then
+    echo "Next task is missing or already complete in the specification: $next_task" >&2
+    exit 1
+fi
+
+jq -r '.acceptanceGates[] | .evidence, (.approvalEvidence // empty)' "$state" |
+while IFS= read -r gate_evidence
+do
+    if [ ! -f "$repository/$gate_evidence" ] || [ -L "$repository/$gate_evidence" ]; then
+        echo "Acceptance-gate evidence is missing or unsafe: $gate_evidence" >&2
+        exit 1
+    fi
+done

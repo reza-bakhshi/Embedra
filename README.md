@@ -37,6 +37,11 @@ why revision-dependent register/ROM names and Embedra crypto analysis are
 unavailable. To use those packs, confirm applicability and select the option
 explicitly during import.
 
+Original ESP32 and ESP32-S2 imports store their selection under
+`Embedra ESP Import` and use target-specific `ESP32_ENRICHMENT_*` or
+`ESP32S2_ENRICHMENT_*` diagnostics. The legacy ESP32-S3 option namespace and
+diagnostic codes remain stable for existing ESP32-S3 projects.
+
 ESP image parsing, provider resolution, memory classification, entry
 validation, and execution-topology results use ISA-neutral ESP contracts.
 ESP32, ESP32-S2, and ESP32-S3 are implemented providers; other catalog entries

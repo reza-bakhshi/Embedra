@@ -86,8 +86,11 @@ class EspApplicationImageLoaderTest {
                         program.getLanguageID().getIdAsString());
                     assertEquals(3, program.getMemory().getBlocks().length);
                     assertEquals("target." + deviceId, program.getOptions(
-                        EspApplicationImageLoader.ENRICHMENT_OPTIONS).getString(
+                        EspApplicationImageLoader.ESP_ENRICHMENT_OPTIONS).getString(
                             "Target Provider", ""));
+                    assertEquals(deviceId.toUpperCase() + "_ENRICHMENT_DISABLED",
+                        program.getOptions(EspApplicationImageLoader.ESP_ENRICHMENT_OPTIONS)
+                            .getString("Diagnostic Code", ""));
                 });
             }
         }
@@ -119,8 +122,11 @@ class EspApplicationImageLoaderTest {
                     assertEquals("espressif." + deviceId + ".svd", program.getOptions(
                         "Embedra " + displayName + " SVD").getString("Pack ID", ""));
                     assertTrue(program.getOptions(
-                        EspApplicationImageLoader.ENRICHMENT_OPTIONS).getBoolean(
+                        EspApplicationImageLoader.ESP_ENRICHMENT_OPTIONS).getBoolean(
                             "Selected", false));
+                    assertEquals(deviceId.toUpperCase() + "_ENRICHMENT_APPLIED",
+                        program.getOptions(EspApplicationImageLoader.ESP_ENRICHMENT_OPTIONS)
+                            .getString("Diagnostic Code", ""));
                 });
             }
         }

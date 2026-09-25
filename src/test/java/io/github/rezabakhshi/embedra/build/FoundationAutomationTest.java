@@ -91,6 +91,19 @@ class FoundationAutomationTest {
         assertNotEquals(0, runScript("scripts/validate-handoff.sh", copy));
     }
 
+    @Test
+    void continuityValidatorRejectsMissingCompletedTaskEvidence() throws Exception {
+        Path copy = temporaryDirectory.resolve("missing-evidence-handoff");
+        Files.createDirectories(copy.resolve(".embedra/evidence/tasks"));
+        Files.copy(PROJECT.resolve("Embedra-SpecKit.md"), copy.resolve("Embedra-SpecKit.md"));
+        Files.copy(PROJECT.resolve("PROJECT_STATE.md"), copy.resolve("PROJECT_STATE.md"));
+        Files.copy(PROJECT.resolve(".embedra/state.json"), copy.resolve(".embedra/state.json"));
+        Files.copy(PROJECT.resolve(".embedra/evidence/commands.jsonl"),
+            copy.resolve(".embedra/evidence/commands.jsonl"));
+
+        assertNotEquals(0, runScript("scripts/validate-handoff.sh", copy));
+    }
+
     private static int runScript(String relativeScript, Path argument)
             throws IOException, InterruptedException {
         Process process = new ProcessBuilder("sh", PROJECT.resolve(relativeScript).toString(),

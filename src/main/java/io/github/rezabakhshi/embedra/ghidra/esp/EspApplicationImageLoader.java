@@ -47,6 +47,8 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
 
     public static final String ENRICHMENT_OPTIONS = "Embedra ESP32-S3 Import";
 
+    public static final String ESP_ENRICHMENT_OPTIONS = "Embedra ESP Import";
+
     @Override
     public String getName() {
         return "Embedra ESP Application Image";
@@ -251,10 +253,12 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
     private void applySelectedEnrichment(Program program, EspTargetProvider target,
             ImporterSettings settings)
             throws IOException, CancelledException {
+        String disabledCode = enrichmentCode(target, false);
+        String appliedCode = enrichmentCode(target, true);
         Option option = findOption(settings.options());
         if (option == null || !Boolean.TRUE.equals(option.getValue())) {
             recordEnrichmentSelection(program, target, false);
-            settings.log().appendMsg(getName(), ENRICHMENT_DISABLED_CODE
+            settings.log().appendMsg(getName(), disabledCode
                 + ": Raw mapping succeeded. Revision-dependent ROM/peripheral/SVD "
                 + "enrichment was not applied; register names and Embedra crypto "
                 + "analysis are unavailable. Confirm applicability, then explicitly "
@@ -274,7 +278,7 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
                 configuration.romCodeLength()).apply(program, packs.rom(),
                     packs.peripherals(), settings.monitor());
             recordEnrichmentSelection(program, target, true);
-            settings.log().appendMsg(getName(), ENRICHMENT_APPLIED_CODE
+            settings.log().appendMsg(getName(), appliedCode
                 + ": Applied explicit " + configuration.displayName() + " enrichment: "
                 + symbols.createdSymbols().size() + " ROM/header symbols, "
                 + svd.createdDataAddresses().size() + " SVD registers, "
@@ -290,13 +294,28 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
             EspTargetProvider target, boolean selected) {
         try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
                 program, "Record ESP enrichment selection")) {
-            var options = program.getOptions(ENRICHMENT_OPTIONS);
+            var options = program.getOptions(enrichmentOptions(target));
             options.setBoolean("Selected", selected);
             options.setString("Target Provider", target.providerId());
-            options.setString("Diagnostic Code", selected
-                ? ENRICHMENT_APPLIED_CODE : ENRICHMENT_DISABLED_CODE);
+            options.setString("Diagnostic Code", enrichmentCode(target, selected));
             transaction.commit();
         }
+    }
+
+    private static String enrichmentOptions(EspTargetProvider target) {
+        return target.chipId() == 9 ? ENRICHMENT_OPTIONS : ESP_ENRICHMENT_OPTIONS;
+    }
+
+    private static String enrichmentCode(EspTargetProvider target, boolean selected) {
+        if (target.chipId() == 9) {
+            return selected ? ENRICHMENT_APPLIED_CODE : ENRICHMENT_DISABLED_CODE;
+        }
+        String providerId = target.providerId();
+        String deviceCode = providerId.substring(providerId.lastIndexOf('.') + 1)
+            .toUpperCase(Locale.ROOT)
+            .replace("-", "");
+        return deviceCode + (selected ? "_ENRICHMENT_APPLIED"
+            : "_ENRICHMENT_DISABLED");
     }
 
     private static Option findOption(List<Option> options) {
