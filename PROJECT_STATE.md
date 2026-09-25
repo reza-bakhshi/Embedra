@@ -14,7 +14,8 @@
   with continuity checkpoint `a17e5b9`. The pre-T029 audit and its two
   corrective changes are committed at `7bfcabd`; this file and machine state
   form its continuity checkpoint. T029 is committed at `aa0ab9a`. The first
-  T030 provider-foundation slice is committed at `365d7af`.
+  T030 provider-foundation slice is committed at `365d7af`; its independent
+  fixture slice is committed at `e3c5ee0`.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -115,6 +116,10 @@ mapped as memory. Raw and explicitly enriched real-Ghidra imports pass.
   the built-in RISC-V language, own pinned memory evidence, and record the
   cataloged application and low-power processor counts. Independent fixtures,
   enrichment packs, and target-specific real-Ghidra proof remain in progress.
+- Added ten independently linked and esptool-converted RISC-V fixtures with
+  target-specific addresses and flash frequencies, manifests, esptool image
+  information, ELF program headers, deterministic regeneration, and provider
+  entry-validation coverage.
 - The latest clean verification counts and reproducible archive identity are
   recorded in the task summaries below and in `.embedra/state.json`.
 - Post-commit GUI log review confirmed enrichment was disabled for both
@@ -135,9 +140,8 @@ claim was added.
 
 ## Exact Next Action
 
-Continue T030 with independent fixtures and target-specific ROM, peripheral,
-and SVD packs, followed by raw and enriched real-Ghidra coverage. Do not start
-T031 until T030 is complete.
+Continue T030 with target-specific ROM, peripheral, and SVD packs, followed by
+raw and enriched real-Ghidra coverage. Do not start T031 until T030 is complete.
 
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
 Two clean quality-script builds produced identical extension ZIPs with SHA-256
