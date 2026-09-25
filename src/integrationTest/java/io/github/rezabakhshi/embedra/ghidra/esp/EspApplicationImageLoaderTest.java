@@ -65,15 +65,19 @@ class EspApplicationImageLoaderTest {
     }
 
     @Test
-    void detectsAndImportsOriginalEsp32AndEsp32S2WithIndependentTargets()
+    void detectsAndImportsEspFamiliesWithIndependentTargets()
             throws Exception {
-        for (String deviceId : List.of("esp32", "esp32s2")) {
+        for (String deviceId : List.of("esp32", "esp32s2", "esp32c3")) {
             EspApplicationImageLoader loader = new EspApplicationImageLoader();
             ByteArrayProvider provider = new ByteArrayProvider("neutral.dat",
                 familyFixture(deviceId));
             LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
-            assertEquals("Xtensa:LE:32:default",
+            String expectedLanguage = deviceId.equals("esp32c3")
+                ? "RISCV:LE:32:default" : "Xtensa:LE:32:default";
+            assertEquals(expectedLanguage,
                 spec.getLanguageCompilerSpec().getLanguageID().getIdAsString());
+            assertEquals(deviceId.equals("esp32c3") ? "gcc" : "default",
+                spec.getLanguageCompilerSpec().getCompilerSpecID().getIdAsString());
             ImporterSettings settings = new ImporterSettings(provider,
                 deviceId + ".bin", null, "/", false, spec,
                 loader.getDefaultOptions(provider, spec, null, false, false),
@@ -82,9 +86,11 @@ class EspApplicationImageLoaderTest {
             try (LoadResults<? extends DomainObject> results = loader.load(settings)) {
                 results.getPrimary().apply(domainObject -> {
                     Program program = (Program) domainObject;
-                    assertEquals("Xtensa:LE:32:default",
+                    assertEquals(expectedLanguage,
                         program.getLanguageID().getIdAsString());
-                    assertEquals(3, program.getMemory().getBlocks().length);
+                    assertEquals(3, java.util.Arrays.stream(program.getMemory().getBlocks())
+                        .filter(block -> block.getName().startsWith("esp_segment_"))
+                        .count());
                     assertEquals("target." + deviceId, program.getOptions(
                         EspApplicationImageLoader.ESP_ENRICHMENT_OPTIONS).getString(
                             "Target Provider", ""));
@@ -97,9 +103,14 @@ class EspApplicationImageLoaderTest {
     }
 
     @Test
-    void appliesMatchingOriginalEsp32AndEsp32S2PacksWhenSelected() throws Exception {
-        for (String deviceId : List.of("esp32", "esp32s2")) {
-            String displayName = deviceId.equals("esp32") ? "ESP32" : "ESP32-S2";
+    void appliesMatchingEspFamilyPacksWhenSelected() throws Exception {
+        for (String deviceId : List.of("esp32", "esp32s2", "esp32c3")) {
+            String displayName = switch (deviceId) {
+                case "esp32" -> "ESP32";
+                case "esp32s2" -> "ESP32-S2";
+                case "esp32c3" -> "ESP32-C3";
+                default -> throw new AssertionError(deviceId);
+            };
             EspApplicationImageLoader loader = new EspApplicationImageLoader();
             ByteArrayProvider provider = new ByteArrayProvider("neutral.dat",
                 familyFixture(deviceId));

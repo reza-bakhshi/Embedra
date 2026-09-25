@@ -16,9 +16,8 @@ import io.github.rezabakhshi.embedra.formats.esp.EspAppDescriptionResult;
 import io.github.rezabakhshi.embedra.formats.esp.EspImage;
 import io.github.rezabakhshi.embedra.formats.esp.EspImageParser;
 import io.github.rezabakhshi.embedra.ghidra.transaction.GhidraProgramTransaction;
-import io.github.rezabakhshi.embedra.targets.esp.Esp32S3TargetProvider;
-import io.github.rezabakhshi.embedra.targets.esp.EspressifChipIdRegistry;
 import io.github.rezabakhshi.embedra.targets.esp.EspTargetProvider;
+import io.github.rezabakhshi.embedra.targets.esp.EspTargetProviders;
 import io.github.rezabakhshi.embedra.targets.esp.EspTargetResolution;
 import io.github.rezabakhshi.embedra.targets.esp.EspTargetResolver;
 import java.security.MessageDigest;
@@ -40,14 +39,15 @@ public final class EspApplicationImportService {
         EvidenceKind.DOCUMENTED_FIELD, "ESP application segment header",
         "Encoded load address and length were retained exactly");
 
-    private final EspTargetProvider targetProvider;
+    private final Optional<EspTargetProvider> targetProvider;
 
     public EspApplicationImportService() {
-        this(new Esp32S3TargetProvider(EspressifChipIdRegistry.loadBundled()));
+        targetProvider = Optional.empty();
     }
 
     public EspApplicationImportService(EspTargetProvider targetProvider) {
-        this.targetProvider = Objects.requireNonNull(targetProvider, "targetProvider");
+        this.targetProvider = Optional.of(Objects.requireNonNull(targetProvider,
+            "targetProvider"));
     }
 
     public EspImportWorkflowResult importImage(Program program, byte[] input,
@@ -70,9 +70,14 @@ public final class EspApplicationImportService {
         Objects.requireNonNull(input, "input");
         Objects.requireNonNull(monitor, "monitor");
         CancellationToken cancellation = monitor::isCancelled;
-        EspImage image = EspImageParser.parseForChip(input, targetProvider.chipId(),
-            ParserLimits.defaults(), cancellation);
-        EspTargetResolution target = new EspTargetResolver(List.of(targetProvider))
+        EspImage image = targetProvider.isPresent()
+            ? EspImageParser.parseForChip(input, targetProvider.orElseThrow().chipId(),
+                ParserLimits.defaults(), cancellation)
+            : EspImageParser.parse(input, ParserLimits.defaults(), cancellation);
+        EspTargetResolver resolver = targetProvider
+            .map(provider -> new EspTargetResolver(List.of(provider)))
+            .orElseGet(EspTargetProviders::resolver);
+        EspTargetResolution target = resolver
             .resolve(image).orElseThrow(() -> new IllegalStateException(
                 "Validated ESP image has no selected target provider"));
         EspAppDescriptionResult appDescription = EspAppDescriptionExtractor.extract(image);

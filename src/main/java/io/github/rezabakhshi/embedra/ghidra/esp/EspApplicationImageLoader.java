@@ -210,8 +210,9 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
         EspTargetResolution resolution = EspTargetProviders.resolver().resolve(image)
             .orElseThrow(() ->
             new IllegalArgumentException("ESP image has no supported target provider"));
-        boolean segmentsMappable = image.segments().stream().allMatch(segment ->
-            resolution.provider().classify(segment.targetRange()).mappable());
+        boolean segmentsMappable = image.segments().stream()
+            .filter(segment -> !segment.isAlignmentPadding())
+            .allMatch(segment -> resolution.provider().classify(segment.targetRange()).mappable());
         if (!segmentsMappable || !resolution.provider().validateEntry(
                 image.header().entryPoint(), image).accepted()) {
             throw new IllegalArgumentException(
@@ -327,6 +328,7 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
         return switch (target.chipId()) {
             case 0 -> new TargetPackConfiguration("esp32", "ESP32", 0x70000L);
             case 2 -> new TargetPackConfiguration("esp32s2", "ESP32-S2", 0x20000L);
+            case 5 -> new TargetPackConfiguration("esp32c3", "ESP32-C3", 0x60000L);
             case 9 -> new TargetPackConfiguration("esp32s3", "ESP32-S3", 0x60000L);
             default -> throw new IllegalArgumentException(
                 "No enrichment packs exist for chip ID " + target.chipId());

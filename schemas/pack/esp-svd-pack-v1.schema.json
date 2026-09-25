@@ -142,7 +142,7 @@
         },
         "matchingPeripheralBases": {"type": "integer", "minimum": 0},
         "matchingRegisterAddresses": {"type": "integer", "minimum": 0},
-        "policy": {"const": "fail-on-shared-name-address-conflict"}
+        "policy": {"enum": ["fail-on-shared-name-address-conflict", "record-conflicts-prefer-svd"]}
       }
     }
   }

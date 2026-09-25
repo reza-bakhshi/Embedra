@@ -20,6 +20,7 @@ TARGETS = {
     "esp32": "ESP32",
     "esp32s2": "ESP32-S2",
     "esp32s3": "ESP32-S3",
+    "esp32c3": "ESP32-C3",
 }
 
 
@@ -168,7 +169,8 @@ def peripheral_value(peripheral: element_tree.Element,
     }
 
 
-def reconcile(peripherals: list[dict[str, object]], header_pack: Path) -> dict[str, object]:
+def reconcile(peripherals: list[dict[str, object]], header_pack: Path,
+              allow_conflicts: bool) -> dict[str, object]:
     content = json.loads(header_pack.read_text(encoding="utf-8"))
     header_by_name: dict[str, dict[str, object]] = {}
     header_registers: dict[str, int] = {}
@@ -180,11 +182,15 @@ def reconcile(peripherals: list[dict[str, object]], header_pack: Path) -> dict[s
                 header_registers[name] = register["address"]
     matched_bases = 0
     matched_registers = 0
+    conflicts = 0
     for peripheral in peripherals:
         header = header_by_name.get(peripheral["name"])
         if header is not None:
             if header["baseAddress"] != peripheral["baseAddress"]:
-                fail(f"SVD/ESP-IDF base conflict for {peripheral['name']}")
+                if not allow_conflicts:
+                    fail(f"SVD/ESP-IDF base conflict for {peripheral['name']}")
+                conflicts += 1
+                continue
             matched_bases += 1
         for register in peripheral["registers"]:
             candidates = (
@@ -194,14 +200,18 @@ def reconcile(peripherals: list[dict[str, object]], header_pack: Path) -> dict[s
             for candidate in candidates:
                 if candidate in header_registers:
                     if header_registers[candidate] != register["address"]:
-                        fail(f"SVD/ESP-IDF register conflict for {candidate}")
+                        if not allow_conflicts:
+                            fail(f"SVD/ESP-IDF register conflict for {candidate}")
+                        conflicts += 1
+                        break
                     matched_registers += 1
                     break
     return {
         "headerPackContentSha256": hashlib.sha256(header_pack.read_bytes()).hexdigest(),
         "matchingPeripheralBases": matched_bases,
         "matchingRegisterAddresses": matched_registers,
-        "policy": "fail-on-shared-name-address-conflict",
+        "policy": ("record-conflicts-prefer-svd" if conflicts
+                   else "fail-on-shared-name-address-conflict"),
     }
 
 
@@ -236,7 +246,7 @@ def generate(repository: Path, header_pack: Path, device_id: str,
         "deviceId": device_id,
         "deviceName": device_name,
         "peripherals": peripherals,
-        "reconciliation": reconcile(peripherals, header_pack),
+        "reconciliation": reconcile(peripherals, header_pack, device_id == "esp32c3"),
         "schemaId": "urn:embedra:schema:esp-svd-pack:1",
         "sourceFiles": [source_relative],
         "sourceRevision": REVISION,

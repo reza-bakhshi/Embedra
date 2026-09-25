@@ -59,4 +59,17 @@ public final class EspImageSegment {
     public AddressRange targetRange() {
         return new AddressRange("default", loadAddress, data.length);
     }
+
+    /** True for the address-zero, all-zero alignment segment emitted by esptool. */
+    public boolean isAlignmentPadding() {
+        if (loadAddress != 0) {
+            return false;
+        }
+        for (byte value : data) {
+            if (value != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

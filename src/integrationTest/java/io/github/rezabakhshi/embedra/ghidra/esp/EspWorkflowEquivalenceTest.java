@@ -67,7 +67,7 @@ class EspWorkflowEquivalenceTest {
         guiProgram = program("GUI import", provider, GUI_CONSUMER);
         headlessProgram = program("Headless import", provider, HEADLESS_CONSUMER);
         byte[] input = fixture();
-        EspApplicationImportService workflow = new EspApplicationImportService();
+        EspApplicationImportService workflow = new EspApplicationImportService(provider);
         Locale originalLocale = Locale.getDefault();
         TimeZone originalTimeZone = TimeZone.getDefault();
 
@@ -106,7 +106,7 @@ class EspWorkflowEquivalenceTest {
         Esp32S3TargetProvider provider = new Esp32S3TargetProvider(
             EspressifChipIdRegistry.loadBundled());
         headlessProgram = program("Malformed headless import", provider, HEADLESS_CONSUMER);
-        EspApplicationImportService workflow = new EspApplicationImportService();
+        EspApplicationImportService workflow = new EspApplicationImportService(provider);
         List<MalformedCase> cases = List.of(
             new MalformedCase("malformed-truncated-segment-data.bin",
                 DiagnosticCode.ESP_SEGMENT_TRUNCATED),

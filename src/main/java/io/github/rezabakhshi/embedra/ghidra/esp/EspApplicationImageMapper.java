@@ -116,7 +116,7 @@ public final class EspApplicationImageMapper {
         if (!actualLanguage.equals(language.languageId())
             || !actualCompiler.equals(language.compilerSpecId())) {
             throw new EspMappingException(DiagnosticCode.ESP_LANGUAGE_MISMATCH,
-                "Program language/compiler does not match the ESP32-S3 provider");
+                "Program language/compiler does not match the selected ESP provider");
         }
     }
 
@@ -124,6 +124,9 @@ public final class EspApplicationImageMapper {
             EspTargetProvider provider) throws EspMappingException {
         List<SegmentPlan> plans = new ArrayList<>(image.segments().size());
         for (EspImageSegment segment : image.segments()) {
+            if (segment.isAlignmentPadding()) {
+                continue;
+            }
             MemoryClassification classification = provider.classify(segment.targetRange());
             if (!classification.mappable()) {
                 throw new EspMappingException(DiagnosticCode.ESP_MAPPING_FAILED,

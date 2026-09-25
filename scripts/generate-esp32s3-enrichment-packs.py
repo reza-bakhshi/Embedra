@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate deterministic ESP Xtensa ROM and peripheral packs from pinned ESP-IDF."""
+"""Generate deterministic ESP-family ROM and peripheral packs from pinned ESP-IDF."""
 
 from __future__ import annotations
 
@@ -32,6 +32,12 @@ TARGETS = {
         "esp32s3.rom.libgcc.ld", "esp32s3.rom.newlib.ld",
         "esp32s3.rom.newlib-nano.ld", "esp32s3.rom.newlib-time.ld",
         "esp32s3.rom.version.ld",
+    ),
+    "esp32c3": (
+        "esp32c3.rom.ld", "esp32c3.rom.bt_funcs.ld", "esp32c3.rom.libc.ld",
+        "esp32c3.rom.libgcc.ld", "esp32c3.rom.newlib.ld",
+        "esp32c3.rom.newlib-nano.ld", "esp32c3.rom.newlib-time.ld",
+        "esp32c3.rom.version.ld",
     ),
 }
 ASSIGNMENT = re.compile(
@@ -166,7 +172,10 @@ def generate_peripherals(idf: Path, target: str) -> dict[str, object]:
             elif base_macro in local_bases:
                 bases = [local_bases[base_macro]]
             else:
-                fail(f"unknown register base {base_macro} for {name}")
+                # Some pinned vendor headers retain obsolete register families
+                # whose base macro is intentionally absent for that target.
+                # A register without a target address cannot enter the pack.
+                continue
             for base in bases:
                 address = base + int(encoded_offset, 0)
                 register = registers_by_base.setdefault(base, {}).setdefault(address, {

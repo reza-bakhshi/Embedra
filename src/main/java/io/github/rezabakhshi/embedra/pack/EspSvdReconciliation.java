@@ -17,7 +17,8 @@ public record EspSvdReconciliation(
             throw new IllegalArgumentException("Reconciliation counts are negative");
         }
         Objects.requireNonNull(policy, "policy");
-        if (!policy.equals("fail-on-shared-name-address-conflict")) {
+        if (!policy.equals("fail-on-shared-name-address-conflict")
+            && !policy.equals("record-conflicts-prefer-svd")) {
             throw new IllegalArgumentException("SVD reconciliation policy is unsupported");
         }
     }

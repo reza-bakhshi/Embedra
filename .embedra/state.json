@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "dbfb392c8595966f8d5813e519f9dca733a51365543886ae79c7f16b107b8373"
+    "sha256": "95eb8483738c79cee2fc0065e9021db574fc06d573c714ced165a03244121dfb"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T028",
+    "id": "T029",
     "status": "COMPLETE",
-    "reasonCode": "ESP32_ESP32S2_INDEPENDENT_SUPPORT_VERIFIED"
+    "reasonCode": "ESP32C3_RISCV_PROVIDER_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -39,7 +39,8 @@
     "T026",
     "T026A",
     "T027",
-    "T028"
+    "T028",
+    "T029"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -91,6 +92,7 @@
     },
     "espFixtureGeneration": {
       "compiler": "xtensa-esp-elf esp-15.2.0_20251204",
+      "riscvCompiler": "riscv32-esp-elf esp-15.2.0_20251204",
       "esptool": "5.4.0",
       "espIdfReferenceVersion": "v6.0",
       "espIdfReferenceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800"
@@ -121,6 +123,14 @@
     }
   ],
   "fixtureEvidence": [
+    {
+      "fixtureId": "esp32c3.esptool-v5.4.0.esp32c3-freestanding-minimal",
+      "path": "src/test/resources/fixtures/esp32c3/esp32c3-freestanding-minimal.bin",
+      "sha256": "25d33ca47189ca5020eacee980bdf4d52fdfee99720067ac33135366890133e0",
+      "sizeBytes": 65600,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp32c3/esp32c3-freestanding-minimal.expectations.json"
+    },
     {
       "fixtureId": "esp32.esptool-v5.4.0.esp32-freestanding-minimal",
       "path": "src/test/resources/fixtures/esp32/esp32-freestanding-minimal.bin",
@@ -263,7 +273,7 @@
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T028.md",
+    "task": ".embedra/evidence/tasks/T029.md",
     "remediation": ".embedra/evidence/tasks/T025-remediation.md",
     "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
     "commands": ".embedra/evidence/commands.jsonl",
@@ -272,7 +282,9 @@
     "taskT028": ".embedra/evidence/tasks/T028.md",
     "adrT028": "docs/adr/0023-esp32-esp32s2-independent-support.md",
     "preT029Audit": ".embedra/evidence/audits/pre-t029-t001-t028.md",
-    "nextTaskPrompt": ".embedra/prompts/T029-esp32c3-riscv-provider.md",
+    "taskT029": ".embedra/evidence/tasks/T029.md",
+    "adrT029": "docs/adr/0024-esp32c3-riscv-provider.md",
+    "nextTaskPrompt": ".embedra/prompts/T030-remaining-esp-providers.md",
     "taskT027": ".embedra/evidence/tasks/T027.md",
     "adrT027": "docs/adr/0022-shared-esp-target-services.md",
     "taskT026A": ".embedra/evidence/tasks/T026A.md",
@@ -286,8 +298,8 @@
     ]
   },
   "knownFailures": [],
-  "nextTask": "T029",
-  "nextAction": "Begin T029: add ESP32-C3 as the first RISC-V ESP provider and prove no Xtensa assumptions remain in common code. Do not start T030 until T029 is complete.",
+  "nextTask": "T030",
+  "nextAction": "Begin T030: add each remaining official ESP provider independently with exact architecture, topology, pack, fixture, and real-Ghidra evidence. Do not start T031 until T030 is complete.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -318,6 +330,12 @@
       "sha256": "0824df264b671cc81372733a807e3eb61469484eeb8a1d188525895a3226c4c6",
       "sizeBytes": 1413971,
       "status": "PRE_T029_AUDIT_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260925_Embedra.zip",
+      "sha256": "42f8af1b0b90b7a57f822e6210e8a1c67109580ff2f08ef30661a2d3c976ca1d",
+      "sizeBytes": 1556399,
+      "status": "T029_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -440,6 +458,11 @@
       "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
       "exitStatus": 0,
       "result": "PRE-T029-AUDIT PASS: two complete uncached clean builds, all 20 quality actions each; 163 unit, 55 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 1,413,971-byte ZIP, SHA-256 0824df264b671cc81372733a807e3eb61469484eeb8a1d188525895a3226c4c6."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T029 PASS: two complete uncached builds, all 20 quality actions each; 169 unit, 55 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 1,556,399-byte ZIP, SHA-256 42f8af1b0b90b7a57f822e6210e8a1c67109580ff2f08ef30661a2d3c976ca1d."
     }
   ],
   "buildQuality": {
@@ -454,7 +477,7 @@
     "minimumCoreClassBranchCoverage": 0.9286,
     "packInstructionCoverage": 0.9226,
     "packBranchCoverage": 0.7759,
-    "unitTests": 163,
+    "unitTests": 169,
     "ghidraIntegrationTests": 55,
     "pythonGeneratorTests": 4
   },
@@ -549,6 +572,32 @@
     },
     "application": "TRANSACTIONAL_IDEMPOTENT_RECEIPT_REMOVABLE_USER_PRESERVING"
   },
+  "esp32c3EnrichmentPacks": {
+    "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+    "license": "Apache-2.0",
+    "rom": {
+      "packId": "espressif.esp32c3.rom",
+      "version": "1.0.0",
+      "contentDigest": "372df6ba5e6177999e9bb806283eac89ef25f326d85704160881105ac97a72a1",
+      "symbolCount": 1902
+    },
+    "peripherals": {
+      "packId": "espressif.esp32c3.peripherals",
+      "version": "1.0.0",
+      "contentDigest": "3a8d9bde919c848cb2c2229df17f99a6ce37095f11bc2bd130cd511daa8e6935",
+      "peripheralCount": 46,
+      "registerAddressCount": 1053
+    },
+    "svd": {
+      "packId": "espressif.esp32c3.svd",
+      "version": "1.0.0",
+      "contentDigest": "0154f2e56311195530c37191880f5c4e8722cb9aec7d129611f9edb4cea69b7e",
+      "peripheralCount": 37,
+      "registerCount": 2606,
+      "fieldCount": 5020,
+      "reconciliationPolicy": "record-conflicts-prefer-svd"
+    }
+  },
   "targetProviders": {
     "esp32": {
       "supportState": "EXPERIMENTAL",
@@ -566,6 +615,17 @@
       "languageId": "Xtensa:LE:32:default",
       "compilerSpecId": "default",
       "processorTopology": "ONE_LX7_APPLICATION_CPU",
+      "mappedProgramVerified": true,
+      "enrichmentVerified": true,
+      "fullFlashWorkspaceVerified": false
+    },
+    "esp32c3": {
+      "supportState": "EXPERIMENTAL",
+      "chipId": 5,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "instructionAlignmentBytes": 2,
+      "processorTopology": "ONE_RV32IMC_APPLICATION_CPU",
       "mappedProgramVerified": true,
       "enrichmentVerified": true,
       "fullFlashWorkspaceVerified": false

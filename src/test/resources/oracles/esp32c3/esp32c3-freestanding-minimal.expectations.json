@@ -1,0 +1,25 @@
+{
+  "fixtureId": "esp32c3.esptool-v5.4.0.esp32c3-freestanding-minimal",
+  "imageSha256": "25d33ca47189ca5020eacee980bdf4d52fdfee99720067ac33135366890133e0",
+  "imageSize": 65600,
+  "esptoolVersion": "5.4.0",
+  "chipId": 5,
+  "target": "ESP32-C3",
+  "entryPoint": "0x42000000",
+  "segmentCount": 4,
+  "mappedSegmentCount": 3,
+  "loadAddresses": [
+    "0x3c000020",
+    "0x3fc80000",
+    "0x00000000",
+    "0x42000000"
+  ],
+  "projectName": "embedra_t029_esp32c3",
+  "checksum": "0xf0",
+  "checksumValid": true,
+  "digestAppended": true,
+  "digest": "9882b7d144accbdeb59aea5b0e4855633ccc27c9b1af4122672f54fde380a794",
+  "digestValid": true,
+  "elfSha256": "71b904dcfb3ee31c4b26df88b6202e5ca4b47a638deeef86430024749e539784",
+  "elfMachine": "RISC-V"
+}

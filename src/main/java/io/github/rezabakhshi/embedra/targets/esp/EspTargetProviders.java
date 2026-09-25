@@ -10,7 +10,7 @@ public final class EspTargetProviders {
     public static List<EspTargetProvider> implemented() {
         EspressifChipIdRegistry chipIds = EspressifChipIdRegistry.loadBundled();
         return List.of(new Esp32TargetProvider(chipIds), new Esp32S2TargetProvider(chipIds),
-            new Esp32S3TargetProvider(chipIds));
+            new Esp32S3TargetProvider(chipIds), new Esp32C3TargetProvider(chipIds));
     }
 
     public static EspTargetResolver resolver() {

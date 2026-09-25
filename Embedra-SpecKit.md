@@ -669,7 +669,7 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [x] T026A Build and validate an ESP32-S3 ESP-IDF Function ID pilot before T027: write failing real-Ghidra applicability and naming tests; generate candidate FIDBs from pinned symbolized ESP32-S3 reference builds at documented optimization levels; measure stripped positive, wrong-version/configuration, and unrelated-code matches; add an explicit conflict-preserving attach/run path and deterministic provenance/status diagnostics. Bundle a database only if its component licenses permit redistribution and the match gate passes; otherwise retain a local opt-in workflow and record the precise blocker. Do not claim arbitrary application-function coverage or start the broad T064 corpus.
 - [x] T027 Refactor only proven shared ESP behavior into common Xtensa/RISC-V-neutral services and the common execution-topology contract.
 - [x] T028 Add original ESP32 and ESP32-S2 fixtures/providers/packs independently and pass their full relevant suites.
-- [ ] T029 Add ESP32-C3 as the first RISC-V ESP provider and prove no Xtensa assumptions remain in common code.
+- [x] T029 Add ESP32-C3 as the first RISC-V ESP provider and prove no Xtensa assumptions remain in common code.
 - [ ] T030 [P] Add S31, P4, C2, C5, C6, C61, E22, H2, H21, and H4 providers independently, including exact part/embedded-memory variants, processor counts/roles, ROMs, low-power/ULP cores, peripherals, security capabilities, evidence, and fixtures; include any newer official series discovered by T026.
 - [ ] T031 Add module/board profiles without confusing them with silicon, then add the separate ESP8266 legacy format/SDK provider only after its own image research and corpus exist.
 

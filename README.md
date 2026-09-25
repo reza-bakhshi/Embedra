@@ -4,7 +4,7 @@ Embedra is an open-source Ghidra extension for embedded-firmware reverse enginee
 
 `Embedra-SpecKit.md` is the single authoritative project specification. The
 current experimental support includes structurally validated original ESP32,
-ESP32-S2, and ESP32-S3 application images. Merged full-flash capture support
+ESP32-S2, ESP32-S3, and RISC-V ESP32-C3 application images. Merged full-flash capture support
 remains proven for ESP32-S3 when its partition table and MD5 record validate.
 Exact silicon/package variants and real-device hardware verification are not
 yet claimed; see `docs/support-matrix.md`.
@@ -20,7 +20,8 @@ Imported programs retain the source-flash SHA-256, partition-table offset,
 physical image range, role, and partition label under program options.
 
 The distribution also carries independent offline ROM-symbol, ESP-IDF
-peripheral, and official Espressif SVD packs for ESP32, ESP32-S2, and ESP32-S3.
+peripheral, and official Espressif SVD packs for ESP32, ESP32-S2, ESP32-S3,
+and ESP32-C3.
 In Ghidra's import-options screen, select `Apply verified target ROM, peripheral,
 and SVD packs` only after confirming that the target data is appropriate for the
 capture; Embedra does not infer the exact silicon revision. The integrity-first applicators add ROM names,
@@ -39,16 +40,18 @@ explicitly during import.
 
 Original ESP32 and ESP32-S2 imports store their selection under
 `Embedra ESP Import` and use target-specific `ESP32_ENRICHMENT_*` or
-`ESP32S2_ENRICHMENT_*` diagnostics. The legacy ESP32-S3 option namespace and
+`ESP32S2_ENRICHMENT_*` diagnostics. ESP32-C3 selects Ghidra's built-in
+`RISCV:LE:32:default` language with the `gcc` compiler specification and uses
+`ESP32C3_ENRICHMENT_*` diagnostics. The legacy ESP32-S3 option namespace and
 diagnostic codes remain stable for existing ESP32-S3 projects.
 
 ESP image parsing, provider resolution, memory classification, entry
 validation, and execution-topology results use ISA-neutral ESP contracts.
-ESP32, ESP32-S2, and ESP32-S3 are implemented providers; other catalog entries
+ESP32, ESP32-S2, ESP32-S3, and ESP32-C3 are implemented providers; other catalog entries
 remain `PLANNED` until their own providers, fixtures, packs, and acceptance
 evidence land. ESP32 topology records two symmetric LX6 application cores with
-shared image memory, while ESP32-S2 and the currently proven ESP32-S3 shape each
-record one application CPU. ULP firmware is not inferred from these fixtures.
+shared image memory, while ESP32-S2, ESP32-S3, and ESP32-C3 each record one
+application CPU. ULP firmware is not inferred from these fixtures.
 
 Embedra also ships one provenance-verified ESP32-S3 ESP-IDF Function ID
 pilot database under `fid/esp32s3/`. Ghidra does not attach it automatically.

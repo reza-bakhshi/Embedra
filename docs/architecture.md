@@ -41,16 +41,19 @@ The generic parser reports the image's encoded chip ID without selecting a targe
 ## Implemented ESP target providers
 
 The implemented providers resolve original ESP32 chip ID `0`, ESP32-S2 chip ID
-`2`, and ESP32-S3 chip ID `9` only when the bundled provenance-bearing esptool
+`2`, ESP32-C3 chip ID `5`, and ESP32-S3 chip ID `9` only when the bundled provenance-bearing esptool
 definitions match. Catalog records do not become provider branches.
 
 ESP32 and ESP32-S2 select Ghidra's built-in `Xtensa:LE:32:default` language;
 ESP32-S3 selects Embedra's `Xtensa:LE:32:esp32s3` extension language with tested
-SALT/SALTU semantics. Each provider owns its half-open ESP-IDF v6.0 DROM, IROM,
+SALT/SALTU semantics; ESP32-C3 selects built-in `RISCV:LE:32:default` with the
+`gcc` compiler specification and two-byte compressed-instruction alignment.
+Each provider owns its half-open ESP-IDF v6.0 DROM, IROM,
 IRAM, DRAM, and RTC-data definitions. Entry decisions require containment in an
 image segment classified executable. ESP32 records two symmetric LX6 cores
 sharing application memory; ESP32-S2 records one LX7 application core. The
-providers do not create ULP nodes without ULP firmware evidence.
+ESP32-C3 provider records one RV32IMC application core. The providers do not
+create ULP nodes without ULP firmware evidence.
 
 ## Shared ESP target services
 
@@ -62,7 +65,7 @@ not become providers automatically.
 Memory classification and entry validation are shared only at the structural
 level. `EspMemoryMap` consumes provider-owned address ranges and evidence;
 `EspEntryPointValidator` consumes a provider-selected language, address space,
-and classifier. Neither service selects an ISA or contains an ESP32-S3 branch.
+and classifier. Neither service selects an ISA or contains an Xtensa branch.
 The ESP32-S3 provider continues to own chip ID 9, its language, memory ranges,
 and all pack and Function ID applicability policy.
 
@@ -128,7 +131,7 @@ full-flash workspace.
 ## ESP-family offline enrichment packs
 
 ROM and peripheral content remain outside target-provider code. Deterministic
-generators create target-specific ESP32, ESP32-S2, and ESP32-S3 pack sets from
+generators create target-specific ESP32, ESP32-S2, ESP32-S3, and ESP32-C3 pack sets from
 the exact pinned ESP-IDF and Espressif SVD revisions. They extract only
 object-like symbols/registers into independently versioned, closed JSON contracts. The
 normal pack manifest provides identity, supported device, source URI/revision,
