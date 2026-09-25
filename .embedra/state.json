@@ -6,9 +6,9 @@
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T029",
-    "status": "COMPLETE",
-    "reasonCode": "ESP32C3_RISCV_PROVIDER_VERIFIED"
+    "id": "T030",
+    "status": "IN_PROGRESS",
+    "reasonCode": "REMAINING_ESP_PROVIDER_FOUNDATION_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -68,7 +68,7 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "aa0ab9a68b758f15acbe9bf0485bc7e51e233ad4"
+    "commit": "365d7af5c3245bbe2af5d347601b129cbda69df8"
   },
   "workingTree": {
     "state": "CLEAN",
@@ -273,7 +273,7 @@
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T029.md",
+    "task": ".embedra/evidence/tasks/T030.md",
     "remediation": ".embedra/evidence/tasks/T025-remediation.md",
     "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
     "commands": ".embedra/evidence/commands.jsonl",
@@ -284,6 +284,7 @@
     "preT029Audit": ".embedra/evidence/audits/pre-t029-t001-t028.md",
     "taskT029": ".embedra/evidence/tasks/T029.md",
     "adrT029": "docs/adr/0024-esp32c3-riscv-provider.md",
+    "taskT030": ".embedra/evidence/tasks/T030.md",
     "nextTaskPrompt": ".embedra/prompts/T030-remaining-esp-providers.md",
     "taskT027": ".embedra/evidence/tasks/T027.md",
     "adrT027": "docs/adr/0022-shared-esp-target-services.md",
@@ -299,7 +300,7 @@
   },
   "knownFailures": [],
   "nextTask": "T030",
-  "nextAction": "Begin T030: add each remaining official ESP provider independently with exact architecture, topology, pack, fixture, and real-Ghidra evidence. Do not start T031 until T030 is complete.",
+  "nextAction": "Continue T030: generate independent fixtures and target-specific ROM, peripheral, and SVD packs, then add raw/enriched real-Ghidra coverage. Do not start T031.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",

@@ -3,7 +3,7 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T029 — ESP32-C3 RISC-V provider (`COMPLETE`)**.
+- Current task: **T030 — remaining ESP providers (`IN_PROGRESS`)**.
 - Last completed task: **T029 — ESP32-C3 RISC-V provider**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
@@ -13,8 +13,8 @@
   its continuity checkpoint is `12d6f66`. T028 is committed at `9470010`
   with continuity checkpoint `a17e5b9`. The pre-T029 audit and its two
   corrective changes are committed at `7bfcabd`; this file and machine state
-  form its continuity checkpoint. T029 is committed at `aa0ab9a`; this file
-  and machine state form its continuity checkpoint.
+  form its continuity checkpoint. T029 is committed at `aa0ab9a`. The first
+  T030 provider-foundation slice is committed at `365d7af`.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -110,6 +110,11 @@ mapped as memory. Raw and explicitly enriched real-Ghidra imports pass.
 - Added T029 ESP32-C3 RISC-V fixture/oracles, provider and topology, alignment
   segment handling, ROM/peripheral/SVD packs, raw/enriched Ghidra tests,
   architecture-boundary regression, ADR 0024, and support documentation.
+- Started T030 with maintained chip IDs and independent provider classes for
+  ESP32-S31, P4, C2, C5, C6, C61, E22, H2, H21, and H4. The providers select
+  the built-in RISC-V language, own pinned memory evidence, and record the
+  cataloged application and low-power processor counts. Independent fixtures,
+  enrichment packs, and target-specific real-Ghidra proof remain in progress.
 - The latest clean verification counts and reproducible archive identity are
   recorded in the task summaries below and in `.embedra/state.json`.
 - Post-commit GUI log review confirmed enrichment was disabled for both
@@ -117,20 +122,21 @@ mapped as memory. Raw and explicitly enriched real-Ghidra imports pass.
   function bodies without a reported repair failure. The mapped-segment log
   now omits the user-supplied input basename; a red-to-green integration test
   covers that privacy fix.
-- T001-T029 implementation and evidence are complete. T030 is next;
+- T001-T029 implementation and evidence are complete. T030 is in progress;
   T064 remains unstarted. Restricted local firmware remains ignored and
   untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
   absent; its ignore and package-exclusion safeguards remain.
 
-Only the four independently implemented providers are promoted beyond the
-catalog's `PLANNED` state. No exact variant, board, or hardware support claim
-was added.
+The ten T030 provider identities are available for raw target resolution, but
+their catalog records remain `PLANNED` until independent fixtures, enrichment
+packs, and real-Ghidra evidence are complete. No board or hardware support
+claim was added.
 
 ## Exact Next Action
 
-Begin T030: add every remaining official ESP provider independently with exact
-architecture, topology, pack, fixture, and real-Ghidra evidence. Do not start
+Continue T030 with independent fixtures and target-specific ROM, peripheral,
+and SVD packs, followed by raw and enriched real-Ghidra coverage. Do not start
 T031 until T030 is complete.
 
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
