@@ -37,25 +37,34 @@ import java.util.Set;
 
 /** Transactional, idempotent, user-preserving application of ESP-family packs. */
 public final class Esp32S3PackApplicator {
-    private static final long ROM_CODE_START = 0x4000_0000L;
+    private static final long DEFAULT_ROM_CODE_START = 0x4000_0000L;
 
     private final String deviceId;
 
     private final String displayName;
 
+    private final long romCodeStart;
+
     private final long romCodeLength;
 
     public Esp32S3PackApplicator() {
-        this("esp32s3", "ESP32-S3", 0x60000L);
+        this("esp32s3", "ESP32-S3", DEFAULT_ROM_CODE_START, 0x60000L);
     }
 
     public Esp32S3PackApplicator(String deviceId, String displayName,
             long romCodeLength) {
+        this(deviceId, displayName, DEFAULT_ROM_CODE_START, romCodeLength);
+    }
+
+    public Esp32S3PackApplicator(String deviceId, String displayName,
+            long romCodeStart, long romCodeLength) {
         this.deviceId = Objects.requireNonNull(deviceId, "deviceId");
         this.displayName = Objects.requireNonNull(displayName, "displayName");
-        if (deviceId.isBlank() || displayName.isBlank() || romCodeLength <= 0) {
+        if (deviceId.isBlank() || displayName.isBlank() || romCodeStart < 0
+            || romCodeLength <= 0) {
             throw new IllegalArgumentException("ESP pack target configuration is invalid");
         }
+        this.romCodeStart = romCodeStart;
         this.romCodeLength = romCodeLength;
     }
 
@@ -80,7 +89,7 @@ public final class Esp32S3PackApplicator {
         try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
                 program, "Apply verified " + displayName + " enrichment packs")) {
             ensureBlock(program, new BlockPlan("embedra_" + deviceId + "_rom_code",
-                ROM_CODE_START, romCodeLength, true, false, true, false),
+                romCodeStart, romCodeLength, true, false, true, false),
                 blocks, conflicts);
             for (long address : romDataAddresses(rom)) {
                 monitor.checkCancelled();

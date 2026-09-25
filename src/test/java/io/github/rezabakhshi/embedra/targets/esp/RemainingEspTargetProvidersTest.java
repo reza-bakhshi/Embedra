@@ -7,7 +7,10 @@ import io.github.rezabakhshi.embedra.core.CancellationToken;
 import io.github.rezabakhshi.embedra.core.ParserLimits;
 import io.github.rezabakhshi.embedra.formats.esp.EspImage;
 import io.github.rezabakhshi.embedra.formats.esp.EspImageParser;
+import io.github.rezabakhshi.embedra.targets.esp.catalog.EspDeviceCatalog;
+import io.github.rezabakhshi.embedra.targets.esp.catalog.EspDeviceCatalogLoader;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.HexFormat;
@@ -60,6 +63,18 @@ class RemainingEspTargetProvidersTest {
             MessageDigest.getInstance("SHA-256").digest(binary))));
         assertTrue(oracle.contains("\"projectName\": \"embedra_t030_" + deviceId + "\""));
         assertTrue(oracle.contains("\"elfMachine\": \"RISC-V\""));
+
+        EspDeviceCatalog catalog = EspDeviceCatalogLoader.load(Path.of(
+            System.getProperty("embedra.projectDir"), "catalogs", "espressif",
+            "2026-09-23"), ParserLimits.defaults(), CancellationToken.none());
+        var variants = provider.catalogVariants(catalog);
+        assertTrue(!variants.isEmpty());
+        assertTrue(variants.stream().allMatch(record -> !record.exactPart().isBlank()
+            && !record.embeddedFlashMb().isBlank()
+            && !record.embeddedPsramMb().isBlank()
+            && record.applicationCoreCount() > 0));
+        assertEquals(variants.size(), variants.stream()
+            .map(record -> record.exactPart().toUpperCase()).distinct().count());
     }
 
     private static EspImage fixture(String deviceId) throws Exception {

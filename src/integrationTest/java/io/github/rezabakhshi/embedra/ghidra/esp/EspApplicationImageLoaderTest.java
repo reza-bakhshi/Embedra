@@ -67,16 +67,19 @@ class EspApplicationImageLoaderTest {
     @Test
     void detectsAndImportsEspFamiliesWithIndependentTargets()
             throws Exception {
-        for (String deviceId : List.of("esp32", "esp32s2", "esp32c3")) {
+        for (String deviceId : List.of("esp32", "esp32s2", "esp32c3", "esp32s31",
+                "esp32p4", "esp32c2", "esp32c5", "esp32c6", "esp32c61",
+                "esp32e22", "esp32h2", "esp32h21", "esp32h4")) {
             EspApplicationImageLoader loader = new EspApplicationImageLoader();
             ByteArrayProvider provider = new ByteArrayProvider("neutral.dat",
                 familyFixture(deviceId));
             LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
-            String expectedLanguage = deviceId.equals("esp32c3")
-                ? "RISCV:LE:32:default" : "Xtensa:LE:32:default";
+            String expectedLanguage = deviceId.equals("esp32")
+                || deviceId.equals("esp32s2") ? "Xtensa:LE:32:default"
+                    : "RISCV:LE:32:default";
             assertEquals(expectedLanguage,
                 spec.getLanguageCompilerSpec().getLanguageID().getIdAsString());
-            assertEquals(deviceId.equals("esp32c3") ? "gcc" : "default",
+            assertEquals(expectedLanguage.startsWith("RISCV") ? "gcc" : "default",
                 spec.getLanguageCompilerSpec().getCompilerSpecID().getIdAsString());
             ImporterSettings settings = new ImporterSettings(provider,
                 deviceId + ".bin", null, "/", false, spec,
@@ -104,11 +107,21 @@ class EspApplicationImageLoaderTest {
 
     @Test
     void appliesMatchingEspFamilyPacksWhenSelected() throws Exception {
-        for (String deviceId : List.of("esp32", "esp32s2", "esp32c3")) {
+        for (String deviceId : List.of("esp32", "esp32s2", "esp32c3", "esp32p4",
+                "esp32c2", "esp32c5", "esp32c6", "esp32c61", "esp32h2",
+                "esp32h21", "esp32h4")) {
             String displayName = switch (deviceId) {
                 case "esp32" -> "ESP32";
                 case "esp32s2" -> "ESP32-S2";
                 case "esp32c3" -> "ESP32-C3";
+                case "esp32p4" -> "ESP32-P4";
+                case "esp32c2" -> "ESP32-C2";
+                case "esp32c5" -> "ESP32-C5";
+                case "esp32c6" -> "ESP32-C6";
+                case "esp32c61" -> "ESP32-C61";
+                case "esp32h2" -> "ESP32-H2";
+                case "esp32h21" -> "ESP32-H21";
+                case "esp32h4" -> "ESP32-H4";
                 default -> throw new AssertionError(deviceId);
             };
             EspApplicationImageLoader loader = new EspApplicationImageLoader();
@@ -130,8 +143,11 @@ class EspApplicationImageLoaderTest {
                     assertEquals("espressif." + deviceId + ".rom", program.getOptions(
                         "Embedra " + displayName + " Packs").getString(
                             "ROM Pack ID", ""));
-                    assertEquals("espressif." + deviceId + ".svd", program.getOptions(
-                        "Embedra " + displayName + " SVD").getString("Pack ID", ""));
+                    if (List.of("esp32", "esp32s2", "esp32c3", "esp32p4", "esp32c2",
+                            "esp32c6", "esp32h2").contains(deviceId)) {
+                        assertEquals("espressif." + deviceId + ".svd", program.getOptions(
+                            "Embedra " + displayName + " SVD").getString("Pack ID", ""));
+                    }
                     assertTrue(program.getOptions(
                         EspApplicationImageLoader.ESP_ENRICHMENT_OPTIONS).getBoolean(
                             "Selected", false));
@@ -140,6 +156,38 @@ class EspApplicationImageLoaderTest {
                             .getString("Diagnostic Code", ""));
                 });
             }
+        }
+    }
+
+    @Test
+    void recordsUnavailableEnrichmentForTargetsAbsentFromPinnedPackSources()
+            throws Exception {
+        for (String deviceId : List.of("esp32s31", "esp32e22")) {
+            EspApplicationImageLoader loader = new EspApplicationImageLoader();
+            ByteArrayProvider provider = new ByteArrayProvider("neutral.dat",
+                familyFixture(deviceId));
+            LoadSpec spec = loader.findSupportedLoadSpecs(provider).iterator().next();
+            List<Option> options = loader.getDefaultOptions(provider, spec, null,
+                false, false);
+            options.stream().filter(option -> option.getName().equals(
+                EspApplicationImageLoader.APPLY_ESP32S3_PACKS_OPTION)).findFirst()
+                .orElseThrow().setValue(Boolean.TRUE);
+            MessageLog log = new MessageLog();
+            ImporterSettings settings = new ImporterSettings(provider,
+                deviceId + ".bin", null, "/", false, spec, options, new Object(),
+                log, TaskMonitor.DUMMY);
+
+            try (LoadResults<? extends DomainObject> results = loader.load(settings)) {
+                results.getPrimary().apply(domainObject -> {
+                    Program program = (Program) domainObject;
+                    var status = program.getOptions(
+                        EspApplicationImageLoader.ESP_ENRICHMENT_OPTIONS);
+                    assertFalse(status.getBoolean("Selected", true));
+                    assertEquals(deviceId.toUpperCase() + "_ENRICHMENT_UNAVAILABLE",
+                        status.getString("Diagnostic Code", ""));
+                });
+            }
+            assertTrue(log.toString().contains("ENRICHMENT_UNAVAILABLE"));
         }
     }
 

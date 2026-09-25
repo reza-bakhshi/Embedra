@@ -13,27 +13,34 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 /** Resolves integrity-checked packs from either an installed module or test tree. */
 record Esp32S3BundledPacks(
         EspRomSymbolPack rom,
         EspPeripheralPack peripherals,
-        EspSvdPack svd) {
+        Optional<EspSvdPack> svd) {
     static Esp32S3BundledPacks load(CancellationToken token)
             throws IOException, DiagnosticException {
-        return load("esp32s3", token);
+        return load("esp32s3", true, token);
     }
 
     static Esp32S3BundledPacks load(String deviceId, CancellationToken token)
             throws IOException, DiagnosticException {
+        return load(deviceId, true, token);
+    }
+
+    static Esp32S3BundledPacks load(String deviceId, boolean hasSvd,
+            CancellationToken token) throws IOException, DiagnosticException {
         ParserLimits limits = ParserLimits.defaults();
         return new Esp32S3BundledPacks(
             EspTargetPackLoader.loadRom(packDirectory("espressif." + deviceId + ".rom"),
                 deviceId, limits, token),
             EspTargetPackLoader.loadPeripherals(packDirectory(
                 "espressif." + deviceId + ".peripherals"), deviceId, limits, token),
-            EspTargetPackLoader.loadSvd(packDirectory("espressif." + deviceId + ".svd"),
-                deviceId, limits, token));
+            hasSvd ? Optional.of(EspTargetPackLoader.loadSvd(
+                packDirectory("espressif." + deviceId + ".svd"), deviceId, limits, token))
+                : Optional.empty());
     }
 
     private static Path packDirectory(String packId) throws IOException {

@@ -14,14 +14,25 @@ REVISION = "be20aa12560889d6125d144cdb48cf615ac17628"
 SOURCE_URI = "https://github.com/espressif/svd"
 VERSION = "1.0.0"
 MAX_INPUT_BYTES = 8 * 1024 * 1024
-MAX_ELEMENTS = 100_000
+MAX_ELEMENTS = 125_000
 MAX_DEPTH = 32
 TARGETS = {
     "esp32": "ESP32",
     "esp32s2": "ESP32-S2",
     "esp32s3": "ESP32-S3",
     "esp32c3": "ESP32-C3",
+    "esp32p4": "ESP32-P4",
+    "esp32c2": "ESP32-C2",
+    "esp32c6": "ESP32-C6",
+    "esp32h2": "ESP32-H2",
 }
+# Both sources are pinned and retained in provenance. These targets have reviewed
+# address disagreements between the standalone SVD and ESP-IDF v6.0 headers, so
+# the richer SVD definition wins while the reconciliation count remains visible.
+REVIEWED_CONFLICT_TARGETS = {
+    "esp32c3", "esp32p4", "esp32c2", "esp32c6", "esp32h2",
+}
+LEGACY_TARGETS = {"esp32", "esp32s2", "esp32s3", "esp32c3"}
 
 
 def fail(message: str) -> None:
@@ -136,7 +147,8 @@ def register_values(register: element_tree.Element, base: int,
 
 
 def peripheral_value(peripheral: element_tree.Element,
-                     definitions: dict[str, element_tree.Element]) -> dict[str, object]:
+                     definitions: dict[str, element_tree.Element],
+                     normalize_duplicates: bool) -> dict[str, object]:
     inherited_name = peripheral.attrib.get("derivedFrom")
     inherited = definitions.get(inherited_name) if inherited_name else None
     name = child_text(peripheral, "name")
@@ -152,6 +164,15 @@ def peripheral_value(peripheral: element_tree.Element,
         for register in registers_root.findall("register"):
             registers.extend(register_values(register, base, size, access, reset))
     registers.sort(key=lambda item: (item["address"], item["name"]))
+    if normalize_duplicates:
+        seen_names: set[str] = set()
+        for register in registers:
+            register_name = register["name"]
+            if register_name in seen_names:
+                register["name"] = (
+                    f"{register_name}_AT_{register['address'] - base:08X}"
+                )
+            seen_names.add(register["name"])
     address_block = source.find("addressBlock")
     end = base + 4
     if address_block is not None:
@@ -239,14 +260,15 @@ def generate(repository: Path, header_pack: Path, device_id: str,
         fail("SVD has no peripherals")
     definitions = {child_text(item, "name"): item
                    for item in peripheral_root.findall("peripheral")}
-    peripherals = [peripheral_value(item, definitions)
+    peripherals = [peripheral_value(item, definitions, device_id not in LEGACY_TARGETS)
                    for item in peripheral_root.findall("peripheral")]
     peripherals.sort(key=lambda item: (item["baseAddress"], item["name"]))
     return {
         "deviceId": device_id,
         "deviceName": device_name,
         "peripherals": peripherals,
-        "reconciliation": reconcile(peripherals, header_pack, device_id == "esp32c3"),
+        "reconciliation": reconcile(
+            peripherals, header_pack, device_id in REVIEWED_CONFLICT_TARGETS),
         "schemaId": "urn:embedra:schema:esp-svd-pack:1",
         "sourceFiles": [source_relative],
         "sourceRevision": REVISION,
@@ -264,6 +286,12 @@ def write_pack(root: Path, device_id: str, content: dict[str, object]) -> None:
     aggregate = hashlib.sha256(
         f"registers.json\0{len(payload)}\0{digest}\n".encode("utf-8")
     ).hexdigest()
+    transformation = (
+        "Deterministic bounded CMSIS-SVD expansion with ESP-IDF header-pack "
+        "address reconciliation"
+    )
+    if device_id == "esp32p4":
+        transformation += "; duplicate vendor register names receive an address suffix"
     manifest = {
         "contentDigest": aggregate,
         "files": [{"path": "registers.json", "sha256": digest,
@@ -274,8 +302,7 @@ def write_pack(root: Path, device_id: str, content: dict[str, object]) -> None:
             "redistribution": "ALLOWED",
             "revision": REVISION,
             "source": SOURCE_URI,
-            "transformation": "Deterministic bounded CMSIS-SVD expansion with "
-                              "ESP-IDF header-pack address reconciliation",
+            "transformation": transformation,
         },
         "schemaId": "urn:embedra:schema:pack-manifest:1",
         "supportedDevices": [device_id],

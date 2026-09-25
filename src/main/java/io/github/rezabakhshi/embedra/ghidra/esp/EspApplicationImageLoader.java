@@ -266,17 +266,29 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
                 + "select the ESP enrichment import option.");
             return;
         }
+        if (!hasEnrichmentPacks(target)) {
+            String unavailableCode = enrichmentUnavailableCode(target);
+            recordEnrichmentSelection(program, target, false, unavailableCode);
+            settings.log().appendMsg(getName(), unavailableCode
+                + ": Raw mapping succeeded. No target-specific packs exist in the "
+                + "pinned ESP-IDF and Espressif SVD sources.");
+            return;
+        }
         try {
             CancellationToken cancellation = settings.monitor()::isCancelled;
             TargetPackConfiguration configuration = packConfiguration(target);
             Esp32S3BundledPacks packs = Esp32S3BundledPacks.load(
-                configuration.deviceId(), cancellation);
-            EspSvdApplicationReport svd = new Esp32S3SvdApplicator(
-                configuration.deviceId(), configuration.displayName()).apply(program,
-                    packs.svd(), settings.monitor());
+                configuration.deviceId(), configuration.hasSvd(), cancellation);
+            EspSvdApplicationReport svd = packs.svd().isPresent()
+                ? new Esp32S3SvdApplicator(configuration.deviceId(),
+                    configuration.displayName()).apply(program, packs.svd().orElseThrow(),
+                        settings.monitor())
+                : new EspSvdApplicationReport(false, "unavailable", List.of(),
+                    List.of(), List.of(), 0, List.of());
             EspPackApplicationReport symbols = new Esp32S3PackApplicator(
                 configuration.deviceId(), configuration.displayName(),
-                configuration.romCodeLength()).apply(program, packs.rom(),
+                configuration.romCodeStart(), configuration.romCodeLength())
+                    .apply(program, packs.rom(),
                     packs.peripherals(), settings.monitor());
             recordEnrichmentSelection(program, target, true);
             settings.log().appendMsg(getName(), appliedCode
@@ -293,12 +305,18 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
 
     private static void recordEnrichmentSelection(Program program,
             EspTargetProvider target, boolean selected) {
+        recordEnrichmentSelection(program, target, selected,
+            enrichmentCode(target, selected));
+    }
+
+    private static void recordEnrichmentSelection(Program program,
+            EspTargetProvider target, boolean selected, String diagnosticCode) {
         try (GhidraProgramTransaction transaction = GhidraProgramTransaction.start(
                 program, "Record ESP enrichment selection")) {
             var options = program.getOptions(enrichmentOptions(target));
             options.setBoolean("Selected", selected);
             options.setString("Target Provider", target.providerId());
-            options.setString("Diagnostic Code", enrichmentCode(target, selected));
+            options.setString("Diagnostic Code", diagnosticCode);
             transaction.commit();
         }
     }
@@ -319,6 +337,19 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
             : "_ENRICHMENT_DISABLED");
     }
 
+    private static String enrichmentUnavailableCode(EspTargetProvider target) {
+        String providerId = target.providerId();
+        return providerId.substring(providerId.lastIndexOf('.') + 1)
+            .toUpperCase(Locale.ROOT).replace("-", "") + "_ENRICHMENT_UNAVAILABLE";
+    }
+
+    private static boolean hasEnrichmentPacks(EspTargetProvider target) {
+        return switch (target.chipId()) {
+            case 0, 2, 5, 9, 12, 13, 16, 18, 20, 23, 25, 28 -> true;
+            default -> false;
+        };
+    }
+
     private static Option findOption(List<Option> options) {
         return options.stream().filter(option ->
             APPLY_ESP32S3_PACKS_OPTION.equals(option.getName())).findFirst().orElse(null);
@@ -326,10 +357,30 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
 
     private static TargetPackConfiguration packConfiguration(EspTargetProvider target) {
         return switch (target.chipId()) {
-            case 0 -> new TargetPackConfiguration("esp32", "ESP32", 0x70000L);
-            case 2 -> new TargetPackConfiguration("esp32s2", "ESP32-S2", 0x20000L);
-            case 5 -> new TargetPackConfiguration("esp32c3", "ESP32-C3", 0x60000L);
-            case 9 -> new TargetPackConfiguration("esp32s3", "ESP32-S3", 0x60000L);
+            case 0 -> new TargetPackConfiguration("esp32", "ESP32", 0x40000000L,
+                0x70000L, true);
+            case 2 -> new TargetPackConfiguration("esp32s2", "ESP32-S2", 0x40000000L,
+                0x20000L, true);
+            case 5 -> new TargetPackConfiguration("esp32c3", "ESP32-C3", 0x40000000L,
+                0x60000L, true);
+            case 9 -> new TargetPackConfiguration("esp32s3", "ESP32-S3", 0x40000000L,
+                0x60000L, true);
+            case 12 -> new TargetPackConfiguration("esp32c2", "ESP32-C2", 0x40000000L,
+                0x3000L, true);
+            case 13 -> new TargetPackConfiguration("esp32c6", "ESP32-C6", 0x40000000L,
+                0x50000L, true);
+            case 16 -> new TargetPackConfiguration("esp32h2", "ESP32-H2", 0x40000000L,
+                0x20000L, true);
+            case 18 -> new TargetPackConfiguration("esp32p4", "ESP32-P4", 0x4fc00000L,
+                0x340000L, true);
+            case 20 -> new TargetPackConfiguration("esp32c61", "ESP32-C61", 0x40000000L,
+                0x40000L, false);
+            case 23 -> new TargetPackConfiguration("esp32c5", "ESP32-C5", 0x40000000L,
+                0x50000L, false);
+            case 25 -> new TargetPackConfiguration("esp32h21", "ESP32-H21", 0x40000000L,
+                0x20000L, false);
+            case 28 -> new TargetPackConfiguration("esp32h4", "ESP32-H4", 0x40000000L,
+                0x20000L, false);
             default -> throw new IllegalArgumentException(
                 "No enrichment packs exist for chip ID " + target.chipId());
         };
@@ -344,6 +395,7 @@ public final class EspApplicationImageLoader extends AbstractLibrarySupportLoade
     }
 
     private record TargetPackConfiguration(
-            String deviceId, String displayName, long romCodeLength) {
+            String deviceId, String displayName, long romCodeStart, long romCodeLength,
+            boolean hasSvd) {
     }
 }
