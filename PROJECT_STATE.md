@@ -10,8 +10,10 @@
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
   T026A is committed at `3263e5d` with its checkpoint `5af60b0` and the
   audit host-path remediation `d3a833b`. T027 is committed at `155e140`;
-  its continuity checkpoint is `12d6f66`. T028 is committed at `9470010`;
-  this file and machine state form its continuity checkpoint.
+  its continuity checkpoint is `12d6f66`. T028 is committed at `9470010`
+  with continuity checkpoint `a17e5b9`. The pre-T029 audit and its two
+  corrective changes are committed at `7bfcabd`; this file and machine state
+  form its continuity checkpoint.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -62,6 +64,12 @@ LX6 application cores; ESP32-S2 records one LX7 application core. Both use the
 built-in Ghidra Xtensa language. Exact variants, ULP firmware, target-specific
 full-flash workflows, and hardware verification remain unclaimed.
 
+The pre-T029 audit revalidated every T001-T028 specification marker, task
+evidence file, acceptance gate, fixture policy, test suite, and packaged input.
+It corrected original ESP32/ESP32-S2 imports that had inherited ESP32-S3
+diagnostic and option names, and strengthened the handoff validator to reject
+missing completed-task evidence or inconsistent current/next-task state.
+
 ## Changed Files
 
 - Added T015 loader, transactional mapper, stable mapping failure codes, entry application, and immutable import report.
@@ -90,9 +98,8 @@ full-flash workflows, and hardware verification remain unclaimed.
 - Added T028 ESP32/ESP32-S2 fixtures and oracles, providers and topology,
   independent ROM/peripheral/SVD packs, target-aware Ghidra import/enrichment,
   tests, ADR 0023, and support documentation.
-- Clean uncached verification passed 142 unit and 29 real-Ghidra tests plus
-  4 Python generator tests; reproducible ZIP SHA-256 is
-  `0e28b05738b45d02086d7527a93d78b3f5f881628705f1658d08bf3dd18d8e82`.
+- The latest clean verification counts and reproducible archive identity are
+  recorded in the task summaries below and in `.embedra/state.json`.
 - Post-commit GUI log review confirmed enrichment was disabled for both
   programs, the PNG and FID messages were expected, and Ghidra repaired three
   function bodies without a reported repair failure. The mapped-segment log
@@ -104,7 +111,9 @@ full-flash workflows, and hardware verification remain unclaimed.
   transient untracked `flash_dump.bin` caught by the package oracle is now
   absent; its ignore and package-exclusion safeguards remain.
 
-No complete device catalog, exact variant, board, or hardware support claim was added.
+Only the three independently implemented providers are promoted beyond the
+catalog's `PLANNED` state. No exact variant, board, or hardware support claim
+was added.
 
 ## Exact Next Action
 
@@ -129,3 +138,8 @@ T028 completed with 162 unit, 55 real-Ghidra, and 4 Python tests passing with
 no failures or skips. Two clean quality-script builds passed all 20 actions
 and produced identical 1,413,370-byte extension ZIPs with SHA-256
 `288bad7a1ea4334c46bbfdf44eebc18576bfd50348d8d33958329d9be99bca0d`.
+
+The pre-T029 audit completed with 163 unit, 55 real-Ghidra, and 4 Python tests
+passing with no failures or skips. Two clean quality-script builds passed all
+20 actions and produced identical 1,413,971-byte extension ZIPs with SHA-256
+`0824df264b671cc81372733a807e3eb61469484eeb8a1d188525895a3226c4c6`.
