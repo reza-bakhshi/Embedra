@@ -38,7 +38,7 @@ class Esp32C3TargetProviderTest {
         assertEquals("gcc", provider.language().compilerSpecId());
         assertEquals("RISC-V", provider.language().instructionSet());
         assertEquals(2, provider.language().instructionAlignmentBytes());
-        assertEquals(4, EspTargetProviders.implemented().size());
+        assertEquals(14, EspTargetProviders.implemented().size());
     }
 
     @Test
