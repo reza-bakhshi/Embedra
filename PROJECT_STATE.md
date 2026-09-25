@@ -13,8 +13,8 @@
   its continuity checkpoint is `12d6f66`. T028 is committed at `9470010`
   with continuity checkpoint `a17e5b9`. The pre-T029 audit and its two
   corrective changes are committed at `7bfcabd`; this file and machine state
-  form its continuity checkpoint. T029 implementation and continuity commits
-  are recorded in `.embedra/state.json`.
+  form its continuity checkpoint. T029 is committed at `aa0ab9a`; this file
+  and machine state form its continuity checkpoint.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
