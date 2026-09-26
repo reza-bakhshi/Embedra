@@ -28,8 +28,10 @@ Redistribution status is evidence, not an override: locally installed restricted
 
 ## ESP-family enrichment content
 
-T022 and T028 add target-specific bundled ROM and peripheral packs for device
-IDs `esp32`, `esp32s2`, and `esp32s3`, version `1.0.0`. Each pack supports only
+T022, T028, T029, and T030 add target-specific bundled ROM and peripheral packs
+for device IDs `esp32`, `esp32s2`, `esp32s3`, `esp32c3`, `esp32p4`, `esp32c2`,
+`esp32c5`, `esp32c6`, `esp32c61`, `esp32h2`, `esp32h21`, and `esp32h4`, version
+`1.0.0`. Each pack supports only
 its exact device ID, cites ESP-IDF v6.0 revision
 `662a3be354759d9487bf4b1a629fadb766cb1800`, declare Apache-2.0, and retain the
 deterministic transformation plus per-file and aggregate SHA-256 digests.
@@ -53,7 +55,7 @@ conflicts. An application receipt identifies only created artifacts so they can
 be removed without remapping firmware bytes; changed/user-bearing blocks are
 left in place.
 
-Gate remediation and T028 add matching target-specific SVD packs conforming to
+Gate remediation and T028-T030 add available target-specific SVD packs conforming to
 `urn:embedra:schema:esp-svd-pack:1`. It cites the official Apache-2.0
 Espressif SVD repository at immutable revision
 `be20aa12560889d6125d144cdb48cf615ac17628`. Its canonical content expands SVD
@@ -64,8 +66,12 @@ the source are not inferred from prose.
 `scripts/generate-esp32s3-svd-pack.py <espressif-svd-checkout>` rejects another
 revision, missing license evidence, oversized/deep XML, and DTD/entity input.
 Generation honors CMSIS `dimIndex`, cross-checks shared names against the
-matching ESP-IDF peripheral pack, and fails on an address disagreement. Each
+matching ESP-IDF peripheral pack, and fails on an unreviewed address
+disagreement. Reviewed upstream conflicts retain both pinned source identities,
+record the conflict count, and prefer SVD data for SVD annotations. Each
 checked-in reconciliation records the source pack digest, matching peripheral
-bases and register addresses, and the fail-on-conflict policy. Installed
-operation uses only these bundled, integrity-checked files and performs no
-network access.
+bases and register addresses, and its conflict policy. The pinned SVD revision
+contains P4, C2, C6, and H2 definitions but no C5, C61, H21, or H4 definition.
+The pinned ESP-IDF and SVD revisions contain neither S31 nor E22 target data, so
+those providers report enrichment as unavailable. Installed operation uses only
+bundled, integrity-checked files and performs no network access.

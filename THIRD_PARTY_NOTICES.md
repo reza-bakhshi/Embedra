@@ -21,14 +21,14 @@ No ESP-IDF source code or headers are copied into the extension.
 
 | Input | Version/revision | Purpose | License | Disposition |
 |---|---|---|---|---|
-| ESP-IDF ESP32-S3 ROM linker scripts and SoC register headers | v6.0, `662a3be354759d9487bf4b1a629fadb766cb1800` | Generate revision/device-matched ROM symbol and peripheral/register-alias packs | Apache-2.0 | Derived names, addresses, source-relative provenance, manifests, and digests bundled under Apache-2.0 |
+| ESP-IDF ESP-family ROM linker scripts and SoC register headers | v6.0, `662a3be354759d9487bf4b1a629fadb766cb1800` | Generate revision/device-matched ROM symbol and peripheral/register-alias packs for the twelve targets present in that revision | Apache-2.0 | Derived names, addresses, source-relative provenance, manifests, and digests bundled under Apache-2.0 |
 
 ESP32-S3 gate remediation also bundles deterministic derived data from the
 official Espressif SVD project.
 
 | Input | Version/revision | Purpose | License | Disposition |
 |---|---|---|---|---|
-| Espressif `svd/esp32s3.svd` | `be20aa12560889d6125d144cdb48cf615ac17628` | Generate peripheral/register/field/type descriptions and reconcile addresses with the ESP-IDF-derived pack | Apache-2.0 | Canonical derived JSON, source-relative provenance, manifest, and digests bundled; no normal-operation network access |
+| Espressif ESP32, S2, S3, C3, P4, C2, C6, and H2 SVD files | `be20aa12560889d6125d144cdb48cf615ac17628` | Generate peripheral/register/field/type descriptions and reconcile addresses with ESP-IDF-derived packs | Apache-2.0 | Canonical derived JSON, source-relative provenance, manifests, and digests bundled; no normal-operation network access |
 
 The complete resolved build-only dependency graph is pinned in `gradle.lockfile`. Full transitive dependency verification metadata and release license review remain assigned to T076 and T078; no completion claim for those later tasks is implied here.
 
