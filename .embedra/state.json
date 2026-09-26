@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "95eb8483738c79cee2fc0065e9021db574fc06d573c714ced165a03244121dfb"
+    "sha256": "9ef22daf20db29398ca0fbc16324088e59eaaacc7ea21f372feabd0c7175ad3d"
   },
   "projectClassification": "NEW",
   "currentTask": {
     "id": "T030",
-    "status": "IN_PROGRESS",
-    "reasonCode": "REMAINING_ESP_PROVIDER_FOUNDATION_VERIFIED"
+    "status": "COMPLETE",
+    "reasonCode": "REMAINING_ESP_PROVIDERS_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -40,7 +40,8 @@
     "T026A",
     "T027",
     "T028",
-    "T029"
+    "T029",
+    "T030"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -68,7 +69,7 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "e3c5ee03cd76fc9bd7a200f83aa3dce9016a76f5"
+    "commit": "e2cf1bb857996dc17d347f987bc2fd35a832cea0"
   },
   "workingTree": {
     "state": "CLEAN",
@@ -299,8 +300,8 @@
     ]
   },
   "knownFailures": [],
-  "nextTask": "T030",
-  "nextAction": "Continue T030: generate independent fixtures and target-specific ROM, peripheral, and SVD packs, then add raw/enriched real-Ghidra coverage. Do not start T031.",
+  "nextTask": "T031",
+  "nextAction": "Begin T031 by separating module and board profiles from silicon identity, then research the ESP8266 legacy image and SDK format before adding its provider.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -337,6 +338,12 @@
       "sha256": "42f8af1b0b90b7a57f822e6210e8a1c67109580ff2f08ef30661a2d3c976ca1d",
       "sizeBytes": 1556399,
       "status": "T029_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260926_Embedra.zip",
+      "sha256": "b97421ba772511eedf313dc49c321f0ff7463bac4b55a7baeeef2184cf27af1e",
+      "sizeBytes": 2587489,
+      "status": "T030_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -464,6 +471,11 @@
       "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
       "exitStatus": 0,
       "result": "T029 PASS: two complete uncached builds, all 20 quality actions each; 169 unit, 55 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 1,556,399-byte ZIP, SHA-256 42f8af1b0b90b7a57f822e6210e8a1c67109580ff2f08ef30661a2d3c976ca1d."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T030 PASS: two complete clean builds, all 20 quality actions each; 191 unit, 56 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 2,587,489-byte ZIP, SHA-256 b97421ba772511eedf313dc49c321f0ff7463bac4b55a7baeeef2184cf27af1e."
     }
   ],
   "buildQuality": {
@@ -478,8 +490,8 @@
     "minimumCoreClassBranchCoverage": 0.9286,
     "packInstructionCoverage": 0.9226,
     "packBranchCoverage": 0.7759,
-    "unitTests": 169,
-    "ghidraIntegrationTests": 55,
+    "unitTests": 191,
+    "ghidraIntegrationTests": 56,
     "pythonGeneratorTests": 4
   },
   "architecture": {
@@ -599,6 +611,25 @@
       "reconciliationPolicy": "record-conflicts-prefer-svd"
     }
   },
+  "remainingEspEnrichmentPacks": {
+    "espIdfRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+    "svdRevision": "be20aa12560889d6125d144cdb48cf615ac17628",
+    "license": "Apache-2.0",
+    "reconciliationPolicy": "record-conflicts-prefer-svd",
+    "deterministicRegenerationVerified": true,
+    "targets": {
+      "esp32p4": {"romSymbols": 732, "headerPeripherals": 122, "headerRegisters": 5259, "svdPeripherals": 89, "svdRegisters": 6029},
+      "esp32c2": {"romSymbols": 2258, "headerPeripherals": 39, "headerRegisters": 905, "svdPeripherals": 27, "svdRegisters": 1013},
+      "esp32c5": {"romSymbols": 1171, "headerPeripherals": 82, "headerRegisters": 2796, "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"},
+      "esp32c6": {"romSymbols": 1300, "headerPeripherals": 75, "headerRegisters": 2392, "svdPeripherals": 65, "svdRegisters": 3944},
+      "esp32c61": {"romSymbols": 1133, "headerPeripherals": 57, "headerRegisters": 2232, "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"},
+      "esp32h2": {"romSymbols": 623, "headerPeripherals": 66, "headerRegisters": 2111, "svdPeripherals": 55, "svdRegisters": 3481},
+      "esp32h21": {"romSymbols": 624, "headerPeripherals": 58, "headerRegisters": 1645, "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"},
+      "esp32h4": {"romSymbols": 588, "headerPeripherals": 78, "headerRegisters": 1803, "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"},
+      "esp32s31": {"status": "UNAVAILABLE_IN_PINNED_SOURCES"},
+      "esp32e22": {"status": "UNAVAILABLE_IN_PINNED_SOURCES"}
+    }
+  },
   "targetProviders": {
     "esp32": {
       "supportState": "EXPERIMENTAL",
@@ -630,6 +661,66 @@
       "mappedProgramVerified": true,
       "enrichmentVerified": true,
       "fullFlashWorkspaceVerified": false
+    },
+    "esp32s31": {
+      "supportState": "EXPERIMENTAL", "chipId": 32,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "TWO_APPLICATION_CPUS", "exactVariantCount": 2,
+      "mappedProgramVerified": true, "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
+    },
+    "esp32p4": {
+      "supportState": "EXPERIMENTAL", "chipId": 18,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "TWO_APPLICATION_CPUS_AND_ONE_LP_CPU", "exactVariantCount": 4,
+      "mappedProgramVerified": true, "enrichmentVerified": true
+    },
+    "esp32c2": {
+      "supportState": "EXPERIMENTAL", "chipId": 12,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU", "exactVariantCount": 2,
+      "mappedProgramVerified": true, "enrichmentVerified": true
+    },
+    "esp32c5": {
+      "supportState": "EXPERIMENTAL", "chipId": 23,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU", "exactVariantCount": 4,
+      "mappedProgramVerified": true, "enrichmentVerified": true
+    },
+    "esp32c6": {
+      "supportState": "EXPERIMENTAL", "chipId": 13,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU", "exactVariantCount": 3,
+      "mappedProgramVerified": true, "enrichmentVerified": true
+    },
+    "esp32c61": {
+      "supportState": "EXPERIMENTAL", "chipId": 20,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU", "exactVariantCount": 4,
+      "mappedProgramVerified": true, "enrichmentVerified": true
+    },
+    "esp32e22": {
+      "supportState": "EXPERIMENTAL", "chipId": 31,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "TWO_APPLICATION_CPUS", "exactVariantCount": 1,
+      "mappedProgramVerified": true, "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
+    },
+    "esp32h2": {
+      "supportState": "EXPERIMENTAL", "chipId": 16,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU", "exactVariantCount": 2,
+      "mappedProgramVerified": true, "enrichmentVerified": true
+    },
+    "esp32h21": {
+      "supportState": "EXPERIMENTAL", "chipId": 25,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU", "exactVariantCount": 1,
+      "mappedProgramVerified": true, "enrichmentVerified": true
+    },
+    "esp32h4": {
+      "supportState": "EXPERIMENTAL", "chipId": 28,
+      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
+      "processorTopology": "TWO_APPLICATION_CPUS", "exactVariantCount": 2,
+      "mappedProgramVerified": true, "enrichmentVerified": true
     },
     "esp32s3": {
       "supportState": "EXPERIMENTAL",

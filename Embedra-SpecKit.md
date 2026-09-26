@@ -670,7 +670,7 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [x] T027 Refactor only proven shared ESP behavior into common Xtensa/RISC-V-neutral services and the common execution-topology contract.
 - [x] T028 Add original ESP32 and ESP32-S2 fixtures/providers/packs independently and pass their full relevant suites.
 - [x] T029 Add ESP32-C3 as the first RISC-V ESP provider and prove no Xtensa assumptions remain in common code.
-- [ ] T030 [P] Add S31, P4, C2, C5, C6, C61, E22, H2, H21, and H4 providers independently, including exact part/embedded-memory variants, processor counts/roles, ROMs, low-power/ULP cores, peripherals, security capabilities, evidence, and fixtures; include any newer official series discovered by T026.
+- [x] T030 [P] Add S31, P4, C2, C5, C6, C61, E22, H2, H21, and H4 providers independently, including exact part/embedded-memory variants, processor counts/roles, ROMs, low-power/ULP cores, peripherals, security capabilities, evidence, and fixtures; include any newer official series discovered by T026.
 - [ ] T031 Add module/board profiles without confusing them with silicon, then add the separate ESP8266 legacy format/SDK provider only after its own image research and corpus exist.
 
 ### STM32 core support
