@@ -79,11 +79,11 @@ Embedra/catalogs/espressif/2026-09-23/catalog.json
 Embedra/catalogs/espressif/2026-09-23/catalog.sha256
 Embedra/catalogs/stm32/
 Embedra/catalogs/stm32/2026-09-28/
-Embedra/catalogs/stm32/2026-09-28/source-catalog.json
-Embedra/catalogs/stm32/2026-09-28/source-catalog.sha256
-Embedra/catalogs/stm32/2026-09-28/cmsis-sources.json
 Embedra/catalogs/stm32/2026-09-28/cmsis-interrupts.json
 Embedra/catalogs/stm32/2026-09-28/cmsis-interrupts.sha256
+Embedra/catalogs/stm32/2026-09-28/cmsis-sources.json
+Embedra/catalogs/stm32/2026-09-28/source-catalog.json
+Embedra/catalogs/stm32/2026-09-28/source-catalog.sha256
 Embedra/catalogs/stm32/2026-09-28/svd-rules.json
 Embedra/catalogs/stm32/2026-09-28/svd-rules.sha256
 Embedra/data/
