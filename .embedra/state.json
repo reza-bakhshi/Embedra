@@ -160,6 +160,17 @@
       "exactParts": 157,
       "supportState": "PLANNED",
       "acceptance": "PARTIAL_T032"
+    },
+    {
+      "catalogId": "stm32.curated-f103-exact",
+      "snapshotDate": "2026-09-29",
+      "path": "catalogs/stm32/2026-09-29/curated-catalog.json",
+      "sha256": "eaa0abec75927ba555ed9b636b6ad84ffed2b57e48b649bffb03f46d1c592f79",
+      "selectionPath": "catalogs/stm32/2026-09-29/selection.json",
+      "exactParts": 3,
+      "family": "STM32F103",
+      "supportState": "PLANNED",
+      "acceptance": "IN_PROGRESS"
     }
   ],
   "stm32CoverageDiagnostic": {
@@ -985,6 +996,9 @@
     "identityPolicy": "EXACT_PART_ONLY_NO_FAMILY_OR_WILDCARD_INFERENCE",
     "sourcePolicy": "REDISTRIBUTABLE_ST_CMSIS_OFFLINE_FACTS",
     "catalogDoesNotImplyImportSupport": true,
-    "nextTask": "T033_NOT_STARTED"
+    "nextTask": "T033_NOT_STARTED",
+    "snapshotPath": "catalogs/stm32/2026-09-29/curated-catalog.json",
+    "sourceReferenceCount": 2,
+    "exactPartCount": 3
   }
 }

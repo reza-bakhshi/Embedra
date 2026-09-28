@@ -165,6 +165,13 @@ T032 evidence now define a finite first F103 set. The family name and wildcard
 ST references do not resolve to exact parts. The older broad indexes remain
 source evidence, not acceptance coverage. No STM32 import support is claimed.
 
+The first curated implementation snapshot now contains three F103 exact parts
+with distinct package/flash identities and pinned CMSIS IRQs. Unknown
+lifecycle, DBGMCU ID, security, and exact SVD applicability remain explicit.
+The prior broad STM32 indexes are excluded from the extension ZIP. Offline
+selection and provenance tests pass; full T032 acceptance verification remains
+to be run before marking the task complete.
+
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
 Two clean quality-script builds produced identical extension ZIPs with SHA-256
 `fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb`. The first

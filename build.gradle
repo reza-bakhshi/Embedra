@@ -178,5 +178,6 @@ if (!configuredGhidraDir.isBlank()) {
         exclude 'scripts/**'
         exclude 'schemas/**'
         exclude 'catalogs/espressif/sources/**'
+        exclude 'catalogs/stm32/2026-09-28/**'
     }
 }

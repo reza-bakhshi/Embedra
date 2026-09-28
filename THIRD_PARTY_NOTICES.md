@@ -82,8 +82,8 @@ STMicroelectronics' `STM32_open_pin_data`, revision
 licensed; source and binary redistribution are permitted with preservation of
 the copyright notice, license conditions, and disclaimer. The committed JSON
 contains normalized facts and per-file digests, not ST XML or pin descriptions.
-See `docs/adr/0026-stm32-catalog-source-boundary.md`. It is not yet a completed
-exact-orderable-part or CMSIS-SVD catalog.
+See `docs/adr/0026-stm32-catalog-source-boundary.md`. The broad 2026-09-28
+source indexes are retained for review and excluded from the extension ZIP.
 
 The preliminary STM32 CMSIS interrupt index derives IRQ names/numbers and
 core-specific header identities from 27 pinned STMicroelectronics CMSIS Device
@@ -93,7 +93,8 @@ SHA-256 in `cmsis-interrupts.json`. These repositories publish the CMSIS Device
 components under Apache-2.0, permitting redistribution of derived facts with
 license and attribution preservation. No CMSIS source headers are bundled.
 Conditional enumerations remain marked for review, and unresolved references
-are not assigned guessed IRQs.
+are not assigned guessed IRQs. The curated F103 snapshot includes only IRQ
+facts from the pinned Apache-2.0 `stm32f103xb.h` header.
 
 The provisional STM32 SVD rule index derives device names, IRQ names/numbers,
 core labels, and transformation-feature counts from ST-authored Apache-2.0
@@ -103,12 +104,21 @@ files were downloaded from ST and normalized for line endings/whitespace.
 The generated index carries each file's SHA-256; no SVD XML is bundled.
 The transport is separately identified because it is not an ST-controlled
 repository. Candidate mappings are not asserted as verified exact-device packs.
+The broad SVD index is excluded from the extension ZIP.
+
+The curated 2026-09-29 F103 snapshot ships three exact factual identifiers,
+package/flash/RAM/core facts from the pinned BSD-3-Clause ST pin source, and
+IRQ facts from the pinned Apache-2.0 CMSIS header. ST public product pages
+and community/NUCLEO board listings justify the manual selection; their
+page contents are not redistributed. Unknown lifecycle, device ID, and exact
+SVD applicability are stated as unknown in the snapshot.
 
 The STMicroelectronics `stm32c5xx-dfp` repository at
 `a5f65bc64535cfa723e9d25f58d7ce23d0937aed` provides the C5 pack
 description under BSD-3-Clause terms and ST-authored SVD files marked
 Apache-2.0. The exact C5 index contains derived factual orderable identities,
 package/memory properties, ST device IDs, and SVD/IRQ references with source
-hashes. No source PDSC, SVD XML, or pack archive is bundled. Other ST-hosted
+hashes. The C5 index is retained in the repository for review and excluded
+from the curated extension ZIP. No source PDSC, SVD XML, or pack archive is bundled. Other ST-hosted
 DFP archives inspected during T032 carried SLA0044 terms restricting use to
 ST processing units; those archives were excluded from generated snapshots.

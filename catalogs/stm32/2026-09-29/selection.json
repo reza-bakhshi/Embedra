@@ -1,0 +1,33 @@
+{
+  "$schema": "urn:embedra:schema:stm32-curated-selection:1",
+  "selectionDate": "2026-09-29",
+  "parts": [
+    {
+      "exactPart": "STM32F103C8T6",
+      "reference": "STM32F103C(8-B)Tx",
+      "package": "LQFP48",
+      "flashKiB": 64,
+      "ramKiB": 20,
+      "orderabilityUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103c8",
+      "commonUseUrl": "https://github.com/stm32duino/Arduino_Core_STM32/blob/cf59c7d0658abdcfa786970b84cc1a2baf67348f/README.md"
+    },
+    {
+      "exactPart": "STM32F103CBT6",
+      "reference": "STM32F103C(8-B)Tx",
+      "package": "LQFP48",
+      "flashKiB": 128,
+      "ramKiB": 20,
+      "orderabilityUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103cb",
+      "commonUseUrl": "https://github.com/stm32duino/Arduino_Core_STM32/blob/cf59c7d0658abdcfa786970b84cc1a2baf67348f/README.md"
+    },
+    {
+      "exactPart": "STM32F103RBT6",
+      "reference": "STM32F103R(8-B)Tx",
+      "package": "LQFP64",
+      "flashKiB": 128,
+      "ramKiB": 20,
+      "orderabilityUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103rb",
+      "commonUseUrl": "https://github.com/STMicroelectronics/STM32CubeF1/blob/c7656f1fee178058be2f8ebfc8df9eaf91dc565e/Projects/STM32F103RB-Nucleo/Examples/UART/UART_TwoBoards_ComDMA/readme.txt"
+    }
+  ]
+}

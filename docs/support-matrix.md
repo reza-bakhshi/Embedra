@@ -81,8 +81,9 @@ user's local STM32CubeMX `DB.6.0.181` Finder database without emitting or
 shipping vendor rows. It found 1,846 ST reference products and 5,366 commercial
 part numbers (5,322 exact, 44 wildcard); all 5,213 parts carrying an ST pin-data
 `RefName` matched a committed Embedra reference pattern, and 2,220 of 2,240
-committed patterns are attested. Committed exact-part coverage is still only the
-157 C5 variants, and the vendor data adds a `STM32V8` series absent from the
+committed patterns are attested. At the time of that audit, committed exact-part
+coverage was the 157 C5 variants; the curated F103 snapshot adds three selected
+parts. The vendor data adds a `STM32V8` series absent from the
 pinned snapshot. The CubeMX database is SLA0048-restricted, so it is a coverage
 oracle only. The finite F103 catalog does not derive a bulk part list from the
 database. T032 remains in progress until its curated snapshot and verification

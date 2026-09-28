@@ -9,6 +9,38 @@ permissions:
   contents: read
 
 jobs:
+  compare-curated-f103-selection:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out Embedra
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Fetch current public board-use evidence
+        run: |
+          curl --fail --location --silent --show-error --max-time 40 \
+            https://raw.githubusercontent.com/stm32duino/Arduino_Core_STM32/main/README.md \
+            --output "$RUNNER_TEMP/stm32duino-readme.md"
+          curl --fail --location --silent --show-error --max-time 40 \
+            https://raw.githubusercontent.com/STMicroelectronics/STM32CubeF1/master/Projects/STM32F103RB-Nucleo/Examples/UART/UART_TwoBoards_ComDMA/readme.txt \
+            --output "$RUNNER_TEMP/cubef1-example.txt"
+      - name: Check curated selection for source drift
+        run: |
+          python3 scripts/check-stm32-curated-selection-drift.py \
+            --arduino-readme "$RUNNER_TEMP/stm32duino-readme.md" \
+            --cube-example "$RUNNER_TEMP/cubef1-example.txt" \
+            --output "$RUNNER_TEMP/stm32-curated-selection-drift.json"
+          python3 scripts/generate-stm32-curated-catalog.py check
+      - name: Upload review result
+        if: failure()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: stm32-curated-selection-drift-${{ github.run_id }}
+          path: ${{ runner.temp }}/stm32-curated-selection-drift.json
+          if-no-files-found: ignore
+          retention-days: 14
+
   compare-official-st-snapshot:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
