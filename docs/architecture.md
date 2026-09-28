@@ -55,6 +55,23 @@ sharing application memory; ESP32-S2 records one LX7 application core. The
 ESP32-C3 provider records one RV32IMC application core. The providers do not
 create ULP nodes without ULP firmware evidence.
 
+## Separate ESP8266 legacy boundary
+
+ESP8266 firmware uses independent `formats.esp8266`, `targets.esp8266`, and
+`ghidra.esp8266` packages. Its `0xe9` version 1 and `0xea` version 2 formats do
+not use the ESP32 extended header or chip-ID registry. The parser verifies
+bounded segment structure, seeded XOR checksum, and the version 2 SDK CRC. It
+keeps the first version 2 IROM segment unresolved because the file does not
+encode its placement in flash.
+
+The legacy Ghidra loader requires a 4 KiB aligned flash base for version 2,
+maps IROM from `0x40200000 + flash base + source data offset`, and stores the
+assertion in program options. Version 1 maps only its address-bearing RAM
+image; the separately emitted raw IROM companion is not guessed. The provider
+models one LX106 CPU and records family identity because these image formats do
+not distinguish ESP8266EX from ESP8285. It is absent from `EspTargetProviders`
+and cannot count toward ESP32-family chip-ID coverage.
+
 ## Shared ESP target services
 
 ESP target selection is expressed through the pure `EspTargetProvider`
@@ -248,6 +265,11 @@ stays unknown; neither path guesses a device. All 53 silicon, 161 module, and
 scheduled/manual CI job is the only networked catalog path: it downloads current
 official pages and ESP-IDF, emits normalized candidate facts, and fails on
 added, removed, or changed records for review.
+
+Typed resolver entry points restrict candidates to exact silicon, modules,
+boards, or product profiles. A profile projects to silicon only through its
+validated `siliconRecordIds`, and reverse lookup returns profiles without
+promoting them to execution targets.
 
 The schemas under `schemas/` use stable URN identities and closed object definitions and are packaged inside the extension JAR. Checked-in golden JSON under `src/test/resources/snapshots/` is updated only by deliberate review; the test helper never creates or refreshes snapshots.
 

@@ -16,6 +16,15 @@ T008 fixture generation also uses the following external tools and source refere
 | Espressif `xtensa-esp-elf` | `esp-15.2.0_20251204` | Compile/link the freestanding project-owned fixture source | GPL toolchain components with applicable runtime exceptions | External development tool; no runtime library is linked or copied |
 | esptool | 5.4.0 | Convert the ELF and independently report image expectations | GPL-2.0-or-later | External development/oracle tool; not copied or bundled |
 
+T031 fixture generation additionally uses Espressif's legacy LX106 compiler.
+The repository contains only original freestanding source, generated fixture
+bytes, and factual oracle output.
+
+| Input | Version/revision | Purpose | License | Disposition |
+|---|---|---|---|---|
+| Espressif `xtensa-lx106-elf` GCC | 10.3.0 | Compile/link the freestanding ESP8266 legacy corpus | GPL toolchain components with applicable runtime exceptions | External development tool; no runtime library is linked or copied |
+| esptool ESP8266 image and target definitions | 5.4.0 | Generate v1/v2 images and establish format/memory-map oracles | GPL-2.0-or-later | External development/oracle tool; no source copied or bundled |
+
 T022 bundles deterministic derived data from the following authoritative source.
 No ESP-IDF source code or headers are copied into the extension.
 

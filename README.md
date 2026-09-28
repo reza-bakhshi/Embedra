@@ -3,8 +3,9 @@
 Embedra is an open-source Ghidra extension for embedded-firmware reverse engineering and hardware CTF analysis.
 
 `Embedra-SpecKit.md` is the single authoritative project specification. The
-current experimental support includes structurally validated original ESP32,
-ESP32-S2, ESP32-S3, and RISC-V ESP32-C3 application images. Merged full-flash capture support
+current experimental support includes structurally validated ESP32-family
+application images across the implemented Xtensa and RISC-V providers, plus a
+separate ESP8266 legacy-image workflow. Merged full-flash capture support
 remains proven for ESP32-S3 when its partition table and MD5 record validate.
 Exact silicon/package variants and real-device hardware verification are not
 yet claimed; see `docs/support-matrix.md`.
@@ -45,13 +46,13 @@ Original ESP32 and ESP32-S2 imports store their selection under
 `ESP32C3_ENRICHMENT_*` diagnostics. The legacy ESP32-S3 option namespace and
 diagnostic codes remain stable for existing ESP32-S3 projects.
 
-ESP image parsing, provider resolution, memory classification, entry
+ESP32-family image parsing, provider resolution, memory classification, entry
 validation, and execution-topology results use ISA-neutral ESP contracts.
-ESP32, ESP32-S2, ESP32-S3, and ESP32-C3 are implemented providers; other catalog entries
-remain `PLANNED` until their own providers, fixtures, packs, and acceptance
-evidence land. ESP32 topology records two symmetric LX6 application cores with
-shared image memory, while ESP32-S2, ESP32-S3, and ESP32-C3 each record one
-application CPU. ULP firmware is not inferred from these fixtures.
+ESP8266 uses independent format, target, and Ghidra-loader packages and never
+enters the ESP32 chip-ID resolver. Version 1 imports its address-bearing RAM
+image; its raw IROM companion remains a separate artifact. Version 2 requires
+the user-confirmed flash base used to resolve its IROM mapping. Neither format
+encodes enough evidence to distinguish ESP8266EX from ESP8285.
 
 Embedra also ships one provenance-verified ESP32-S3 ESP-IDF Function ID
 pilot database under `fid/esp32s3/`. Ghidra does not attach it automatically.
@@ -86,8 +87,9 @@ The extension also ships an offline generated Espressif product catalog. Its
 profiles, and 58 development-board profiles across every ESP32 series listed by
 Espressif at capture time. Every record begins `PLANNED`; catalog discovery is
 not a firmware-support claim. Module and board records remain profiles that
-reference one or more exact silicon records, and ambiguous queries never select
-a target automatically. Normal builds and installed operation use the pinned
+reference one or more exact silicon records. Typed silicon, module, board, and
+profile resolvers prevent a product profile from satisfying a silicon lookup,
+and ambiguous queries never select a target automatically. Normal builds and installed operation use the pinned
 snapshot without network access; a separate scheduled CI workflow detects
 official additions, removals, and changed normalized product properties.
 

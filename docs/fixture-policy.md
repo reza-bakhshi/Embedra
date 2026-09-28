@@ -86,3 +86,23 @@ table, one populated and one erased OTA slot, OTA selection of `app0`, bounded
 NVS page-state inspection, an erased SPIFFS partition, and a chip-ID-9 coredump.
 The capture's hardware provenance and exact silicon/package variant are unknown,
 so this evidence does not upgrade device support or permit redistribution.
+
+## ESP8266 legacy fixtures
+
+T031 adds a repository-authored freestanding LX106 source and linker script.
+The pinned `xtensa-lx106-elf` GCC 10.3.0 compiler and esptool 5.4.0 generate a
+version 1 RAM image, its separate raw IROM companion, and a version 2 combined
+image. Retained esptool image-info and ELF program-header outputs are independent
+oracles. Malformed derivatives change the v1 checksum, the v2 appended SDK CRC,
+or truncate the v2 IROM segment.
+
+Run with the pinned tools available through `PATH` and `ESPTOOL_COMMAND`:
+
+```bash
+ESPTOOL_COMMAND=/path/to/esptool.py \
+  sh scripts/generate-esp8266-legacy-fixtures.sh
+```
+
+Two consecutive generations must produce identical fixture and oracle SHA-256
+sets. The raw version 1 IROM companion is retained to prove that a headerless
+blob is not accepted as a self-addressing executable image.
