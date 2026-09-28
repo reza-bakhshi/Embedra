@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "311dc72f9a17e8d6f41dbd765ee6790bdbcbfee6d0de3158d325ccf5582316a3"
+    "sha256": "1b4bfa24766a147552a4dd6faa222471c9cb985816935ed21d30bcc088b17e95"
   },
   "projectClassification": "NEW",
   "currentTask": {
     "id": "T032",
     "status": "IN_PROGRESS",
-    "reasonCode": "ST_SOURCE_CATALOG_FOUNDATION"
+    "reasonCode": "CURATED_STM32F103_EXACT_PART_CATALOG"
   },
   "completedTasks": [
     "T001",
@@ -973,5 +973,18 @@
     "fixtureValidator": "scripts/validate-fixture-provenance.sh",
     "handoffValidator": "scripts/validate-handoff.sh",
     "hostedCiExecuted": false
+  },
+  "stm32CuratedScope": {
+    "status": "IN_PROGRESS",
+    "acceptanceFamily": "STM32F103",
+    "exactParts": [
+      "STM32F103C8T6",
+      "STM32F103CBT6",
+      "STM32F103RBT6"
+    ],
+    "identityPolicy": "EXACT_PART_ONLY_NO_FAMILY_OR_WILDCARD_INFERENCE",
+    "sourcePolicy": "REDISTRIBUTABLE_ST_CMSIS_OFFLINE_FACTS",
+    "catalogDoesNotImplyImportSupport": true,
+    "nextTask": "T033_NOT_STARTED"
   }
 }

@@ -1,7 +1,7 @@
 # ADR 0026: ST reference patterns as the STM32 catalog foundation
 
-- Status: Accepted for T032 source ingestion; T032 acceptance remains open
-- Date: 2026-09-28
+- Status: Amended for curated T032 acceptance; implementation remains open
+- Date: 2026-09-29
 
 ## Context
 
@@ -30,22 +30,31 @@ applicability. Some wireless network cores are absent from its `Core` elements.
 
 ## T032 acceptance boundary
 
-T032 is complete only when an authoritative exact orderable-part source is
-reconciled with the ST reference patterns, and all available MCU/MPU records
-have evidence-backed lifecycle, device identifiers, memory variants,
-execution topology (including hidden/network cores), interrupts, security
-capabilities, and exact CMSIS-SVD transformation rules. Source revisions,
-license/redistribution decisions, negative and structural tests, offline
-snapshot checks, network drift detection, full Gradle checks, and two clean
-identical builds must pass. Catalog discovery makes no firmware-import or
-runtime-device-support claim; those start with T033 and later tasks.
+T032's first accepted exact-part set is **STM32F103C8T6**, **STM32F103CBT6**,
+and **STM32F103RBT6**. C8 and CB have distinct 64/128 KiB flash identities;
+RBT6 has a distinct LQFP64 package. ST's active orderable-product pages,
+Blue Pill use of F103C8, and ST's NUCLEO-F103RB example establish the
+selection rationale (links in T032 evidence). This is a finite allowlist, not
+all F103 products. Further families and parts need an explicit reviewed
+amendment. A family name or wildcard reference cannot identify an exact part.
+
+T032 is complete when a deterministic, bounded offline snapshot validates
+these three exact names and their distinct package/memory facts against
+redistributable ST/CMSIS source data, records source revisions and licenses,
+and records lifecycle, device ID, topology, interrupts, security, and SVD
+applicability as sourced facts or explicit unknowns. Official web product
+listings can justify selection and network drift review; their page data are
+not copied wholesale into the shipped snapshot. Negative and structural tests,
+offline snapshot checks, network drift detection, full Gradle checks, both
+validators, and two clean identical builds must pass. Catalog discovery makes
+no firmware-import or runtime-device-support claim; those start with T033.
 
 ## Consequences
 
-The initial pinned source catalog is useful for coverage and change review,
-but cannot be presented as the final exact-part catalog. A later T032 slice
-must resolve its intentionally missing facts with appropriately licensed
-ST/CMSIS sources before completion.
+The broad pinned source indexes remain useful for source review but are not
+the curated exact-part catalog. Their unresolved records do not block this
+finite acceptance set or imply support. Unknown facts in the selected parts
+remain visibly unknown rather than inferred from a related part.
 
 ## CMSIS interrupt index checkpoint
 
@@ -139,7 +148,7 @@ exists for the other series. T032 completion therefore needs one of:
    `UNKNOWN`/user-local provenance, mirroring the T026A Function ID pilot. The
    shipped catalog would remain the BSD/offline subset.
 
-Until the maintainer chooses, T032 remains `IN_PROGRESS`; the committed catalog
-is not presented as complete, and no exact suffix or lifecycle state is
-invented.
-
+The maintainer has chosen the curated acceptance boundary above. The two
+earlier options remain relevant only if a later expansion requires bulk exact
+coverage. T032 remains `IN_PROGRESS` until the selected catalog and required
+verification are complete; no exact suffix or lifecycle state is invented.

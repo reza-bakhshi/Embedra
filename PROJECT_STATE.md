@@ -153,11 +153,17 @@ support claim was added.
 
 ## Exact Next Action
 
-Continue T032 by resolving the exact-part/lifecycle source boundary: obtain ST
-permission to redistribute derived exact-part and lifecycle facts, or get an
-approved specification amendment for a default-off user-local catalog built
-from the licensed CubeMX install (ADR 0026). Then complete coverage and rerun
-full verification. Do not begin T033.
+Continue the revised T032 finite acceptance set: build the curated offline
+STM32F103C8T6, STM32F103CBT6, and STM32F103RBT6 exact-part snapshot from
+redistributable ST/CMSIS facts, with bounded validation and network drift
+detection. Record absent facts explicitly, run both validators, full Ghidra
+12.1.3 Gradle `check`, and two clean reproducible builds. Do not begin T033.
+
+The maintainer narrowed T032 on 2026-09-29 from every ST MCU/MPU to commonly
+used orderable parts. ADR 0026, the specification, support matrix, state, and
+T032 evidence now define a finite first F103 set. The family name and wildcard
+ST references do not resolve to exact parts. The older broad indexes remain
+source evidence, not acceptance coverage. No STM32 import support is claimed.
 
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
 Two clean quality-script builds produced identical extension ZIPs with SHA-256

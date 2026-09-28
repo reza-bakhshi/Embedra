@@ -3,7 +3,7 @@
 **Status**: Authoritative project specification  
 **Created**: 2026-09-21  
 **Document model**: Single source of truth; no feature-version documents  
-**Primary implementation order**: ESP32-S3 → complete ESP32 family → complete STM32 catalog → RP2040 → complete RP2350/RP2354 family  
+**Primary implementation order**: ESP32-S3 → complete ESP32 family → curated STM32 catalog → RP2040 → complete RP2350/RP2354 family
 **Initial build baseline**: Ghidra 12.1.3, 64-bit JDK 21, Gradle Wrapper; later compatibility requires explicit matrix evidence
 
 This document intentionally combines the project constitution, product specification, technical plan, architecture, data model, contracts, test strategy, acceptance criteria, and implementation tasks. It replaces a version-by-version or feature-folder specification model.
@@ -21,8 +21,8 @@ Embedra MUST prefer an explicit target selection over a confident-looking guess.
 | 1 | ESP32-S3 | Application images, full flash, partitions, ESP-IDF metadata, ROM symbols, peripherals, NVS, OTA, filesystems, CTF triage |
 | 2 | Complete ESP32 SoC catalog | Every officially documented ESP32-branded SoC series and exact silicon/package/embedded-memory variant, including current ESP32, S2, S3, S31, P4, C2, C3, C5, C6, C61, E22, H2, H21, H4, and future official additions through catalog updates; Xtensa and RISC-V remain separate providers |
 | 3 | ESP legacy | ESP8266 Non-OS/RTOS SDK through a separate legacy provider after ESP32-branded coverage |
-| 4 | Complete STM32 MCU catalog | Every officially documented STM32 MCU orderable part and documented legacy part for which authoritative device data exists, across C, F, G, H, L, U, N, WB, WB0, WBA, WL, and future official series; exact part/package/flash/core/security identity is preserved |
-| 5 | STM32 heterogeneous/MPU | Every officially documented STM32 dual-core, wireless multi-processor, and STM32MP part through explicitly separate core/OS-aware providers rather than pretending they are ordinary Cortex-M binaries |
+| 4 | Curated STM32 MCU catalog | A reviewable selection of commonly used, orderable STM32 parts, initially STM32F103C8T6, STM32F103CBT6, and STM32F103RBT6; exact package and memory identities are separate |
+| 5 | STM32 heterogeneous/MPU | Add selected dual-core, wireless multi-processor, and STM32MP parts only through explicit core/OS-aware providers |
 | 6 | RP2040 | RP2040 silicon plus board profiles for official Pico/Pico H/Pico W/Pico WH and a data-driven path for third-party boards; UF2, raw XIP, boot2, vector table, peripherals, SDK metadata, both cores, and PIO programs |
 | 7 | RP2350/RP2354 | RP2350A, RP2350B, RP2354A, and RP2354B; ARM Cortex-M33 and Hazard3 RISC-V boot architectures, TrustZone/security metadata, internal/external flash differences, both CPU cores, three PIO blocks, Pico 2 family profiles, and future official variants through catalog updates |
 
@@ -138,7 +138,7 @@ As an embedded analyst, I can select any officially cataloged ESP32 SoC or exact
 
 ### US5 — Import and identify STM32 firmware (P5)
 
-As a reverse engineer, I can import STM32 ELF/AXF, Intel HEX, DFU, and raw BIN/dump inputs, search the complete generated STM32 part catalog, select or narrow the exact orderable part, construct flash/RAM/system memory, and recover the correct core vector tables and handlers.
+As a reverse engineer, I can import STM32 ELF/AXF, Intel HEX, DFU, and raw BIN/dump inputs, search the curated STM32 part catalog, select or narrow the exact orderable part, construct flash/RAM/system memory, and recover the correct core vector tables and handlers.
 
 **Independent acceptance**: Address-bearing formats preserve their addresses; raw BIN never receives a guessed base silently; vector entries and memory ranges match the selected ST device data and reference build.
 
@@ -536,7 +536,7 @@ The ESP catalog generator records every official SoC part and embedded-memory/pa
 
 STM32 support is device-centric. Address-bearing ELF/HEX inputs can be loaded before exact part selection but device enrichment remains pending. Raw BIN requires a selected device/base, board profile, or user-confirmed vector-table inference. ST CMSIS device repositories and packs are preferred structured sources for interrupt/device metadata; transformed SVD/device data retains its original Apache-2.0 or applicable license and exact source identity.
 
-STM32 coverage is generated per exact part number from ST/CMSIS sources and checked for catalog drift. STM32 MCU support covers all cataloged Cortex-M devices, with support state tracked per part and feature. TrustZone, dual-core, wireless companion cores, external flash, and STM32MP1/MP2 devices are separate provider capabilities. The UI must never present “STM32 detected” as an exact part number when only a Cortex-M vector table was found.
+STM32 coverage is a curated, explicit allowlist of exact orderable parts, checked for catalog drift. The first T032 acceptance set is STM32F103C8T6 (LQFP48, 64 KiB flash), STM32F103CBT6 (LQFP48, 128 KiB flash), and STM32F103RBT6 (LQFP64, 128 KiB flash). The family name STM32F103 and ST wildcard/range references never resolve to one of these exact parts without independent evidence or user selection. Further parts require a reviewed source, availability/common-use rationale, and a spec amendment. STM32 MCU support covers cataloged parts only after later import tasks, with state tracked per part and feature. TrustZone, dual-core, wireless companion cores, external flash, and STM32MP devices are separate provider capabilities. The UI must never present “STM32 detected” as an exact part number when only a Cortex-M vector table was found.
 
 ### 8.3 RP2040 and RP2350/RP2354
 
@@ -675,14 +675,14 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 
 ### STM32 core support
 
-- [ ] T032 Build the complete authoritative STM32 exact-part catalog generator and CI drift detection from ST/CMSIS sources, recording licenses, lifecycle, device identifiers, packages, memory, execution topology, interrupts, security, and SVD transformation rules for every available MCU/MPU part.
-- [ ] T033 [P] Create golden STM32 fixtures for Cortex-M0/M0+/M3/M4/M7/M33/M55 across every cataloged series, with representative exact parts plus generated structural validation for every part record.
+- [ ] T032 Build a deterministic curated STM32 exact-part catalog and network drift detection from redistributable ST/CMSIS inputs for the three named F103 parts in section 8.2. Record provenance, packages, memory, execution topology, interrupts, security, lifecycle, device identifiers, and SVD applicability; mark unavailable facts explicitly. Validate every selected exact identity without expanding family names or wildcard references. This is catalog work only; firmware import begins at T033.
+- [ ] T033 [P] Create golden STM32 fixtures for the curated catalog, beginning with Cortex-M3 STM32F103 exact parts, plus structural validation for every selected part record.
 - [ ] T034 Implement or integrate pure ELF/AXF and Intel HEX address-bearing input models without duplicating Ghidra's correct native behavior.
 - [ ] T035 Implement the supported STM32 DFU container parser with suffix/target/element validation.
 - [ ] T036 Implement raw BIN import requiring explicit device/base or confirmed inference.
 - [ ] T037 Implement Cortex-M vector-table discovery, scoring, user confirmation, vector creation, and false-positive tests.
-- [ ] T038 Implement STM32 exact-part search/selection, lifecycle/support state, ambiguity handling, package/flash/core variant identity, and device-pack registry covering the complete generated catalog.
-- [ ] T039 Implement catalog-driven STM32 memory-region and execution-topology planning for internal flash/RAM/system/OTP/option/alias regions and every part record; catalog validation fails on incomplete mandatory properties.
+- [ ] T038 Implement STM32 exact-part search/selection, lifecycle/support state, ambiguity handling, package/flash/core variant identity, and device-pack registry covering the curated catalog.
+- [ ] T039 Implement catalog-driven STM32 memory-region and execution-topology planning for internal flash/RAM/system/OTP/option/alias regions and every selected part record; catalog validation fails on incomplete mandatory properties.
 - [ ] T040 Implement CMSIS-SVD/device-data transformation into Ghidra registers, types, enums, and interrupts with provenance.
 - [ ] T041 Implement vector labels/functions and Cortex-M core exception structures.
 - [ ] T042 Add board profiles for external flash/RAM and boot offsets without mutating MCU packs.
@@ -695,7 +695,7 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [ ] T046 Implement WB/WB0/WL/WBA wireless/network-core distinctions, separately supplied coprocessor firmware, shared resources, and related packs.
 - [ ] T047 Implement external-memory loaders and OCTOSPI/FMC mapping through confirmed board/device profiles.
 - [ ] T048 Implement STM32 firmware diff and CTF enrichment using the shared analyzers.
-- [ ] T049 Research and implement every cataloged STM32MP1/MP2 and future STM32MP/heterogeneous part as a distinct provider covering Cortex-A artifacts, Cortex-M firmware, boot chain, device tree, trusted/security domains, and shared resources without weakening MCU assumptions.
+- [ ] T049 Research and implement selected STM32MP/heterogeneous parts as distinct providers covering Cortex-A artifacts, Cortex-M firmware, boot chain, device tree, trusted/security domains, and shared resources without weakening MCU assumptions.
 
 ### RP2040 and RP2350/RP2354 family
 
@@ -732,7 +732,7 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [ ] T071 Run at least 10,000 deterministic malformed inputs per implemented binary format.
 - [ ] T072 Verify all program-transaction rollback, cancellation, and partial-workspace cleanup cases.
 - [ ] T073 Verify canonical GUI/headless equality for every golden fixture.
-- [ ] T074 Verify catalog completeness/drift, exact support state, and execution topology for every discovered ESP, STM32, and Raspberry Pi silicon part; no uncategorized model may be silently omitted.
+- [ ] T074 Verify ESP and Raspberry Pi discovery completeness/drift, and verify exact support state and execution topology for every selected STM32 catalog part; STM32 additions require explicit review rather than silent expansion.
 - [ ] T075 Complete compatibility matrices by Ghidra release, OS, exact device, processor topology, input format, pack, crypto detector, and feature state.
 - [ ] T076 Complete dependency, code, pack, fixture, derived-data, trademark, and redistribution license review.
 - [ ] T077 Create and validate README, security/contribution policies, architecture, pack, fixture, headless, troubleshooting, support, device-catalog, crypto-coverage, and agent-handoff documentation.
@@ -747,7 +747,7 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 | ESP32-S3 app | Exact segments and entry match esptool + ELF; corrupt images roll back |
 | ESP32-S3 full flash | Partition results match ESP-IDF tools; custom offsets and false magic handled |
 | ESP family | Official catalog snapshot is complete; every exact part has a state; all implemented Xtensa/RISC-V/topology providers pass independent corpora |
-| STM32 core | Every official catalog part has complete mandatory metadata/state; representative parts from every series import with exact selected-device maps; raw BIN requires confirmation |
+| STM32 core | Every selected catalog part has explicit metadata/state; representative selected parts import with exact selected-device maps; raw BIN requires confirmation |
 | STM32 advanced | TrustZone, dual-core, wireless/network-core, STM32MP, and external memory do not contaminate simple-device behavior and cross-program relationships are verified |
 | RP2040/RP2350 family | RP2040 and RP2350A/B/RP2354A/B UF2/ELF/raw, flash, ARM/RISC-V, dual-core, TrustZone, vector/trap, and PIO results match official tools and builds |
 | Crypto analysis | Positive/negative multi-ISA corpus reports measured precision/recall and hardware/software/inlined coverage without promoting weak candidates to verified secrets/functions |

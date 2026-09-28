@@ -43,6 +43,13 @@ discovered repository catalog records yet. No STM32 or RP firmware support is cl
 
 ## STM32 catalog work in progress
 
+T032 now targets a finite curated exact-part set: STM32F103C8T6 (LQFP48,
+64 KiB flash), STM32F103CBT6 (LQFP48, 128 KiB), and STM32F103RBT6
+(LQFP64, 128 KiB). ST product listings establish orderability; Blue Pill
+and NUCLEO-F103RB establish common use. These are distinct catalog-only
+`PLANNED` identities. The family name `STM32F103` and wildcard/range
+references never resolve to an exact part without independent evidence.
+
 The pinned ST source snapshot includes 2,240 MCU/MPU reference records across
 28 family labels, including STM32MP1 and STM32MP2. It preserves package,
 flash/RAM values, declared core order, security contexts, and source digests.
@@ -51,12 +58,13 @@ catalog. Lifecycle, device IDs, interrupt vectors, and SVD mappings remain
 unresolved; wildcard/ranged ST references are not expanded into products.
 An audited Open-CMSIS-Pack H7RS pack lists 34 wildcard device names; H7RS is
 absent from this pinned ST pin snapshot and is not counted in its 28 families.
-T032 remains in progress. STM32 import and device support start at T033 onward.
+The broad source indexes remain review evidence, not T032's finite acceptance
+set. STM32 import and device support start at T033 onward.
 
 The separate pinned ST CMSIS IRQ index currently maps 2,114 of the 2,240
 source references to at least one device header. It retains multiple header
 variants and flags conditional IRQ enumerations. The 126 unmatched references
-and the exact part, lifecycle, device-ID, and SVD gaps still block T032.
+remain gaps in the broad index; they do not extend the curated acceptance set.
 
 A provisional ST-authored SVD index covers 1,725 source references with at
 least one candidate file; 515 have no candidate. The mapping remains
@@ -76,6 +84,6 @@ part numbers (5,322 exact, 44 wildcard); all 5,213 parts carrying an ST pin-data
 committed patterns are attested. Committed exact-part coverage is still only the
 157 C5 variants, and the vendor data adds a `STM32V8` series absent from the
 pinned snapshot. The CubeMX database is SLA0048-restricted, so it is a coverage
-oracle only. T032 remains in progress pending ST permission for derived
-exact-part/lifecycle facts or an accepted user-local catalog path; STM32 import
-and device support start at T033 onward.
+oracle only. The finite F103 catalog does not derive a bulk part list from the
+database. T032 remains in progress until its curated snapshot and verification
+pass; STM32 import and device support start at T033 onward.
