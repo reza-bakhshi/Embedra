@@ -218,3 +218,11 @@ The provisional SVD rule index records 196 pinned ST-authored SVD files,
 transformation-feature counts, and candidate mappings. It leaves 515
 references without a candidate and does not claim exact ST-controlled SVD
 provenance or any T040 Ghidra register application. T032 remains open.
+
+The expanded T032 source indexes passed offline regeneration, provenance and
+handoff validation, full Ghidra 12.1.3 `check`, and two clean reproducible
+builds: 201 unit, 60 real-Ghidra, and 19 Python tests with no failures or
+skips. The 2,887,986-byte ZIP SHA-256 is
+`7f5d151e234c1445fc14adb8313be6467ee684447e13a28ef3e148e084b163e5`.
+The exact ZIP-entry oracle needed an ordering correction before the final
+successful two-build run. T032 remains `IN_PROGRESS`; T033 has not begun.

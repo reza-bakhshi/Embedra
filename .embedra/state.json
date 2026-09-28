@@ -70,7 +70,7 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "cccfd0f"
+    "commit": "a3c66f8"
   },
   "workingTree": {
     "state": "CLEAN",
@@ -130,6 +130,24 @@
       "path": "catalogs/stm32/2026-09-28/source-catalog.json",
       "sha256": "6ecc64d28e086d6135dbf664674c259fc2cf29e9111b10b4be3a14305ab5a417",
       "sourceRevision": "7d1f1514ed5583ec5007ad91236b4e1d377295b1",
+      "sourceReferenceRecords": 2240,
+      "supportState": "PLANNED",
+      "acceptance": "INCOMPLETE"
+    },
+    {
+      "catalogId": "stm32.cmsis-interrupt-index",
+      "snapshotDate": "2026-09-28",
+      "path": "catalogs/stm32/2026-09-28/cmsis-interrupts.json",
+      "sha256": "2c312786d907f85babde522944141d0672094749e787ce87078c14bc07495f72",
+      "sourceReferenceRecords": 2240,
+      "supportState": "PLANNED",
+      "acceptance": "INCOMPLETE"
+    },
+    {
+      "catalogId": "stm32.svd-rule-candidates",
+      "snapshotDate": "2026-09-28",
+      "path": "catalogs/stm32/2026-09-28/svd-rules.json",
+      "sha256": "16cb39d558e249f9c6a4020e39b77644d70af2d07b2df01becc732e4d6056ace",
       "sourceReferenceRecords": 2240,
       "supportState": "PLANNED",
       "acceptance": "INCOMPLETE"
@@ -339,7 +357,7 @@
   },
   "knownFailures": [],
   "nextTask": "T032",
-  "nextAction": "Continue T032: reconcile exact orderable STM32 MCU/MPU identities, lifecycle, device IDs, complete topology, interrupts, security, and CMSIS-SVD mappings from pinned authoritative sources; do not begin T033.",
+  "nextAction": "Continue T032: reconcile exact orderable parts and lifecycle from ST, device IDs and complete topology from authoritative ST/CMSIS sources, resolve 126 CMSIS IRQ and 515 SVD gaps, and verify exact SVD applicability. Do not begin T033.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -394,6 +412,12 @@
       "sha256": "435975910273e96cb9e4c0b0e7aa0e9646f6be10c98b7d5ebb2b920f74e7aa17",
       "sizeBytes": 2772307,
       "status": "T032_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
+      "sha256": "7f5d151e234c1445fc14adb8313be6467ee684447e13a28ef3e148e084b163e5",
+      "sizeBytes": 2887986,
+      "status": "T032_IN_PROGRESS_CMSIS_SVD_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -547,7 +571,7 @@
     "packBranchCoverage": 0.7759,
     "unitTests": 201,
     "ghidraIntegrationTests": 60,
-    "pythonGeneratorTests": 10
+    "pythonGeneratorTests": 19
   },
   "architecture": {
     "pureBoundaries": [
