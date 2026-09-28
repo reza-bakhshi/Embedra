@@ -26,6 +26,7 @@ for required_task in \
     jacocoTestCoverageVerification \
     test \
     verifyFormatting \
+    verifySTM32CatalogGenerator \
     buildExtension
 do
     if ! grep -Eq "^${required_task}( |$)" "$task_list"; then
@@ -76,6 +77,10 @@ Embedra/catalogs/espressif/
 Embedra/catalogs/espressif/2026-09-23/
 Embedra/catalogs/espressif/2026-09-23/catalog.json
 Embedra/catalogs/espressif/2026-09-23/catalog.sha256
+Embedra/catalogs/stm32/
+Embedra/catalogs/stm32/2026-09-28/
+Embedra/catalogs/stm32/2026-09-28/source-catalog.json
+Embedra/catalogs/stm32/2026-09-28/source-catalog.sha256
 Embedra/data/
 Embedra/data/languages/
 Embedra/data/languages/cust.sinc

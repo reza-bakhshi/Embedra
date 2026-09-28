@@ -181,13 +181,13 @@ def main():
     if args.mode != 'check' and args.output is None:
         parser.error('--output required for generate/drift')
     try:
-        if args.mode != 'drift':
-            revision = subprocess.check_output(
-                ['git', '-C', str(args.source), 'rev-parse', 'HEAD'],
-                stderr=subprocess.DEVNULL, text=True).strip()
-            if revision != PIN_REVISION:
-                raise CatalogError('ST input revision does not match pinned revision')
+        revision = subprocess.check_output(
+            ['git', '-C', str(args.source), 'rev-parse', 'HEAD'],
+            stderr=subprocess.DEVNULL, text=True).strip()
+        if args.mode != 'drift' and revision != PIN_REVISION:
+            raise CatalogError('ST input revision does not match pinned revision')
         current = generate(args.source)
+        current['sources'][0]['revision'] = revision
         validate(current)
         if args.mode == 'generate':
             args.output.write_bytes(canonical(current))
