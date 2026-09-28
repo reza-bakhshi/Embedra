@@ -3,8 +3,8 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T030 — remaining ESP providers (`COMPLETE`)**.
-- Last completed task: **T030 — remaining ESP providers**.
+- Current task: **T032 — STM32 exact-part catalog (`IN_PROGRESS`)**.
+- Last completed task: **T031 — ESP product profiles and ESP8266 legacy provider**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
@@ -188,3 +188,14 @@ T030 completed with 191 unit, 56 real-Ghidra, and 4 Python tests passing with
 no failures or skips. Two clean quality-script builds passed all 20 actions
 and produced identical 2,587,489-byte extension ZIPs with SHA-256
 `b97421ba772511eedf313dc49c321f0ff7463bac4b55a7baeeef2184cf27af1e`.
+
+## T032 In-progress checkpoint (2026-09-28)
+
+ADR 0026 defines the exact acceptance boundary. ST's BSD-3-Clause open pin
+snapshot at `7d1f1514ed5583ec5007ad91236b4e1d377295b1` has been
+normalized into 2,240 offline source-reference records. A bounded generator,
+Python tests, and a scheduled/manual network drift workflow are present.
+The source is not a complete exact-part catalog: orderable suffixes,
+lifecycle, DBGMCU IDs, network cores, interrupts, and exact CMSIS-SVD mappings
+still require authoritative reconciliation. T032 stays `IN_PROGRESS`; T033
+has not begun. See `.embedra/evidence/tasks/T032.md`.

@@ -1,0 +1,35 @@
+name: stm32-catalog-drift
+
+on:
+  schedule:
+    - cron: '37 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare-official-st-snapshot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out Embedra
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Fetch current ST pin database
+        run: git clone --depth 1 https://github.com/STMicroelectronics/STM32_open_pin_data.git "$RUNNER_TEMP/st-pin"
+      - name: Compare normalized catalog
+        run: |
+          python3 scripts/generate-stm32-catalog.py drift \
+            --source "$RUNNER_TEMP/st-pin" \
+            --baseline catalogs/stm32/2026-09-28/source-catalog.json \
+            --output "$RUNNER_TEMP/stm32-catalog-drift.json"
+      - name: Upload reviewable candidate on drift
+        if: failure()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: stm32-catalog-drift-${{ github.run_id }}
+          path: ${{ runner.temp }}/stm32-catalog-drift.json
+          if-no-files-found: ignore
+          retention-days: 14

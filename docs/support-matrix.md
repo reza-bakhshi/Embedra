@@ -38,5 +38,15 @@ claims for packages, embedded-memory variants, modules, or boards.
 Exact ESP32-S3 silicon/package/flash/PSRAM variants are now cataloged but are
 not implicitly covered by the verified generic chip-ID rows. Every T026 record
 begins `PLANNED` until its own provider, topology, fixtures, and acceptance
-evidence exist. STM32 and RP devices have no discovered repository catalog
-records yet and no support claim is made here.
+evidence exist. STM32 source-reference records are described below. RP devices have no
+discovered repository catalog records yet. No STM32 or RP firmware support is claimed.
+
+## STM32 catalog work in progress
+
+The pinned ST source snapshot includes 2,240 MCU/MPU reference records across
+28 family labels, including STM32MP1 and STM32MP2. It preserves package,
+flash/RAM values, declared core order, security contexts, and source digests.
+It is a source-facts snapshot, not an exact orderable-part or firmware-support
+catalog. Lifecycle, device IDs, interrupt vectors, and SVD mappings remain
+unresolved; wildcard/ranged ST references are not expanded into products.
+T032 remains in progress. STM32 import and device support start at T033 onward.

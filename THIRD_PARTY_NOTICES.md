@@ -75,3 +75,12 @@ images, descriptive prose, and purchase links are not redistributed.
 |---|---|---|---|
 | Espressif SoC, module, and development-board catalog pages | Content captured 2026-09-23; exact SHA-256 values are embedded in `source-facts.json` | Discover exact product variants and profile relationships | Public product facts only (`LicenseRef-Espressif-Public-Product-Facts`); normalized non-expressive facts redistributed, page content excluded |
 | ESP-IDF Kconfig and SoC capability headers | `662a3be354759d9487bf4b1a629fadb766cb1800` | Firmware chip IDs, ISA, application-core count, and documented low-power/ULP capability evidence | Apache-2.0; normalized derived facts bundled |
+
+T032's preliminary offline STM32 source catalog derives factual fields from
+STMicroelectronics' `STM32_open_pin_data`, revision
+`7d1f1514ed5583ec5007ad91236b4e1d377295b1`. The source is BSD-3-Clause
+licensed; source and binary redistribution are permitted with preservation of
+the copyright notice, license conditions, and disclaimer. The committed JSON
+contains normalized facts and per-file digests, not ST XML or pin descriptions.
+See `docs/adr/0026-stm32-catalog-source-boundary.md`. It is not yet a completed
+exact-orderable-part or CMSIS-SVD catalog.

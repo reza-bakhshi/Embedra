@@ -6,9 +6,9 @@
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T031",
-    "status": "COMPLETE",
-    "reasonCode": "ESP_PROFILES_AND_ESP8266_LEGACY_VERIFIED"
+    "id": "T032",
+    "status": "IN_PROGRESS",
+    "reasonCode": "ST_SOURCE_CATALOG_FOUNDATION"
   },
   "completedTasks": [
     "T001",
@@ -300,7 +300,7 @@
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T031.md",
+    "task": ".embedra/evidence/tasks/T032.md",
     "remediation": ".embedra/evidence/tasks/T025-remediation.md",
     "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
     "commands": ".embedra/evidence/commands.jsonl",
@@ -657,16 +657,64 @@
     "reconciliationPolicy": "record-conflicts-prefer-svd",
     "deterministicRegenerationVerified": true,
     "targets": {
-      "esp32p4": {"romSymbols": 732, "headerPeripherals": 122, "headerRegisters": 5259, "svdPeripherals": 89, "svdRegisters": 6029},
-      "esp32c2": {"romSymbols": 2258, "headerPeripherals": 39, "headerRegisters": 905, "svdPeripherals": 27, "svdRegisters": 1013},
-      "esp32c5": {"romSymbols": 1171, "headerPeripherals": 82, "headerRegisters": 2796, "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"},
-      "esp32c6": {"romSymbols": 1300, "headerPeripherals": 75, "headerRegisters": 2392, "svdPeripherals": 65, "svdRegisters": 3944},
-      "esp32c61": {"romSymbols": 1133, "headerPeripherals": 57, "headerRegisters": 2232, "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"},
-      "esp32h2": {"romSymbols": 623, "headerPeripherals": 66, "headerRegisters": 2111, "svdPeripherals": 55, "svdRegisters": 3481},
-      "esp32h21": {"romSymbols": 624, "headerPeripherals": 58, "headerRegisters": 1645, "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"},
-      "esp32h4": {"romSymbols": 588, "headerPeripherals": 78, "headerRegisters": 1803, "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"},
-      "esp32s31": {"status": "UNAVAILABLE_IN_PINNED_SOURCES"},
-      "esp32e22": {"status": "UNAVAILABLE_IN_PINNED_SOURCES"}
+      "esp32p4": {
+        "romSymbols": 732,
+        "headerPeripherals": 122,
+        "headerRegisters": 5259,
+        "svdPeripherals": 89,
+        "svdRegisters": 6029
+      },
+      "esp32c2": {
+        "romSymbols": 2258,
+        "headerPeripherals": 39,
+        "headerRegisters": 905,
+        "svdPeripherals": 27,
+        "svdRegisters": 1013
+      },
+      "esp32c5": {
+        "romSymbols": 1171,
+        "headerPeripherals": 82,
+        "headerRegisters": 2796,
+        "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
+      },
+      "esp32c6": {
+        "romSymbols": 1300,
+        "headerPeripherals": 75,
+        "headerRegisters": 2392,
+        "svdPeripherals": 65,
+        "svdRegisters": 3944
+      },
+      "esp32c61": {
+        "romSymbols": 1133,
+        "headerPeripherals": 57,
+        "headerRegisters": 2232,
+        "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
+      },
+      "esp32h2": {
+        "romSymbols": 623,
+        "headerPeripherals": 66,
+        "headerRegisters": 2111,
+        "svdPeripherals": 55,
+        "svdRegisters": 3481
+      },
+      "esp32h21": {
+        "romSymbols": 624,
+        "headerPeripherals": 58,
+        "headerRegisters": 1645,
+        "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
+      },
+      "esp32h4": {
+        "romSymbols": 588,
+        "headerPeripherals": 78,
+        "headerRegisters": 1803,
+        "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
+      },
+      "esp32s31": {
+        "status": "UNAVAILABLE_IN_PINNED_SOURCES"
+      },
+      "esp32e22": {
+        "status": "UNAVAILABLE_IN_PINNED_SOURCES"
+      }
     }
   },
   "targetProviders": {
@@ -676,7 +724,10 @@
       "languageId": "Xtensa:LE:32:default",
       "compilerSpecId": "default",
       "processorTopology": "ONE_LX106_APPLICATION_CPU",
-      "imageVersions": [1, 2],
+      "imageVersions": [
+        1,
+        2
+      ],
       "version2FlashBaseRequired": true,
       "mappedProgramVerified": true,
       "esp32ChipIdRegistryMember": false
@@ -713,64 +764,104 @@
       "fullFlashWorkspaceVerified": false
     },
     "esp32s31": {
-      "supportState": "EXPERIMENTAL", "chipId": 32,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "TWO_APPLICATION_CPUS", "exactVariantCount": 2,
-      "mappedProgramVerified": true, "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
+      "supportState": "EXPERIMENTAL",
+      "chipId": 32,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "TWO_APPLICATION_CPUS",
+      "exactVariantCount": 2,
+      "mappedProgramVerified": true,
+      "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
     },
     "esp32p4": {
-      "supportState": "EXPERIMENTAL", "chipId": 18,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "TWO_APPLICATION_CPUS_AND_ONE_LP_CPU", "exactVariantCount": 4,
-      "mappedProgramVerified": true, "enrichmentVerified": true
+      "supportState": "EXPERIMENTAL",
+      "chipId": 18,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "TWO_APPLICATION_CPUS_AND_ONE_LP_CPU",
+      "exactVariantCount": 4,
+      "mappedProgramVerified": true,
+      "enrichmentVerified": true
     },
     "esp32c2": {
-      "supportState": "EXPERIMENTAL", "chipId": 12,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU", "exactVariantCount": 2,
-      "mappedProgramVerified": true, "enrichmentVerified": true
+      "supportState": "EXPERIMENTAL",
+      "chipId": 12,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU",
+      "exactVariantCount": 2,
+      "mappedProgramVerified": true,
+      "enrichmentVerified": true
     },
     "esp32c5": {
-      "supportState": "EXPERIMENTAL", "chipId": 23,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU", "exactVariantCount": 4,
-      "mappedProgramVerified": true, "enrichmentVerified": true
+      "supportState": "EXPERIMENTAL",
+      "chipId": 23,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU",
+      "exactVariantCount": 4,
+      "mappedProgramVerified": true,
+      "enrichmentVerified": true
     },
     "esp32c6": {
-      "supportState": "EXPERIMENTAL", "chipId": 13,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU", "exactVariantCount": 3,
-      "mappedProgramVerified": true, "enrichmentVerified": true
+      "supportState": "EXPERIMENTAL",
+      "chipId": 13,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU",
+      "exactVariantCount": 3,
+      "mappedProgramVerified": true,
+      "enrichmentVerified": true
     },
     "esp32c61": {
-      "supportState": "EXPERIMENTAL", "chipId": 20,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU", "exactVariantCount": 4,
-      "mappedProgramVerified": true, "enrichmentVerified": true
+      "supportState": "EXPERIMENTAL",
+      "chipId": 20,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU",
+      "exactVariantCount": 4,
+      "mappedProgramVerified": true,
+      "enrichmentVerified": true
     },
     "esp32e22": {
-      "supportState": "EXPERIMENTAL", "chipId": 31,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "TWO_APPLICATION_CPUS", "exactVariantCount": 1,
-      "mappedProgramVerified": true, "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
+      "supportState": "EXPERIMENTAL",
+      "chipId": 31,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "TWO_APPLICATION_CPUS",
+      "exactVariantCount": 1,
+      "mappedProgramVerified": true,
+      "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
     },
     "esp32h2": {
-      "supportState": "EXPERIMENTAL", "chipId": 16,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU", "exactVariantCount": 2,
-      "mappedProgramVerified": true, "enrichmentVerified": true
+      "supportState": "EXPERIMENTAL",
+      "chipId": 16,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU",
+      "exactVariantCount": 2,
+      "mappedProgramVerified": true,
+      "enrichmentVerified": true
     },
     "esp32h21": {
-      "supportState": "EXPERIMENTAL", "chipId": 25,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU", "exactVariantCount": 1,
-      "mappedProgramVerified": true, "enrichmentVerified": true
+      "supportState": "EXPERIMENTAL",
+      "chipId": 25,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "ONE_APPLICATION_CPU",
+      "exactVariantCount": 1,
+      "mappedProgramVerified": true,
+      "enrichmentVerified": true
     },
     "esp32h4": {
-      "supportState": "EXPERIMENTAL", "chipId": 28,
-      "languageId": "RISCV:LE:32:default", "compilerSpecId": "gcc",
-      "processorTopology": "TWO_APPLICATION_CPUS", "exactVariantCount": 2,
-      "mappedProgramVerified": true, "enrichmentVerified": true
+      "supportState": "EXPERIMENTAL",
+      "chipId": 28,
+      "languageId": "RISCV:LE:32:default",
+      "compilerSpecId": "gcc",
+      "processorTopology": "TWO_APPLICATION_CPUS",
+      "exactVariantCount": 2,
+      "mappedProgramVerified": true,
+      "enrichmentVerified": true
     },
     "esp32s3": {
       "supportState": "EXPERIMENTAL",
