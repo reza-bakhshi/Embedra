@@ -199,3 +199,9 @@ The source is not a complete exact-part catalog: orderable suffixes,
 lifecycle, DBGMCU IDs, network cores, interrupts, and exact CMSIS-SVD mappings
 still require authoritative reconciliation. T032 stays `IN_PROGRESS`; T033
 has not begun. See `.embedra/evidence/tasks/T032.md`.
+
+The initial T032 slice passed fixture/handoff validation, full Ghidra 12.1.3
+`check`, and two clean reproducibility builds: 201 unit, 60 real-Ghidra, and
+10 Python tests without failures or skips. The 2,772,307-byte ZIP SHA-256 is
+`435975910273e96cb9e4c0b0e7aa0e9646f6be10c98b7d5ebb2b920f74e7aa17`.
+This verification does not complete T032's unresolved source requirements.

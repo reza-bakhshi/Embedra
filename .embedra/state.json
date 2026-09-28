@@ -70,7 +70,7 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "bac065b36ff18f3faf44ee4cb859e3ca8622506d"
+    "commit": "cccfd0f"
   },
   "workingTree": {
     "state": "CLEAN",
@@ -123,6 +123,16 @@
       "moduleProfiles": 161,
       "boardProfiles": 58,
       "supportState": "PLANNED"
+    },
+    {
+      "catalogId": "stm32.source-reference",
+      "snapshotDate": "2026-09-28",
+      "path": "catalogs/stm32/2026-09-28/source-catalog.json",
+      "sha256": "6ecc64d28e086d6135dbf664674c259fc2cf29e9111b10b4be3a14305ab5a417",
+      "sourceRevision": "7d1f1514ed5583ec5007ad91236b4e1d377295b1",
+      "sourceReferenceRecords": 2240,
+      "supportState": "PLANNED",
+      "acceptance": "INCOMPLETE"
     }
   ],
   "fixtureEvidence": [
@@ -329,7 +339,7 @@
   },
   "knownFailures": [],
   "nextTask": "T032",
-  "nextAction": "Build the authoritative STM32 exact-part catalog generator and CI drift detection from pinned ST and CMSIS sources.",
+  "nextAction": "Continue T032: reconcile exact orderable STM32 MCU/MPU identities, lifecycle, device IDs, complete topology, interrupts, security, and CMSIS-SVD mappings from pinned authoritative sources; do not begin T033.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -378,6 +388,12 @@
       "sha256": "0113152d589dcfc08cefeb21bcbc117c9af02e50a19c6aeb25652813a014ad2e",
       "sizeBytes": 2632122,
       "status": "T031_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
+      "sha256": "435975910273e96cb9e4c0b0e7aa0e9646f6be10c98b7d5ebb2b920f74e7aa17",
+      "sizeBytes": 2772307,
+      "status": "T032_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -531,7 +547,7 @@
     "packBranchCoverage": 0.7759,
     "unitTests": 201,
     "ghidraIntegrationTests": 60,
-    "pythonGeneratorTests": 4
+    "pythonGeneratorTests": 10
   },
   "architecture": {
     "pureBoundaries": [
