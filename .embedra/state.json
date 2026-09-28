@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "9ef22daf20db29398ca0fbc16324088e59eaaacc7ea21f372feabd0c7175ad3d"
+    "sha256": "311dc72f9a17e8d6f41dbd765ee6790bdbcbfee6d0de3158d325ccf5582316a3"
   },
   "projectClassification": "NEW",
   "currentTask": {
     "id": "T031",
-    "status": "IN_PROGRESS",
-    "reasonCode": "ESP8266_LEGACY_IMPLEMENTATION_UNDER_VERIFICATION"
+    "status": "COMPLETE",
+    "reasonCode": "ESP_PROFILES_AND_ESP8266_LEGACY_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -41,7 +41,8 @@
     "T027",
     "T028",
     "T029",
-    "T030"
+    "T030",
+    "T031"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -69,7 +70,7 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "e2cf1bb857996dc17d347f987bc2fd35a832cea0"
+    "commit": "bac065b36ff18f3faf44ee4cb859e3ca8622506d"
   },
   "workingTree": {
     "state": "CLEAN",
@@ -93,6 +94,7 @@
     },
     "espFixtureGeneration": {
       "compiler": "xtensa-esp-elf esp-15.2.0_20251204",
+      "legacyCompiler": "xtensa-lx106-elf GCC 10.3.0",
       "riscvCompiler": "riscv32-esp-elf esp-15.2.0_20251204",
       "esptool": "5.4.0",
       "espIdfReferenceVersion": "v6.0",
@@ -259,6 +261,30 @@
       "sizeBytes": 524288,
       "redistributionStatus": "REDISTRIBUTABLE",
       "oracle": "src/test/resources/oracles/esp32s3/full-flash/invalid-partition-md5.expectations.json"
+    },
+    {
+      "fixtureId": "esp8266.esptool-v5.4.0.freestanding-v1",
+      "path": "src/test/resources/fixtures/esp8266/esp8266-freestanding-v1-0x00000.bin",
+      "sha256": "5d6596092012160ef08af2e2c8dc5feb3ee8b37c9b974dbb65bfcdd2aacc5d8f",
+      "sizeBytes": 80,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json"
+    },
+    {
+      "fixtureId": "esp8266.esptool-v5.4.0.freestanding-v1-irom-companion",
+      "path": "src/test/resources/fixtures/esp8266/esp8266-freestanding-v1-0x01010.bin",
+      "sha256": "9a82ca2c932d83424e62cb63ed0acdf2d687550df86e1b7e5094cb8df14b8747",
+      "sizeBytes": 16,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json"
+    },
+    {
+      "fixtureId": "esp8266.esptool-v5.4.0.freestanding-v2",
+      "path": "src/test/resources/fixtures/esp8266/esp8266-freestanding-v2-0x01000.bin",
+      "sha256": "99175667a2bcf43a794599d0737eec25f8ce1fa541d535a9e26fc390d88f561b",
+      "sizeBytes": 116,
+      "redistributionStatus": "REDISTRIBUTABLE",
+      "oracle": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json"
     }
   ],
   "restrictedFixtureEvidence": [
@@ -286,6 +312,8 @@
     "taskT029": ".embedra/evidence/tasks/T029.md",
     "adrT029": "docs/adr/0024-esp32c3-riscv-provider.md",
     "taskT030": ".embedra/evidence/tasks/T030.md",
+    "taskT031": ".embedra/evidence/tasks/T031.md",
+    "adrT031": "docs/adr/0025-esp8266-separate-legacy-provider.md",
     "nextTaskPrompt": ".embedra/prompts/T030-remaining-esp-providers.md",
     "taskT027": ".embedra/evidence/tasks/T027.md",
     "adrT027": "docs/adr/0022-shared-esp-target-services.md",
@@ -300,8 +328,8 @@
     ]
   },
   "knownFailures": [],
-  "nextTask": "T031",
-  "nextAction": "Complete T031 documentation and reproducible extension verification.",
+  "nextTask": "T032",
+  "nextAction": "Build the authoritative STM32 exact-part catalog generator and CI drift detection from pinned ST and CMSIS sources.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -344,6 +372,12 @@
       "sha256": "b97421ba772511eedf313dc49c321f0ff7463bac4b55a7baeeef2184cf27af1e",
       "sizeBytes": 2587489,
       "status": "T030_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
+      "sha256": "0113152d589dcfc08cefeb21bcbc117c9af02e50a19c6aeb25652813a014ad2e",
+      "sizeBytes": 2632122,
+      "status": "T031_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -476,6 +510,11 @@
       "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
       "exitStatus": 0,
       "result": "T030 PASS: two complete clean builds, all 20 quality actions each; 191 unit, 56 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 2,587,489-byte ZIP, SHA-256 b97421ba772511eedf313dc49c321f0ff7463bac4b55a7baeeef2184cf27af1e."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T031 PASS: two complete clean builds, all 20 quality actions each; 201 unit, 60 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 2,632,122-byte ZIP, SHA-256 0113152d589dcfc08cefeb21bcbc117c9af02e50a19c6aeb25652813a014ad2e."
     }
   ],
   "buildQuality": {
@@ -490,8 +529,8 @@
     "minimumCoreClassBranchCoverage": 0.9286,
     "packInstructionCoverage": 0.9226,
     "packBranchCoverage": 0.7759,
-    "unitTests": 191,
-    "ghidraIntegrationTests": 56,
+    "unitTests": 201,
+    "ghidraIntegrationTests": 60,
     "pythonGeneratorTests": 4
   },
   "architecture": {
@@ -631,6 +670,17 @@
     }
   },
   "targetProviders": {
+    "esp8266Legacy": {
+      "supportState": "EXPERIMENTAL",
+      "identity": "ESP8266EX_OR_ESP8285_NOT_ENCODED",
+      "languageId": "Xtensa:LE:32:default",
+      "compilerSpecId": "default",
+      "processorTopology": "ONE_LX106_APPLICATION_CPU",
+      "imageVersions": [1, 2],
+      "version2FlashBaseRequired": true,
+      "mappedProgramVerified": true,
+      "esp32ChipIdRegistryMember": false
+    },
     "esp32": {
       "supportState": "EXPERIMENTAL",
       "chipId": 0,

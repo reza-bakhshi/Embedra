@@ -140,7 +140,7 @@ eight targets with pinned enrichment inputs.
   function bodies without a reported repair failure. The mapped-segment log
   now omits the user-supplied input basename; a red-to-green integration test
   covers that privacy fix.
-- T001-T030 implementation and evidence are complete. T031 is in progress;
+- T001-T031 implementation and evidence are complete. T032 is unstarted;
   T064 remains unstarted. Restricted local firmware remains ignored and
   untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
@@ -153,8 +153,8 @@ support claim was added.
 
 ## Exact Next Action
 
-Complete T031 documentation and reproducible extension verification for the
-typed product-profile APIs and separate ESP8266 legacy provider.
+Begin T032 by building the authoritative STM32 exact-part catalog generator
+and CI drift detection from pinned ST and CMSIS sources.
 
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
 Two clean quality-script builds produced identical extension ZIPs with SHA-256
