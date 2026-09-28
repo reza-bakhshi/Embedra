@@ -134,3 +134,33 @@ jobs:
           path: ${{ runner.temp }}/c5-exact-parts.json
           if-no-files-found: ignore
           retention-days: 14
+
+  discover-new-st-dfp-sources:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out Embedra
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Fetch ST repository listing
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X GET search/repositories -f q='org:STMicroelectronics dfp' \
+            -f per_page=100 > "$RUNNER_TEMP/st-dfp-repos.json"
+      - name: Audit STM32 DFP source licenses
+        run: |
+          python3 scripts/discover-stm32-dfp-sources.py \
+            --repos-json "$RUNNER_TEMP/st-dfp-repos.json" \
+            --output "$RUNNER_TEMP/st-dfp-audit.json"
+      - name: Upload reviewable candidate on new source
+        if: failure()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: stm32-dfp-source-audit-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/st-dfp-repos.json
+            ${{ runner.temp }}/st-dfp-audit.json
+          if-no-files-found: ignore
+          retention-days: 14

@@ -69,9 +69,9 @@ tasks.named('check') {
 
 tasks.register('verifySTM32CatalogGenerator', Exec) {
     group = 'verification'
-    description = 'Runs offline STM32 catalog generator and integrity tests.'
+    description = 'Runs offline STM32 catalog generator, coverage, and integrity tests.'
     commandLine 'python3', '-m', 'unittest', 'discover', '-s', 'scripts/tests',
-        '-p', 'test_generate_stm32_*.py'
+        '-p', 'test_*stm32*.py'
 }
 
 tasks.named('check') {
