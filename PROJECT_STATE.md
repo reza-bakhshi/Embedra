@@ -246,3 +246,11 @@ H7, N6, U3, WL4, and H7RS PDSCs use wildcard orderable variants or shortened
 device names and provide no lifecycle statuses. H7RS is also absent from the
 2,240-reference open pin snapshot. The audit is recorded in T032 evidence;
 no audited PDSC data was committed or promoted to exact-part coverage.
+
+The user-provided local STM32CubeMX `DB.6.0.181` Finder SQLite archive was
+inspected read-only. It has 5,366 MCU/MPU commercial-part-number rows after
+product-class filtering, including 44 wildcard names, plus reference-product
+marketing status and memory/package/core attributes. The bundled SLA0048
+processing-unit restriction and lack of a separate Finder database license
+prevent this audit from authorizing a redistributed Embedra catalog. Only
+aggregate counts and source hashes are recorded in T032 evidence.
