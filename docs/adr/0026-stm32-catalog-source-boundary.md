@@ -88,3 +88,58 @@ access from this environment failed. This is a concrete source/redistribution
 blocker for completing exact orderable identities and lifecycle across all
 series. The Open-CMSIS-Pack F0 DFP checked here uses redistributable licenses
 but retains `x` pattern variants rather than exact orderable suffixes.
+
+## CubeMX coverage reconciliation checkpoint
+
+`scripts/check-stm32-cubemx-coverage.py` is a bounded, read-only, aggregate-only
+diagnostic. Given a local STM32CubeMX Finder archive it validates the ZIP and
+SQLite integrity, discovers the two STM32 product classes by name, and emits
+per-series counts plus a reconciliation against the committed catalogs. It
+never emits vendor part numbers, memory values, die IDs, or database bytes, and
+it is excluded from the shipped extension. Normal builds stay offline; only its
+synthetic-fixture tests run in `check`.
+
+Against the user's local `DB.6.0.181` archive (SHA-256
+`9b5a52038e1dbbda98aaa36e370bc19c866db3b187af9add22147a3f2300e076`, database
+SHA-256 `78543ddc8c7667a7ebb8d0e30498f566404b635068ed6f504142dc7b6af39089`) the
+diagnostic found 1,846 reference products and 5,366 commercial part numbers
+across 28 series (5,322 exact, 44 wildcard), with `die_id` on 5,327 and a
+security attribute on 3,487. The `MXFILENAME_SDTDB` attribute, which is the ST
+pin-data `RefName`, matched a committed Embedra reference pattern for all 5,213
+parts that carry it; 2,220 of 2,240 committed patterns are attested by at least
+one orderable part and 20 are not. The reconciliation therefore confirms the
+pinned reference-pattern layer but also shows that the committed exact-part
+layer covers only the 157 C5 variants from the BSD DFP. The vendor data adds a
+new `STM32V8` series (24 reference products, no orderable parts yet) absent from
+the pinned pin snapshot.
+
+The CubeMX database carries exactly the lifecycle, die-ID, package, memory,
+core, and security facts T032 still needs, but the installed SLA0048
+processing-unit restriction and the absence of a separate Finder-database
+license block using it for the shipped host-side catalog. It is a coverage
+oracle only.
+
+## Source-seeking outcome and options
+
+A refreshed GitHub organization search (`org:STMicroelectronics` matching
+`dfp`) still returns only the BSD-3-Clause `stm32c5xx-dfp` repository as an
+exact-part-bearing ST DFP; `STM32CubeU5-V2-Preview` carries the `dfp` topic but
+no permissive exact-part source. A scheduled `discover-new-st-dfp-sources` job
+now flags any new STM32 `*-dfp` repository for license review rather than
+assuming one exists.
+
+No redistributable source of lifecycle plus exact orderable parts currently
+exists for the other series. T032 completion therefore needs one of:
+
+1. Written ST permission to redistribute derived exact-part and lifecycle
+   facts; or
+2. A specification amendment that accepts a default-off, user-local catalog
+   built from the user's own licensed CubeMX installation. Such a pack would be
+   generated on demand, never committed or redistributed, and clearly labeled
+   `UNKNOWN`/user-local provenance, mirroring the T026A Function ID pilot. The
+   shipped catalog would remain the BSD/offline subset.
+
+Until the maintainer chooses, T032 remains `IN_PROGRESS`; the committed catalog
+is not presented as complete, and no exact suffix or lifecycle state is
+invented.
+

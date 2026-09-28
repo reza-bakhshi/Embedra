@@ -153,9 +153,11 @@ support claim was added.
 
 ## Exact Next Action
 
-Continue T032 by reconciling the pinned ST source-reference catalog with
-authoritative ST/CMSIS exact-part, lifecycle, device-ID, interrupt, security,
-and SVD sources. Do not begin T033.
+Continue T032 by resolving the exact-part/lifecycle source boundary: obtain ST
+permission to redistribute derived exact-part and lifecycle facts, or get an
+approved specification amendment for a default-off user-local catalog built
+from the licensed CubeMX install (ADR 0026). Then complete coverage and rerun
+full verification. Do not begin T033.
 
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
 Two clean quality-script builds produced identical extension ZIPs with SHA-256
@@ -254,3 +256,33 @@ marketing status and memory/package/core attributes. The bundled SLA0048
 processing-unit restriction and lack of a separate Finder database license
 prevent this audit from authorizing a redistributed Embedra catalog. Only
 aggregate counts and source hashes are recorded in T032 evidence.
+
+### T032 CubeMX coverage checkpoint (2026-09-29)
+
+A bounded, aggregate-only coverage diagnostic
+(`scripts/check-stm32-cubemx-coverage.py`) now reconciles the committed STM32
+catalogs against a user-supplied STM32CubeMX Finder archive without emitting or
+shipping vendor rows; offline synthetic tests cover it, and normal builds stay
+offline. Against the local `DB.6.0.181` database it found 1,846 reference
+products and 5,366 commercial parts (5,322 exact, 44 wildcard) across 28 series;
+all 5,213 parts carrying an ST pin-data `RefName` matched a committed reference
+pattern, 2,220 of 2,240 committed patterns are attested, die IDs exist for
+5,327 parts, and security attributes for 3,487. Committed exact-part coverage
+remains the 157 C5 variants, and the vendor data adds a `STM32V8` series absent
+from the pinned snapshot.
+
+A refreshed GitHub `org:STMicroelectronics` DFP search still finds only the
+BSD-3-Clause `stm32c5xx-dfp` as an exact-part source; a new scheduled/manual
+`discover-new-st-dfp-sources` job flags any new STM32 `*-dfp` repository for
+license review via `scripts/discover-stm32-dfp-sources.py`. No redistributable
+lifecycle-plus-exact-part source exists for the other series. T032 remains
+`IN_PROGRESS`; completion needs ST permission for derived exact-part/lifecycle
+facts or a spec amendment allowing a default-off, user-local catalog built from
+the user's licensed CubeMX install, as described in ADR 0026.
+
+The CubeMX-coverage slice passed both validators, full Ghidra 12.1.3 `check`,
+and two clean 21-action reproducibility builds: 201 unit, 60 real-Ghidra, and
+36 Python tests with no failures or skips. The 2,894,012-byte ZIP SHA-256 is
+`b8923f7e410ec31d90075cbefdaff682de7d72e86b77729f1020a96fa1ff65bc`. This
+verifies the coverage/source-watch tooling only and does not complete T032's
+exact-part/lifecycle acceptance.

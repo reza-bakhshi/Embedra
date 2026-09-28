@@ -70,7 +70,7 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "84f0f50"
+    "commit": "40bc643"
   },
   "workingTree": {
     "state": "CLEAN",
@@ -162,6 +162,27 @@
       "acceptance": "PARTIAL_T032"
     }
   ],
+  "stm32CoverageDiagnostic": {
+    "tool": "scripts/check-stm32-cubemx-coverage.py",
+    "cubemxArchiveSha256": "9b5a52038e1dbbda98aaa36e370bc19c866db3b187af9add22147a3f2300e076",
+    "cubemxDatabaseSha256": "78543ddc8c7667a7ebb8d0e30498f566404b635068ed6f504142dc7b6af39089",
+    "productClasses": 2,
+    "vendorReferenceProducts": 1846,
+    "vendorCommercialParts": 5366,
+    "vendorExactParts": 5322,
+    "vendorWildcardParts": 44,
+    "vendorPartsMatchingEmbedraReferencePattern": 5213,
+    "embedraReferencePatterns": 2240,
+    "embedraReferencePatternsAttested": 2220,
+    "embedraExactParts": 157,
+    "vendorPartsWithDieId": 5327,
+    "vendorPartsWithSecurityAttribute": 3487,
+    "vendorSeriesAbsentFromEmbedra": [
+      "STM32V8"
+    ],
+    "acceptance": "INCOMPLETE",
+    "redistribution": "AGGREGATE_ONLY_SLA0048_LOCAL_DIAGNOSTIC"
+  },
   "fixtureEvidence": [
     {
       "fixtureId": "esp32c3.esptool-v5.4.0.esp32c3-freestanding-minimal",
@@ -366,7 +387,7 @@
   },
   "knownFailures": [],
   "nextTask": "T032",
-  "nextAction": "Continue T032 using licensed exact-part and lifecycle sources. The pinned ST C5 BSD DFP covers 157 exact parts; other ST pack-server DFPs examined are SLA0044-restricted. Obtain a permitted source for remaining orderable identities/lifecycle, resolve CMSIS/SVD gaps, then rerun full verification. Do not begin T033.",
+  "nextAction": "T032 remains IN_PROGRESS: the committed exact-part layer is still only the 157 BSD C5 variants. The aggregate-only CubeMX coverage diagnostic reconciles the committed reference patterns but the Finder database is SLA0048-restricted and cannot be shipped. Resolve the source boundary by obtaining ST permission to redistribute derived exact-part/lifecycle facts or by an approved specification amendment for a default-off user-local catalog built from the licensed CubeMX install; then complete exact-part coverage and rerun full verification. Do not begin T033.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -433,6 +454,12 @@
       "sha256": "cdcb179f63c0b74423f39d55de16add75a2cdcabcb9f95ed34353ec4f7a92e87",
       "sizeBytes": 2893566,
       "status": "T032_IN_PROGRESS_C5_EXACT_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+      "sha256": "b8923f7e410ec31d90075cbefdaff682de7d72e86b77729f1020a96fa1ff65bc",
+      "sizeBytes": 2894012,
+      "status": "T032_IN_PROGRESS_CUBEMX_COVERAGE_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -570,6 +597,11 @@
       "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
       "exitStatus": 0,
       "result": "T031 PASS: two complete clean builds, all 20 quality actions each; 201 unit, 60 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 2,632,122-byte ZIP, SHA-256 0113152d589dcfc08cefeb21bcbc117c9af02e50a19c6aeb25652813a014ad2e."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> sh scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T032 IN-PROGRESS PASS: added aggregate-only CubeMX coverage diagnostic and ST DFP source watch; two clean 21-action builds; 201 unit, 60 real-Ghidra, and 36 Python tests with no failures or skips; byte-identical 2,894,012-byte ZIP, SHA-256 b8923f7e410ec31d90075cbefdaff682de7d72e86b77729f1020a96fa1ff65bc. Exact-part/lifecycle source gap remains."
     }
   ],
   "buildQuality": {
@@ -586,7 +618,7 @@
     "packBranchCoverage": 0.7759,
     "unitTests": 201,
     "ghidraIntegrationTests": 60,
-    "pythonGeneratorTests": 23
+    "pythonGeneratorTests": 36
   },
   "architecture": {
     "pureBoundaries": [

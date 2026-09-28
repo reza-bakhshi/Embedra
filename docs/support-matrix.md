@@ -66,3 +66,16 @@ STM32C5 has 157 exact orderable records from a separately pinned,
 redistributable ST DFP. These records include package/memory variants,
 ST device-ID group, and SVD/IRQ references. They remain catalog-only facts,
 with lifecycle unresolved and no C5 firmware import/provider claim.
+
+A read-only, aggregate-only CubeMX coverage diagnostic
+(`scripts/check-stm32-cubemx-coverage.py`) reconciles committed facts with the
+user's local STM32CubeMX `DB.6.0.181` Finder database without emitting or
+shipping vendor rows. It found 1,846 ST reference products and 5,366 commercial
+part numbers (5,322 exact, 44 wildcard); all 5,213 parts carrying an ST pin-data
+`RefName` matched a committed Embedra reference pattern, and 2,220 of 2,240
+committed patterns are attested. Committed exact-part coverage is still only the
+157 C5 variants, and the vendor data adds a `STM32V8` series absent from the
+pinned snapshot. The CubeMX database is SLA0048-restricted, so it is a coverage
+oracle only. T032 remains in progress pending ST permission for derived
+exact-part/lifecycle facts or an accepted user-local catalog path; STM32 import
+and device support start at T033 onward.
