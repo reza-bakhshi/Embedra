@@ -56,3 +56,17 @@ multiple nonconditional variants, 44 involve conditional IRQ definitions, and
 126 have no match. STM32MP2 headers explicitly distinguish CA35, CM33, and CM0
 views; the ST pin XML lists only A35 and M33 for those references. No IRQ list
 is merged across variants or declared complete for unmatched records.
+
+## SVD transformation candidate checkpoint
+
+An additional index pins 196 ST-authored Apache-2.0 SVD files via the
+`modm-io/cmsis-svd-stm32` transport revision
+`e79021accd49bf19bd0b16065f5471fb073ff3ac`. It records file hashes,
+CPU labels, IRQs, and the presence of `derivedFrom`, `dim`, alternate-register,
+cluster, and enumerated-value constructs. Transformation rules require
+resolving inheritance and arrays while retaining alternate registers,
+core-specific views, and source provenance. Of 2,240 reference patterns,
+1,641 have one candidate, 47 have core variants, 37 have multiple candidates,
+and 515 have none. These are candidates because an exact part-to-SVD identity
+and ST-controlled source revision have not yet been established for all parts.
+No Ghidra register/type application is claimed; that remains T040.

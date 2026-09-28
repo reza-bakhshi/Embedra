@@ -94,3 +94,12 @@ components under Apache-2.0, permitting redistribution of derived facts with
 license and attribution preservation. No CMSIS source headers are bundled.
 Conditional enumerations remain marked for review, and unresolved references
 are not assigned guessed IRQs.
+
+The provisional STM32 SVD rule index derives device names, IRQ names/numbers,
+core labels, and transformation-feature counts from ST-authored Apache-2.0
+CMSIS-SVD files transported by `modm-io/cmsis-svd-stm32` at revision
+`e79021accd49bf19bd0b16065f5471fb073ff3ac`. The archive reports that
+files were downloaded from ST and normalized for line endings/whitespace.
+The generated index carries each file's SHA-256; no SVD XML is bundled.
+The transport is separately identified because it is not an ST-controlled
+repository. Candidate mappings are not asserted as verified exact-device packs.

@@ -55,3 +55,7 @@ The separate pinned ST CMSIS IRQ index currently maps 2,114 of the 2,240
 source references to at least one device header. It retains multiple header
 variants and flags conditional IRQ enumerations. The 126 unmatched references
 and the exact part, lifecycle, device-ID, and SVD gaps still block T032.
+
+A provisional ST-authored SVD index covers 1,725 source references with at
+least one candidate file; 515 have no candidate. The mapping remains
+unverified and supplies no Ghidra registers or device-support claim.

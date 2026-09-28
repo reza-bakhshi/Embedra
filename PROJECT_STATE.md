@@ -213,3 +213,8 @@ header variants, flags 44 conditional mappings, and leaves 126 unresolved.
 STM32MP2 CA35, CM33, and CM0 header views are distinct. The source catalog
 remains incomplete for exact orderable identities, lifecycle, device IDs,
 full topology, and SVD mapping; T032 remains in progress.
+
+The provisional SVD rule index records 196 pinned ST-authored SVD files,
+transformation-feature counts, and candidate mappings. It leaves 515
+references without a candidate and does not claim exact ST-controlled SVD
+provenance or any T040 Ghidra register application. T032 remains open.

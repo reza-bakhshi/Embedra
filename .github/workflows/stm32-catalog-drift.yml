@@ -80,3 +80,29 @@ jobs:
             ${{ runner.temp }}/stm32-cmsis/current-interrupts.json
           if-no-files-found: ignore
           retention-days: 14
+
+  compare-st-authored-svd-archive:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out Embedra
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Fetch current ST-authored SVD transport
+        run: git clone --depth 1 https://github.com/modm-io/cmsis-svd-stm32.git "$RUNNER_TEMP/st-svd"
+      - name: Compare normalized SVD rule index
+        run: |
+          python3 scripts/generate-stm32-svd-rules.py drift \
+            --source catalogs/stm32/2026-09-28/source-catalog.json \
+            --svd-root "$RUNNER_TEMP/st-svd" \
+            --output "$RUNNER_TEMP/stm32-svd-rules.json"
+          cmp catalogs/stm32/2026-09-28/svd-rules.json "$RUNNER_TEMP/stm32-svd-rules.json"
+      - name: Upload reviewable candidate on drift
+        if: failure()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: stm32-svd-drift-${{ github.run_id }}
+          path: ${{ runner.temp }}/stm32-svd-rules.json
+          if-no-files-found: ignore
+          retention-days: 14
