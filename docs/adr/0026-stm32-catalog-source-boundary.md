@@ -1,6 +1,6 @@
 # ADR 0026: ST reference patterns as the STM32 catalog foundation
 
-- Status: Amended for curated T032 acceptance; implementation remains open
+- Status: Accepted and completed for the curated T032 F103 set
 - Date: 2026-09-29
 
 ## Context
@@ -150,5 +150,6 @@ exists for the other series. T032 completion therefore needs one of:
 
 The maintainer has chosen the curated acceptance boundary above. The two
 earlier options remain relevant only if a later expansion requires bulk exact
-coverage. T032 remains `IN_PROGRESS` until the selected catalog and required
-verification are complete; no exact suffix or lifecycle state is invented.
+coverage. The selected catalog and required verification are complete.
+Further families require an explicit reviewed amendment; no exact suffix or
+lifecycle state is invented.
