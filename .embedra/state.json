@@ -6,9 +6,9 @@
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T030",
-    "status": "COMPLETE",
-    "reasonCode": "REMAINING_ESP_PROVIDERS_VERIFIED"
+    "id": "T031",
+    "status": "IN_PROGRESS",
+    "reasonCode": "ESP8266_LEGACY_IMPLEMENTATION_UNDER_VERIFICATION"
   },
   "completedTasks": [
     "T001",
@@ -274,7 +274,7 @@
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T030.md",
+    "task": ".embedra/evidence/tasks/T031.md",
     "remediation": ".embedra/evidence/tasks/T025-remediation.md",
     "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
     "commands": ".embedra/evidence/commands.jsonl",
@@ -301,7 +301,7 @@
   },
   "knownFailures": [],
   "nextTask": "T031",
-  "nextAction": "Begin T031 by separating module and board profiles from silicon identity, then research the ESP8266 legacy image and SDK format before adding its provider.",
+  "nextAction": "Complete T031 documentation and reproducible extension verification.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",

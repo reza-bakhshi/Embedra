@@ -1,0 +1,42 @@
+{
+  "fixtureId": "esp8266.malformed.malformed-v2-truncated-second-header",
+  "sha256": "1c70c9bbcf92686ab3f581091d3ed1c5ec131190bcb74748f361a4109b145b86",
+  "target": "ESP8266",
+  "device": "ESP8266EX/ESP8285 legacy family (exact part not encoded)",
+  "inputFormat": "Malformed ESP8266 legacy image",
+  "origin": "Generated from repository freestanding C and linker sources",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "sourceProvenance": [
+    {
+      "name": "esptool ESP8266 firmware image implementation",
+      "revision": "v5.4.0",
+      "license": "GPL-2.0-or-later",
+      "url": "https://github.com/espressif/esptool/blob/v5.4.0/esptool/bin_image.py"
+    },
+    {
+      "name": "esptool ESP8266 target memory map",
+      "revision": "v5.4.0",
+      "license": "GPL-2.0-or-later",
+      "url": "https://github.com/espressif/esptool/blob/v5.4.0/esptool/targets/esp8266.py"
+    }
+  ],
+  "generatorRevision": "sha256:bdff07e81ccc85401f58668bf5e9506bb338731308783a67d1fd9591197a04a9",
+  "generationCommand": "source ESP-IDF v6.0 export.sh; scripts/generate-esp8266-legacy-fixtures.sh",
+  "toolchain": "xtensa-lx106-elf GCC 10.3.0; esptool 5.4.0",
+  "oracleCommands": [
+    "esptool --chip esp8266 image-info <fixture>",
+    "xtensa-lx106-elf-readelf --file-header --program-headers <elf>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json",
+  "requirements": [
+    "T031",
+    "ESP-001",
+    "ESP-002",
+    "ESP-003",
+    "ESP-004",
+    "ESP-005",
+    "ESP-020",
+    "TOPO-006"
+  ]
+}

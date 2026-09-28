@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /** Validated offline ESP product catalog and non-guessing exact-variant resolver. */
 public final class EspDeviceCatalog {
@@ -131,28 +132,81 @@ public final class EspDeviceCatalog {
         return resolution.requireExact();
     }
 
+    /** Requires an exact silicon identity and rejects module or board names. */
+    public EspCatalogRecord requireExactSilicon(String exactPart) {
+        return resolveSilicon(exactPart).requireExact();
+    }
+
+    /** Resolves only exact silicon records. Product profiles are never candidates. */
+    public EspCatalogResolution resolveSilicon(String query) {
+        return resolve(query, record -> record.kind() == EspCatalogEntityKind.SILICON);
+    }
+
+    /** Resolves only module profiles without treating them as processor identities. */
+    public EspCatalogResolution resolveModule(String query) {
+        return resolve(query, record -> record.kind() == EspCatalogEntityKind.MODULE);
+    }
+
+    /** Resolves only board profiles without treating them as processor identities. */
+    public EspCatalogResolution resolveBoard(String query) {
+        return resolve(query, record -> record.kind() == EspCatalogEntityKind.BOARD);
+    }
+
+    /** Resolves module and board profiles while excluding exact silicon records. */
+    public EspCatalogResolution resolveProfile(String query) {
+        return resolve(query, record -> record.kind() != EspCatalogEntityKind.SILICON);
+    }
+
+    /** Returns the exact silicon candidates explicitly referenced by a profile. */
+    public List<EspCatalogRecord> compatibleSilicon(EspCatalogRecord profile) {
+        Objects.requireNonNull(profile, "profile");
+        if (profile.kind() == EspCatalogEntityKind.SILICON) {
+            throw new IllegalArgumentException("Silicon records are not product profiles");
+        }
+        Map<String, EspCatalogRecord> siliconById = silicon().stream().collect(
+            java.util.stream.Collectors.toUnmodifiableMap(EspCatalogRecord::recordId,
+                record -> record));
+        return profile.siliconRecordIds().stream().map(siliconById::get)
+            .sorted(Comparator.comparing(EspCatalogRecord::recordId)).toList();
+    }
+
+    /** Returns all module and board profiles that explicitly reference exact silicon. */
+    public List<EspCatalogRecord> profilesForSilicon(String exactPart) {
+        String siliconId = requireExactSilicon(exactPart).recordId();
+        return records.stream().filter(record ->
+            record.kind() != EspCatalogEntityKind.SILICON
+                && record.siliconRecordIds().contains(siliconId)).toList();
+    }
+
     public EspCatalogResolution resolve(String query) {
+        return resolve(query, ignored -> true);
+    }
+
+    private EspCatalogResolution resolve(String query, Predicate<EspCatalogRecord> filter) {
         require(query, "query");
-        EspCatalogResolution exact = exactLookup(query);
+        Objects.requireNonNull(filter, "filter");
+        List<EspCatalogRecord> exactCandidates = byExactPart.getOrDefault(
+            normalize(query), List.of()).stream().filter(filter).toList();
+        EspCatalogResolution exact = resolution(query, exactCandidates);
         if (exact.status() != EspCatalogResolutionStatus.UNKNOWN) {
             return exact;
         }
         String normalized = normalize(query);
         List<EspCatalogRecord> candidates = records.stream()
+            .filter(filter)
             .filter(record -> normalize(record.exactPart()).startsWith(normalized + "-"))
             .toList();
-        if (candidates.size() == 1) {
-            return new EspCatalogResolution(EspCatalogResolutionStatus.EXACT, query, candidates);
-        }
-        if (candidates.size() > 1) {
-            return new EspCatalogResolution(EspCatalogResolutionStatus.AMBIGUOUS, query, candidates);
-        }
-        return new EspCatalogResolution(EspCatalogResolutionStatus.UNKNOWN, query, List.of());
+        return resolution(query, candidates);
     }
 
     private EspCatalogResolution exactLookup(String query) {
         require(query, "query");
         List<EspCatalogRecord> candidates = byExactPart.getOrDefault(normalize(query), List.of());
+        return resolution(query, candidates);
+    }
+
+    private static EspCatalogResolution resolution(
+            String query, List<EspCatalogRecord> candidates) {
         if (candidates.size() == 1) {
             return new EspCatalogResolution(EspCatalogResolutionStatus.EXACT, query, candidates);
         }

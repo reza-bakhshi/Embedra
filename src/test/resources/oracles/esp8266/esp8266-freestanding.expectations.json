@@ -1,0 +1,36 @@
+{
+  "target": "ESP8266",
+  "entryPoint": "0x40100008",
+  "elfMachine": "Tensilica Xtensa Processor",
+  "elfSha256": "b4a0c329bd207d47060798c21ad300de086dc393945ec223d40c656c21de4810",
+  "version1": {
+    "sha256": "5d6596092012160ef08af2e2c8dc5feb3ee8b37c9b974dbb65bfcdd2aacc5d8f",
+    "size": 80,
+    "segmentCount": 2,
+    "loadAddresses": [
+      "0x40100000",
+      "0x3ffe8000"
+    ],
+    "checksum": "0x90"
+  },
+  "version1IromCompanion": {
+    "sha256": "9a82ca2c932d83424e62cb63ed0acdf2d687550df86e1b7e5094cb8df14b8747",
+    "size": 16,
+    "flashOffset": "0x00001010",
+    "mappedAddress": "0x40201010"
+  },
+  "version2": {
+    "sha256": "99175667a2bcf43a794599d0737eec25f8ce1fa541d535a9e26fc390d88f561b",
+    "size": 116,
+    "segmentCount": 3,
+    "encodedLoadAddresses": [
+      "0x00000000",
+      "0x40100000",
+      "0x3ffe8000"
+    ],
+    "requiredFlashBase": "0x00001000",
+    "mappedIromAddress": "0x40201010",
+    "checksum": "0x90",
+    "sdkCrc32Appended": true
+  }
+}

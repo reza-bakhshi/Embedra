@@ -1,0 +1,22 @@
+esptool v5.4.0
+Image size: 80 bytes
+
+ESP8266 Image Header
+====================
+Image version: 1
+Entry point: 0x40100008
+Segments: 2
+Flash size: 1MB
+Flash freq: 40m
+Flash mode: DIO
+
+Segments Information
+====================
+Segment   Length   Load addr   File offs  Memory types
+-------  -------  ----------  ----------  ------------
+      0  0x00028  0x40100000  0x00000008  IRAM
+      1  0x00004  0x3ffe8000  0x00000038  DRAM
+
+ESP8266 Image Footer
+====================
+Checksum: 0x90 (valid)

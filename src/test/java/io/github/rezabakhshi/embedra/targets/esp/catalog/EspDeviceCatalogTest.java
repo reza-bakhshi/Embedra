@@ -95,6 +95,39 @@ class EspDeviceCatalogTest {
     }
 
     @Test
+    void typedProfileResolutionNeverPromotesModulesOrBoardsToSilicon() throws Exception {
+        EspDeviceCatalog catalog = load(CATALOG);
+
+        EspCatalogRecord module = catalog.resolveModule("ESP32-C3-MINI-1-H4")
+            .requireExact();
+        EspCatalogRecord board = catalog.resolveBoard("ESP32-C3-DevKitM-1-N4X")
+            .requireExact();
+        assertEquals(EspCatalogEntityKind.MODULE, module.kind());
+        assertEquals(EspCatalogEntityKind.BOARD, board.kind());
+        assertEquals(EspCatalogResolutionStatus.UNKNOWN,
+            catalog.resolveSilicon(module.exactPart()).status());
+        assertThrows(IllegalStateException.class,
+            () -> catalog.requireExactSilicon(module.exactPart()));
+
+        List<EspCatalogRecord> compatible = catalog.compatibleSilicon(module);
+        assertFalse(compatible.isEmpty());
+        assertTrue(compatible.stream().allMatch(record ->
+            record.kind() == EspCatalogEntityKind.SILICON));
+        assertTrue(compatible.stream().anyMatch(record ->
+            record.exactPart().equals("ESP32-C3FH4")));
+        assertThrows(IllegalArgumentException.class,
+            () -> catalog.compatibleSilicon(compatible.getFirst()));
+
+        List<EspCatalogRecord> profiles = catalog.profilesForSilicon("ESP32-C3FH4");
+        assertTrue(profiles.contains(module));
+        assertTrue(profiles.stream().noneMatch(record ->
+            record.kind() == EspCatalogEntityKind.SILICON));
+        assertTrue(catalog.profilesForSilicon("ESP32-C3").contains(board));
+        assertEquals(EspCatalogEntityKind.MODULE,
+            catalog.resolveProfile(module.exactPart()).requireExact().kind());
+    }
+
+    @Test
     void retainsDistinctIsaTopologyAndAuxiliaryProcessorEvidence() throws Exception {
         EspDeviceCatalog catalog = load(CATALOG);
 
