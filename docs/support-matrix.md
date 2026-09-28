@@ -59,3 +59,8 @@ and the exact part, lifecycle, device-ID, and SVD gaps still block T032.
 A provisional ST-authored SVD index covers 1,725 source references with at
 least one candidate file; 515 have no candidate. The mapping remains
 unverified and supplies no Ghidra registers or device-support claim.
+
+STM32C5 has 157 exact orderable records from a separately pinned,
+redistributable ST DFP. These records include package/memory variants,
+ST device-ID group, and SVD/IRQ references. They remain catalog-only facts,
+with lifecycle unresolved and no C5 firmware import/provider claim.

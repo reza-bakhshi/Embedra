@@ -226,3 +226,9 @@ skips. The 2,887,986-byte ZIP SHA-256 is
 `7f5d151e234c1445fc14adb8313be6467ee684447e13a28ef3e148e084b163e5`.
 The exact ZIP-entry oracle needed an ordering correction before the final
 successful two-build run. T032 remains `IN_PROGRESS`; T033 has not begun.
+
+ST's BSD-licensed C5 DFP added 157 exact C5 orderable variants with device IDs,
+package/memory facts, and nine SVD references; C5 was absent from the open pin
+snapshot. Other ST pack-server DFP archives examined use SLA0044 rev 6 and
+were excluded from committed inputs. Full T032 exact-part/lifecycle coverage
+still needs a source that permits this host-side catalog use and redistribution.

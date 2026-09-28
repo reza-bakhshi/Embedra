@@ -70,3 +70,21 @@ core-specific views, and source provenance. Of 2,240 reference patterns,
 and 515 have none. These are candidates because an exact part-to-SVD identity
 and ST-controlled source revision have not yet been established for all parts.
 No Ghidra register/type application is claimed; that remains T040.
+
+## Exact C5 source checkpoint and restricted DFP boundary
+
+ST's pack index dated 2026-09-18 listed a C5 DFP absent from the pinned open
+pin snapshot. ST's GitHub `stm32c5xx-dfp` revision
+`a5f65bc64535cfa723e9d25f58d7ce23d0937aed` is BSD-3-Clause for the
+PDSC, with Apache-2.0 SVD files. It yields 157 exact orderable C5 variants,
+package/memory properties, three device-ID groups, and nine SVD identities.
+The C5 snapshot is separate until full cross-source reconciliation.
+
+Other ST pack-server DFP archives examined carried SLA0044 revision 6 terms,
+including a restriction on use/execution outside ST processing units. Their
+PDSCs and derived catalogs are not committed or shipped. ST's public product
+pages show exact ordering codes and marketing status, but automated bulk
+access from this environment failed. This is a concrete source/redistribution
+blocker for completing exact orderable identities and lifecycle across all
+series. The Open-CMSIS-Pack F0 DFP checked here uses redistributable licenses
+but retains `x` pattern variants rather than exact orderable suffixes.

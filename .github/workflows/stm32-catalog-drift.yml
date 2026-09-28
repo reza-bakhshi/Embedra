@@ -106,3 +106,31 @@ jobs:
           path: ${{ runner.temp }}/stm32-svd-rules.json
           if-no-files-found: ignore
           retention-days: 14
+
+  compare-official-c5-dfp:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out Embedra
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Fetch current BSD-licensed ST C5 DFP
+        run: |
+          git clone --depth 1 --filter=blob:none --sparse \
+            https://github.com/STMicroelectronics/stm32c5xx-dfp.git "$RUNNER_TEMP/c5-dfp"
+          git -C "$RUNNER_TEMP/c5-dfp" sparse-checkout set SVD
+      - name: Compare exact C5 catalog
+        run: |
+          python3 scripts/generate-stm32-dfp-catalog.py drift \
+            --repo "$RUNNER_TEMP/c5-dfp" \
+            --output "$RUNNER_TEMP/c5-exact-parts.json"
+          cmp catalogs/stm32/2026-09-28/c5-exact-parts.json "$RUNNER_TEMP/c5-exact-parts.json"
+      - name: Upload reviewable candidate on drift
+        if: failure()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: stm32-c5-dfp-drift-${{ github.run_id }}
+          path: ${{ runner.temp }}/c5-exact-parts.json
+          if-no-files-found: ignore
+          retention-days: 14

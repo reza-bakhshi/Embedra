@@ -103,3 +103,12 @@ files were downloaded from ST and normalized for line endings/whitespace.
 The generated index carries each file's SHA-256; no SVD XML is bundled.
 The transport is separately identified because it is not an ST-controlled
 repository. Candidate mappings are not asserted as verified exact-device packs.
+
+The STMicroelectronics `stm32c5xx-dfp` repository at
+`a5f65bc64535cfa723e9d25f58d7ce23d0937aed` provides the C5 pack
+description under BSD-3-Clause terms and ST-authored SVD files marked
+Apache-2.0. The exact C5 index contains derived factual orderable identities,
+package/memory properties, ST device IDs, and SVD/IRQ references with source
+hashes. No source PDSC, SVD XML, or pack archive is bundled. Other ST-hosted
+DFP archives inspected during T032 carried SLA0044 terms restricting use to
+ST processing units; those archives were excluded from generated snapshots.
