@@ -232,3 +232,11 @@ package/memory facts, and nine SVD references; C5 was absent from the open pin
 snapshot. Other ST pack-server DFP archives examined use SLA0044 rev 6 and
 were excluded from committed inputs. Full T032 exact-part/lifecycle coverage
 still needs a source that permits this host-side catalog use and redistribution.
+
+The C5 slice passed pinned-source regeneration, both validators, Ghidra 12.1.3
+`check`, and two clean reproducible builds: 201 unit, 60 real-Ghidra, 23
+Python tests without failures/skips. The 2,893,566-byte ZIP SHA-256 is
+`cdcb179f63c0b74423f39d55de16add75a2cdcabcb9f95ed34353ec4f7a92e87`.
+T032 remains in progress because exact orderable and lifecycle data for other
+series have not been established from a source suitable for the shipped
+host-side catalog.

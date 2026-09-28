@@ -70,7 +70,7 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "a3c66f8"
+    "commit": "84f0f50"
   },
   "workingTree": {
     "state": "CLEAN",
@@ -151,6 +151,15 @@
       "sourceReferenceRecords": 2240,
       "supportState": "PLANNED",
       "acceptance": "INCOMPLETE"
+    },
+    {
+      "catalogId": "stm32.c5-exact-dfp",
+      "snapshotDate": "2026-09-28",
+      "path": "catalogs/stm32/2026-09-28/c5-exact-parts.json",
+      "sha256": "ea899df4ac99089d482eb4e7ec676a4702bfac912fd3ab10f638a3222eaccc35",
+      "exactParts": 157,
+      "supportState": "PLANNED",
+      "acceptance": "PARTIAL_T032"
     }
   ],
   "fixtureEvidence": [
@@ -357,7 +366,7 @@
   },
   "knownFailures": [],
   "nextTask": "T032",
-  "nextAction": "Continue T032: reconcile exact orderable parts and lifecycle from ST, device IDs and complete topology from authoritative ST/CMSIS sources, resolve 126 CMSIS IRQ and 515 SVD gaps, and verify exact SVD applicability. Do not begin T033.",
+  "nextAction": "Continue T032 using licensed exact-part and lifecycle sources. The pinned ST C5 BSD DFP covers 157 exact parts; other ST pack-server DFPs examined are SLA0044-restricted. Obtain a permitted source for remaining orderable identities/lifecycle, resolve CMSIS/SVD gaps, then rerun full verification. Do not begin T033.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -418,6 +427,12 @@
       "sha256": "7f5d151e234c1445fc14adb8313be6467ee684447e13a28ef3e148e084b163e5",
       "sizeBytes": 2887986,
       "status": "T032_IN_PROGRESS_CMSIS_SVD_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
+      "sha256": "cdcb179f63c0b74423f39d55de16add75a2cdcabcb9f95ed34353ec4f7a92e87",
+      "sizeBytes": 2893566,
+      "status": "T032_IN_PROGRESS_C5_EXACT_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -571,7 +586,7 @@
     "packBranchCoverage": 0.7759,
     "unitTests": 201,
     "ghidraIntegrationTests": 60,
-    "pythonGeneratorTests": 19
+    "pythonGeneratorTests": 23
   },
   "architecture": {
     "pureBoundaries": [
