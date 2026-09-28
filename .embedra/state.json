@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "1b4bfa24766a147552a4dd6faa222471c9cb985816935ed21d30bcc088b17e95"
+    "sha256": "18ffa893ff16725383380bd01e819319fc54f6daf62eae43ab6b7716974c534b"
   },
   "projectClassification": "NEW",
   "currentTask": {
     "id": "T032",
-    "status": "IN_PROGRESS",
-    "reasonCode": "CURATED_STM32F103_EXACT_PART_CATALOG"
+    "status": "COMPLETE",
+    "reasonCode": "CURATED_STM32F103_EXACT_PART_CATALOG_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -42,7 +42,8 @@
     "T028",
     "T029",
     "T030",
-    "T031"
+    "T031",
+    "T032"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -70,7 +71,7 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "40bc643"
+    "commit": "cb97007"
   },
   "workingTree": {
     "state": "CLEAN",
@@ -170,7 +171,7 @@
       "exactParts": 3,
       "family": "STM32F103",
       "supportState": "PLANNED",
-      "acceptance": "IN_PROGRESS"
+      "acceptance": "COMPLETE"
     }
   ],
   "stm32CoverageDiagnostic": {
@@ -397,8 +398,8 @@
     ]
   },
   "knownFailures": [],
-  "nextTask": "T032",
-  "nextAction": "T032 remains IN_PROGRESS: the committed exact-part layer is still only the 157 BSD C5 variants. The aggregate-only CubeMX coverage diagnostic reconciles the committed reference patterns but the Finder database is SLA0048-restricted and cannot be shipped. Resolve the source boundary by obtaining ST permission to redistribute derived exact-part/lifecycle facts or by an approved specification amendment for a default-off user-local catalog built from the licensed CubeMX install; then complete exact-part coverage and rerun full verification. Do not begin T033.",
+  "nextTask": "T033",
+  "nextAction": "T032 curated F103 catalog is complete; T033 STM32 firmware import is the next task and remains unstarted by instruction.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -471,6 +472,12 @@
       "sha256": "b8923f7e410ec31d90075cbefdaff682de7d72e86b77729f1020a96fa1ff65bc",
       "sizeBytes": 2894012,
       "status": "T032_IN_PROGRESS_CUBEMX_COVERAGE_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+      "sha256": "fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c",
+      "sizeBytes": 2637415,
+      "status": "T032_CURATED_COMPLETE_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -629,7 +636,7 @@
     "packBranchCoverage": 0.7759,
     "unitTests": 201,
     "ghidraIntegrationTests": 60,
-    "pythonGeneratorTests": 36
+    "pythonGeneratorTests": 43
   },
   "architecture": {
     "pureBoundaries": [
@@ -986,7 +993,7 @@
     "hostedCiExecuted": false
   },
   "stm32CuratedScope": {
-    "status": "IN_PROGRESS",
+    "status": "COMPLETE",
     "acceptanceFamily": "STM32F103",
     "exactParts": [
       "STM32F103C8T6",
@@ -999,6 +1006,16 @@
     "nextTask": "T033_NOT_STARTED",
     "snapshotPath": "catalogs/stm32/2026-09-29/curated-catalog.json",
     "sourceReferenceCount": 2,
-    "exactPartCount": 3
+    "exactPartCount": 3,
+    "verification": {
+      "unitTests": 201,
+      "realGhidraTests": 60,
+      "stm32PythonTests": 39,
+      "espPythonTests": 4,
+      "provenanceValidator": "PASS",
+      "handoffValidator": "PASS",
+      "twoBuildReproducibility": "PASS",
+      "extensionSha256": "fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c"
+    }
   }
 }

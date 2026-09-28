@@ -675,7 +675,7 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 
 ### STM32 core support
 
-- [ ] T032 Build a deterministic curated STM32 exact-part catalog and network drift detection from redistributable ST/CMSIS inputs for the three named F103 parts in section 8.2. Record provenance, packages, memory, execution topology, interrupts, security, lifecycle, device identifiers, and SVD applicability; mark unavailable facts explicitly. Validate every selected exact identity without expanding family names or wildcard references. This is catalog work only; firmware import begins at T033.
+- [x] T032 Build a deterministic curated STM32 exact-part catalog and network drift detection from redistributable ST/CMSIS inputs for the three named F103 parts in section 8.2. Record provenance, packages, memory, execution topology, interrupts, security, lifecycle, device identifiers, and SVD applicability; mark unavailable facts explicitly. Validate every selected exact identity without expanding family names or wildcard references. This is catalog work only; firmware import begins at T033.
 - [ ] T033 [P] Create golden STM32 fixtures for the curated catalog, beginning with Cortex-M3 STM32F103 exact parts, plus structural validation for every selected part record.
 - [ ] T034 Implement or integrate pure ELF/AXF and Intel HEX address-bearing input models without duplicating Ghidra's correct native behavior.
 - [ ] T035 Implement the supported STM32 DFU container parser with suffix/target/element validation.

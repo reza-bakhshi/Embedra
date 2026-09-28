@@ -41,13 +41,14 @@ begins `PLANNED` until its own provider, topology, fixtures, and acceptance
 evidence exist. STM32 source-reference records are described below. RP devices have no
 discovered repository catalog records yet. No STM32 or RP firmware support is claimed.
 
-## STM32 catalog work in progress
+## STM32 curated catalog
 
 T032 now targets a finite curated exact-part set: STM32F103C8T6 (LQFP48,
 64 KiB flash), STM32F103CBT6 (LQFP48, 128 KiB), and STM32F103RBT6
 (LQFP64, 128 KiB). ST product listings establish orderability; Blue Pill
 and NUCLEO-F103RB establish common use. These are distinct catalog-only
-`PLANNED` identities. The family name `STM32F103` and wildcard/range
+`PLANNED` identities. T032 catalog generation is complete for this reviewed
+set; firmware import is not implemented. The family name `STM32F103` and wildcard/range
 references never resolve to an exact part without independent evidence.
 
 The pinned ST source snapshot includes 2,240 MCU/MPU reference records across
@@ -86,5 +87,4 @@ coverage was the 157 C5 variants; the curated F103 snapshot adds three selected
 parts. The vendor data adds a `STM32V8` series absent from the
 pinned snapshot. The CubeMX database is SLA0048-restricted, so it is a coverage
 oracle only. The finite F103 catalog does not derive a bulk part list from the
-database. T032 remains in progress until its curated snapshot and verification
-pass; STM32 import and device support start at T033 onward.
+database. STM32 import and device support start at T033 onward.

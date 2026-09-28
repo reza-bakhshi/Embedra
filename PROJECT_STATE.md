@@ -3,8 +3,8 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T032 — STM32 exact-part catalog (`IN_PROGRESS`)**.
-- Last completed task: **T031 — ESP product profiles and ESP8266 legacy provider**.
+- Current task: **T032 — curated STM32F103 exact-part catalog (`COMPLETE`)**.
+- Last completed task: **T032 — curated STM32F103 exact-part catalog**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
@@ -140,7 +140,7 @@ eight targets with pinned enrichment inputs.
   function bodies without a reported repair failure. The mapped-segment log
   now omits the user-supplied input basename; a red-to-green integration test
   covers that privacy fix.
-- T001-T031 implementation and evidence are complete. T032 is in progress;
+- T001-T032 implementation and evidence are complete. T033 is unstarted;
   T064 remains unstarted. Restricted local firmware remains ignored and
   untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
@@ -153,11 +153,10 @@ support claim was added.
 
 ## Exact Next Action
 
-Continue the revised T032 finite acceptance set: build the curated offline
-STM32F103C8T6, STM32F103CBT6, and STM32F103RBT6 exact-part snapshot from
-redistributable ST/CMSIS facts, with bounded validation and network drift
-detection. Record absent facts explicitly, run both validators, full Ghidra
-12.1.3 Gradle `check`, and two clean reproducible builds. Do not begin T033.
+T032's revised finite acceptance set is complete. The next task is T033,
+which remains unstarted by instruction. Its STM32 firmware import work
+requires independent fixtures and selection evidence; the T032 catalog alone
+does not imply firmware support.
 
 The maintainer narrowed T032 on 2026-09-29 from every ST MCU/MPU to commonly
 used orderable parts. ADR 0026, the specification, support matrix, state, and
@@ -165,12 +164,13 @@ T032 evidence now define a finite first F103 set. The family name and wildcard
 ST references do not resolve to exact parts. The older broad indexes remain
 source evidence, not acceptance coverage. No STM32 import support is claimed.
 
-The first curated implementation snapshot now contains three F103 exact parts
+The curated implementation snapshot contains three F103 exact parts
 with distinct package/flash identities and pinned CMSIS IRQs. Unknown
 lifecycle, DBGMCU ID, security, and exact SVD applicability remain explicit.
 The prior broad STM32 indexes are excluded from the extension ZIP. Offline
-selection and provenance tests pass; full T032 acceptance verification remains
-to be run before marking the task complete.
+selection and provenance tests, both validators, Ghidra 12.1.3 `check`, and
+two clean reproducibility builds passed before completion. The final ZIP
+verification after the bundled support-matrix update is recorded below.
 
 T026A completed with 152 unit, 53 real-Ghidra, and 4 Python tests passing.
 Two clean quality-script builds produced identical extension ZIPs with SHA-256
@@ -299,3 +299,17 @@ and two clean 21-action reproducibility builds: 201 unit, 60 real-Ghidra, and
 `b8923f7e410ec31d90075cbefdaff682de7d72e86b77729f1020a96fa1ff65bc`. This
 verifies the coverage/source-watch tooling only and does not complete T032's
 exact-part/lifecycle acceptance.
+
+## T032 curated completion (2026-09-29)
+
+The finite T032 acceptance set is STM32F103C8T6, STM32F103CBT6, and
+STM32F103RBT6. The deterministic offline catalog carries distinct
+package/flash identities and pinned CMSIS IRQs; lifecycle, DBGMCU ID,
+security status, and exact SVD applicability remain explicit unknowns. It
+ships without the historical broad STM32 indexes. Catalog entries are
+`PLANNED`; T033 firmware import has not begun.
+
+The final gate passed 201 unit, 60 real-Ghidra, 39 STM32 Python, and 4 ESP
+Python tests with no failures/skips; both validators passed. Two clean
+21-action builds produced byte-identical ZIPs. Final ZIP: two byte-identical 2,637,415-byte builds, SHA-256
+`fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c`.
