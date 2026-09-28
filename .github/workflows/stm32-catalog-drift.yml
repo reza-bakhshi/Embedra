@@ -33,3 +33,50 @@ jobs:
           path: ${{ runner.temp }}/stm32-catalog-drift.json
           if-no-files-found: ignore
           retention-days: 14
+
+  compare-official-cmsis-headers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Check out Embedra
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Fetch current official ST CMSIS inputs
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          import subprocess
+          base = Path('${{ runner.temp }}') / 'stm32-cmsis'
+          base.mkdir()
+          manifest = json.loads(Path('catalogs/stm32/2026-09-28/cmsis-sources.json').read_text())
+          for repo in manifest['repositories']:
+              name = repo['name']
+              subprocess.run(['git', 'clone', '--depth', '1', '--filter=blob:none', '--sparse',
+                              'https://github.com/STMicroelectronics/' + name + '.git',
+                              str(base / name)], check=True)
+              subprocess.run(['git', '-C', str(base / name), 'sparse-checkout', 'set', 'Include'], check=True)
+              repo['revision'] = subprocess.check_output(['git', '-C', str(base / name),
+                                                          'rev-parse', 'HEAD'], text=True).strip()
+          (base / 'current-sources.json').write_text(json.dumps(manifest))
+          PY
+      - name: Compare normalized IRQ index
+        run: |
+          python3 scripts/generate-stm32-cmsis-interrupts.py generate \
+            --source catalogs/stm32/2026-09-28/source-catalog.json \
+            --manifest "$RUNNER_TEMP/stm32-cmsis/current-sources.json" \
+            --repos-root "$RUNNER_TEMP/stm32-cmsis" \
+            --output "$RUNNER_TEMP/stm32-cmsis/current-interrupts.json"
+          cmp catalogs/stm32/2026-09-28/cmsis-interrupts.json \
+              "$RUNNER_TEMP/stm32-cmsis/current-interrupts.json"
+      - name: Upload reviewable candidate on drift
+        if: failure()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: stm32-cmsis-drift-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/stm32-cmsis/current-sources.json
+            ${{ runner.temp }}/stm32-cmsis/current-interrupts.json
+          if-no-files-found: ignore
+          retention-days: 14

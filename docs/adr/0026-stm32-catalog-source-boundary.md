@@ -46,3 +46,13 @@ The initial pinned source catalog is useful for coverage and change review,
 but cannot be presented as the final exact-part catalog. A later T032 slice
 must resolve its intentionally missing facts with appropriately licensed
 ST/CMSIS sources before completion.
+
+## CMSIS interrupt index checkpoint
+
+A second offline snapshot indexes 377 IRQ-bearing device headers from 27
+pinned ST CMSIS Device repositories (Apache-2.0). The mapping is intentionally
+header-specific: 1,906 references have one nonconditional header, 164 have
+multiple nonconditional variants, 44 involve conditional IRQ definitions, and
+126 have no match. STM32MP2 headers explicitly distinguish CA35, CM33, and CM0
+views; the ST pin XML lists only A35 and M33 for those references. No IRQ list
+is merged across variants or declared complete for unmatched records.

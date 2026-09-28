@@ -206,3 +206,10 @@ The initial T032 slice passed fixture/handoff validation, full Ghidra 12.1.3
 10 Python tests without failures or skips. The 2,772,307-byte ZIP SHA-256 is
 `435975910273e96cb9e4c0b0e7aa0e9646f6be10c98b7d5ebb2b920f74e7aa17`.
 This verification does not complete T032's unresolved source requirements.
+
+A further T032 slice pins 27 ST CMSIS Device repositories and indexes 377
+IRQ-bearing headers. The separate offline snapshot maps 2,114 references to
+header variants, flags 44 conditional mappings, and leaves 126 unresolved.
+STM32MP2 CA35, CM33, and CM0 header views are distinct. The source catalog
+remains incomplete for exact orderable identities, lifecycle, device IDs,
+full topology, and SVD mapping; T032 remains in progress.

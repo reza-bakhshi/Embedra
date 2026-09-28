@@ -50,3 +50,8 @@ It is a source-facts snapshot, not an exact orderable-part or firmware-support
 catalog. Lifecycle, device IDs, interrupt vectors, and SVD mappings remain
 unresolved; wildcard/ranged ST references are not expanded into products.
 T032 remains in progress. STM32 import and device support start at T033 onward.
+
+The separate pinned ST CMSIS IRQ index currently maps 2,114 of the 2,240
+source references to at least one device header. It retains multiple header
+variants and flags conditional IRQ enumerations. The 126 unmatched references
+and the exact part, lifecycle, device-ID, and SVD gaps still block T032.

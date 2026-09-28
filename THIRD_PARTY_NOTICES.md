@@ -84,3 +84,13 @@ the copyright notice, license conditions, and disclaimer. The committed JSON
 contains normalized facts and per-file digests, not ST XML or pin descriptions.
 See `docs/adr/0026-stm32-catalog-source-boundary.md`. It is not yet a completed
 exact-orderable-part or CMSIS-SVD catalog.
+
+The preliminary STM32 CMSIS interrupt index derives IRQ names/numbers and
+core-specific header identities from 27 pinned STMicroelectronics CMSIS Device
+repositories. Their exact commit IDs and URLs are in
+`catalogs/stm32/2026-09-28/cmsis-sources.json`; each included header has a
+SHA-256 in `cmsis-interrupts.json`. These repositories publish the CMSIS Device
+components under Apache-2.0, permitting redistribution of derived facts with
+license and attribution preservation. No CMSIS source headers are bundled.
+Conditional enumerations remain marked for review, and unresolved references
+are not assigned guessed IRQs.
