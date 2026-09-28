@@ -49,6 +49,8 @@ flash/RAM values, declared core order, security contexts, and source digests.
 It is a source-facts snapshot, not an exact orderable-part or firmware-support
 catalog. Lifecycle, device IDs, interrupt vectors, and SVD mappings remain
 unresolved; wildcard/ranged ST references are not expanded into products.
+An audited Open-CMSIS-Pack H7RS pack lists 34 wildcard device names; H7RS is
+absent from this pinned ST pin snapshot and is not counted in its 28 families.
 T032 remains in progress. STM32 import and device support start at T033 onward.
 
 The separate pinned ST CMSIS IRQ index currently maps 2,114 of the 2,240

@@ -240,3 +240,9 @@ Python tests without failures/skips. The 2,893,566-byte ZIP SHA-256 is
 T032 remains in progress because exact orderable and lifecycle data for other
 series have not been established from a source suitable for the shipped
 host-side catalog.
+
+A pinned GitHub-only DFP audit confirmed that sampled Open-CMSIS-Pack F4,
+H7, N6, U3, WL4, and H7RS PDSCs use wildcard orderable variants or shortened
+device names and provide no lifecycle statuses. H7RS is also absent from the
+2,240-reference open pin snapshot. The audit is recorded in T032 evidence;
+no audited PDSC data was committed or promoted to exact-part coverage.
