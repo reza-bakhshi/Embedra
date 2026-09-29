@@ -43,12 +43,14 @@ discovered repository catalog records yet. No STM32 or RP firmware support is cl
 
 ## STM32 curated catalog
 
-T032 now targets a finite curated exact-part set: STM32F103C8T6 (LQFP48,
+The earlier T032 slice covers STM32F103C8T6 (LQFP48,
 64 KiB flash), STM32F103CBT6 (LQFP48, 128 KiB), and STM32F103RBT6
 (LQFP64, 128 KiB). ST product listings establish orderability; Blue Pill
 and NUCLEO-F103RB establish common use. These are distinct catalog-only
-`PLANNED` identities. T032 catalog generation is complete for this reviewed
-set; firmware import is not implemented. The family name `STM32F103` and wildcard/range
+`PLANNED` identities. The user clarified that F103 was only an example, so
+T032 is reopened for a multi-family, ST-board-backed, market-checked catalog.
+The three-part slice remains verified but is not T032 completion. Firmware
+import is not implemented. The family name `STM32F103` and wildcard/range
 references never resolve to an exact part without independent evidence.
 
 The pinned ST source snapshot includes 2,240 MCU/MPU reference records across

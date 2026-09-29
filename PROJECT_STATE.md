@@ -3,8 +3,8 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T032 — curated STM32F103 exact-part catalog (`COMPLETE`)**.
-- Last completed task: **T032 — curated STM32F103 exact-part catalog**.
+- Current task: **T032 — board-backed STM32 exact-part catalog (`IN_PROGRESS`, reopened after user scope correction)**.
+- Last completed task: **T031 — ESP product profiles and ESP8266 legacy provider**.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
@@ -140,7 +140,7 @@ eight targets with pinned enrichment inputs.
   function bodies without a reported repair failure. The mapped-segment log
   now omits the user-supplied input basename; a red-to-green integration test
   covers that privacy fix.
-- T001-T032 implementation and evidence are complete. T033 is unstarted;
+- T001-T031 implementation and evidence are complete. T032 is reopened;
   T064 remains unstarted. Restricted local firmware remains ignored and
   untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
@@ -153,10 +153,11 @@ support claim was added.
 
 ## Exact Next Action
 
-T032's revised finite acceptance set is complete. The next task is T033,
-which remains unstarted by instruction. Its STM32 firmware import work
-requires independent fixtures and selection evidence; the T032 catalog alone
-does not imply firmware support.
+Rework T032 for the user's clarified scope: research ST-made sample boards and
+current market availability across popular STM32 families, define the exact
+part acceptance list, and audit the license of each source used for shipped
+facts. Extend the offline catalog and verification accordingly. T033 remains
+unstarted by instruction.
 
 The maintainer narrowed T032 on 2026-09-29 from every ST MCU/MPU to commonly
 used orderable parts. ADR 0026, the specification, support matrix, state, and
@@ -300,9 +301,9 @@ and two clean 21-action reproducibility builds: 201 unit, 60 real-Ghidra, and
 verifies the coverage/source-watch tooling only and does not complete T032's
 exact-part/lifecycle acceptance.
 
-## T032 curated completion (2026-09-29)
+## T032 verified first slice, superseded as completion (2026-09-29)
 
-The finite T032 acceptance set is STM32F103C8T6, STM32F103CBT6, and
+The former finite T032 acceptance set was STM32F103C8T6, STM32F103CBT6, and
 STM32F103RBT6. The deterministic offline catalog carries distinct
 package/flash identities and pinned CMSIS IRQs; lifecycle, DBGMCU ID,
 security status, and exact SVD applicability remain explicit unknowns. It
@@ -313,3 +314,8 @@ The final gate passed 201 unit, 60 real-Ghidra, 39 STM32 Python, and 4 ESP
 Python tests with no failures/skips; both validators passed. Two clean
 21-action builds produced byte-identical ZIPs. Final ZIP: two byte-identical 2,637,415-byte builds, SHA-256
 `fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c`.
+
+The user clarified afterward that STM32F103 was an example. T032 is reopened
+for a multi-family, ST-board-backed, market-checked catalog. The prior
+verification remains valid only for the three-part F103 slice; T033 remains
+unstarted.

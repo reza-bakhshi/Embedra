@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "18ffa893ff16725383380bd01e819319fc54f6daf62eae43ab6b7716974c534b"
+    "sha256": "59cab0f1eb641b215f5d7c70b6daa98e5e83de76e5730b0329ea98c400b7cf98"
   },
   "projectClassification": "NEW",
   "currentTask": {
     "id": "T032",
-    "status": "COMPLETE",
-    "reasonCode": "CURATED_STM32F103_EXACT_PART_CATALOG_VERIFIED"
+    "status": "IN_PROGRESS",
+    "reasonCode": "USER_EXPANDED_BOARD_BACKED_MARKET_CATALOG"
   },
   "completedTasks": [
     "T001",
@@ -42,8 +42,7 @@
     "T028",
     "T029",
     "T030",
-    "T031",
-    "T032"
+    "T031"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -171,7 +170,7 @@
       "exactParts": 3,
       "family": "STM32F103",
       "supportState": "PLANNED",
-      "acceptance": "COMPLETE"
+      "acceptance": "VERIFIED_FIRST_SLICE_T032_OPEN"
     }
   ],
   "stm32CoverageDiagnostic": {
@@ -398,8 +397,8 @@
     ]
   },
   "knownFailures": [],
-  "nextTask": "T033",
-  "nextAction": "T032 curated F103 catalog is complete; T033 STM32 firmware import is the next task and remains unstarted by instruction.",
+  "nextTask": "T032",
+  "nextAction": "Research current ST-made STM32 development boards and market availability, define a reviewable multi-family exact-part list, audit per-source redistribution rights, and extend the catalog. Do not begin T033.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -993,7 +992,7 @@
     "hostedCiExecuted": false
   },
   "stm32CuratedScope": {
-    "status": "COMPLETE",
+    "status": "REOPENED_FIRST_SLICE_ONLY",
     "acceptanceFamily": "STM32F103",
     "exactParts": [
       "STM32F103C8T6",
@@ -1016,6 +1015,7 @@
       "handoffValidator": "PASS",
       "twoBuildReproducibility": "PASS",
       "extensionSha256": "fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c"
-    }
+    },
+    "acceptance": "SUPERSEDED_BY_BOARD_BACKED_MARKET_SCOPE"
   }
 }

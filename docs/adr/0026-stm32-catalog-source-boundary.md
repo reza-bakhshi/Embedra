@@ -1,6 +1,6 @@
 # ADR 0026: ST reference patterns as the STM32 catalog foundation
 
-- Status: Accepted and completed for the curated T032 F103 set
+- Status: Superseded as T032 acceptance; F103 slice retained pending broader decision
 - Date: 2026-09-29
 
 ## Context
@@ -150,6 +150,8 @@ exists for the other series. T032 completion therefore needs one of:
 
 The maintainer has chosen the curated acceptance boundary above. The two
 earlier options remain relevant only if a later expansion requires bulk exact
-coverage. The selected catalog and required verification are complete.
-Further families require an explicit reviewed amendment; no exact suffix or
-lifecycle state is invented.
+coverage. The selected three-part F103 slice and its verification are
+complete, but the user clarified that F103 was only an example. T032 is
+reopened for a board-backed, market-checked multi-family catalog with an
+explicit part list and per-source license audit. No exact suffix or lifecycle
+state is invented.
