@@ -319,3 +319,22 @@ The user clarified afterward that STM32F103 was an example. T032 is reopened
 for a multi-family, ST-board-backed, market-checked catalog. The prior
 verification remains valid only for the three-part F103 slice; T033 remains
 unstarted.
+
+## Reopened T032 board-source checkpoint
+
+The pinned BSD-3-Clause ST open pin repository now has a bounded, offline
+board-source candidate index with 277 board configurations and per-file
+digests. It records 148 explicit exact CPN rows covering 89 distinct parts;
+67 distinct exact MCU candidates are on Nucleo/Discovery configurations.
+The index is excluded from the extension ZIP. ST's current selectors list
+91 Nucleo products and 61 Discovery-category products; candidate-to-current-board and
+market-availability reconciliation remains in progress. No candidate was
+promoted to the shipped curated catalog yet.
+
+A second repository-only offline snapshot reconciles the 89 explicit CPNs to
+pinned ST pin and CMSIS facts. It retains 14 unpaired flash alternatives,
+11 non-single IRQ mappings, and three family-label alias cases for review;
+lifecycle, device ID, security, exact SVD, and market status are explicit
+unknowns. Neither snapshot is shipped. The ST current-board name comparison
+found 85 of 91 Nucleo and 41 of 61 Discovery-category names in the pinned
+board index, yielding 56 distinct exact MCU candidates before market checks.

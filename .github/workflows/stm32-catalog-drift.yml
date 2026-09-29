@@ -57,12 +57,21 @@ jobs:
             --source "$RUNNER_TEMP/st-pin" \
             --baseline catalogs/stm32/2026-09-28/source-catalog.json \
             --output "$RUNNER_TEMP/stm32-catalog-drift.json"
+      - name: Compare ST board source index
+        if: always()
+        run: |
+          python3 scripts/generate-stm32-board-index.py drift \
+            --repo "$RUNNER_TEMP/st-pin" \
+            --baseline catalogs/stm32/sources/board-index.json \
+            --output "$RUNNER_TEMP/stm32-board-index-drift.json"
       - name: Upload reviewable candidate on drift
         if: failure()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: stm32-catalog-drift-${{ github.run_id }}
-          path: ${{ runner.temp }}/stm32-catalog-drift.json
+          path: |
+            ${{ runner.temp }}/stm32-catalog-drift.json
+            ${{ runner.temp }}/stm32-board-index-drift.json
           if-no-files-found: ignore
           retention-days: 14
 

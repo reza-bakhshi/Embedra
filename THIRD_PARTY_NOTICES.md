@@ -84,6 +84,13 @@ the copyright notice, license conditions, and disclaimer. The committed JSON
 contains normalized facts and per-file digests, not ST XML or pin descriptions.
 See `docs/adr/0026-stm32-catalog-source-boundary.md`. The broad 2026-09-28
 source indexes are retained for review and excluded from the extension ZIP.
+The reopened T032 board-source candidate index is also derived from that
+same pinned BSD-3-Clause repository (`boards/*.ioc`), retaining per-file
+digests and explicit `Mcu.CPN` facts. It remains repository-only and is
+excluded from the extension ZIP until board and market evidence is reviewed.
+The accompanying repository-only candidate reconciliation joins those BSD
+facts to the pinned Apache-2.0 ST CMSIS IRQ index; it also remains excluded
+from the ZIP.
 
 The preliminary STM32 CMSIS interrupt index derives IRQ names/numbers and
 core-specific header identities from 27 pinned STMicroelectronics CMSIS Device

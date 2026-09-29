@@ -171,6 +171,31 @@
       "family": "STM32F103",
       "supportState": "PLANNED",
       "acceptance": "VERIFIED_FIRST_SLICE_T032_OPEN"
+    },
+    {
+      "catalogId": "stm32.board-source-candidates",
+      "snapshotDate": "2026-09-29",
+      "path": "catalogs/stm32/sources/board-index.json",
+      "sha256": "2b9c7c2cc5e2838c50190a507cc0d96792d3a3e5eba8a5aee4e21d50cc77b6a7",
+      "sourceRevision": "7d1f1514ed5583ec5007ad91236b4e1d377295b1",
+      "sourceLicense": "BSD-3-Clause",
+      "boardConfigurations": 277,
+      "explicitExactCpnRows": 148,
+      "distinctExactCpnCandidates": 89,
+      "distinctNucleoDiscoveryMcuCandidates": 67,
+      "acceptance": "CANDIDATE_ONLY_NOT_SHIPPED"
+    },
+    {
+      "catalogId": "stm32.board-part-candidates",
+      "snapshotDate": "2026-09-29",
+      "path": "catalogs/stm32/sources/board-part-candidates.json",
+      "sha256": "448d1d701777b22bfc7ceb6064710c57c8868be0e1f5d6b59c70a151393e6d76",
+      "explicitExactParts": 89,
+      "marketVerifiedParts": 0,
+      "singleIrqMappings": 78,
+      "unpairedFlashAlternatives": 14,
+      "familyAliasReview": 3,
+      "acceptance": "CANDIDATE_ONLY_NOT_SHIPPED"
     }
   ],
   "stm32CoverageDiagnostic": {
@@ -1017,5 +1042,21 @@
       "extensionSha256": "fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c"
     },
     "acceptance": "SUPERSEDED_BY_BOARD_BACKED_MARKET_SCOPE"
+  },
+  "stm32MarketSurvey": {
+    "status": "IN_PROGRESS",
+    "officialNucleoProductCount": 91,
+    "officialDiscoveryProductCount": 61,
+    "boardSourceConfigurations": 277,
+    "explicitExactCpnRows": 148,
+    "distinctExactCpnCandidates": 89,
+    "candidateIndexPath": "catalogs/stm32/sources/board-index.json",
+    "redistribution": "BSD_3_CLAUSE_SOURCE_FACTS_REPOSITORY_ONLY",
+    "marketAvailability": "PENDING_PER_PART_CHECK",
+    "discoveryIncludesMpuAndApplicationBoards": true,
+    "currentNucleoBoardNameMatches": 85,
+    "currentDiscoveryBoardNameMatches": 41,
+    "currentMatchedDistinctExactMcuCandidates": 56,
+    "candidateFactsPath": "catalogs/stm32/sources/board-part-candidates.json"
   }
 }

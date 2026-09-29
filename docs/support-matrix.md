@@ -53,6 +53,18 @@ The three-part slice remains verified but is not T032 completion. Firmware
 import is not implemented. The family name `STM32F103` and wildcard/range
 references never resolve to an exact part without independent evidence.
 
+The pinned BSD-3-Clause ST board-source index has 277 configurations,
+including 148 rows with explicit exact commercial part numbers and 89
+distinct exact candidates. Only 67 distinct MCU candidates occur on Nucleo
+or Discovery configurations. This repository-only index is excluded from
+the extension ZIP while current ST board listings, market availability,
+device facts, and per-source licenses are reconciled. Candidate rows are
+not new supported catalog entries.
+The separate candidate reconciliation records pinned pin/CMSIS facts for
+89 exact CPNs but leaves 14 flash alternatives unpaired and 11 IRQ mappings
+unresolved, conditional, or variant-dependent. No candidate has yet passed
+the current market and full-license review for shipment.
+
 The pinned ST source snapshot includes 2,240 MCU/MPU reference records across
 28 family labels, including STM32MP1 and STM32MP2. It preserves package,
 flash/RAM values, declared core order, security contexts, and source digests.

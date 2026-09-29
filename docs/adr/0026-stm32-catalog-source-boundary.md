@@ -155,3 +155,16 @@ complete, but the user clarified that F103 was only an example. T032 is
 reopened for a board-backed, market-checked multi-family catalog with an
 explicit part list and per-source license audit. No exact suffix or lifecycle
 state is invented.
+
+## Reopened T032 board-source boundary
+
+The pinned BSD-3-Clause `STM32_open_pin_data` repository includes `boards/*.ioc`
+configuration files. A bounded, digest-stamped repository-only index records
+board identity, target reference, package, and an exact `Mcu.CPN` only where
+ST explicitly supplies one. It does not expand a wildcard reference into an
+orderable part. This index is a candidate source: a historical configuration
+file does not establish a currently offered ST board or MCU, and neither
+board presence nor CPN alone establishes lifecycle, device ID, security,
+SVD applicability, or firmware support. Those facts require separate licensed
+sources or explicit unknown statuses. The index is excluded from the shipped
+extension while the current-board and market checks are in progress.
