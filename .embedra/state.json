@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "59cab0f1eb641b215f5d7c70b6daa98e5e83de76e5730b0329ea98c400b7cf98"
+    "sha256": "c68b88048e32365fc35bec6e83ed5002b83b818c8a5ea3bc26bfa01dcb5aa8f7"
   },
   "projectClassification": "NEW",
   "currentTask": {
     "id": "T032",
-    "status": "IN_PROGRESS",
-    "reasonCode": "USER_EXPANDED_BOARD_BACKED_MARKET_CATALOG"
+    "status": "COMPLETE",
+    "reasonCode": "REVISED_CURATED_BOARD_MARKET_CATALOG_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -42,7 +42,8 @@
     "T028",
     "T029",
     "T030",
-    "T031"
+    "T031",
+    "T032"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -70,7 +71,7 @@
   "versionControl": {
     "present": true,
     "branch": "main",
-    "commit": "cb97007"
+    "commit": "e051a59"
   },
   "workingTree": {
     "state": "CLEAN",
@@ -162,15 +163,15 @@
       "acceptance": "PARTIAL_T032"
     },
     {
-      "catalogId": "stm32.curated-f103-exact",
+      "catalogId": "stm32.curated-board-backed-exact",
       "snapshotDate": "2026-09-29",
       "path": "catalogs/stm32/2026-09-29/curated-catalog.json",
-      "sha256": "eaa0abec75927ba555ed9b636b6ad84ffed2b57e48b649bffb03f46d1c592f79",
+      "sha256": "afc66a47cd79c2025d115049c8aebd2db671c1112d42531b1db50df8514858f9",
       "selectionPath": "catalogs/stm32/2026-09-29/selection.json",
-      "exactParts": 3,
-      "family": "STM32F103",
+      "exactParts": 53,
       "supportState": "PLANNED",
-      "acceptance": "VERIFIED_FIRST_SLICE_T032_OPEN"
+      "acceptance": "REVISED_T032_COMPLETE",
+      "families": 20
     },
     {
       "catalogId": "stm32.board-source-candidates",
@@ -182,8 +183,8 @@
       "boardConfigurations": 277,
       "explicitExactCpnRows": 148,
       "distinctExactCpnCandidates": 89,
-      "distinctNucleoDiscoveryMcuCandidates": 67,
-      "acceptance": "CANDIDATE_ONLY_NOT_SHIPPED"
+      "acceptance": "CANDIDATE_ONLY_NOT_SHIPPED",
+      "distinctNucleoDiscoveryCpnCandidates": 67
     },
     {
       "catalogId": "stm32.board-part-candidates",
@@ -191,7 +192,7 @@
       "path": "catalogs/stm32/sources/board-part-candidates.json",
       "sha256": "448d1d701777b22bfc7ceb6064710c57c8868be0e1f5d6b59c70a151393e6d76",
       "explicitExactParts": 89,
-      "marketVerifiedParts": 0,
+      "marketVerifiedParts": 50,
       "singleIrqMappings": 78,
       "unpairedFlashAlternatives": 14,
       "familyAliasReview": 3,
@@ -422,8 +423,8 @@
     ]
   },
   "knownFailures": [],
-  "nextTask": "T032",
-  "nextAction": "Research current ST-made STM32 development boards and market availability, define a reviewable multi-family exact-part list, audit per-source redistribution rights, and extend the catalog. Do not begin T033.",
+  "nextTask": "T033",
+  "nextAction": "T033 is not started. Begin only in a later task; T032 is complete for its explicit 53-part board-backed curated selection.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -502,6 +503,18 @@
       "sha256": "fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c",
       "sizeBytes": 2637415,
       "status": "T032_CURATED_COMPLETE_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+      "sha256": "973c53e6857b0cafd2972dfffc4ad8b594de785916634d26cd60040bd3945a50",
+      "sizeBytes": 2665769,
+      "status": "T032_REVISED_INTERMEDIATE_SUPERSEDED"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+      "sha256": "e49ab7a474bd5b7326dcf23cf4078dacb86743e10cd20e1113a0270cd5010687",
+      "sizeBytes": 2665303,
+      "status": "T032_REVISED_53_PART_COMPLETE_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -1017,34 +1030,105 @@
     "hostedCiExecuted": false
   },
   "stm32CuratedScope": {
-    "status": "REOPENED_FIRST_SLICE_ONLY",
-    "acceptanceFamily": "STM32F103",
+    "status": "COMPLETE_REVISED_53_PART_ALLOWLIST",
     "exactParts": [
+      "STM32C031C6T3",
+      "STM32C051C8T6",
+      "STM32C071RBT6",
+      "STM32C092RCT6",
       "STM32F103C8T6",
       "STM32F103CBT6",
-      "STM32F103RBT6"
+      "STM32F103RBT6",
+      "STM32F207ZGT6",
+      "STM32F401RET6",
+      "STM32F756ZGT6",
+      "STM32G0B1RET6",
+      "STM32G431RBT6",
+      "STM32G473QET6",
+      "STM32G474RET6",
+      "STM32G491RET6",
+      "STM32H503RBT6",
+      "STM32H533RET6",
+      "STM32H553ZGT6",
+      "STM32H573IIK3Q",
+      "STM32H5E5ZJT6",
+      "STM32H5F5LJH7Q",
+      "STM32H735IGK6",
+      "STM32H750XBH6",
+      "STM32H7S3L8H6",
+      "STM32H7S7L8H6H",
+      "STM32L412KBU3",
+      "STM32L412RBT6P",
+      "STM32L4P5CGU6",
+      "STM32L4R5ZIT6",
+      "STM32L552ZET6Q",
+      "STM32L562QEI6Q",
+      "STM32N657X0H3Q",
+      "STM32U031R8T6",
+      "STM32U083MCT6",
+      "STM32U083RCT6",
+      "STM32U385RGT6Q",
+      "STM32U3C5ZIT6Q",
+      "STM32U545RET6Q",
+      "STM32U575ZIT6Q",
+      "STM32U585AII6Q",
+      "STM32U5A5ZJT6Q",
+      "STM32U5G9NJH6Q",
+      "STM32U5G9ZJT6Q",
+      "STM32WB05KZV6TR",
+      "STM32WB07CCV6TR",
+      "STM32WB09KEV6TR",
+      "STM32WB15CCU6",
+      "STM32WB55RGV6",
+      "STM32WBA25CEU7",
+      "STM32WBA52CGU6",
+      "STM32WBA65RIV7",
+      "STM32WL33CCV6TR",
+      "STM32WL3RKBV6"
     ],
     "identityPolicy": "EXACT_PART_ONLY_NO_FAMILY_OR_WILDCARD_INFERENCE",
     "sourcePolicy": "REDISTRIBUTABLE_ST_CMSIS_OFFLINE_FACTS",
     "catalogDoesNotImplyImportSupport": true,
     "nextTask": "T033_NOT_STARTED",
     "snapshotPath": "catalogs/stm32/2026-09-29/curated-catalog.json",
-    "sourceReferenceCount": 2,
-    "exactPartCount": 3,
+    "sourceReferenceCount": 52,
+    "exactPartCount": 53,
     "verification": {
       "unitTests": 201,
       "realGhidraTests": 60,
-      "stm32PythonTests": 39,
+      "stm32PythonTests": 50,
       "espPythonTests": 4,
       "provenanceValidator": "PASS",
       "handoffValidator": "PASS",
       "twoBuildReproducibility": "PASS",
-      "extensionSha256": "fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c"
+      "extensionSha256": "e49ab7a474bd5b7326dcf23cf4078dacb86743e10cd20e1113a0270cd5010687"
     },
-    "acceptance": "SUPERSEDED_BY_BOARD_BACKED_MARKET_SCOPE"
+    "acceptance": "COMPLETE_REVISED_T032",
+    "acceptanceFamilies": [
+      "STM32C0",
+      "STM32F103",
+      "STM32F2",
+      "STM32F4",
+      "STM32F7",
+      "STM32G0",
+      "STM32G4",
+      "STM32H5",
+      "STM32H7",
+      "STM32L4",
+      "STM32L4+",
+      "STM32L5",
+      "STM32N6",
+      "STM32U0",
+      "STM32U3",
+      "STM32U5",
+      "STM32WB",
+      "STM32WB0",
+      "STM32WBA",
+      "STM32WL3"
+    ]
   },
   "stm32MarketSurvey": {
-    "status": "IN_PROGRESS",
+    "status": "REVIEWED_SELECTION_COMPLETE_2026_09_29",
     "officialNucleoProductCount": 91,
     "officialDiscoveryProductCount": 61,
     "boardSourceConfigurations": 277,
@@ -1052,11 +1136,15 @@
     "distinctExactCpnCandidates": 89,
     "candidateIndexPath": "catalogs/stm32/sources/board-index.json",
     "redistribution": "BSD_3_CLAUSE_SOURCE_FACTS_REPOSITORY_ONLY",
-    "marketAvailability": "PENDING_PER_PART_CHECK",
+    "marketAvailability": "32_IN_STOCK_18_ACTIVE_OUT_OF_STOCK_5_UNVERIFIED_1_MODULE_EXCLUDED",
     "discoveryIncludesMpuAndApplicationBoards": true,
     "currentNucleoBoardNameMatches": 85,
     "currentDiscoveryBoardNameMatches": 41,
-    "currentMatchedDistinctExactMcuCandidates": 56,
-    "candidateFactsPath": "catalogs/stm32/sources/board-part-candidates.json"
+    "candidateFactsPath": "catalogs/stm32/sources/board-part-candidates.json",
+    "reviewedActiveBoardParts": 50,
+    "selectionPath": "catalogs/stm32/2026-09-29/selection.json",
+    "auditEvidencePath": ".embedra/evidence/tasks/T032-market-audit.json",
+    "currentMatchedDistinctExactCpnCandidates": 56,
+    "moduleCandidatesExcluded": 1
   }
 }

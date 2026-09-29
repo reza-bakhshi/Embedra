@@ -3,8 +3,8 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T032 — board-backed STM32 exact-part catalog (`IN_PROGRESS`, reopened after user scope correction)**.
-- Last completed task: **T031 — ESP product profiles and ESP8266 legacy provider**.
+- Current task: **T032 — board-backed STM32 exact-part catalog (`COMPLETE` under the reviewed 53-part boundary)**.
+- Last completed task: **T032 — curated STM32 catalog**. T033 has not started.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
@@ -17,6 +17,7 @@
   T030 provider-foundation slice is committed at `365d7af`; its independent
   fixture slice is committed at `e3c5ee0`, enrichment implementation at
   `3206d71`, and support documentation at `e2cf1bb`.
+  The revised T032 implementation is committed at `e051a59`.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -140,7 +141,8 @@ eight targets with pinned enrichment inputs.
   function bodies without a reported repair failure. The mapped-segment log
   now omits the user-supplied input basename; a red-to-green integration test
   covers that privacy fix.
-- T001-T031 implementation and evidence are complete. T032 is reopened;
+- T001-T032 implementation and evidence are complete under their respective
+  acceptance boundaries;
   T064 remains unstarted. Restricted local firmware remains ignored and
   untracked. The
   transient untracked `flash_dump.bin` caught by the package oracle is now
@@ -153,17 +155,26 @@ support claim was added.
 
 ## Exact Next Action
 
-Rework T032 for the user's clarified scope: research ST-made sample boards and
-current market availability across popular STM32 families, define the exact
-part acceptance list, and audit the license of each source used for shipped
-facts. Extend the offline catalog and verification accordingly. T033 remains
-unstarted by instruction.
+T032 is complete under the reviewed 53-part boundary. T033 is the next task
+but remains unstarted by instruction.
 
 The maintainer narrowed T032 on 2026-09-29 from every ST MCU/MPU to commonly
 used orderable parts. ADR 0026, the specification, support matrix, state, and
 T032 evidence now define a finite first F103 set. The family name and wildcard
 ST references do not resolve to exact parts. The older broad indexes remain
 source evidence, not acceptance coverage. No STM32 import support is claimed.
+
+The revised T032 selection now has 53 exact parts across 20 family labels:
+50 active exact CPNs found in pinned BSD-3-Clause ST board files and current
+ST Nucleo/Discovery listings, plus the earlier three F103 parts. A dated
+eStore audit found 32 of the 50 in stock, 18 active but temporarily out of
+stock, and five additional board CPNs whose exact page/status could not be
+verified; those five are excluded. An active STM32WB5MMGH6TR module is also
+excluded because the scope is exact MCUs. The generated catalog retains package and
+topology for all 53, marks 11 unpaired flash sizes and two unsafe IRQ mappings
+explicitly, and keeps lifecycle, device ID, security status, and exact SVD
+applicability unknown. ST website HTML and restricted CubeMX Finder rows are
+not shipped. See the full exact list in T032 evidence and the selection JSON.
 
 The curated implementation snapshot contains three F103 exact parts
 with distinct package/flash identities and pinned CMSIS IRQs. Unknown
@@ -325,11 +336,13 @@ unstarted.
 The pinned BSD-3-Clause ST open pin repository now has a bounded, offline
 board-source candidate index with 277 board configurations and per-file
 digests. It records 148 explicit exact CPN rows covering 89 distinct parts;
-67 distinct exact MCU candidates are on Nucleo/Discovery configurations.
+67 distinct exact CPN candidates are on Nucleo/Discovery configurations,
+including one STM32WBxM module.
 The index is excluded from the extension ZIP. ST's current selectors list
 91 Nucleo products and 61 Discovery-category products; candidate-to-current-board and
-market-availability reconciliation remains in progress. No candidate was
-promoted to the shipped curated catalog yet.
+market-availability reconciliation was completed for the revised finite
+acceptance set. Fifty current-board CPNs were promoted to the shipped
+curated catalog after active exact-page and license checks.
 
 A second repository-only offline snapshot reconciles the 89 explicit CPNs to
 pinned ST pin and CMSIS facts. It retains 14 unpaired flash alternatives,
@@ -337,4 +350,24 @@ pinned ST pin and CMSIS facts. It retains 14 unpaired flash alternatives,
 lifecycle, device ID, security, exact SVD, and market status are explicit
 unknowns. Neither snapshot is shipped. The ST current-board name comparison
 found 85 of 91 Nucleo and 41 of 61 Discovery-category names in the pinned
-board index, yielding 56 distinct exact MCU candidates before market checks.
+board index, yielding 56 distinct exact CPN candidates before market checks, including one STM32WBxM module.
+
+## Revised T032 completion (2026-09-29)
+
+The exact allowlist in `catalogs/stm32/2026-09-29/selection.json` contains 54
+parts across 20 family labels. The first F103 three-part slice remains, and
+50 additions have explicit CPNs in the pinned BSD-3-Clause ST board files,
+current ST Nucleo/Discovery listing evidence, and active exact eStore pages.
+The dated audit records 32 in stock, 18 active but out of stock, and five
+excluded current-board CPNs with unverified exact pages. This is a curated
+selection based on board and purchase evidence, not a sales-rank claim or
+exhaustive ST catalog. One active wireless module was excluded after ST's
+product classification review. The shipped snapshot records source-bound facts and
+explicit unknowns; all support states remain `PLANNED`.
+
+Both validators and the full Ghidra 12.1.3 Gradle check passed. The final
+two clean builds passed 201 unit, 60 Ghidra integration, 50 STM32 Python,
+and 4 ESP Python tests each. The byte-identical extension ZIPs have SHA-256
+`e49ab7a474bd5b7326dcf23cf4078dacb86743e10cd20e1113a0270cd5010687`.
+The ZIP contains the full pinned ST BSD-3-Clause notice and curated snapshot;
+it excludes the broad source indexes, website HTML, and CubeMX Finder data.
