@@ -1,0 +1,446 @@
+{
+  "$schema": "urn:embedra:schema:stm32-market-audit:1",
+  "checkedDate": "2026-09-29",
+  "source": "https://estore.st.com/en/{exactPartLower}-cpn.html",
+  "scope": "56 exact CPNs on current ST Nucleo/Discovery listings and pinned BSD board files; includes one STM32WBxM module excluded from MCU selection",
+  "rows": [
+    {
+      "errorType": "HTTPError",
+      "exactPart": "STM32C011F6U3",
+      "result": "FETCH_FAILED",
+      "url": "https://estore.st.com/en/stm32c011f6u3-cpn.html"
+    },
+    {
+      "exactPart": "STM32C031C6T3",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "277f6aad3d2494195e8b9d09d541b92b59eebdaea0da3e03aa1a925d667ac359",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32c031c6t3-cpn.html"
+    },
+    {
+      "exactPart": "STM32C051C8T6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "ea72cf9cd82dba0c90e474e9da80ba174216d991ac1740d5e66f9296bffd19ae",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32c051c8t6-cpn.html"
+    },
+    {
+      "exactPart": "STM32C071RBT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "7d52f9462bff56aca70e5d2b9f600cbde9691dd8cb0b01a78e4b32d41285a37a",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32c071rbt6-cpn.html"
+    },
+    {
+      "exactPart": "STM32C092RCT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "fd28d2541094718a4b5edfe1eec7c1eb31fdedf32ce25e0153fe1991e53ee465",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32c092rct6-cpn.html"
+    },
+    {
+      "exactPart": "STM32F207ZGT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "b976b0132c9d7d7b25aa59b266d835fed8d24a89f3d4fd8f7bbde5da5bcec9f2",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32f207zgt6-cpn.html"
+    },
+    {
+      "exactPart": "STM32F401RET6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "9650437b6d276489e452107b5826af55b2ca03aba4d6802280e06614133af094",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32f401ret6-cpn.html"
+    },
+    {
+      "exactPart": "STM32F756ZGT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "50e07d2a5ca741b57b086059829285ed66961d56a8d9971319a90731cc8ab4ac",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32f756zgt6-cpn.html"
+    },
+    {
+      "exactPart": "STM32G0B1RET6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "f8d00051ab168e6232236a7e88f26058d5ef2ed5b11c5f6130b554fcf463a606",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32g0b1ret6-cpn.html"
+    },
+    {
+      "exactPart": "STM32G431RBT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "ba04dd03ccbca74ad18595801e04d36b1e97ef3eeebe261d390f614ad14a31c3",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32g431rbt6-cpn.html"
+    },
+    {
+      "exactPart": "STM32G473QET6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "9f8c8c0c0be560d250fee3ad9095a84c14eadca53488431dc8bf4143c7ffd324",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32g473qet6-cpn.html"
+    },
+    {
+      "exactPart": "STM32G474RET6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "8a51f8af752f56b4f1871218ca29d95b447ff0b4b8bc3e1828bf600ab6a2c098",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32g474ret6-cpn.html"
+    },
+    {
+      "exactPart": "STM32G491RET6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "70e1fa35c228da720bbeb7b80a6ca84bf7ee861fe2f522df49e2aa4acb15269e",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32g491ret6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H503RBT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "10b82fb3ed6fedb8959525b9219db954d54cc30c98ee81857e29d0a12daec288",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32h503rbt6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H533RET6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "c88c5edc5578b7ad98ddeca355ef548dbae37c5dda412b032f86c686bf611fdd",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32h533ret6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H553ZGT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "5dcecce2006bddc676f775785efc35ef3d1feafe3a6f184621226da31affc175",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32h553zgt6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H563ZIT6",
+      "responseSha256": "e8298463176a35310b528c50f74b2151ed38b541b058ea9b26331cdc9644d632",
+      "result": "PAGE_IDENTITY_UNVERIFIED",
+      "url": "https://estore.st.com/en/stm32h563zit6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H573IIK3Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "145434b2c62b5774c0433b4f42d4d8a0dc7e8d66274f95862e6e5f72bf92d473",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32h573iik3q-cpn.html"
+    },
+    {
+      "exactPart": "STM32H5E5ZJT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "eb167da94e78bbb1806d79392008efc93388ecbc6f4bf371a78ee40439e166cb",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32h5e5zjt6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H5F5LJH7Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "5158051f1414eb7fd103da48cbd1e0bcb617c9bb68ebdd143dbf703942efc336",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32h5f5ljh7q-cpn.html"
+    },
+    {
+      "exactPart": "STM32H735IGK6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "ef68a160e70b605ba41d0ca58024e24be786d6d8217a3489257e956821b843d6",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32h735igk6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H750XBH6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "8d7c5c7de10ebebe7f9e3d9c15e5c8a4983f6fe53df3fd1d822460564642c288",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32h750xbh6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H753ZIT6",
+      "responseSha256": "9194e41e92091fd5f204647567d6269b28d931630c47c289bd6b38246db366eb",
+      "result": "PAGE_IDENTITY_UNVERIFIED",
+      "url": "https://estore.st.com/en/stm32h753zit6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H7S3L8H6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "de9c7660a7ba486fd4ba788cc2db9bae9589deab4b6649575020d4fc59cb00d4",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32h7s3l8h6-cpn.html"
+    },
+    {
+      "exactPart": "STM32H7S7L8H6H",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "2fd000443b45744e81ac3efbb7d1e8337dcbc0992c51328e9440b2766cdc3ba7",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32h7s7l8h6h-cpn.html"
+    },
+    {
+      "exactPart": "STM32L412KBU3",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "cef1eb3023109b0afd2ef3e1d195db8fca989e59928d1bc2155af2bed7e020dd",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32l412kbu3-cpn.html"
+    },
+    {
+      "exactPart": "STM32L412RBT6P",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "253d99b0ca3428c821ec2a701b3daf541a02b02c7c13ab30246a76a56a12a6c7",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32l412rbt6p-cpn.html"
+    },
+    {
+      "exactPart": "STM32L4P5CGU6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "808626045b2ed89738dcbd990d29afa086e19c0e5155c6ffb478dcdf390f17fd",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32l4p5cgu6-cpn.html"
+    },
+    {
+      "exactPart": "STM32L4R5ZIT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "b0052b960d52ec6e0c6ec630250a51eb047198e46d44b104b77cc409bb3a6c22",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32l4r5zit6-cpn.html"
+    },
+    {
+      "exactPart": "STM32L552ZET6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "31c1ac905c3b44d3e7b78292a93b8e679b0f3e4dc32f0cba60864d7b5cbeef6c",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32l552zet6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32L562QEI6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "0d7fdd456f281ac3812c9992bb80c95493196a9307ff50f1fc29dfee930447a8",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32l562qei6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32N657X0H3Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "0cb2e03702b406769d194c198c93b4ab0f86f493b873fef07458c35f0ee77e89",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32n657x0h3q-cpn.html"
+    },
+    {
+      "exactPart": "STM32U031R8T6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "d4f65798e7ff3e43984cdb5987a368751c0b1d6bc9529d45947990ba57c156bb",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32u031r8t6-cpn.html"
+    },
+    {
+      "exactPart": "STM32U083MCT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "4464f0c26247cbf203f1ba4fa8cad1bee5320b4ce9b154d8709169070bf80f45",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32u083mct6-cpn.html"
+    },
+    {
+      "exactPart": "STM32U083RCT6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "9cd991864aed915091e171630457602b97b49fd2dad3601cdcbe3b5b68f902b9",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32u083rct6-cpn.html"
+    },
+    {
+      "exactPart": "STM32U385RGT6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "cec3d67dac130aa86afd343ab61a04acfc163f69e4f1cfe58e45ae853f7f6b1a",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32u385rgt6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32U3C5ZIT6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "14ddd20827e78e454527876a6772849fca2a80f1b4bd6f62f1d9f282293c0943",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32u3c5zit6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32U545RET6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "7e37ca33e058f70e70381c06e4d63e07c23e09e7d2e2954f399d94362481cb9f",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32u545ret6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32U575ZIT6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "f3a5b7a0302440d71175c7baa03e0dbac13871b1aa9e7817c15aafbd913db3b2",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32u575zit6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32U585AII6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "03840c135f82328b6bb352bdd4a0396e83f1576190dadf353cc467769cb1432d",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32u585aii6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32U5A5ZJT6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "06e5a8f41ed81a2b90807df7530a8b1b6356f57225f9b600b9b9bfda5a931f3b",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32u5a5zjt6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32U5G9NJH6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "6074416040773a496ac557be3f8097b146a82aeeceb6cc3cbcc94bbca8436ea0",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32u5g9njh6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32U5G9ZJT6Q",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "fb0358076a60f27e325fbcb4c7b767af9a190c3cfd17ac2145b733f8b510f62d",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32u5g9zjt6q-cpn.html"
+    },
+    {
+      "exactPart": "STM32WB05KZV6TR",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "b79b2731ce2d719daa3d6f3cdf4d24b0644d9bb382e2836ed5607c455333a86b",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32wb05kzv6tr-cpn.html"
+    },
+    {
+      "exactPart": "STM32WB07CCV6TR",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "8178a39b57bfe0a6afcf5848b7248cdc320114911c2404dd1b3d610ca79f7842",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32wb07ccv6tr-cpn.html"
+    },
+    {
+      "exactPart": "STM32WB09KEV6TR",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "41d0a9641083175f1c25cf5df8929a811bcabb2eaffb6b3c7ddbd7bc1d62f88e",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32wb09kev6tr-cpn.html"
+    },
+    {
+      "exactPart": "STM32WB15CCU6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "3252fdd60135b6ebc9c8124a56a5e242786afd96044a7208388eee0e54da4c87",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32wb15ccu6-cpn.html"
+    },
+    {
+      "exactPart": "STM32WB55RGV6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "ea6c89a0acb746c554ef036eb680f9f6bab5dad2a95eeb026f5ab19a9cec506f",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32wb55rgv6-cpn.html"
+    },
+    {
+      "exactPart": "STM32WB5MMGH6TR",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "bbca9c0813640ec013967a2f01d3d7dea939ba253f7a116cfdbfc1943068ef73",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32wb5mmgh6tr-cpn.html"
+    },
+    {
+      "exactPart": "STM32WBA25CEU7",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "efb2d2e5cc5241c7aabc36a976061643a46482ec5114c95054ddd2d163353978",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32wba25ceu7-cpn.html"
+    },
+    {
+      "exactPart": "STM32WBA52CGU6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "41712876f3f6ceb2ce38a07450fb2cf65394a99b6d388d47489a1b65f185290d",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32wba52cgu6-cpn.html"
+    },
+    {
+      "errorType": "HTTPError",
+      "exactPart": "STM32WBA52CGU6T",
+      "result": "FETCH_FAILED",
+      "url": "https://estore.st.com/en/stm32wba52cgu6t-cpn.html"
+    },
+    {
+      "errorType": "HTTPError",
+      "exactPart": "STM32WBA55CGU6T",
+      "result": "FETCH_FAILED",
+      "url": "https://estore.st.com/en/stm32wba55cgu6t-cpn.html"
+    },
+    {
+      "exactPart": "STM32WBA65RIV7",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "a74c11b8d73096c2333d0ec9547c4ec60a9f0563ee6c58a5d1b43985aa61c61f",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32wba65riv7-cpn.html"
+    },
+    {
+      "exactPart": "STM32WL33CCV6TR",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "46066815146f81c5e00bf2d5a5cc0a99fed376ea24b62b1e08e8a91f109b062b",
+      "result": "PARSED",
+      "stockStatus": "OUT_OF_STOCK",
+      "url": "https://estore.st.com/en/stm32wl33ccv6tr-cpn.html"
+    },
+    {
+      "exactPart": "STM32WL3RKBV6",
+      "marketingStatus": "ACTIVE",
+      "responseSha256": "530c0faa43ee47d6987a7eb7fed93b05de50b5185f8b2f54dbb915b0aa1f46c7",
+      "result": "PARSED",
+      "stockStatus": "IN_STOCK",
+      "url": "https://estore.st.com/en/stm32wl3rkbv6-cpn.html"
+    }
+  ]
+}

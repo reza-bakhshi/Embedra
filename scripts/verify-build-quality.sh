@@ -106,6 +106,8 @@ Embedra/fid/esp32s3/README.md
 Embedra/fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.audit.json
 Embedra/fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb
 Embedra/fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.json
+Embedra/licenses/
+Embedra/licenses/STMicroelectronics-STM32-open-pin-data-BSD-3-Clause.txt
 Embedra/packs/
 Embedra/packs/espressif.esp32.peripherals/
 Embedra/packs/espressif.esp32.peripherals/1.0.0/

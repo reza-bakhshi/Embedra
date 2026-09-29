@@ -82,12 +82,15 @@ STMicroelectronics' `STM32_open_pin_data`, revision
 licensed; source and binary redistribution are permitted with preservation of
 the copyright notice, license conditions, and disclaimer. The committed JSON
 contains normalized facts and per-file digests, not ST XML or pin descriptions.
+The full ST BSD-3-Clause notice is bundled at
+`licenses/STMicroelectronics-STM32-open-pin-data-BSD-3-Clause.txt`.
 See `docs/adr/0026-stm32-catalog-source-boundary.md`. The broad 2026-09-28
 source indexes are retained for review and excluded from the extension ZIP.
 The reopened T032 board-source candidate index is also derived from that
 same pinned BSD-3-Clause repository (`boards/*.ioc`), retaining per-file
 digests and explicit `Mcu.CPN` facts. It remains repository-only and is
-excluded from the extension ZIP until board and market evidence is reviewed.
+excluded from the extension ZIP. The curated snapshot now includes 50 exact
+CPNs attested by those files; it does not copy IOC files or descriptions.
 The accompanying repository-only candidate reconciliation joins those BSD
 facts to the pinned Apache-2.0 ST CMSIS IRQ index; it also remains excluded
 from the ZIP.
@@ -113,12 +116,15 @@ The transport is separately identified because it is not an ST-controlled
 repository. Candidate mappings are not asserted as verified exact-device packs.
 The broad SVD index is excluded from the extension ZIP.
 
-The curated 2026-09-29 F103 snapshot ships three exact factual identifiers,
-package/flash/RAM/core facts from the pinned BSD-3-Clause ST pin source, and
-IRQ facts from the pinned Apache-2.0 CMSIS header. ST public product pages
-and community/NUCLEO board listings justify the manual selection; their
-page contents are not redistributed. Unknown lifecycle, device ID, and exact
-SVD applicability are stated as unknown in the snapshot.
+The curated 2026-09-29 snapshot ships 53 exact factual identifiers across 20
+family labels, with package/memory/core facts from pinned BSD-3-Clause ST
+pin/board sources and IRQ facts from pinned Apache-2.0 CMSIS headers where a
+single safe mapping exists. ST public Nucleo/Discovery and eStore pages plus
+the F103 community example justify selection. The repository audit retains
+only factual status, URLs, and response digests, not ST website content;
+the extension ZIP contains no page HTML. Stock is dated evidence, not a
+permanent product claim. Unknown flash pairing, lifecycle, device ID,
+security status, and exact SVD applicability are stated as unknown.
 
 The STMicroelectronics `stm32c5xx-dfp` repository at
 `a5f65bc64535cfa723e9d25f58d7ce23d0937aed` provides the C5 pack

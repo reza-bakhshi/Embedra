@@ -9,6 +9,45 @@ permissions:
   contents: read
 
 jobs:
+  compare-selected-st-market:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out Embedra
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - name: Prepare reviewed exact CPN list
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          selection = json.loads(Path('catalogs/stm32/2026-09-29/selection.json').read_text())
+          parts = sorted(x['exactPart'] for x in selection['parts']
+                         if x['selectionReason'] == 'CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN')
+          (Path(os.environ['RUNNER_TEMP']) / 'stm32-market-parts.json').write_text(json.dumps({'parts': parts}))
+          PY
+      - name: Audit current exact eStore pages
+        run: |
+          python3 scripts/audit-stm32-estore-market.py \
+            --parts "$RUNNER_TEMP/stm32-market-parts.json" \
+            --output "$RUNNER_TEMP/stm32-market-current.json"
+          python3 scripts/check-stm32-market-drift.py \
+            --selection catalogs/stm32/2026-09-29/selection.json \
+            --current "$RUNNER_TEMP/stm32-market-current.json" \
+            --output "$RUNNER_TEMP/stm32-market-drift.json"
+      - name: Upload reviewable market drift
+        if: failure()
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: stm32-market-drift-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/stm32-market-current.json
+            ${{ runner.temp }}/stm32-market-drift.json
+          if-no-files-found: ignore
+          retention-days: 14
+
   compare-curated-f103-selection:
     runs-on: ubuntu-24.04
     timeout-minutes: 10

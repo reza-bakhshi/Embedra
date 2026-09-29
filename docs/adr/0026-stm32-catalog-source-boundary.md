@@ -1,6 +1,6 @@
 # ADR 0026: ST reference patterns as the STM32 catalog foundation
 
-- Status: Superseded as T032 acceptance; F103 slice retained pending broader decision
+- Status: Accepted for the revised T032 curated acceptance boundary
 - Date: 2026-09-29
 
 ## Context
@@ -30,24 +30,28 @@ applicability. Some wireless network cores are absent from its `Core` elements.
 
 ## T032 acceptance boundary
 
-T032's first accepted exact-part set is **STM32F103C8T6**, **STM32F103CBT6**,
-and **STM32F103RBT6**. C8 and CB have distinct 64/128 KiB flash identities;
-RBT6 has a distinct LQFP64 package. ST's active orderable-product pages,
-Blue Pill use of F103C8, and ST's NUCLEO-F103RB example establish the
-selection rationale (links in T032 evidence). This is a finite allowlist, not
-all F103 products. Further families and parts need an explicit reviewed
-amendment. A family name or wildcard reference cannot identify an exact part.
+The user clarified that STM32F103 was an example. The revised finite allowlist
+is the 53 exact identities in `catalogs/stm32/2026-09-29/selection.json`: 50
+active MCU CPNs explicitly present in pinned BSD-3-Clause ST board files and
+matched to current ST Nucleo or Discovery product listings, plus the three
+previously reviewed F103 parts. The source lists 20 family labels. Stock
+availability is dated selection evidence, not a permanent support property;
+18 selected board parts were temporarily out of stock on the audit date.
+Five current-board CPNs could not be verified against exact eStore pages and
+are excluded pending review. ST identifies the active `STM32WB5MMGH6TR` as
+a wireless module containing an MCU, so it is excluded from this MCU set.
+The original C8/CB/RB memory and package
+variants remain separate. A family name or wildcard reference never identifies
+an exact part.
 
-T032 is complete when a deterministic, bounded offline snapshot validates
-these three exact names and their distinct package/memory facts against
-redistributable ST/CMSIS source data, records source revisions and licenses,
-and records lifecycle, device ID, topology, interrupts, security, and SVD
-applicability as sourced facts or explicit unknowns. Official web product
-listings can justify selection and network drift review; their page data are
-not copied wholesale into the shipped snapshot. Negative and structural tests,
-offline snapshot checks, network drift detection, full Gradle checks, both
-validators, and two clean identical builds must pass. Catalog discovery makes
-no firmware-import or runtime-device-support claim; those start with T033.
+The shipped snapshot uses BSD-3-Clause board/pin facts and Apache-2.0 CMSIS
+headers. It has explicit unknowns where licensed sources cannot safely pair
+flash size, identify a single IRQ header, establish security/lifecycle/device
+ID, or map an SVD. Current ST website pages and factual availability states
+are selection evidence; HTML and CubeMX Finder rows are not redistributed.
+T032 is complete only after offline snapshot, provenance, drift, full Gradle,
+validator, and two-build reproducibility gates pass. The catalog makes no
+firmware-import or runtime-device-support claim; those start with T033.
 
 ## Consequences
 
@@ -138,7 +142,7 @@ now flags any new STM32 `*-dfp` repository for license review rather than
 assuming one exists.
 
 No redistributable source of lifecycle plus exact orderable parts currently
-exists for the other series. T032 completion therefore needs one of:
+exists for all ST series. A future exhaustive catalog would need one of:
 
 1. Written ST permission to redistribute derived exact-part and lifecycle
    facts; or
@@ -148,13 +152,9 @@ exists for the other series. T032 completion therefore needs one of:
    `UNKNOWN`/user-local provenance, mirroring the T026A Function ID pilot. The
    shipped catalog would remain the BSD/offline subset.
 
-The maintainer has chosen the curated acceptance boundary above. The two
-earlier options remain relevant only if a later expansion requires bulk exact
-coverage. The selected three-part F103 slice and its verification are
-complete, but the user clarified that F103 was only an example. T032 is
-reopened for a board-backed, market-checked multi-family catalog with an
-explicit part list and per-source license audit. No exact suffix or lifecycle
-state is invented.
+The maintainer chose the curated acceptance boundary above. The two earlier
+options remain relevant only if a later expansion requires bulk exact
+coverage. No exact suffix or lifecycle state is invented.
 
 ## Reopened T032 board-source boundary
 
@@ -167,4 +167,6 @@ file does not establish a currently offered ST board or MCU, and neither
 board presence nor CPN alone establishes lifecycle, device ID, security,
 SVD applicability, or firmware support. Those facts require separate licensed
 sources or explicit unknown statuses. The index is excluded from the shipped
-extension while the current-board and market checks are in progress.
+extension. The revised selected MCU CPNs were promoted only after the
+current-board and market checks; the broader candidate index remains for
+future review.

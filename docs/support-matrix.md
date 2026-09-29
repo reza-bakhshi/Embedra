@@ -48,22 +48,30 @@ The earlier T032 slice covers STM32F103C8T6 (LQFP48,
 (LQFP64, 128 KiB). ST product listings establish orderability; Blue Pill
 and NUCLEO-F103RB establish common use. These are distinct catalog-only
 `PLANNED` identities. The user clarified that F103 was only an example, so
-T032 is reopened for a multi-family, ST-board-backed, market-checked catalog.
-The three-part slice remains verified but is not T032 completion. Firmware
+T032's revised snapshot contains 53 exact parts across 20 family labels: the
+three-part F103 first slice and 50 active exact CPNs from pinned ST board
+files that match current ST Nucleo/Discovery listings. The dated market audit
+found 32 of the new parts in stock and 18 active but out of stock. Five other
+current-board CPNs lack a verified exact eStore result and are excluded.
+The active `STM32WB5MMGH6TR` is excluded because ST identifies it as a
+wireless module containing an MCU.
+The full allowlist is in `catalogs/stm32/2026-09-29/selection.json` and T032
+evidence. Firmware
 import is not implemented. The family name `STM32F103` and wildcard/range
 references never resolve to an exact part without independent evidence.
 
 The pinned BSD-3-Clause ST board-source index has 277 configurations,
 including 148 rows with explicit exact commercial part numbers and 89
-distinct exact candidates. Only 67 distinct MCU candidates occur on Nucleo
-or Discovery configurations. This repository-only index is excluded from
-the extension ZIP while current ST board listings, market availability,
-device facts, and per-source licenses are reconciled. Candidate rows are
-not new supported catalog entries.
+distinct exact candidates. Sixty-seven distinct exact CPN candidates occur
+on Nucleo or Discovery configurations; this pool includes a wireless module.
+This repository-only index is excluded from the extension ZIP after current
+ST board, market, and license review. Candidate rows are
+not automatically supported catalog entries. The 50 reviewed identities are
+now in the curated snapshot as `PLANNED` catalog records.
 The separate candidate reconciliation records pinned pin/CMSIS facts for
 89 exact CPNs but leaves 14 flash alternatives unpaired and 11 IRQ mappings
-unresolved, conditional, or variant-dependent. No candidate has yet passed
-the current market and full-license review for shipment.
+unresolved, conditional, or variant-dependent. In the revised curated subset,
+11 flash values remain unpaired and two IRQ mappings are not safely singular.
 
 The pinned ST source snapshot includes 2,240 MCU/MPU reference records across
 28 family labels, including STM32MP1 and STM32MP2. It preserves package,

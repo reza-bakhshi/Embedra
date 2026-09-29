@@ -1,7 +1,55 @@
 {
-  "$schema": "urn:embedra:schema:stm32-curated-selection:1",
+  "$schema": "urn:embedra:schema:stm32-curated-selection:2",
   "selectionDate": "2026-09-29",
+  "boardCatalogUrl": "https://www.st.com/en/evaluation-tools/stm32-nucleo-boards/products.html",
+  "discoveryCatalogUrl": "https://www.st.com/en/evaluation-tools/stm32-discovery-kits/products.html",
+  "marketAuditEvidence": ".embedra/evidence/tasks/T032-market-audit.json",
   "parts": [
+    {
+      "exactPart": "STM32C031C6T3",
+      "reference": "STM32C031C(4-6)Tx",
+      "boardSourcePaths": [
+        "boards/M44_Nucleo_NUCLEO-C031C6_STM32C031C6_Board_AllConfig.ioc",
+        "boards/N03_Discovery_STM32C0316-DK_STM32C031C6T_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32c031c6t3-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32C051C8T6",
+      "reference": "STM32C051C8Tx",
+      "boardSourcePaths": [
+        "boards/M46_Nucleo_NUCLEO-C051C8_STM32C051C8_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32c051c8t6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32C071RBT6",
+      "reference": "STM32C071RBTx",
+      "boardSourcePaths": [
+        "boards/M45_Nucleo_NUCLEO-C071RB_STM32C071RB_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32c071rbt6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32C092RCT6",
+      "reference": "STM32C092RCTx",
+      "boardSourcePaths": [
+        "boards/M47_Nucleo_NUCLEO-C092RC_STM32C092RC_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32c092rct6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
     {
       "exactPart": "STM32F103C8T6",
       "reference": "STM32F103C(8-B)Tx",
@@ -9,7 +57,8 @@
       "flashKiB": 64,
       "ramKiB": 20,
       "orderabilityUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103c8",
-      "commonUseUrl": "https://github.com/stm32duino/Arduino_Core_STM32/blob/cf59c7d0658abdcfa786970b84cc1a2baf67348f/README.md"
+      "commonUseUrl": "https://github.com/stm32duino/Arduino_Core_STM32/blob/cf59c7d0658abdcfa786970b84cc1a2baf67348f/README.md",
+      "selectionReason": "F103_FIRST_SLICE"
     },
     {
       "exactPart": "STM32F103CBT6",
@@ -18,7 +67,8 @@
       "flashKiB": 128,
       "ramKiB": 20,
       "orderabilityUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103cb",
-      "commonUseUrl": "https://github.com/stm32duino/Arduino_Core_STM32/blob/cf59c7d0658abdcfa786970b84cc1a2baf67348f/README.md"
+      "commonUseUrl": "https://github.com/stm32duino/Arduino_Core_STM32/blob/cf59c7d0658abdcfa786970b84cc1a2baf67348f/README.md",
+      "selectionReason": "F103_FIRST_SLICE"
     },
     {
       "exactPart": "STM32F103RBT6",
@@ -27,7 +77,544 @@
       "flashKiB": 128,
       "ramKiB": 20,
       "orderabilityUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103rb",
-      "commonUseUrl": "https://github.com/STMicroelectronics/STM32CubeF1/blob/c7656f1fee178058be2f8ebfc8df9eaf91dc565e/Projects/STM32F103RB-Nucleo/Examples/UART/UART_TwoBoards_ComDMA/readme.txt"
+      "commonUseUrl": "https://github.com/STMicroelectronics/STM32CubeF1/blob/c7656f1fee178058be2f8ebfc8df9eaf91dc565e/Projects/STM32F103RB-Nucleo/Examples/UART/UART_TwoBoards_ComDMA/readme.txt",
+      "selectionReason": "F103_FIRST_SLICE"
+    },
+    {
+      "exactPart": "STM32F207ZGT6",
+      "reference": "STM32F207Z(C-E-F-G)Tx",
+      "boardSourcePaths": [
+        "boards/A20_Nucleo_NUCLEO-F207ZG_STM32F207ZG_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32f207zgt6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32F401RET6",
+      "reference": "STM32F401R(D-E)Tx",
+      "boardSourcePaths": [
+        "boards/A40_Nucleo_NUCLEO-F401RE_STM32F401RE_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32f401ret6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32F756ZGT6",
+      "reference": "STM32F756ZGTx",
+      "boardSourcePaths": [
+        "boards/A73_Nucleo_NUCLEO-F756ZG_STM32F756ZG_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32f756zgt6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32G0B1RET6",
+      "reference": "STM32G0B1R(B-C-E)Tx",
+      "boardSourcePaths": [
+        "boards/M03_Nucleo_NUCLEO-G0B1RE_STM32G0B1RE_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32g0b1ret6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32G431RBT6",
+      "reference": "STM32G431R(6-8-B)Tx",
+      "boardSourcePaths": [
+        "boards/M41_Nucleo_NUCLEO-G431RB_STM32G431RB_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32g431rbt6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32G473QET6",
+      "reference": "STM32G473Q(B-C-E)Tx",
+      "boardSourcePaths": [
+        "boards/N05_Discovery_B-G473E-ZEST1S_STM32G473QET_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32g473qet6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32G474RET6",
+      "reference": "STM32G474R(B-C-E)Tx",
+      "boardSourcePaths": [
+        "boards/M42_Nucleo_NUCLEO-G474RE_STM32G474RE_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32g474ret6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32G491RET6",
+      "reference": "STM32G491R(C-E)Tx",
+      "boardSourcePaths": [
+        "boards/M43_Nucleo_NUCLEO-G491RE_STM32G491RE_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32g491ret6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H503RBT6",
+      "reference": "STM32H503RBTx",
+      "boardSourcePaths": [
+        "boards/G77_Nucleo_NUCLEO-H503RB_STM32H503RBT6_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h503rbt6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H533RET6",
+      "reference": "STM32H533RETx",
+      "boardSourcePaths": [
+        "boards/G78_Nucleo_NUCLEO-H533RE_STM32H533RETx_Board_AllConfig.ioc",
+        "boards/G78_Nucleo_NUCLEO-H533RE_STM32H533RETx_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h533ret6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H553ZGT6",
+      "reference": "STM32H553ZGTx",
+      "boardSourcePaths": [
+        "boards/G81_Nucleo_NUCLEO-H553ZG_STM32H553ZGT6_Board_AllConfig.ioc",
+        "boards/G81_Nucleo_NUCLEO-H553ZG_STM32H553ZGT6_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h553zgt6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H573IIK3Q",
+      "reference": "STM32H573IIKxQ",
+      "boardSourcePaths": [
+        "boards/H77_Discovery_STM32H573I-DK_STM32H573IIK3Q_Board_AllConfig.ioc",
+        "boards/H77_Discovery_STM32H573I-DK_STM32H573IIK3Q_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h573iik3q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H5E5ZJT6",
+      "reference": "STM32H5E5ZJTx",
+      "boardSourcePaths": [
+        "boards/G80_Nucleo_NUCLEO-H5E5ZJ_STM32H5E5ZJT6_Board_AllConfig.ioc",
+        "boards/G80_Nucleo_NUCLEO-H5E5ZJ_STM32H5E5ZJT6_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h5e5zjt6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H5F5LJH7Q",
+      "reference": "STM32H5F5LJHxQ",
+      "boardSourcePaths": [
+        "boards/H79_Discovery_STM32H5F5J-DK_STM32H5F5LJH7Q_Board_AllConfig.ioc",
+        "boards/H79_Discovery_STM32H5F5J-DK_STM32H5F5LJH7Q_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h5f5ljh7q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H735IGK6",
+      "reference": "STM32H735IGKx",
+      "boardSourcePaths": [
+        "boards/H76_Discovery_STM32H735G-DK_STM32H735IGK_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h735igk6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H750XBH6",
+      "reference": "STM32H750XBHx",
+      "boardSourcePaths": [
+        "boards/H71_Discovery_STM32H750B-DK_STM32H750XBH_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h750xbh6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H7S3L8H6",
+      "reference": "STM32H7S3L8Hx",
+      "boardSourcePaths": [
+        "boards/G79_Nucleo_NUCLEO-H7S3L8_STM32H7S3L8Hx_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h7s3l8h6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32H7S7L8H6H",
+      "reference": "STM32H7S7L8HxH",
+      "boardSourcePaths": [
+        "boards/H78_Discovery_STM32H7S78-DK_STM32H7S7L8H6H_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32h7s7l8h6h-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32L412KBU3",
+      "reference": "STM32L412KBUx",
+      "boardSourcePaths": [
+        "boards/B48_Nucleo_NUCLEO-L412KB_STM32L412KB_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32l412kbu3-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32L412RBT6P",
+      "reference": "STM32L412RBTxP",
+      "boardSourcePaths": [
+        "boards/B49_Nucleo_NUCLEO-L412RB-P_STM32L412RB_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32l412rbt6p-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32L4P5CGU6",
+      "reference": "STM32L4P5C(G-E)Ux",
+      "boardSourcePaths": [
+        "boards/F58_Evaluation_Board_STEVAL-SMARTAG2_STM32L4P5CGUx_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32l4p5cgu6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32L4R5ZIT6",
+      "reference": "STM32L4R5Z(G-I)Tx",
+      "boardSourcePaths": [
+        "boards/B47_Nucleo_NUCLEO-L4R5ZI_STM32L4R5ZI_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32l4r5zit6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32L552ZET6Q",
+      "reference": "STM32L552Z(C-E)TxQ",
+      "boardSourcePaths": [
+        "boards/B51_Nucleo_NUCLEO-L552ZE-Q_STM32L552ZE_Board_AllConfig.ioc",
+        "boards/B51_Nucleo_NUCLEO-L552ZE-Q_STM32L552ZE_TrustZoneEnabled_Board_AllConfig.ioc",
+        "boards/F52_Evaluation_Board_STM32L552E-EV_STM32L552ZE_Board_AllConfig.ioc",
+        "boards/F52_Evaluation_Board_STM32L552E-EV_STM32L552ZE_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32l552zet6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32L562QEI6Q",
+      "reference": "STM32L562QEIxQ",
+      "boardSourcePaths": [
+        "boards/D53_Discovery_STM32L562E-DK_STM32L562QE_Board_AllConfig.ioc",
+        "boards/D53_Discovery_STM32L562E-DK_STM32L562QE_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32l562qei6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32N657X0H3Q",
+      "reference": "STM32N657X0HxQ",
+      "boardSourcePaths": [
+        "boards/M04_Nucleo_NUCLEO-N657X0-Q_STM32N657X0H_Board_AllConfig.ioc",
+        "boards/M04_Nucleo_NUCLEO-N657X0-Q_STM32N657X0H_FullSecure_Board_AllConfig.ioc",
+        "boards/M13_Discovery_STM32N6570-DK_STM32N657X0H_Board_AllConfig.ioc",
+        "boards/M13_Discovery_STM32N6570-DK_STM32N657X0H_FullSecure_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32n657x0h3q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U031R8T6",
+      "reference": "STM32U031R8Tx",
+      "boardSourcePaths": [
+        "boards/B57_Nucleo_NUCLEO-U031R8_STM32U031R8_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u031r8t6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U083MCT6",
+      "reference": "STM32U083MCTx",
+      "boardSourcePaths": [
+        "boards/D64_Discovery_STM32U083C-DK_STM32U083MC_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u083mct6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U083RCT6",
+      "reference": "STM32U083RCTx",
+      "boardSourcePaths": [
+        "boards/B58_Nucleo_NUCLEO-U083RC_STM32U083RC_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u083rct6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U385RGT6Q",
+      "reference": "STM32U385RGTxQ",
+      "boardSourcePaths": [
+        "boards/B59_Nucleo_NUCLEO-U385RG-Q_STM32U385RGT6Q_Board_AllConfig.ioc",
+        "boards/B59_Nucleo_NUCLEO-U385RG-Q_STM32U385RGT6Q_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u385rgt6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U3C5ZIT6Q",
+      "reference": "STM32U3C5ZITxQ",
+      "boardSourcePaths": [
+        "boards/B61_Nucleo_NUCLEO-U3C5ZI-Q_STM32U3C5ZIxQ_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u3c5zit6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U545RET6Q",
+      "reference": "STM32U545RETxQ",
+      "boardSourcePaths": [
+        "boards/B56_Nucleo_NUCLEO-U545RE-Q_STM32U545RE_Board_AllConfig.ioc",
+        "boards/B56_Nucleo_NUCLEO-U545RE-Q_STM32U545RE_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u545ret6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U575ZIT6Q",
+      "reference": "STM32U575ZITxQ",
+      "boardSourcePaths": [
+        "boards/B54_Nucleo_NUCLEO-U575ZI-Q_STM32U575ZI_Board_AllConfig.ioc",
+        "boards/B54_Nucleo_NUCLEO-U575ZI-Q_STM32U575ZI_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u575zit6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U585AII6Q",
+      "reference": "STM32U585AIIxQ",
+      "boardSourcePaths": [
+        "boards/D58_Discovery_B-U585I-IOT02A_STM32U585AI_Board_AllConfig.ioc",
+        "boards/D58_Discovery_B-U585I-IOT02A_STM32U585AI_TrustZoneEnabled_Board_AllConfig.ioc",
+        "boards/F55_Evaluation_Board_STEVAL-STWINBX1_STM32U585AIIxQ_Board_AllConfig.ioc",
+        "boards/F55_Evaluation_Board_STEVAL-STWINBX1_STM32U585AIIxQ_TrustZoneEnabled_Board_AllConfig.ioc",
+        "boards/F59_Evaluation_Board_STEVAL-MKBOXPRO_STM32U585AIIxQ_Board_AllConfig.ioc",
+        "boards/F59_Evaluation_Board_STEVAL-MKBOXPRO_STM32U585AIIxQ_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u585aii6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U5A5ZJT6Q",
+      "reference": "STM32U5A5ZJTxQ",
+      "boardSourcePaths": [
+        "boards/B55_Nucleo_NUCLEO-U5A5ZJ-Q_STM32U5A5ZJ_Board_AllConfig.ioc",
+        "boards/B55_Nucleo_NUCLEO-U5A5ZJ-Q_STM32U5A5ZJ_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u5a5zjt6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U5G9NJH6Q",
+      "reference": "STM32U5G9NJHxQ",
+      "boardSourcePaths": [
+        "boards/D62_Discovery_STM32U5G9J-DK1_STM32U5G9NJH_Board_AllConfig.ioc",
+        "boards/D62_Discovery_STM32U5G9J-DK1_STM32U5G9NJH_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u5g9njh6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32U5G9ZJT6Q",
+      "reference": "STM32U5G9ZJTxQ",
+      "boardSourcePaths": [
+        "boards/D63_Discovery_STM32U5G9J-DK2_STM32U5G9ZJT_Board_AllConfig.ioc",
+        "boards/D63_Discovery_STM32U5G9J-DK2_STM32U5G9ZJT_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32u5g9zjt6q-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WB05KZV6TR",
+      "reference": "STM32WB05KZVx",
+      "boardSourcePaths": [
+        "boards/JB2_Nucleo_NUCLEO-WB05KZ_STM32WB05KZV6TR_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wb05kzv6tr-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WB07CCV6TR",
+      "reference": "STM32WB07CCVx",
+      "boardSourcePaths": [
+        "boards/JB3_Nucleo_NUCLEO-WB07CC_STM32WB07CCV6TR_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wb07ccv6tr-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WB09KEV6TR",
+      "reference": "STM32WB09KEVx",
+      "boardSourcePaths": [
+        "boards/JB4_Nucleo_NUCLEO-WB09KE_STM32WB09KEV6TR_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wb09kev6tr-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WB15CCU6",
+      "reference": "STM32WB15CCUx",
+      "boardSourcePaths": [
+        "boards/J03_Nucleo_NUCLEO-WB15CC_STM32WB15C_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wb15ccu6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WB55RGV6",
+      "reference": "STM32WB55RGVx",
+      "boardSourcePaths": [
+        "boards/J00_Nucleo_P-NUCLEO-WB55-Nucleo_STM32WB55R_Board_AllConfig.ioc",
+        "boards/J02_Nucleo_NUCLEO-WB55RG_STM32WB55R_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wb55rgv6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WBA25CEU7",
+      "reference": "STM32WBA25CEUx",
+      "boardSourcePaths": [
+        "boards/JB6_Nucleo_NUCLEO-WBA25CE1_STM32WBA25CEU7_Board_AllConfig.ioc",
+        "boards/JB6_Nucleo_NUCLEO-WBA25CE1_STM32WBA25CEU7_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wba25ceu7-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WBA52CGU6",
+      "reference": "STM32WBA52CGUx",
+      "boardSourcePaths": [
+        "boards/JB0_Nucleo_NUCLEO-WBA52CG_STM32WBA52CGU_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wba52cgu6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WBA65RIV7",
+      "reference": "STM32WBA65RIVx",
+      "boardSourcePaths": [
+        "boards/JB5_Nucleo_NUCLEO-WBA65RI_STM32WBA65RIV7_Board_AllConfig.ioc",
+        "boards/JB5_Nucleo_NUCLEO-WBA65RI_STM32WBA65RIV7_TrustZoneEnabled_Board_AllConfig.ioc",
+        "boards/K04_Discovery_STM32WBA65I-DK1_STM32WBA65RIV7_Board_AllConfig.ioc",
+        "boards/K04_Discovery_STM32WBA65I-DK1_STM32WBA65RIV7_TrustZoneEnabled_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wba65riv7-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WL33CCV6TR",
+      "reference": "STM32WL33CCVx",
+      "boardSourcePaths": [
+        "boards/PL1_Nucleo_NUCLEO-WL33CC1_STM32WL33CCV6TR_Board_AllConfig.ioc",
+        "boards/PL1_Nucleo_NUCLEO-WL33CC2_STM32WL33CCV6TR_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wl33ccv6tr-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "OUT_OF_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
+    },
+    {
+      "exactPart": "STM32WL3RKBV6",
+      "reference": "STM32WL3RKBVx",
+      "boardSourcePaths": [
+        "boards/PL2_Nucleo_NUCLEO-WL3RKB1_STM32WL3RKBV6_Board_AllConfig.ioc",
+        "boards/PL3_Nucleo_NUCLEO-WL3RKB2_STM32WL3RKBV6_Board_AllConfig.ioc"
+      ],
+      "marketUrl": "https://estore.st.com/en/stm32wl3rkbv6-cpn.html",
+      "marketingStatus": "ACTIVE",
+      "stockStatusOnSelectionDate": "IN_STOCK",
+      "selectionReason": "CURRENT_ST_NUCLEO_OR_DISCOVERY_EXACT_CPN"
     }
   ]
 }
