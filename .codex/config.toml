@@ -1,0 +1,3 @@
+# Reduce reasoning-token use for routine work in this trusted repository.
+# Raise effort per session for difficult source reconciliation if needed.
+model_reasoning_effort = "low"
