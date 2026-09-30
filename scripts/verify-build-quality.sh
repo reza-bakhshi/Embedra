@@ -27,6 +27,7 @@ for required_task in \
     test \
     verifyFormatting \
     verifySTM32CatalogGenerator \
+    verifySTM32FixtureCatalog \
     buildExtension
 do
     if ! grep -Eq "^${required_task}( |$)" "$task_list"; then

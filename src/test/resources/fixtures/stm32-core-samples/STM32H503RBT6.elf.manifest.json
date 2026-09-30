@@ -1,0 +1,38 @@
+{
+  "device": "STM32H503RBT6",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32H503RBT6.json",
+  "fixtureId": "stm32-core-samples.t033.stm32h503rbt6.elf",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "ELF32 ARM",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "6dde0f559ecda50cf7c6bd63c0be6e8cef350f9a28043b3662e0b6600f00628b",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE_NS",
+      "SRAM1_BASE_NS",
+      "SRAM1_SIZE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32h503xx.h",
+    "repository": "STMicroelectronics/cmsis-device-h5",
+    "revision": "884b8dc78e41cbfca008363342b17f4a9e8641f7",
+    "sha256": "ab1c898a59b5423d0c34ea8b165d9c6c7278a6128db0b0d0e602d963e00aac68",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-h5/blob/884b8dc78e41cbfca008363342b17f4a9e8641f7/Include/stm32h503xx.h"
+  },
+  "target": "STM32H503RBT6",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

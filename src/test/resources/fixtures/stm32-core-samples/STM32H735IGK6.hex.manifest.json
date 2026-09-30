@@ -1,0 +1,37 @@
+{
+  "device": "STM32H735IGK6",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32H735IGK6.json",
+  "fixtureId": "stm32-core-samples.t033.stm32h735igk6.hex",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "Intel HEX",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "4741273260ec2fd5a06a2159ef5f0dcb89b86681c94a63afd2002be16f171414",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BANK1_BASE",
+      "D1_DTCMRAM_BASE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32h735xx.h",
+    "repository": "STMicroelectronics/cmsis-device-h7",
+    "revision": "81db1ec63cdc191fae1565b772da3ea5aa29a683",
+    "sha256": "637eaf7fb1329b3f9643f8badc34b5b1f98468d8bec324e1d8be979a13da40c2",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-h7/blob/81db1ec63cdc191fae1565b772da3ea5aa29a683/Include/stm32h735xx.h"
+  },
+  "target": "STM32H735IGK6",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

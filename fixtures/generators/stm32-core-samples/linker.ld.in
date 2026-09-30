@@ -1,0 +1,9 @@
+ENTRY(Reset_Handler)
+MEMORY {
+  IMAGE (rx) : ORIGIN = @IMAGE_BASE@, LENGTH = @IMAGE_KIB@K
+}
+SECTIONS {
+  .isr_vector @IMAGE_BASE@ : { KEEP(*(.isr_vector)) } > IMAGE
+  .text @TEXT_BASE@ : { *(.text*) *(.rodata*) } > IMAGE
+  /DISCARD/ : { *(.comment*) *(.note*) *(.ARM.attributes*) }
+}

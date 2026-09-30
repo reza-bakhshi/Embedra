@@ -1,0 +1,38 @@
+{
+  "device": "STM32L412KBU3",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32L412KBU3.json",
+  "fixtureId": "stm32-core-samples.t033.stm32l412kbu3.elf",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "ELF32 ARM",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "15155d9241a299902d67f5aa6966f768912647bf45b00101ba32ac53c0ff5e2a",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE",
+      "SRAM1_BASE",
+      "SRAM1_SIZE_MAX"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32l412xx.h",
+    "repository": "STMicroelectronics/cmsis-device-l4",
+    "revision": "ca0bfa2b8b68dc2994b27fba0a10dfd28d086ee1",
+    "sha256": "537df47fe54104e2b6a18981c2319ffd52d0ef6cb68f2e80586698592b92ff4d",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-l4/blob/ca0bfa2b8b68dc2994b27fba0a10dfd28d086ee1/Include/stm32l412xx.h"
+  },
+  "target": "STM32L412KBU3",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

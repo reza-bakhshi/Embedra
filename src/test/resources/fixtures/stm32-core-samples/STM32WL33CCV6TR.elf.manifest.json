@@ -1,0 +1,38 @@
+{
+  "device": "STM32WL33CCV6TR",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32WL33CCV6TR.json",
+  "fixtureId": "stm32-core-samples.t033.stm32wl33ccv6tr.elf",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "ELF32 ARM",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "2ba2837e228dc1a77e0352e36e3d71fe7a14e3396a9b866f85df37a366bfaa85",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE",
+      "SRAM_BASE",
+      "SRAM1_BASE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32wl3xx.h",
+    "repository": "STMicroelectronics/cmsis-device-wl3",
+    "revision": "b97b5218a4506652761dd85fae8ad7d696251a4c",
+    "sha256": "46969b1689ec8762704d802a91ba14fde4a6db9878afc35fd0205bfd51032b73",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-wl3/blob/b97b5218a4506652761dd85fae8ad7d696251a4c/Include/stm32wl3xx.h"
+  },
+  "target": "STM32WL33CCV6TR",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

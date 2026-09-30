@@ -1,0 +1,37 @@
+{
+  "architecture": "ARM Cortex-M4",
+  "artifactSha256": {
+    "bin": "c8a2aa98898c22b4a1d1ecef210974b6fd4c6576002da587ff61433a4c3e59dc",
+    "elf": "15155d9241a299902d67f5aa6966f768912647bf45b00101ba32ac53c0ff5e2a",
+    "hex": "c492c4b5c0bd1a8f928b3e6d470ada8f0fb6cba0924d22a7b7c614a56f22a4c2"
+  },
+  "compilerCpu": "cortex-m4",
+  "elfHeader": "ELF Header:\n  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 \n  Class:                             ELF32\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - System V\n  ABI Version:                       0\n  Type:                              EXEC (Executable file)\n  Machine:                           ARM\n  Version:                           0x1\n  Entry point address:               0x8000101\n  Start of program headers:          52 (bytes into file)\n  Start of section headers:          4664 (bytes into file)\n  Flags:                             0x5000200, Version5 EABI, soft-float ABI\n  Size of this header:               52 (bytes)\n  Size of program headers:           32 (bytes)\n  Number of program headers:         1\n  Size of section headers:           40 (bytes)\n  Number of section headers:         6\n  Section header string table index: 5\n",
+  "elfMachine": "ARM",
+  "elfProgramHeaders": "\nElf file type is EXEC (Executable file)\nEntry point 0x8000101\nThere is 1 program header, starting at offset 52\n\nProgram Headers:\n  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align\n  LOAD           0x001000 0x08000000 0x08000000 0x00114 0x00114 R E 0x1000\n\n Section to Segment mapping:\n  Segment Sections...\n   00     .isr_vector .text \n",
+  "flashBase": "0x08000000",
+  "flashKiB": 128,
+  "imageBase": "0x08000000",
+  "imageRegionKiB": 128,
+  "imageSemantics": "INTERNAL_FLASH_VECTOR_SAMPLE",
+  "initialSp": "0x20008000",
+  "part": "STM32L412KBU3",
+  "ramKiB": 40,
+  "resetVector": "0x08000101",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE",
+      "SRAM1_BASE",
+      "SRAM1_SIZE_MAX"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32l412xx.h",
+    "repository": "STMicroelectronics/cmsis-device-l4",
+    "revision": "ca0bfa2b8b68dc2994b27fba0a10dfd28d086ee1",
+    "sha256": "537df47fe54104e2b6a18981c2319ffd52d0ef6cb68f2e80586698592b92ff4d",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-l4/blob/ca0bfa2b8b68dc2994b27fba0a10dfd28d086ee1/Include/stm32l412xx.h"
+  },
+  "stackRegion": "SRAM1",
+  "stackRegionBase": "0x20000000",
+  "stackRegionKiB": 32
+}

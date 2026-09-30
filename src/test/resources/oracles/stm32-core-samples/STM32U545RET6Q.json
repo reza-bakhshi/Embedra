@@ -1,0 +1,37 @@
+{
+  "architecture": "ARM Cortex-M33",
+  "artifactSha256": {
+    "bin": "cd7f577cbc975169e59ddad57d8b652be1a3b367e78fddab16861d4004324cfb",
+    "elf": "eb7f7b609153a763a1bf1398b29f9b18c683f09bc9263d58c9a250badfbe4e90",
+    "hex": "a6decd850f7bb730fc696d5ae8d8b610bcc66a4f403efd4a87367d4983a091d5"
+  },
+  "compilerCpu": "cortex-m33",
+  "elfHeader": "ELF Header:\n  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 \n  Class:                             ELF32\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - System V\n  ABI Version:                       0\n  Type:                              EXEC (Executable file)\n  Machine:                           ARM\n  Version:                           0x1\n  Entry point address:               0x8000101\n  Start of program headers:          52 (bytes into file)\n  Start of section headers:          4668 (bytes into file)\n  Flags:                             0x5000200, Version5 EABI, soft-float ABI\n  Size of this header:               52 (bytes)\n  Size of program headers:           32 (bytes)\n  Number of program headers:         1\n  Size of section headers:           40 (bytes)\n  Number of section headers:         6\n  Section header string table index: 5\n",
+  "elfMachine": "ARM",
+  "elfProgramHeaders": "\nElf file type is EXEC (Executable file)\nEntry point 0x8000101\nThere is 1 program header, starting at offset 52\n\nProgram Headers:\n  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align\n  LOAD           0x001000 0x08000000 0x08000000 0x00115 0x00115 R E 0x1000\n\n Section to Segment mapping:\n  Segment Sections...\n   00     .isr_vector .text \n",
+  "flashBase": "0x08000000",
+  "flashKiB": 512,
+  "imageBase": "0x08000000",
+  "imageRegionKiB": 512,
+  "imageSemantics": "INTERNAL_FLASH_VECTOR_SAMPLE",
+  "initialSp": "0x20030000",
+  "part": "STM32U545RET6Q",
+  "ramKiB": 274,
+  "resetVector": "0x08000101",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE_NS",
+      "SRAM1_BASE_NS",
+      "SRAM1_SIZE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32u545xx.h",
+    "repository": "STMicroelectronics/cmsis-device-u5",
+    "revision": "624374fa1e21ca195d6f2102ac0caaa50d0ea4c8",
+    "sha256": "9f17e9107dfb08c1528698222c1c70d17e5b9f3d13ceb61eedac777c0ad7a254",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-u5/blob/624374fa1e21ca195d6f2102ac0caaa50d0ea4c8/Include/stm32u545xx.h"
+  },
+  "stackRegion": "SRAM1_NS",
+  "stackRegionBase": "0x20000000",
+  "stackRegionKiB": 192
+}

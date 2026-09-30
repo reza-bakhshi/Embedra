@@ -1,0 +1,36 @@
+{
+  "device": "STM32G0B1RET6",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32G0B1RET6.json",
+  "fixtureId": "stm32-core-samples.t033.stm32g0b1ret6.hex",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "Intel HEX",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "55b31b3bc59a473c65d18db62490c7e9fe0d14fe48b5cce4f2e2cf7f9e55b241",
+  "sourceProvenance": {
+    "facts": [
+      "SRAM_BASE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32g0b1xx.h",
+    "repository": "STMicroelectronics/cmsis-device-g0",
+    "revision": "f576c24e123edf3332988ecd49512c0f35f85186",
+    "sha256": "461f2c4a7f80bc317ddb1d16c067bedd58fac6c3c41a261cf01e05cf1013236f",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-g0/blob/f576c24e123edf3332988ecd49512c0f35f85186/Include/stm32g0b1xx.h"
+  },
+  "target": "STM32G0B1RET6",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

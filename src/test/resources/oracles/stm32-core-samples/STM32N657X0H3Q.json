@@ -1,0 +1,36 @@
+{
+  "architecture": "ARM Cortex-M55",
+  "artifactSha256": {
+    "bin": "7d6efee706b00e97cd2530d7d93699f72449dec22d2298bed6f5583efe374eb9",
+    "elf": "847db4095dd253bbaf829116e6c5c2c03bbbf0cbe0dee8c2ba64d7ab360b4882",
+    "hex": "378ec56234d1529c4759cd2c1a86605358527218ab6d86afdd7cab0742cdb8c9"
+  },
+  "compilerCpu": "cortex-m55",
+  "elfHeader": "ELF Header:\n  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 \n  Class:                             ELF32\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - System V\n  ABI Version:                       0\n  Type:                              EXEC (Executable file)\n  Machine:                           ARM\n  Version:                           0x1\n  Entry point address:               0x34000101\n  Start of program headers:          52 (bytes into file)\n  Start of section headers:          4668 (bytes into file)\n  Flags:                             0x5000200, Version5 EABI, soft-float ABI\n  Size of this header:               52 (bytes)\n  Size of program headers:           32 (bytes)\n  Number of program headers:         1\n  Size of section headers:           40 (bytes)\n  Number of section headers:         6\n  Section header string table index: 5\n",
+  "elfMachine": "ARM",
+  "elfProgramHeaders": "\nElf file type is EXEC (Executable file)\nEntry point 0x34000101\nThere is 1 program header, starting at offset 52\n\nProgram Headers:\n  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align\n  LOAD           0x001000 0x34000000 0x34000000 0x00115 0x00115 R E 0x1000\n\n Section to Segment mapping:\n  Segment Sections...\n   00     .isr_vector .text \n",
+  "flashBase": null,
+  "flashKiB": 0,
+  "imageBase": "0x34000000",
+  "imageRegionKiB": 1024,
+  "imageSemantics": "RAM_VECTOR_SAMPLE",
+  "initialSp": "0x34100000",
+  "part": "STM32N657X0H3Q",
+  "ramKiB": 4200,
+  "resetVector": "0x34000101",
+  "sourceProvenance": {
+    "facts": [
+      "SRAM1_AXI_BASE_S",
+      "SRAM1_AXI_SIZE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32n657xx.h",
+    "repository": "STMicroelectronics/cmsis-device-n6",
+    "revision": "81fe2fe8d576ec4c55be308ac4504bd580e498e6",
+    "sha256": "559792ea50e7253ddb386bd77267e475c7f5ecbccfc917adeea9398ef3aaa689",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-n6/blob/81fe2fe8d576ec4c55be308ac4504bd580e498e6/Include/stm32n657xx.h"
+  },
+  "stackRegion": "SRAM1_AXI_S",
+  "stackRegionBase": "0x34000000",
+  "stackRegionKiB": 1024
+}

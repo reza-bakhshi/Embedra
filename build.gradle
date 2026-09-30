@@ -78,6 +78,16 @@ tasks.named('check') {
     dependsOn tasks.named('verifySTM32CatalogGenerator')
 }
 
+tasks.register('verifySTM32FixtureCatalog', Exec) {
+    group = 'verification'
+    description = 'Validates selected STM32 records and golden fixture provenance/structure.'
+    commandLine 'python3', 'scripts/validate-stm32-fixture-catalog.py'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifySTM32FixtureCatalog')
+}
+
 if (!configuredGhidraDir.isBlank()) {
     sourceSets {
         integrationTest {

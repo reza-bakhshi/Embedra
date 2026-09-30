@@ -1,0 +1,26 @@
+{
+  "device": "STM32F103RBT6",
+  "expectedSnapshot": "src/test/resources/oracles/stm32f103/STM32F103RBT6.json",
+  "fixtureId": "stm32f103.t033.stm32f103rbt6.hex",
+  "generationCommand": "python3 scripts/generate-stm32f103-golden-fixtures.py",
+  "generatorRevision": "sha256:f57f9c3bbcfbbd3ad311cd724d7300545ffd9c270b5eba54e556178e50a8828e",
+  "inputFormat": "Intel HEX",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding assembly and linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-003",
+    "STM-004"
+  ],
+  "sha256": "e6983f3318f8dc21b2883ab959015824953c3a65fb3337eada43d0ff9a6fc712",
+  "target": "STM32F103RBT6",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

@@ -1,0 +1,36 @@
+{
+  "architecture": "ARM Cortex-M0+",
+  "artifactSha256": {
+    "bin": "ca80a2170fbf4365b6240a969cc1b7681515ecf813a255db4bea70a16f001093",
+    "elf": "9585895f9dc8a4607d27a6d2aa60eeb76bf2b15a0db6040c4811bc8190b07d41",
+    "hex": "fd6ccb41721a92daaa9a5fb9b7edf159c425746dabc9d02ec8f5916479578ea1"
+  },
+  "compilerCpu": "cortex-m0plus",
+  "elfHeader": "ELF Header:\n  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 \n  Class:                             ELF32\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - System V\n  ABI Version:                       0\n  Type:                              EXEC (Executable file)\n  Machine:                           ARM\n  Version:                           0x1\n  Entry point address:               0x20000101\n  Start of program headers:          52 (bytes into file)\n  Start of section headers:          4668 (bytes into file)\n  Flags:                             0x5000200, Version5 EABI, soft-float ABI\n  Size of this header:               52 (bytes)\n  Size of program headers:           32 (bytes)\n  Number of program headers:         1\n  Size of section headers:           40 (bytes)\n  Number of section headers:         6\n  Section header string table index: 5\n",
+  "elfMachine": "ARM",
+  "elfProgramHeaders": "\nElf file type is EXEC (Executable file)\nEntry point 0x20000101\nThere is 1 program header, starting at offset 52\n\nProgram Headers:\n  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align\n  LOAD           0x001000 0x20000000 0x20000000 0x00116 0x00116 R E 0x1000\n\n Section to Segment mapping:\n  Segment Sections...\n   00     .isr_vector .text \n",
+  "flashBase": null,
+  "flashKiB": 192,
+  "imageBase": "0x20000000",
+  "imageRegionKiB": 12,
+  "imageSemantics": "RAM_VECTOR_SAMPLE",
+  "initialSp": "0x20003000",
+  "part": "STM32WB05KZV6TR",
+  "ramKiB": 24,
+  "resetVector": "0x20000101",
+  "sourceProvenance": {
+    "facts": [
+      "SRAM_BASE",
+      "SRAM1_BASE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32wb05.h",
+    "repository": "STMicroelectronics/cmsis-device-wb0",
+    "revision": "f893ef4a3886f53f8042daca733cfcde9b708ed2",
+    "sha256": "3c0b702bd644b3d7da901db49a0b318e3e0e58dd2563e8ef1381ae5f336cefca",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-wb0/blob/f893ef4a3886f53f8042daca733cfcde9b708ed2/Include/stm32wb05.h"
+  },
+  "stackRegion": "SRAM0_WINDOW",
+  "stackRegionBase": "0x20000000",
+  "stackRegionKiB": 12
+}

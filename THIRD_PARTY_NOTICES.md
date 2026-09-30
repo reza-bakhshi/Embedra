@@ -25,6 +25,16 @@ bytes, and factual oracle output.
 | Espressif `xtensa-lx106-elf` GCC | 10.3.0 | Compile/link the freestanding ESP8266 legacy corpus | GPL toolchain components with applicable runtime exceptions | External development tool; no runtime library is linked or copied |
 | esptool ESP8266 image and target definitions | 5.4.0 | Generate v1/v2 images and establish format/memory-map oracles | GPL-2.0-or-later | External development/oracle tool; no source copied or bundled |
 
+T033 fixture generation uses the Debian GNU Arm bare-metal compiler and
+binutils as development-only tools, plus factual address definitions from
+ST's Apache-2.0 CMSIS device headers. No ST header or toolchain runtime is
+copied or linked into the fixtures or extension.
+
+| Input | Version/revision | Purpose | License | Disposition |
+|---|---|---|---|---|
+| `arm-none-eabi-gcc` and binutils | GCC 13.2.1, binutils 2.42 | Assemble and inspect original freestanding STM32 fixtures | GPL toolchain components | External development tools; `-nostdlib`, no copied runtime |
+| ST CMSIS device headers for C0, L4, F7, H5 | Pinned header revisions and SHA-256 in fixture manifests | Cross-check flash/SRAM bases and chosen stack regions | Apache-2.0 | Derived factual addresses and provenance only; source files excluded |
+
 T022 bundles deterministic derived data from the following authoritative source.
 No ESP-IDF source code or headers are copied into the extension.
 

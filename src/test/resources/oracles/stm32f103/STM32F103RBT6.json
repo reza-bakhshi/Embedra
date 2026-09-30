@@ -1,0 +1,17 @@
+{
+  "architecture": "ARM Cortex-M3",
+  "artifactSha256": {
+    "bin": "306211f2f21c588419612653257107747831ae27c0499a4071c9ec33255e89aa",
+    "elf": "7934d32e1d07c6b5e1dfdb43820db286797b9debec8c83739c0c4a7dc9a3294b",
+    "hex": "e6983f3318f8dc21b2883ab959015824953c3a65fb3337eada43d0ff9a6fc712"
+  },
+  "elfHeader": "ELF Header:\n  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 \n  Class:                             ELF32\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - System V\n  ABI Version:                       0\n  Type:                              EXEC (Executable file)\n  Machine:                           ARM\n  Version:                           0x1\n  Entry point address:               0x8000101\n  Start of program headers:          52 (bytes into file)\n  Start of section headers:          4664 (bytes into file)\n  Flags:                             0x5000200, Version5 EABI, soft-float ABI\n  Size of this header:               52 (bytes)\n  Size of program headers:           32 (bytes)\n  Number of program headers:         1\n  Size of section headers:           40 (bytes)\n  Number of section headers:         6\n  Section header string table index: 5\n",
+  "elfMachine": "ARM",
+  "elfProgramHeaders": "\nElf file type is EXEC (Executable file)\nEntry point 0x8000101\nThere is 1 program header, starting at offset 52\n\nProgram Headers:\n  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align\n  LOAD           0x001000 0x08000000 0x08000000 0x00114 0x00114 R E 0x1000\n\n Section to Segment mapping:\n  Segment Sections...\n   00     .isr_vector .text \n",
+  "flashBase": "0x08000000",
+  "flashKiB": 128,
+  "initialSp": "0x20005000",
+  "part": "STM32F103RBT6",
+  "ramKiB": 20,
+  "resetVector": "0x08000101"
+}

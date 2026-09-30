@@ -136,6 +136,12 @@ As an embedded analyst, I can select any officially cataloged ESP32 SoC or exact
 
 **Independent acceptance**: The generated catalog matches the official Espressif catalog snapshot, every listed model has an explicit support state, all implemented part variants resolve to the correct provider/topology, and at least one additional Xtensa and one RISC-V target pass independent vendor-oracle corpora before the common ESP layer is considered stable.
 
+### US4A — Analyze full flash for every ESP32-branded series (future)
+
+As a reverse engineer, I can open a complete flash capture for any ESP32-branded series with a verified flash-layout profile, inspect its validated partitions, and import its bootloader and populated applications into separate Ghidra programs. I can select an exact silicon or board profile when the bytes do not identify one. Each unsupported layout or encrypted payload remains visible as an artifact with a precise reason.
+
+**Independent acceptance**: For each official series in the current catalog, a separate target-specific corpus and reference oracle establish bootloader placement, partition layout, image identity, and program bytes/addresses. Every exact variant has an explicit full-flash state; catalog membership or application-image import alone never promotes it. Newly discovered series begin `PLANNED`.
+
 ### US5 — Import and identify STM32 firmware (P5)
 
 As a reverse engineer, I can import STM32 ELF/AXF, Intel HEX, DFU, and raw BIN/dump inputs, search the curated STM32 part catalog, select or narrow the exact orderable part, construct flash/RAM/system memory, and recover the correct core vector tables and handlers.
@@ -213,6 +219,12 @@ As a maintainer, I can run parsing, import, enrichment, diffing, and report gene
 - **ESP-019**: Treat modules and development boards as optional board profiles referencing an exact SoC part; module flash/PSRAM and board external-memory layouts may extend but never overwrite the SoC definition.
 - **ESP-020**: Treat ESP8266 as a separate legacy image/SDK provider and never count it as proof of ESP32-family coverage.
 - **ESP-021**: Generate ESP32-S3 Function ID databases only from symbolized, reproducible, target-matched ESP-IDF builds with recorded SDK revision, component licenses, compiler/toolchain, configuration, optimization, Ghidra language, and generated-database digest. Test FID applicability and match precision in real Ghidra against stripped positive and negative fixtures before applying names. FID use MUST be explicit, preserve user-defined names, report ambiguous or unavailable matches, and never imply that an absent database ran.
+- **ESP-022**: Extend the ESP32-S3 full-flash workflow to every officially cataloged ESP32-branded series, including future additions, through an explicit per-target flash-layout capability. A working application-image provider or catalog entry MUST NOT imply full-flash support. ESP8266 remains a separately scoped legacy workflow.
+- **ESP-023**: A flash-layout profile MUST record its official source/version, target chip ID or required user selection, bootloader offset and valid extent, partition-table location rules, flash-size/embedded-flash constraints, image format, and any board-specific external-flash assumptions. Do not reuse ESP32-S3's bootloader start or infer a board/embedded-memory variant from an application header. Unknown or conflicting profile facts MUST yield a visible unsupported/ambiguous result.
+- **ESP-024**: Full-flash discovery MUST distinguish a raw contiguous flash capture from merged flashing artifacts or files with an explicit offset manifest. It MUST validate capture origin/length, bounded candidate partition offsets, table structure and applicable integrity, entry alignment/ranges/nonoverlap, and target-matched bootloader/application images before planning any Ghidra mutation. An offset is inferred only from independently validated evidence or supplied explicitly by the user; a recognizable magic byte alone is insufficient.
+- **ESP-025**: Workspace planning MUST preserve absolute flash offsets separately from CPU addresses and source byte ranges; create separate programs for a validated bootloader and each populated, unencrypted application; treat erased slots, unsupported partition types, encrypted or otherwise opaque payloads as labeled non-program artifacts; and never silently decode ciphertext. OTA selection is evidence-based and does not suppress other valid slots. Data handlers run only when their format and target applicability are established.
+- **ESP-026**: The common flash parser, partition model, and workspace planner MUST be independent of ESP32-S3-specific chip IDs, offsets, and processor assumptions. Providers supply target-specific rules; unsupported targets fail with stable diagnostics. GUI and headless imports MUST share the same plan, report, transaction/rollback behavior, optional enrichment rules, and user-selection requirements.
+- **ESP-027**: Track full-flash support independently for each series and exact variant as `PLANNED`, `EXPERIMENTAL`, `VERIFIED`, or `UNSUPPORTED`, including input form, Ghidra release, packs, and limitations. Publish a coverage table with positive/negative oracle evidence for each series and explicit gaps for future catalog additions. Neither an S3 gate nor one representative part promotes another series or embedded-memory variant.
 
 ### 4.3 STM32 family
 
@@ -528,6 +540,8 @@ Schema identity, tool build, input digests, providers/packs, validations, worksp
 
 ESP application images use their encoded segment addresses. Full flash processing first establishes a flash-offset view, validates the partition table, then parses each app partition independently. ROM symbols and peripheral definitions are revision/target packs. ESP-IDF signatures are indexed by target, IDF version, toolchain, and optimization evidence.
 
+The ESP32-S3 full-flash implementation is the reference workflow, not a flash-layout oracle for other targets. Expansion first inventories official bootloader and partition rules for every cataloged ESP32-branded series, pins redistributable sources, and records whether each exact variant has embedded flash or requires a board/module profile. A provider supplies flash origin, valid bootloader range, partition discovery bounds, image validation, and supported handlers. A shared planner consumes those rules and emits a source-to-flash-to-CPU mapping for each program. If capture origin, target, flash extent, or partition-table offset cannot be established, the user must supply the missing fact or receive an explicit ambiguity diagnostic. Encrypted regions remain opaque without authorized, separately specified decryption support. The capability is accepted one series at a time and documented per exact variant; newly cataloged series remain `PLANNED` until their own corpus and Ghidra evidence pass.
+
 For ESP32-S3 Function ID, follow the reproducible symbolized-build workflow described by [Tarlogic](https://www.tarlogic.com/blog/esp32-firmware-using-ghidra-fidb/) using exact ESP32-S3 builds, not its original ESP32 example as a matching oracle. Pin the ESP-IDF revision and toolchain, record build configuration and optimization, and create candidate Ghidra FIDBs from symbolized ELFs. Ghidra may consider an Xtensa database applicable across language variants with the same processor, width, and endianness; applicability alone does not verify names in `Xtensa:LE:32:esp32s3`. A local pilot may be attached explicitly after positive/negative match tests, while redistribution requires a component-level license review. The broader multi-version and multi-library signature corpus remains T064.
 
 The ESP catalog generator records every official SoC part and embedded-memory/package variant rather than maintaining a handwritten permanent list. Each provider declares its Xtensa or RISC-V CPU topology, application cores, low-power/ULP execution units, ROMs, shared memories, and security hardware. A module or board profile may add flash, PSRAM, or external components but cannot change the selected silicon identity.
@@ -673,15 +687,17 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [x] T030 [P] Add S31, P4, C2, C5, C6, C61, E22, H2, H21, and H4 providers independently, including exact part/embedded-memory variants, processor counts/roles, ROMs, low-power/ULP cores, peripherals, security capabilities, evidence, and fixtures; include any newer official series discovered by T026.
 - [x] T031 Add module/board profiles without confusing them with silicon, then add the separate ESP8266 legacy format/SDK provider only after its own image research and corpus exist.
 
+The ESP32-branded full-flash expansion below is a future workstream. Its T080-T087 IDs preserve completed-task numbering; it does not change the recorded next task T037 or imply that the ESP32-S3 workflow already covers other series.
+
 ### STM32 core support
 
 - [x] T032 Build a deterministic curated STM32 exact-part catalog and network drift detection from redistributable ST/CMSIS inputs for a reviewable, multi-family selection backed by ST-made sample boards and market evidence. Record the exact acceptance list and its inclusion/exclusion evidence before completion. Record provenance, packages, memory, execution topology, interrupts, security, lifecycle, device identifiers, and SVD applicability; mark unavailable facts explicitly. Validate every selected exact identity without expanding family names or wildcard references. This is catalog work only; firmware import begins at T033.
-- [ ] T033 [P] Create golden STM32 fixtures for the curated catalog, beginning with Cortex-M3 STM32F103 exact parts, plus structural validation for every selected part record.
-- [ ] T034 Implement or integrate pure ELF/AXF and Intel HEX address-bearing input models without duplicating Ghidra's correct native behavior.
-- [ ] T035 Implement the supported STM32 DFU container parser with suffix/target/element validation.
-- [ ] T036 Implement raw BIN import requiring explicit device/base or confirmed inference.
-- [ ] T037 Implement Cortex-M vector-table discovery, scoring, user confirmation, vector creation, and false-positive tests.
-- [ ] T038 Implement STM32 exact-part search/selection, lifecycle/support state, ambiguity handling, package/flash/core variant identity, and device-pack registry covering the curated catalog.
+- [x] T033 [P] Create golden STM32 fixtures for the curated catalog, beginning with Cortex-M3 STM32F103 exact parts, plus structural validation for every selected part record.
+- [x] T034 Implement or integrate pure ELF/AXF and Intel HEX address-bearing input models without duplicating Ghidra's correct native behavior.
+- [x] T035 Implement the supported STM32 DFU container parser with suffix/target/element validation.
+- [x] T036 Implement raw BIN import requiring explicit device/base or confirmed inference.
+- [x] T037 Implement Cortex-M vector-table discovery, scoring, user confirmation, vector creation, and false-positive tests.
+- [x] T038 Implement STM32 exact-part search/selection, lifecycle/support state, ambiguity handling, package/flash/core variant identity, and device-pack registry covering the curated catalog.
 - [ ] T039 Implement catalog-driven STM32 memory-region and execution-topology planning for internal flash/RAM/system/OTP/option/alias regions and every selected part record; catalog validation fails on incomplete mandatory properties.
 - [ ] T040 Implement CMSIS-SVD/device-data transformation into Ghidra registers, types, enums, and interrupts with provenance.
 - [ ] T041 Implement vector labels/functions and Cortex-M core exception structures.
@@ -739,6 +755,17 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 - [ ] T078 Enable dependency locking/verification, secret scanning, static analysis, SBOM generation, artifact checksums, and pinned release inputs.
 - [ ] T079 Execute install, uninstall, upgrade, agent-resume, and full clean-environment quickstarts on every claimed host platform; produce the installable extension ZIP and complete release bundle, then run Spec Kit convergence until every constitution, requirement, plan, task, test, document, catalog, and support claim agrees.
 
+### Future ESP32-branded full-flash expansion
+
+- [ ] T080 Audit every ESP32-branded series in the generated catalog against pinned official bootloader, partition, image, flash-origin, and embedded-flash/board documentation. Record a per-series/per-exact-variant capability matrix and unknowns; keep ESP8266 separate. Inventory the current S3 hardcoded assumptions and required common/provider boundaries.
+- [ ] T081 [P] Build independently generated, redistributable full-flash goldens and official-tool oracles for each cataloged series, covering bootloader plus factory/OTA, custom table offset, erased slot, relevant embedded-flash variants, and explicit offset manifests where applicable. Add malformed, false-magic, truncated, overlap, invalid-integrity, wrong-chip, encrypted, oversized, and cancellation fixtures. Missing authoritative inputs block that series without substituting S3 samples.
+- [ ] T082 Refactor the existing S3 partition discovery and workspace planner behind a pure flash-layout provider contract. Remove hardcoded S3 chip ID, bootloader start, and layout assumptions from the shared path. Preserve S3 canonical reports/program snapshots and test provider isolation, address arithmetic, resource limits, and immutable source/flash/CPU provenance.
+- [ ] T083 Implement target-aware capture identification, bootloader bounds, bounded partition discovery, image/entry validation, and artifact classification for original ESP32 and ESP32-S2. Require target or board selection where the bytes are ambiguous; compare all results with their independent oracles.
+- [ ] T084 Implement and independently verify the same full-flash path for ESP32-C3, C2, C5, C6, C61, H2, H21, and H4. Record any series-specific unavailable feature explicitly; no RISC-V target inherits another target's flash layout or processor assumptions.
+- [ ] T085 Implement and independently verify the same full-flash path for ESP32-S31, P4, and E22, and for every newer ESP32-branded series introduced by catalog drift. If official format/layout evidence or a reproducible fixture is unavailable, retain `PLANNED`/`UNSUPPORTED` for that series and record the precise gap.
+- [ ] T086 Wire each proven target plan into real-Ghidra GUI and headless multi-program import. Verify bootloader and every populated app byte/address/language/entry, opaque artifact handling, OTA metadata, collision preservation, cancellation, rollback, repeat-import idempotence, and canonical GUI/headless equality on positive and negative corpora. Apply only target-matched optional packs.
+- [ ] T087 Review the per-series and per-exact-variant support table against current catalog drift; run clean, reproducible unit and Ghidra suites, regression-check the S3 gate, publish fixture/oracle and source-license evidence, and issue a separate full-flash expansion gate report. Promote only target/input/variant combinations with complete evidence; leave all other combinations visibly `PLANNED` or `UNSUPPORTED`.
+
 ## 12. Acceptance Gates by Workstream
 
 | Workstream | Gate before moving on |
@@ -747,6 +774,7 @@ Tasks are ordered by dependency, not product version. `[P]` means safe to perfor
 | ESP32-S3 app | Exact segments and entry match esptool + ELF; corrupt images roll back |
 | ESP32-S3 full flash | Partition results match ESP-IDF tools; custom offsets and false magic handled |
 | ESP family | Official catalog snapshot is complete; every exact part has a state; all implemented Xtensa/RISC-V/topology providers pass independent corpora |
+| ESP family full flash (T080-T087) | Each promoted series has pinned flash-layout evidence, independent valid/malformed full-flash corpora and official-tool oracles, exact bootloader/app/artifact mappings in real Ghidra, rollback and GUI/headless equality; every exact variant and new catalog series retains an explicit state |
 | STM32 core | Every selected catalog part has explicit metadata/state; representative selected parts import with exact selected-device maps; raw BIN requires confirmation |
 | STM32 advanced | TrustZone, dual-core, wireless/network-core, STM32MP, and external memory do not contaminate simple-device behavior and cross-program relationships are verified |
 | RP2040/RP2350 family | RP2040 and RP2350A/B/RP2354A/B UF2/ELF/raw, flash, ARM/RISC-V, dual-core, TrustZone, vector/trap, and PIO results match official tools and builds |
@@ -867,6 +895,9 @@ The baseline is Ghidra 12.1.3 and JDK 21. Any change to the build baseline or ad
 - [Ghidra 12.1.3 Getting Started and platform/JDK requirements](https://github.com/NationalSecurityAgency/ghidra/blob/Ghidra_12.1.3_build/GhidraDocs/GettingStarted.md)
 - [Espressif ESP32-S3 firmware image format](https://docs.espressif.com/projects/esptool/en/latest/esp32s3/advanced-topics/firmware-image-format.html)
 - [Espressif ESP32-S3 partition tables](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-guides/partition-tables.html)
+- [Espressif ESP32 partition tables](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/partition-tables.html)
+- [Espressif ESP32-C3 partition tables](https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/api-guides/partition-tables.html)
+- [Espressif esptool flashing firmware](https://docs.espressif.com/projects/esptool/en/latest/esp32/esptool/flashing-firmware.html)
 - [Espressif official SoC catalog](https://www.espressif.com/en/products/socs)
 - [Espressif ROM ELF files](https://github.com/espressif/esp-rom-elfs)
 - [ST STM32 MCU developer resources](https://www.st.com/content/st_com/en/stm32-mcu-developer-zone.html)

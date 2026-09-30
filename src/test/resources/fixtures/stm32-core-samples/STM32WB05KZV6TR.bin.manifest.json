@@ -1,0 +1,37 @@
+{
+  "device": "STM32WB05KZV6TR",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32WB05KZV6TR.json",
+  "fixtureId": "stm32-core-samples.t033.stm32wb05kzv6tr.bin",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "raw binary",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "ca80a2170fbf4365b6240a969cc1b7681515ecf813a255db4bea70a16f001093",
+  "sourceProvenance": {
+    "facts": [
+      "SRAM_BASE",
+      "SRAM1_BASE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32wb05.h",
+    "repository": "STMicroelectronics/cmsis-device-wb0",
+    "revision": "f893ef4a3886f53f8042daca733cfcde9b708ed2",
+    "sha256": "3c0b702bd644b3d7da901db49a0b318e3e0e58dd2563e8ef1381ae5f336cefca",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-wb0/blob/f893ef4a3886f53f8042daca733cfcde9b708ed2/Include/stm32wb05.h"
+  },
+  "target": "STM32WB05KZV6TR",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

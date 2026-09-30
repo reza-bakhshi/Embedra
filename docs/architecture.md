@@ -273,6 +273,58 @@ promoting them to execution targets.
 
 The schemas under `schemas/` use stable URN identities and closed object definitions and are packaged inside the extension JAR. Checked-in golden JSON under `src/test/resources/snapshots/` is updated only by deliberate review; the test helper never creates or refreshes snapshots.
 
+## STM32 addressed inputs
+
+T034 records STM32 ELF/AXF and Intel HEX address facts in immutable pure-core
+models. The Ghidra adapter recognizes format bytes independent of a filename,
+uses Ghidra's `ElfHeader` and `IntelHexRecordReader`, and bounds input length,
+record counts, source ranges, and 32-bit target addresses. ELF load segments,
+sections, and encoded entry addresses remain separate facts. Intel HEX data
+records preserve their type 02/04 extended addresses and type 03/05 start
+address. The adapter chooses Ghidra's native `ElfLoader` or `IntelHexLoader`
+for import; it does not map memory, infer a raw BIN base, or select an exact
+STM32 part. T033's 24 ELF/HEX golden pairs establish address agreement across
+the selected family samples, and headless native-loader tests check mapped
+memory for ELF and Intel HEX.
+
+T035 parses the addressed DfuSe version 1 container described by
+[ST UM0391](https://community.st.com/ysqtg83639/attachments/ysqtg83639/interface-connectivity-ics-forum/3972/1/UM0391.pdf).
+The supported form requires the prefix's length to cover the complete file,
+nonempty targets and elements, distinct alternate settings, exact target and
+element lengths, 32-bit element address ranges, a 16-byte `UFD` suffix with
+DFU revision `0x011a`, and its complemented CRC-32. Field order and checksum
+are cross-checked against the [dfu-util DfuSe packer](https://sources.debian.org/src/dfu-util/0.11-1/dfuse-pack.py/).
+The pure parser retains source byte ranges and encoded element addresses;
+it does not copy firmware payloads or map memory. Overlapping elements in one
+target are rejected because they would make later mapping ambiguous. Standard
+DFU suffixes on otherwise raw binary files and newer DfuSe revisions are
+outside this supported subset.
+
+T036 provides an explicit raw BIN path for an already selected 32-bit
+little-endian ARM program. A pure plan requires an exact part present in the
+digest-pinned T032 selection, a supplied base, and bounded nonempty bytes.
+The Ghidra adapter rechecks the pinned part list, byte length, language, and
+native loader options, then uses Ghidra's
+[BinaryLoader](https://github.com/NationalSecurityAgency/ghidra/blob/master/Ghidra/Features/Base/src/main/java/ghidra/app/util/opinion/BinaryLoader.java)
+inside a rollback-capable transaction. It records the exact part and explicit
+base as program provenance and rejects a conflicting prior part or memory
+block. T037 scans bytes with a proposed image base and caller-supplied RAM
+ranges, scores 16-word Cortex-M vector candidates from stack alignment,
+Thumb reset and handler containment, density, and table alignment, and
+requires explicit selection of a reported table address. A Ghidra adapter
+checks the mapped words again before transactionally creating primitive
+32-bit vector data. It preserves source digest and confirmation provenance,
+but creates no handler labels or functions. No vector-derived base is applied
+automatically. T038 loads the digest-pinned 53-record curated catalog only
+after checking its selection digest and exact membership. Its registry exposes
+separate family, line, package, flash-size candidates, core roles, lifecycle,
+marketing status, and `PLANNED` support state. Search returns candidates with
+explicit `NO_MATCH`, `SINGLE_CANDIDATE`, `AMBIGUOUS`, or `EXACT_ID` status;
+only an exact, case-sensitive ID becomes a selection. Each registry descriptor
+has `CATALOG_ONLY` pack status. Mapping bytes or selecting a descriptor does
+not establish a device-specific memory map or prove the program language is
+the exact core variant; those checks belong to T039.
+
 ## Offline packs
 
 Pack manifests are strict, closed, versioned JSON contracts parsed with the shared limits and cooperative cancellation. They expose pack identity/version, exact supported-device IDs, source URI and revision, license, transformation, redistribution status, per-file size/SHA-256, and an aggregate descriptor digest. File paths are normalized relative forward-slash paths; absolute, parent-traversal, Windows-drive, backslash, duplicate, manifest-shadowing, symlink, non-regular, missing, and unexpected entries are rejected.

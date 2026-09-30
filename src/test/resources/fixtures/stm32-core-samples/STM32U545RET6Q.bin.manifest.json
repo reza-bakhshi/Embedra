@@ -1,0 +1,38 @@
+{
+  "device": "STM32U545RET6Q",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32U545RET6Q.json",
+  "fixtureId": "stm32-core-samples.t033.stm32u545ret6q.bin",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "raw binary",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "cd7f577cbc975169e59ddad57d8b652be1a3b367e78fddab16861d4004324cfb",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE_NS",
+      "SRAM1_BASE_NS",
+      "SRAM1_SIZE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32u545xx.h",
+    "repository": "STMicroelectronics/cmsis-device-u5",
+    "revision": "624374fa1e21ca195d6f2102ac0caaa50d0ea4c8",
+    "sha256": "9f17e9107dfb08c1528698222c1c70d17e5b9f3d13ceb61eedac777c0ad7a254",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-u5/blob/624374fa1e21ca195d6f2102ac0caaa50d0ea4c8/Include/stm32u545xx.h"
+  },
+  "target": "STM32U545RET6Q",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

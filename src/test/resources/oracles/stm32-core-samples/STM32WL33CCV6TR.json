@@ -1,0 +1,37 @@
+{
+  "architecture": "ARM Cortex-M0+",
+  "artifactSha256": {
+    "bin": "a89dfa1063fe8fa7aee86a2c005463a6b8b3e9fd17782a511134bb3a501b1fd2",
+    "elf": "2ba2837e228dc1a77e0352e36e3d71fe7a14e3396a9b866f85df37a366bfaa85",
+    "hex": "de6d38307877b6cecdfcf6ae20d90d4acc342be20bf4b049ba3587a0f26ff020"
+  },
+  "compilerCpu": "cortex-m0plus",
+  "elfHeader": "ELF Header:\n  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 \n  Class:                             ELF32\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - System V\n  ABI Version:                       0\n  Type:                              EXEC (Executable file)\n  Machine:                           ARM\n  Version:                           0x1\n  Entry point address:               0x10040101\n  Start of program headers:          52 (bytes into file)\n  Start of section headers:          4668 (bytes into file)\n  Flags:                             0x5000200, Version5 EABI, soft-float ABI\n  Size of this header:               52 (bytes)\n  Size of program headers:           32 (bytes)\n  Number of program headers:         1\n  Size of section headers:           40 (bytes)\n  Number of section headers:         6\n  Section header string table index: 5\n",
+  "elfMachine": "ARM",
+  "elfProgramHeaders": "\nElf file type is EXEC (Executable file)\nEntry point 0x10040101\nThere is 1 program header, starting at offset 52\n\nProgram Headers:\n  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align\n  LOAD           0x001000 0x10040000 0x10040000 0x00116 0x00116 R E 0x1000\n\n Section to Segment mapping:\n  Segment Sections...\n   00     .isr_vector .text \n",
+  "flashBase": "0x10040000",
+  "flashKiB": 256,
+  "imageBase": "0x10040000",
+  "imageRegionKiB": 256,
+  "imageSemantics": "INTERNAL_FLASH_VECTOR_SAMPLE",
+  "initialSp": "0x20004000",
+  "part": "STM32WL33CCV6TR",
+  "ramKiB": 32,
+  "resetVector": "0x10040101",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE",
+      "SRAM_BASE",
+      "SRAM1_BASE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32wl3xx.h",
+    "repository": "STMicroelectronics/cmsis-device-wl3",
+    "revision": "b97b5218a4506652761dd85fae8ad7d696251a4c",
+    "sha256": "46969b1689ec8762704d802a91ba14fde4a6db9878afc35fd0205bfd51032b73",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-wl3/blob/b97b5218a4506652761dd85fae8ad7d696251a4c/Include/stm32wl3xx.h"
+  },
+  "stackRegion": "SRAM0_WINDOW",
+  "stackRegionBase": "0x20000000",
+  "stackRegionKiB": 16
+}

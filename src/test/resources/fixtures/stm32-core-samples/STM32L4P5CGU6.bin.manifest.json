@@ -1,0 +1,36 @@
+{
+  "device": "STM32L4P5CGU6",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32L4P5CGU6.json",
+  "fixtureId": "stm32-core-samples.t033.stm32l4p5cgu6.bin",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "raw binary",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "40e56393c7a986b9d375264bae6949810c3c6a3911a7a679a415abe27853c4f7",
+  "sourceProvenance": {
+    "facts": [
+      "SRAM1_BASE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32l4p5xx.h",
+    "repository": "STMicroelectronics/cmsis-device-l4",
+    "revision": "ca0bfa2b8b68dc2994b27fba0a10dfd28d086ee1",
+    "sha256": "3aeddbf5115c5440c5f47a8b044ee7ccc874760d0c5e5fc6958cb63c7af1a940",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-l4/blob/ca0bfa2b8b68dc2994b27fba0a10dfd28d086ee1/Include/stm32l4p5xx.h"
+  },
+  "target": "STM32L4P5CGU6",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

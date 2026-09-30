@@ -1,0 +1,38 @@
+{
+  "device": "STM32WBA25CEU7",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32WBA25CEU7.json",
+  "fixtureId": "stm32-core-samples.t033.stm32wba25ceu7.hex",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "Intel HEX",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "3b6e362a8cb6e703b1840eb26f2b9f241ae354fd79f1a787ff9fb4008f3577ec",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE_NS",
+      "SRAM1_BASE_NS",
+      "SRAM1_SIZE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32wba25xx.h",
+    "repository": "STMicroelectronics/cmsis-device-wba",
+    "revision": "3373b40fa3b71ce114f58b170acd0f8833d42508",
+    "sha256": "0f58c92548df65e395a55e970497094aa09900dbbec23e906cfebab712ea1317",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-wba/blob/3373b40fa3b71ce114f58b170acd0f8833d42508/Include/stm32wba25xx.h"
+  },
+  "target": "STM32WBA25CEU7",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

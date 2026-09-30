@@ -1,0 +1,36 @@
+{
+  "device": "STM32C051C8T6",
+  "expectedSnapshot": "src/test/resources/oracles/stm32c0/STM32C051C8T6.json",
+  "fixtureId": "stm32c0.t033.stm32c051c8t6.hex",
+  "generationCommand": "python3 scripts/generate-stm32c0-golden-fixtures.py",
+  "generatorRevision": "sha256:809e40161d137a2883fe16c135a634e0a2a3b1227de5417dbd589bd4b1deaeb1",
+  "inputFormat": "Intel HEX",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding Cortex-M0+ assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "384281faa77b1a84562a77975b1fc6b3c0984676bcf9fe1fde96b1337a0695f8",
+  "sourceProvenance": {
+    "distribution": "STM32Cube_FW_C0_V1.4.0",
+    "facts": [
+      "FLASH_BASE",
+      "SRAM_BASE"
+    ],
+    "license": "Apache-2.0",
+    "name": "ST STM32C051C8T6 CMSIS device header",
+    "path": "Drivers/CMSIS/Device/ST/STM32C0xx/Include/stm32c051xx.h",
+    "sha256": "7747e558cae5d8ff58d36f1a040c62041cd2e4698128bbefc095b7e2b908920b"
+  },
+  "target": "STM32C051C8T6",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

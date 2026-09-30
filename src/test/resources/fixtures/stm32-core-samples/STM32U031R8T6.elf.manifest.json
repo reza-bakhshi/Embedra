@@ -1,0 +1,38 @@
+{
+  "device": "STM32U031R8T6",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32U031R8T6.json",
+  "fixtureId": "stm32-core-samples.t033.stm32u031r8t6.elf",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "ELF32 ARM",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "04ec9896014432da038d64287580003de29023cca39dcdce3741f8e0818e62a3",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE",
+      "SRAM1_BASE",
+      "SRAM1_SIZE_MAX"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32u031xx.h",
+    "repository": "STMicroelectronics/cmsis-device-u0",
+    "revision": "5fca202fc2c5c5273238cfd27943dd95759a44a6",
+    "sha256": "6690877a1c9fc9d392f1954011ff448adbeddb43e5d03507d1afcd0a92d9384c",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-u0/blob/5fca202fc2c5c5273238cfd27943dd95759a44a6/Include/stm32u031xx.h"
+  },
+  "target": "STM32U031R8T6",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

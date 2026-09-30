@@ -39,7 +39,21 @@ Exact ESP32-S3 silicon/package/flash/PSRAM variants are now cataloged but are
 not implicitly covered by the verified generic chip-ID rows. Every T026 record
 begins `PLANNED` until its own provider, topology, fixtures, and acceptance
 evidence exist. STM32 source-reference records are described below. RP devices have no
-discovered repository catalog records yet. No STM32 or RP firmware support is claimed.
+discovered repository catalog records yet. STM32 has the limited import and
+vector-confirmation components below; no exact STM32 device support or RP
+firmware support is claimed.
+
+## STM32 import components
+
+| Input or feature | State | Evidence | Limitation |
+|---|---|---|---|
+| Address-bearing ELF/AXF and Intel HEX | EXPERIMENTAL | T033-T034 golden pairs and representative Ghidra native imports | The pure model preserves encoded addresses; exact device map selection is pending |
+| DfuSe v1 container | EXPERIMENTAL | T035 bounded parser and malformed/CRC tests | Pure parsed ranges only; no direct Ghidra workspace import |
+| Raw BIN at selected exact part and explicit base | EXPERIMENTAL | T036 F103 and N6 native Ghidra imports and rollback tests | Requires an existing ARM program; base and exact part are supplied, not inferred |
+| Cortex-M vector candidates and confirmed primitive words | EXPERIMENTAL | T037 F103/relocated/false-positive pure tests and real-Ghidra confirmation/byte-conflict tests | Caller supplies a proposed image base and known RAM ranges, selects a candidate explicitly; no part inference, automatic base selection, vector labels, functions, or exact device map |
+| Exact-part catalog search and selection | VERIFIED catalog lookup | T038 digest-pinned 53-record registry, identity/ambiguity/variant tests | Search candidates never become an inferred part; all descriptor pack states are `CATALOG_ONLY` and all device-support states remain `PLANNED` |
+
+All 53 curated exact STM32 part records remain `PLANNED` for device support.
 
 ## STM32 curated catalog
 
@@ -82,7 +96,8 @@ unresolved; wildcard/ranged ST references are not expanded into products.
 An audited Open-CMSIS-Pack H7RS pack lists 34 wildcard device names; H7RS is
 absent from this pinned ST pin snapshot and is not counted in its 28 families.
 The broad source indexes remain review evidence, not T032's finite acceptance
-set. STM32 import and device support start at T033 onward.
+set. T033-T037 provide the limited import components above; exact device
+support remains planned.
 
 The separate pinned ST CMSIS IRQ index currently maps 2,114 of the 2,240
 source references to at least one device header. It retains multiple header
@@ -109,4 +124,5 @@ coverage was the 157 C5 variants; the curated F103 snapshot adds three selected
 parts. The vendor data adds a `STM32V8` series absent from the
 pinned snapshot. The CubeMX database is SLA0048-restricted, so it is a coverage
 oracle only. The finite F103 catalog does not derive a bulk part list from the
-database. STM32 import and device support start at T033 onward.
+database. T033-T037 provide the limited import components above; exact device
+support remains planned.

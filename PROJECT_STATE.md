@@ -3,8 +3,11 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T032 — board-backed STM32 exact-part catalog (`COMPLETE` under the reviewed 53-part boundary)**.
-- Last completed task: **T032 — curated STM32 catalog**. T033 has not started.
+- Current task: **T039 — STM32 memory-region and topology planning (`IN_PROGRESS`)**.
+- Last completed task: **T038 — STM32 exact-part registry and selection**.
+- Future scope: the SpecKit now plans ESP32-branded full-flash expansion as
+  T080-T087, with independent per-series/variant evidence and a separate gate.
+  This specification change does not promote ESP support or reorder STM32 tasks.
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
@@ -155,8 +158,45 @@ support claim was added.
 
 ## Exact Next Action
 
-T032 is complete under the reviewed 53-part boundary. T033 is the next task
-but remains unstarted by instruction.
+T033 is complete. Repository-authored sources produce deterministic ELF,
+Intel HEX, and raw BIN goldens for 24 exact selected parts across all 20
+selected family labels and M0+/M3/M4/M7/M33/M55 cores. The N6 sample is
+RAM-resident because the part has zero internal flash; unresolved exact flash
+sizes remain unresolved. The independent validator checks all 53 selected
+records. The 29 identities without a golden remain catalog only. See
+`.embedra/evidence/tasks/T033.md`.
+
+T034 is complete. Immutable pure models retain ELF/AXF load segments,
+sections, and entry addresses, and Intel HEX extended addresses, data
+records, and start addresses. The Ghidra adapter delegates parsing and import
+to its native readers/loaders. All 24 T033 ELF/HEX pairs agree on image and
+entry addresses; native Ghidra imports map representative ELF and HEX memory.
+T035 is complete. A bounded pure parser validates DfuSe v1 prefix and file
+length, target headers and unique alternate settings, addressed elements and
+nonoverlap, the 16-byte suffix, and its CRC. It retains payload source ranges
+without copying payload bytes. T036 now maps raw BIN through Ghidra's native
+BinaryLoader only with a digest-checked exact part from the 53-part selection
+and an explicit base. The importer checks length, language, conflicting memory,
+and existing part provenance before a transactional import. No inferred base
+is applied. T037 now scores candidate 16-word Cortex-M vector tables using a
+caller-supplied proposed image base and known RAM ranges. An explicit candidate
+address selection is required before a Ghidra adapter verifies the mapped
+words and transactionally creates primitive vector data. It adds no exact-part
+inference or automatic base selection. T038 now loads the digest-pinned 53-record
+curated catalog after verifying its selection digest. Search reports no match,
+one candidate, ambiguity, or an exact ID; only an exact ID is selected. The
+registry preserves separate package, flash, core, lifecycle, and support
+facts, including unknown values. All entries are catalog-only packs and
+device support remains `PLANNED`. T039 is in progress: the pinned catalog has
+zero complete memory-bank maps and eleven unresolved flash sizes. A fail-closed
+readiness audit reports these gaps. Nineteen SHA-pinned DFP descriptors now
+produce reproducible, unreviewed memory candidates for 50 of 53 selected
+parts. The other three are F103; separate ST product and Nucleo-RB linker
+evidence is pinned. One WL33 part has competing candidate paths. Physical
+banks, security and boot aliases, capacity conflicts, prefix identities, and
+special regions still need reconciliation before support can be promoted.
+The next-chat prompt is `.embedra/prompts/T039-stm32-memory-topology.md`;
+full evidence is `.embedra/evidence/tasks/T039.md`.
 
 The maintainer narrowed T032 on 2026-09-29 from every ST MCU/MPU to commonly
 used orderable parts. ADR 0026, the specification, support matrix, state, and
@@ -354,7 +394,7 @@ board index, yielding 56 distinct exact CPN candidates before market checks, inc
 
 ## Revised T032 completion (2026-09-29)
 
-The exact allowlist in `catalogs/stm32/2026-09-29/selection.json` contains 54
+The exact allowlist in `catalogs/stm32/2026-09-29/selection.json` contains 53
 parts across 20 family labels. The first F103 three-part slice remains, and
 50 additions have explicit CPNs in the pinned BSD-3-Clause ST board files,
 current ST Nucleo/Discovery listing evidence, and active exact eStore pages.
@@ -371,3 +411,46 @@ and 4 ESP Python tests each. The byte-identical extension ZIPs have SHA-256
 `e49ab7a474bd5b7326dcf23cf4078dacb86743e10cd20e1113a0270cd5010687`.
 The ZIP contains the full pinned ST BSD-3-Clause notice and curated snapshot;
 it excludes the broad source indexes, website HTML, and CubeMX Finder data.
+
+## T033 first checkpoint (2026-09-29)
+
+T033 is `IN_PROGRESS`. Three exact F103 ELF/HEX/BIN golden sets were generated
+twice from original Cortex-M3 startup/linker sources. Their manifests, readelf
+oracles, vector bytes, HEX addresses/checksums, and catalog identities pass the
+new fixture validator. The validator also checks structural and provenance
+contracts for all 53 selected records; it preserves 11 unresolved flash sizes
+and two unsafe IRQ mappings. T033 evidence lists remaining multi-family
+fixture work. No STM32 import support is claimed.
+
+JDK 21/Ghidra 12.1.3 `check` and both clean 22-action quality builds pass:
+201 unit, 60 real-Ghidra, 55 STM32 Python, and 4 ESP Python tests with no
+failures or skips. The reproducible 2,665,777-byte ZIP has SHA-256
+`599266f88c6793a186df0a9b0f6dfec4768f32ee289c73b7d3ac505e0cadc53d`.
+
+The second T033 slice adds STM32C051C8T6, STM32C071RBT6, and
+STM32C092RCT6 Cortex-M0+ goldens with exact sourced flash/RAM sizes and
+Apache-2.0 CMSIS address evidence. Its fixture
+and all-record validators pass. Two updated clean 22-action builds pass 201
+unit, 60 real-Ghidra, 56 STM32 Python, and 4 ESP Python tests with no failures
+or skips. The byte-identical 2,666,019-byte ZIPs have SHA-256
+`5dad3335e6e789f48ebafac4d0383334ece30d5515700de67d8ca2972d384b30`.
+The earlier ZIP digest above belongs to the first slice. The expanded C0
+three-part generator passed both clean 22-action builds: 201 unit, 60
+real-Ghidra, 56 STM32 Python, and 4 ESP Python tests; zero failures or skips.
+The byte-identical 2,666,051-byte ZIPs have SHA-256
+`7b262ae0d9c0b9b5411c810c047214383813b703e33370477a8f27063d91293b`.
+
+An intermediate T033 checkpoint added M4/M7/M33 flash samples and an M55 RAM
+sample with pinned ST CMSIS bank evidence; ten exact fixture sets validated.
+Total RAM was not treated as a single contiguous bank.
+The updated clean 22-action gate passed twice with 201 unit, 60 real-Ghidra,
+57 STM32 Python, and 4 ESP Python tests, with no failures or skips. The
+byte-identical 2,666,799-byte ZIPs have SHA-256
+`c64793c6d4fc83f6c6d9da65222c46b7bcbf9bd10f8465c3760c9e1e8fe53cd8`.
+
+T033 completed with fourteen further cross-family samples. All 20 selected
+family labels have a representative fixture, while structural checks cover
+all 53 exact catalog records. Two final clean 22-action builds passed 201
+unit, 60 real-Ghidra, 58 STM32 Python, and 4 ESP Python tests with no failures
+or skips. The byte-identical 2,667,205-byte ZIPs have SHA-256
+`e5f683a13969337200bc0e1738716aeb5a00e2c592dc4458a596e9efdcb8748e`.

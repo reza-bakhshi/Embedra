@@ -1,0 +1,44 @@
+{
+  "partPages": [
+    {
+      "exactPart": "STM32F103C8T6",
+      "flashKiB": 64,
+      "note": "Product page gives size; address and region applicability need separate reconciliation.",
+      "product": "STM32F103C8",
+      "ramKiB": 20,
+      "stProductUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103c8.html"
+    },
+    {
+      "exactPart": "STM32F103CBT6",
+      "flashKiB": 128,
+      "note": "Product page gives size; address and region applicability need separate reconciliation.",
+      "product": "STM32F103CB",
+      "ramKiB": 20,
+      "stProductUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103cb.html"
+    },
+    {
+      "exactPart": "STM32F103RBT6",
+      "flashKiB": 128,
+      "note": "Product page gives size; address and region applicability need separate reconciliation.",
+      "product": "STM32F103RB",
+      "ramKiB": 20,
+      "stProductUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103rb.html"
+    }
+  ],
+  "reviewDate": "2026-09-30",
+  "schema": "embedra.stm32.f103-source-audit.v1",
+  "stCubeF1Linker": {
+    "appliesDirectlyTo": "STM32F103RBT6",
+    "commit": "c7656f1fee178058be2f8ebfc8df9eaf91dc565e",
+    "flashSize": 131072,
+    "flashStart": 134217728,
+    "limitation": "Nucleo RB IAR linker is not direct C8/CB address evidence and does not cover system/OTP/option/alias regions.",
+    "path": "Projects/STM32F103RB-Nucleo/Templates/EWARM/stm32f103xb_flash.icf",
+    "ramSize": 20480,
+    "ramStart": 536870912,
+    "rawUrl": "https://raw.githubusercontent.com/STMicroelectronics/STM32CubeF1/c7656f1fee178058be2f8ebfc8df9eaf91dc565e/Projects/STM32F103RB-Nucleo/Templates/EWARM/stm32f103xb_flash.icf",
+    "repository": "https://github.com/STMicroelectronics/STM32CubeF1.git",
+    "sha256": "72b435fe05d052d6e4dd02ae4a7549d6e42bd94efe2761ec6275e2e4787408cf"
+  },
+  "status": "SOURCE_RESEARCH_ONLY"
+}

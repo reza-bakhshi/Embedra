@@ -1,0 +1,38 @@
+{
+  "device": "STM32L562QEI6Q",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32L562QEI6Q.json",
+  "fixtureId": "stm32-core-samples.t033.stm32l562qei6q.bin",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "raw binary",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "ebab0ab5dc960a45ac755edeb933b418eed372475399ec164d7bd3f997e05cad",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE_NS",
+      "SRAM1_BASE_NS",
+      "SRAM1_SIZE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32l562xx.h",
+    "repository": "STMicroelectronics/cmsis-device-l5",
+    "revision": "e237398c0cbae890f4659f74fe6b64cae339b6a0",
+    "sha256": "8155d38ebbcbc78da35ea39436739bb860c0935d9898732d3e4516dc7eb73a42",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-l5/blob/e237398c0cbae890f4659f74fe6b64cae339b6a0/Include/stm32l562xx.h"
+  },
+  "target": "STM32L562QEI6Q",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}

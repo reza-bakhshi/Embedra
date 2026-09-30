@@ -1,0 +1,5439 @@
+{
+  "catalogSha256": "afc66a47cd79c2025d115049c8aebd2db671c1112d42531b1db50df8514858f9",
+  "records": [
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32C031C6Tx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00008000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32C031C6Tx",
+              "name": "Flash",
+              "size": 32768,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00003000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32C031C6Tx",
+              "name": "SRAM",
+              "size": 12288,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32C0 Series",
+            "STM32C031",
+            "STM32C031C6Tx"
+          ],
+          "sourceCommit": "a2434d9d624a6591cadf8e1c0c2f926d8a4d1beb",
+          "sourcePdscSha256": "e157463dafbba2d35a39a3e9393724b485807ea184ed3b2188d9da0bbb0f7081",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32C0xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 12,
+      "exactPart": "STM32C031C6T3",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32C051C8Tx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00010000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32C051C8Tx",
+              "name": "Flash",
+              "size": 65536,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00003000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32C051C8Tx",
+              "name": "SRAM",
+              "size": 12288,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32C0 Series",
+            "STM32C051",
+            "STM32C051C8Tx"
+          ],
+          "sourceCommit": "a2434d9d624a6591cadf8e1c0c2f926d8a4d1beb",
+          "sourcePdscSha256": "e157463dafbba2d35a39a3e9393724b485807ea184ed3b2188d9da0bbb0f7081",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32C0xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 64,
+      "catalogRamKiB": 12,
+      "exactPart": "STM32C051C8T6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32C071RBTx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00020000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32C071RBTx",
+              "name": "Flash",
+              "size": 131072,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00006000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32C071RBTx",
+              "name": "SRAM",
+              "size": 24576,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32C0 Series",
+            "STM32C071",
+            "STM32C071RBTx"
+          ],
+          "sourceCommit": "a2434d9d624a6591cadf8e1c0c2f926d8a4d1beb",
+          "sourcePdscSha256": "e157463dafbba2d35a39a3e9393724b485807ea184ed3b2188d9da0bbb0f7081",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32C0xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 128,
+      "catalogRamKiB": 24,
+      "exactPart": "STM32C071RBT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32C092RCTx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00040000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32C092RCTx",
+              "name": "Flash",
+              "size": 262144,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00007800",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32C092RCTx",
+              "name": "SRAM",
+              "size": 30720,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32C0 Series",
+            "STM32C092",
+            "STM32C092RCTx"
+          ],
+          "sourceCommit": "a2434d9d624a6591cadf8e1c0c2f926d8a4d1beb",
+          "sourcePdscSha256": "e157463dafbba2d35a39a3e9393724b485807ea184ed3b2188d9da0bbb0f7081",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32C0xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 256,
+      "catalogRamKiB": 30,
+      "exactPart": "STM32C092RCT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [],
+      "catalogFlashKiB": 64,
+      "catalogRamKiB": 20,
+      "exactPart": "STM32F103C8T6",
+      "status": "NO_DFP_MATCH"
+    },
+    {
+      "candidates": [],
+      "catalogFlashKiB": 128,
+      "catalogRamKiB": 20,
+      "exactPart": "STM32F103CBT6",
+      "status": "NO_DFP_MATCH"
+    },
+    {
+      "candidates": [],
+      "catalogFlashKiB": 128,
+      "catalogRamKiB": 20,
+      "exactPart": "STM32F103RBT6",
+      "status": "NO_DFP_MATCH"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32F207ZGTx",
+          "matchStrength": "PREFIX_CANDIDATE",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00100000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32F207ZG",
+              "name": "Flash",
+              "size": 1048576,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00020000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32F207ZG",
+              "name": "SRAM",
+              "size": 131072,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32F2 Series",
+            "STM32F207",
+            "STM32F207ZG",
+            "STM32F207ZGTx"
+          ],
+          "sourceCommit": "02311aec4d8e251d959bf6e5dd95b400ada4e1f7",
+          "sourcePdscSha256": "9abd1f37524ebc53baf7ab685fafa960cc777c97321dbecb3491965f315c3216",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32F2xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 128,
+      "exactPart": "STM32F207ZGT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32F401RETx",
+          "matchStrength": "PREFIX_CANDIDATE",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32F401RE",
+              "name": "Flash",
+              "size": 524288,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00018000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32F401RE",
+              "name": "SRAM",
+              "size": 98304,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32F4 Series",
+            "STM32F401",
+            "STM32F401RE",
+            "STM32F401RETx"
+          ],
+          "sourceCommit": "3afdf33b1b92c7175b978982158a5c8f685398ce",
+          "sourcePdscSha256": "aa1c339944342d1ca187f7c7bb5f10cdde508cf3e25b879914900140d595e46e",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32F4xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 96,
+      "exactPart": "STM32F401RET6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32F756ZGTx",
+          "matchStrength": "PREFIX_CANDIDATE",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "DTCM",
+                "size": "0x00010000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32F756",
+              "name": "DTCM",
+              "size": 65536,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x0003C000",
+                "start": "0x20010000"
+              },
+              "declaredAt": "STM32F756",
+              "name": "SRAM1",
+              "size": 245760,
+              "start": 536936448
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM2",
+                "size": "0x00004000",
+                "start": "0x2004C000"
+              },
+              "declaredAt": "STM32F756",
+              "name": "SRAM2",
+              "size": 16384,
+              "start": 537182208
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "BKP_SRAM",
+                "size": "0x00001000",
+                "start": "0x40024000"
+              },
+              "declaredAt": "STM32F756",
+              "name": "BKP_SRAM",
+              "size": 4096,
+              "start": 1073889280
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "ITCM",
+                "size": "0x00004000",
+                "start": "0x00000000"
+              },
+              "declaredAt": "STM32F756",
+              "name": "ITCM",
+              "size": 16384,
+              "start": 0
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00100000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32F756ZG",
+              "name": "Flash",
+              "size": 1048576,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "0",
+                "name": "ITCM_Flash",
+                "size": "0x00100000",
+                "start": "0x00200000",
+                "startup": "0"
+              },
+              "declaredAt": "STM32F756ZG",
+              "name": "ITCM_Flash",
+              "size": 1048576,
+              "start": 2097152
+            }
+          ],
+          "nodePath": [
+            "STM32F7 Series",
+            "STM32F756",
+            "STM32F756ZG",
+            "STM32F756ZGTx"
+          ],
+          "sourceCommit": "c5bcd5c8a5007c3ef0a3f69dcea0dc6f5a22c9a2",
+          "sourcePdscSha256": "679a0cd03e9ea9b5b75f924ba863acef91f4719194fb7bc6bb1bedb0c7868a00",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32F7xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 1024,
+      "catalogRamKiB": 320,
+      "exactPart": "STM32F756ZGT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32G0B1RETx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32G0B1RETx",
+              "name": "Main_Flash",
+              "size": 524288,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00024000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32G0B1RETx",
+              "name": "SRAM",
+              "size": 147456,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32G0 Series",
+            "STM32G0B1",
+            "STM32G0B1RETx"
+          ],
+          "sourceCommit": "3334b4fa92aa4eb09dbdc9902f2c9dada23c8944",
+          "sourcePdscSha256": "b522e346d20bb394d97270fd91c95fbf9fcf3b3d40841b0bb79bb48cc44e8a29",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32G0xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 144,
+      "exactPart": "STM32G0B1RET6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32G431RBTx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00008000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32G431",
+              "name": "SRAM",
+              "size": 32768,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00020000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32G431RBTx",
+              "name": "Main_Flash",
+              "size": 131072,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32G4 Series",
+            "STM32G431",
+            "STM32G431RBTx"
+          ],
+          "sourceCommit": "697d2262d1986b449fbe9329882bf206171d88f9",
+          "sourcePdscSha256": "5beb24ab0827bea12fa62cb114bc48e86ee5e2e78a695a5c5f2bcbb47a279b36",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32G4xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 32,
+      "exactPart": "STM32G431RBT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32G473QETx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00020000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32G473",
+              "name": "SRAM",
+              "size": 131072,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32G473QETx",
+              "name": "Main_Flash",
+              "size": 524288,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32G4 Series",
+            "STM32G473",
+            "STM32G473QETx"
+          ],
+          "sourceCommit": "697d2262d1986b449fbe9329882bf206171d88f9",
+          "sourcePdscSha256": "5beb24ab0827bea12fa62cb114bc48e86ee5e2e78a695a5c5f2bcbb47a279b36",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32G4xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 128,
+      "exactPart": "STM32G473QET6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32G474RETx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x00020000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32G474",
+              "name": "SRAM",
+              "size": 131072,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32G474RETx",
+              "name": "Main_Flash",
+              "size": 524288,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32G4 Series",
+            "STM32G474",
+            "STM32G474RETx"
+          ],
+          "sourceCommit": "697d2262d1986b449fbe9329882bf206171d88f9",
+          "sourcePdscSha256": "5beb24ab0827bea12fa62cb114bc48e86ee5e2e78a695a5c5f2bcbb47a279b36",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32G4xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 128,
+      "exactPart": "STM32G474RET6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32G491RETx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM",
+                "size": "0x0001C000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32G491",
+              "name": "SRAM",
+              "size": 114688,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32G491RETx",
+              "name": "Main_Flash",
+              "size": 524288,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32G4 Series",
+            "STM32G491",
+            "STM32G491RETx"
+          ],
+          "sourceCommit": "697d2262d1986b449fbe9329882bf206171d88f9",
+          "sourcePdscSha256": "5beb24ab0827bea12fa62cb114bc48e86ee5e2e78a695a5c5f2bcbb47a279b36",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32G4xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 128,
+      "exactPart": "STM32G491RET6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H503RBTx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00020000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H503",
+              "name": "Flash",
+              "size": 131072,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1",
+                "size": "0x00004000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H503",
+              "name": "SRAM1",
+              "size": 16384,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "SRAM2",
+                "size": "0x00004000",
+                "start": "0x20004000"
+              },
+              "declaredAt": "STM32H503",
+              "name": "SRAM2",
+              "size": 16384,
+              "start": 536887296
+            }
+          ],
+          "nodePath": [
+            "STM32H5 Series",
+            "STM32H503",
+            "STM32H503RBTx"
+          ],
+          "sourceCommit": "f954be2f9afd93c90a2c47d6c339a67a7569ed77",
+          "sourcePdscSha256": "e27b9a5170f345226c2ad473aef6645f4b739e82d2b224a859b05007a652ebb0",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 128,
+      "catalogRamKiB": 32,
+      "exactPart": "STM32H503RBT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H533RETx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00020000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H533",
+              "name": "SRAM1_NS",
+              "size": 131072,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00020000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32H533",
+              "name": "SRAM1_S",
+              "size": 131072,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00014000",
+                "start": "0x20020000"
+              },
+              "declaredAt": "STM32H533",
+              "name": "SRAM2_NS",
+              "size": 81920,
+              "start": 537001984
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00014000",
+                "start": "0x30020000"
+              },
+              "declaredAt": "STM32H533",
+              "name": "SRAM2_S",
+              "size": 81920,
+              "start": 805437440
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x00010000",
+                "start": "0x20034000"
+              },
+              "declaredAt": "STM32H533",
+              "name": "SRAM3_NS",
+              "size": 65536,
+              "start": 537083904
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x00010000",
+                "start": "0x30034000"
+              },
+              "declaredAt": "STM32H533",
+              "name": "SRAM3_S",
+              "size": 65536,
+              "start": 805519360
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "BKPSRAM_NS",
+                "size": "0x00000800",
+                "start": "0x40036400"
+              },
+              "declaredAt": "STM32H533",
+              "name": "BKPSRAM_NS",
+              "size": 2048,
+              "start": 1073964032
+            },
+            {
+              "alias": "BKPSRAM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "BKPSRAM_NS",
+                "name": "BKPSRAM_S",
+                "size": "0x00000800",
+                "start": "0x50036400"
+              },
+              "declaredAt": "STM32H533",
+              "name": "BKPSRAM_S",
+              "size": 2048,
+              "start": 1342399488
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x0080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H533RETx",
+              "name": "Flash_NS",
+              "size": 524288,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x0080000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32H533RETx",
+              "name": "Flash_S",
+              "size": 524288,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32H5 Series",
+            "STM32H533",
+            "STM32H533RETx"
+          ],
+          "sourceCommit": "f954be2f9afd93c90a2c47d6c339a67a7569ed77",
+          "sourcePdscSha256": "e27b9a5170f345226c2ad473aef6645f4b739e82d2b224a859b05007a652ebb0",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 512,
+      "catalogRamKiB": 272,
+      "exactPart": "STM32H533RET6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H553ZGTx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00020000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H553",
+              "name": "SRAM1_NS",
+              "size": 131072,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00020000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32H553",
+              "name": "SRAM1_S",
+              "size": 131072,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00014000",
+                "start": "0x20020000"
+              },
+              "declaredAt": "STM32H553",
+              "name": "SRAM2_NS",
+              "size": 81920,
+              "start": 537001984
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00014000",
+                "start": "0x30020000"
+              },
+              "declaredAt": "STM32H553",
+              "name": "SRAM2_S",
+              "size": 81920,
+              "start": 805437440
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x00018000",
+                "start": "0x20034000"
+              },
+              "declaredAt": "STM32H553",
+              "name": "SRAM3_NS",
+              "size": 98304,
+              "start": 537083904
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x00018000",
+                "start": "0x30034000"
+              },
+              "declaredAt": "STM32H553",
+              "name": "SRAM3_S",
+              "size": 98304,
+              "start": 805519360
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "BKPSRAM_NS",
+                "size": "0x00000800",
+                "start": "0x40036400"
+              },
+              "declaredAt": "STM32H553",
+              "name": "BKPSRAM_NS",
+              "size": 2048,
+              "start": 1073964032
+            },
+            {
+              "alias": "BKPSRAM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "BKPSRAM_NS",
+                "name": "BKPSRAM_S",
+                "size": "0x00000800",
+                "start": "0x50036400"
+              },
+              "declaredAt": "STM32H553",
+              "name": "BKPSRAM_S",
+              "size": 2048,
+              "start": 1342399488
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00100000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H553ZGTx",
+              "name": "Flash",
+              "size": 1048576,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32H5 Series",
+            "STM32H553",
+            "STM32H553ZGTx"
+          ],
+          "sourceCommit": "f954be2f9afd93c90a2c47d6c339a67a7569ed77",
+          "sourcePdscSha256": "e27b9a5170f345226c2ad473aef6645f4b739e82d2b224a859b05007a652ebb0",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 1024,
+      "catalogRamKiB": 304,
+      "exactPart": "STM32H553ZGT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H573IIKxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00040000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H573",
+              "name": "SRAM1_NS",
+              "size": 262144,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00040000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32H573",
+              "name": "SRAM1_S",
+              "size": 262144,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x20040000"
+              },
+              "declaredAt": "STM32H573",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537133056
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x30040000"
+              },
+              "declaredAt": "STM32H573",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 805568512
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x00050000",
+                "start": "0x20050000"
+              },
+              "declaredAt": "STM32H573",
+              "name": "SRAM3_NS",
+              "size": 327680,
+              "start": 537198592
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x00050000",
+                "start": "0x30050000"
+              },
+              "declaredAt": "STM32H573",
+              "name": "SRAM3_S",
+              "size": 327680,
+              "start": 805634048
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "BKPSRAM_NS",
+                "size": "0x00001000",
+                "start": "0x40036400"
+              },
+              "declaredAt": "STM32H573",
+              "name": "BKPSRAM_NS",
+              "size": 4096,
+              "start": 1073964032
+            },
+            {
+              "alias": "BKPSRAM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "BKPSRAM_NS",
+                "name": "BKPSRAM_S",
+                "size": "0x00001000",
+                "start": "0x50036400"
+              },
+              "declaredAt": "STM32H573",
+              "name": "BKPSRAM_S",
+              "size": 4096,
+              "start": 1342399488
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00200000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H573IIKxQ",
+              "name": "Flash_NS",
+              "size": 2097152,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00200000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32H573IIKxQ",
+              "name": "Flash_S",
+              "size": 2097152,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32H5 Series",
+            "STM32H573",
+            "STM32H573IIKxQ"
+          ],
+          "sourceCommit": "f954be2f9afd93c90a2c47d6c339a67a7569ed77",
+          "sourcePdscSha256": "e27b9a5170f345226c2ad473aef6645f4b739e82d2b224a859b05007a652ebb0",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 2048,
+      "catalogRamKiB": 640,
+      "exactPart": "STM32H573IIK3Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H5E5ZJTx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00040000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM1_NS",
+              "size": 262144,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00040000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM1_S",
+              "size": 262144,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00020000",
+                "start": "0x20040000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM2_NS",
+              "size": 131072,
+              "start": 537133056
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00020000",
+                "start": "0x30040000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM2_S",
+              "size": 131072,
+              "start": 805568512
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x00060000",
+                "start": "0x20060000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM3_NS",
+              "size": 393216,
+              "start": 537264128
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x00060000",
+                "start": "0x30060000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM3_S",
+              "size": 393216,
+              "start": 805699584
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM4_NS",
+                "size": "0x00060000",
+                "start": "0x200C0000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM4_NS",
+              "size": 393216,
+              "start": 537657344
+            },
+            {
+              "alias": "SRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM4_NS",
+                "name": "SRAM4_S",
+                "size": "0x00060000",
+                "start": "0x300C0000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM4_S",
+              "size": 393216,
+              "start": 806092800
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM5_NS",
+                "size": "0x00060000",
+                "start": "0x20120000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM5_NS",
+              "size": 393216,
+              "start": 538050560
+            },
+            {
+              "alias": "SRAM5_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM5_NS",
+                "name": "SRAM5_S",
+                "size": "0x00060000",
+                "start": "0x30120000"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "SRAM5_S",
+              "size": 393216,
+              "start": 806486016
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "BKPSRAM_NS",
+                "size": "0x00001000",
+                "start": "0x40036400"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "BKPSRAM_NS",
+              "size": 4096,
+              "start": 1073964032
+            },
+            {
+              "alias": "BKPSRAM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "BKPSRAM_NS",
+                "name": "BKPSRAM_S",
+                "size": "0x00001000",
+                "start": "0x50036400"
+              },
+              "declaredAt": "STM32H5E5",
+              "name": "BKPSRAM_S",
+              "size": 4096,
+              "start": 1342399488
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00400000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H5E5ZJTx",
+              "name": "Flash_NS",
+              "size": 4194304,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00400000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32H5E5ZJTx",
+              "name": "Flash_S",
+              "size": 4194304,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32H5 Series",
+            "STM32H5E5",
+            "STM32H5E5ZJTx"
+          ],
+          "sourceCommit": "f954be2f9afd93c90a2c47d6c339a67a7569ed77",
+          "sourcePdscSha256": "e27b9a5170f345226c2ad473aef6645f4b739e82d2b224a859b05007a652ebb0",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 4096,
+      "catalogRamKiB": 1536,
+      "exactPart": "STM32H5E5ZJT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H5F5LJHxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00040000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM1_NS",
+              "size": 262144,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00040000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM1_S",
+              "size": 262144,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00020000",
+                "start": "0x20040000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM2_NS",
+              "size": 131072,
+              "start": 537133056
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00020000",
+                "start": "0x30040000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM2_S",
+              "size": 131072,
+              "start": 805568512
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x00060000",
+                "start": "0x20060000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM3_NS",
+              "size": 393216,
+              "start": 537264128
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x00060000",
+                "start": "0x30060000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM3_S",
+              "size": 393216,
+              "start": 805699584
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM4_NS",
+                "size": "0x00060000",
+                "start": "0x200C0000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM4_NS",
+              "size": 393216,
+              "start": 537657344
+            },
+            {
+              "alias": "SRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM4_NS",
+                "name": "SRAM4_S",
+                "size": "0x00060000",
+                "start": "0x300C0000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM4_S",
+              "size": 393216,
+              "start": 806092800
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM5_NS",
+                "size": "0x00060000",
+                "start": "0x20120000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM5_NS",
+              "size": 393216,
+              "start": 538050560
+            },
+            {
+              "alias": "SRAM5_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM5_NS",
+                "name": "SRAM5_S",
+                "size": "0x00060000",
+                "start": "0x30120000"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "SRAM5_S",
+              "size": 393216,
+              "start": 806486016
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "BKPSRAM_NS",
+                "size": "0x00001000",
+                "start": "0x40036400"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "BKPSRAM_NS",
+              "size": 4096,
+              "start": 1073964032
+            },
+            {
+              "alias": "BKPSRAM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "BKPSRAM_NS",
+                "name": "BKPSRAM_S",
+                "size": "0x00001000",
+                "start": "0x50036400"
+              },
+              "declaredAt": "STM32H5F5",
+              "name": "BKPSRAM_S",
+              "size": 4096,
+              "start": 1342399488
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00400000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H5F5LJHxQ",
+              "name": "Flash_NS",
+              "size": 4194304,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00400000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32H5F5LJHxQ",
+              "name": "Flash_S",
+              "size": 4194304,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32H5 Series",
+            "STM32H5F5",
+            "STM32H5F5LJHxQ"
+          ],
+          "sourceCommit": "f954be2f9afd93c90a2c47d6c339a67a7569ed77",
+          "sourcePdscSha256": "e27b9a5170f345226c2ad473aef6645f4b739e82d2b224a859b05007a652ebb0",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 4096,
+      "catalogRamKiB": 1536,
+      "exactPart": "STM32H5F5LJH7Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H735IGKx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "DTCMRAM",
+                "size": "0x00020000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H735",
+              "name": "DTCMRAM",
+              "size": 131072,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "RAM_D1",
+                "size": "0x00050000",
+                "start": "0x24000000"
+              },
+              "declaredAt": "STM32H735",
+              "name": "RAM_D1",
+              "size": 327680,
+              "start": 603979776
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "RAM_D2",
+                "size": "0x00008000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32H735",
+              "name": "RAM_D2",
+              "size": 32768,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "RAM_D3",
+                "size": "0x00004000",
+                "start": "0x38000000"
+              },
+              "declaredAt": "STM32H735",
+              "name": "RAM_D3",
+              "size": 16384,
+              "start": 939524096
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "FLASH_Bank1",
+                "size": "0x00100000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H735IGKx",
+              "name": "FLASH_Bank1",
+              "size": 1048576,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32H7 Series",
+            "STM32H735",
+            "STM32H735IGKx"
+          ],
+          "sourceCommit": "058af2e871a1ee2f203459f8780c02741079ba5a",
+          "sourcePdscSha256": "9b84881a982243977b4a5169fc74187b7bd73394d4c484264dfb54b799e529fa",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H7xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 1024,
+      "catalogRamKiB": 564,
+      "exactPart": "STM32H735IGK6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H750XBHx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "DTCMRAM",
+                "size": "0x00020000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H750",
+              "name": "DTCMRAM",
+              "size": 131072,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "RAM_D1",
+                "size": "0x00080000",
+                "start": "0x24000000"
+              },
+              "declaredAt": "STM32H750",
+              "name": "RAM_D1",
+              "size": 524288,
+              "start": 603979776
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "RAM_D2",
+                "size": "0x00048000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32H750",
+              "name": "RAM_D2",
+              "size": 294912,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "RAM_D3",
+                "size": "0x00010000",
+                "start": "0x38000000"
+              },
+              "declaredAt": "STM32H750",
+              "name": "RAM_D3",
+              "size": 65536,
+              "start": 939524096
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "FLASH_Bank1",
+                "size": "0x00020000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H750XBHx",
+              "name": "FLASH_Bank1",
+              "size": 131072,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32H7 Series",
+            "STM32H750",
+            "STM32H750XBHx"
+          ],
+          "sourceCommit": "058af2e871a1ee2f203459f8780c02741079ba5a",
+          "sourcePdscSha256": "9b84881a982243977b4a5169fc74187b7bd73394d4c484264dfb54b799e529fa",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H7xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 128,
+      "catalogRamKiB": 864,
+      "exactPart": "STM32H750XBH6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H7S3L8Hx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "ITCM_RAM",
+                "size": "0x00010000",
+                "start": "0x00000000"
+              },
+              "declaredAt": "STM32H7S3",
+              "name": "ITCM_RAM",
+              "size": 65536,
+              "start": 0
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "DTCM_RAM",
+                "size": "0x00010000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H7S3",
+              "name": "DTCM_RAM",
+              "size": 65536,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "AXI_SRAM",
+                "size": "0x00072000",
+                "start": "0x24000000"
+              },
+              "declaredAt": "STM32H7S3",
+              "name": "AXI_SRAM",
+              "size": 466944,
+              "start": 603979776
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "AHB_SRAM",
+                "size": "0x00008000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32H7S3",
+              "name": "AHB_SRAM",
+              "size": 32768,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "BKP_SRAM",
+                "size": "0x00001000",
+                "start": "0x38800000"
+              },
+              "declaredAt": "STM32H7S3",
+              "name": "BKP_SRAM",
+              "size": 4096,
+              "start": 947912704
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00010000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H7S3L8Hx",
+              "name": "Flash",
+              "size": 65536,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32H7RS Series",
+            "STM32H7S3",
+            "STM32H7S3L8Hx"
+          ],
+          "sourceCommit": "b29144605bd5c531309872afb193097cdb5fecd9",
+          "sourcePdscSha256": "f610752859fed5abc6d87bc4eb7ecd10eabf476c28c104930b8629f8b70505c4",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H7RSxx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 64,
+      "catalogRamKiB": 620,
+      "exactPart": "STM32H7S3L8H6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32H7S7L8HxH",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "ITCM_RAM",
+                "size": "0x00010000",
+                "start": "0x00000000"
+              },
+              "declaredAt": "STM32H7S7",
+              "name": "ITCM_RAM",
+              "size": 65536,
+              "start": 0
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "DTCM_RAM",
+                "size": "0x00010000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32H7S7",
+              "name": "DTCM_RAM",
+              "size": 65536,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "AXI_SRAM",
+                "size": "0x00072000",
+                "start": "0x24000000"
+              },
+              "declaredAt": "STM32H7S7",
+              "name": "AXI_SRAM",
+              "size": 466944,
+              "start": 603979776
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "AHB_SRAM",
+                "size": "0x00008000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32H7S7",
+              "name": "AHB_SRAM",
+              "size": 32768,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "BKP_SRAM",
+                "size": "0x00001000",
+                "start": "0x38800000"
+              },
+              "declaredAt": "STM32H7S7",
+              "name": "BKP_SRAM",
+              "size": 4096,
+              "start": 947912704
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00010000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32H7S7L8HxH",
+              "name": "Flash",
+              "size": 65536,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32H7RS Series",
+            "STM32H7S7",
+            "STM32H7S7L8HxH"
+          ],
+          "sourceCommit": "b29144605bd5c531309872afb193097cdb5fecd9",
+          "sourcePdscSha256": "f610752859fed5abc6d87bc4eb7ecd10eabf476c28c104930b8629f8b70505c4",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32H7RSxx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 64,
+      "catalogRamKiB": 620,
+      "exactPart": "STM32H7S7L8H6H",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32L412KBUx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00008000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32L412",
+              "name": "SRAM1",
+              "size": 32768,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "SRAM2",
+                "size": "0x00002000",
+                "start": "0x10000000"
+              },
+              "declaredAt": "STM32L412",
+              "name": "SRAM2",
+              "size": 8192,
+              "start": 268435456
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00020000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32L412KBUx",
+              "name": "Flash",
+              "size": 131072,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32L4 Series",
+            "STM32L412",
+            "STM32L412KBUx"
+          ],
+          "sourceCommit": "c95bed1673824afa695036dce2db3e7eed1c9823",
+          "sourcePdscSha256": "b53932051459e1590784aeb8bc7dc487e18a88941c3b327d73538ebe7b0db7f1",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32L4xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 128,
+      "catalogRamKiB": 40,
+      "exactPart": "STM32L412KBU3",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32L412RBTxP",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00008000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32L412",
+              "name": "SRAM1",
+              "size": 32768,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "SRAM2",
+                "size": "0x00002000",
+                "start": "0x10000000"
+              },
+              "declaredAt": "STM32L412",
+              "name": "SRAM2",
+              "size": 8192,
+              "start": 268435456
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00020000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32L412RBTxP",
+              "name": "Flash",
+              "size": 131072,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32L4 Series",
+            "STM32L412",
+            "STM32L412RBTxP"
+          ],
+          "sourceCommit": "c95bed1673824afa695036dce2db3e7eed1c9823",
+          "sourcePdscSha256": "b53932051459e1590784aeb8bc7dc487e18a88941c3b327d73538ebe7b0db7f1",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32L4xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 128,
+      "catalogRamKiB": 40,
+      "exactPart": "STM32L412RBT6P",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32L4P5CGUx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00020000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32L4P5",
+              "name": "SRAM1",
+              "size": 131072,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "SRAM2",
+                "size": "0x00010000",
+                "start": "0x10000000"
+              },
+              "declaredAt": "STM32L4P5",
+              "name": "SRAM2",
+              "size": 65536,
+              "start": 268435456
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "SRAM3",
+                "size": "0x00020000",
+                "start": "0x20030000"
+              },
+              "declaredAt": "STM32L4P5",
+              "name": "SRAM3",
+              "size": 131072,
+              "start": 537067520
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00100000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32L4P5CGUx",
+              "name": "Flash",
+              "size": 1048576,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32L4 Series",
+            "STM32L4P5",
+            "STM32L4P5CGUx"
+          ],
+          "sourceCommit": "c95bed1673824afa695036dce2db3e7eed1c9823",
+          "sourcePdscSha256": "b53932051459e1590784aeb8bc7dc487e18a88941c3b327d73538ebe7b0db7f1",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32L4xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 320,
+      "exactPart": "STM32L4P5CGU6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32L4R5ZITx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00030000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32L4R5",
+              "name": "SRAM1",
+              "size": 196608,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "SRAM2",
+                "size": "0x00010000",
+                "start": "0x10000000"
+              },
+              "declaredAt": "STM32L4R5",
+              "name": "SRAM2",
+              "size": 65536,
+              "start": 268435456
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "SRAM3",
+                "size": "0x00060000",
+                "start": "0x20040000"
+              },
+              "declaredAt": "STM32L4R5",
+              "name": "SRAM3",
+              "size": 393216,
+              "start": 537133056
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00200000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32L4R5ZITx",
+              "name": "Flash",
+              "size": 2097152,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32L4 Series",
+            "STM32L4R5",
+            "STM32L4R5ZITx"
+          ],
+          "sourceCommit": "c95bed1673824afa695036dce2db3e7eed1c9823",
+          "sourcePdscSha256": "b53932051459e1590784aeb8bc7dc487e18a88941c3b327d73538ebe7b0db7f1",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32L4xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 640,
+      "exactPart": "STM32L4R5ZIT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32L552ZETxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash-non-secure",
+                "size": "0x00080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32L552ZETxQ",
+              "name": "Flash-non-secure",
+              "size": 524288,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash-non-secure",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash-non-secure",
+                "name": "Flash-secure",
+                "size": "0x00080000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32L552ZETxQ",
+              "name": "Flash-secure",
+              "size": 524288,
+              "start": 201326592
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM-non-secure",
+                "size": "0x00040000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32L552ZETxQ",
+              "name": "SRAM-non-secure",
+              "size": 262144,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM-non-secure",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM-non-secure",
+                "name": "SRAM-secure",
+                "size": "0x00040000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32L552ZETxQ",
+              "name": "SRAM-secure",
+              "size": 262144,
+              "start": 805306368
+            }
+          ],
+          "nodePath": [
+            "STM32L5 Series",
+            "STM32L5x2",
+            "STM32L552ZETxQ"
+          ],
+          "sourceCommit": "5aee9c972a046a604f40b138f67e396fa14fd8eb",
+          "sourcePdscSha256": "18e668b336033918e7929465f5bff791004ef1ba6191e1e5f2d38958a99f5ddf",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32L5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": null,
+      "catalogRamKiB": 256,
+      "exactPart": "STM32L552ZET6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32L562QEIxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash-non-secure",
+                "size": "0x00080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32L562QEIxQ",
+              "name": "Flash-non-secure",
+              "size": 524288,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash-non-secure",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash-non-secure",
+                "name": "Flash-secure",
+                "size": "0x00080000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32L562QEIxQ",
+              "name": "Flash-secure",
+              "size": 524288,
+              "start": 201326592
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM-non-secure",
+                "size": "0x00040000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32L562QEIxQ",
+              "name": "SRAM-non-secure",
+              "size": 262144,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM-non-secure",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM-non-secure",
+                "name": "SRAM-secure",
+                "size": "0x00040000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32L562QEIxQ",
+              "name": "SRAM-secure",
+              "size": 262144,
+              "start": 805306368
+            }
+          ],
+          "nodePath": [
+            "STM32L5 Series",
+            "STM32L5x2",
+            "STM32L562QEIxQ"
+          ],
+          "sourceCommit": "5aee9c972a046a604f40b138f67e396fa14fd8eb",
+          "sourcePdscSha256": "18e668b336033918e7929465f5bff791004ef1ba6191e1e5f2d38958a99f5ddf",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32L5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 512,
+      "catalogRamKiB": 256,
+      "exactPart": "STM32L562QEI6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32N657X0HxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "alias": "FSBL_CODE_S",
+              "attributes": {
+                "access": "rwx",
+                "alias": "FSBL_CODE_S",
+                "name": "FSBL_CODE_NS",
+                "size": "0x0003FC00",
+                "start": "0x24180400"
+              },
+              "declaredAt": "STM32N657",
+              "name": "FSBL_CODE_NS",
+              "size": 261120,
+              "start": 605553664
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "FSBL_CODE_S",
+                "size": "0x0003FC00",
+                "start": "0x34180400",
+                "startup": "1"
+              },
+              "declaredAt": "STM32N657",
+              "name": "FSBL_CODE_S",
+              "size": 261120,
+              "start": 873989120
+            },
+            {
+              "alias": "FSBL_DATA_S",
+              "attributes": {
+                "access": "rwx",
+                "alias": "FSBL_DATA_S",
+                "name": "FSBL_DATA_NS",
+                "size": "0x00040000",
+                "start": "0x241C0000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "FSBL_DATA_NS",
+              "size": 262144,
+              "start": 605814784
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "FSBL_DATA_S",
+                "size": "0x00040000",
+                "start": "0x341C0000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "FSBL_DATA_S",
+              "size": 262144,
+              "start": 874250240
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "FLEXRAM_NS",
+                "size": "0x00064000",
+                "start": "0x24000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "FLEXRAM_NS",
+              "size": 409600,
+              "start": 603979776
+            },
+            {
+              "alias": "FLEXRAM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "FLEXRAM_NS",
+                "name": "FLEXRAM_S",
+                "size": "0x00064000",
+                "start": "0x34000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "FLEXRAM_S",
+              "size": 409600,
+              "start": 872415232
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "AXISRAM1_NS",
+                "size": "0x0009C000",
+                "start": "0x24064000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM1_NS",
+              "size": 638976,
+              "start": 604389376
+            },
+            {
+              "alias": "AXISRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "AXISRAM1_NS",
+                "name": "AXISRAM1_S",
+                "size": "0x0009C000",
+                "start": "0x34064000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM1_S",
+              "size": 638976,
+              "start": 872824832
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "AXISRAM3_NS",
+                "size": "0x00070000",
+                "start": "0x24200000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM3_NS",
+              "size": 458752,
+              "start": 606076928
+            },
+            {
+              "alias": "AXISRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "AXISRAM3_NS",
+                "name": "AXISRAM3_S",
+                "size": "0x00070000",
+                "start": "0x34200000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM3_S",
+              "size": 458752,
+              "start": 874512384
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "AXISRAM4_NS",
+                "size": "0x00070000",
+                "start": "0x24270000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM4_NS",
+              "size": 458752,
+              "start": 606535680
+            },
+            {
+              "alias": "AXISRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "AXISRAM4_NS",
+                "name": "AXISRAM4_S",
+                "size": "0x00070000",
+                "start": "0x34270000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM4_S",
+              "size": 458752,
+              "start": 874971136
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "AXISRAM5_NS",
+                "size": "0x00070000",
+                "start": "0x242E0000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM5_NS",
+              "size": 458752,
+              "start": 606994432
+            },
+            {
+              "alias": "AXISRAM5_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "AXISRAM5_NS",
+                "name": "AXISRAM5_S",
+                "size": "0x00070000",
+                "start": "0x342E0000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM5_S",
+              "size": 458752,
+              "start": 875429888
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "AXISRAM6_NS",
+                "size": "0x00070000",
+                "start": "0x24350000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM6_NS",
+              "size": 458752,
+              "start": 607453184
+            },
+            {
+              "alias": "AXISRAM6_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "AXISRAM6_NS",
+                "name": "AXISRAM6_S",
+                "size": "0x00070000",
+                "start": "0x34350000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AXISRAM6_S",
+              "size": 458752,
+              "start": 875888640
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "CACHEAXI_NS",
+                "size": "0x00040000",
+                "start": "0x243C0000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "CACHEAXI_NS",
+              "size": 262144,
+              "start": 607911936
+            },
+            {
+              "alias": "CACHEAXI_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "CACHEAXI_NS",
+                "name": "CACHEAXI_S",
+                "size": "0x00040000",
+                "start": "0x343C0000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "CACHEAXI_S",
+              "size": 262144,
+              "start": 876347392
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "VENCRAM_NS",
+                "size": "0x00020000",
+                "start": "0x24400000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "VENCRAM_NS",
+              "size": 131072,
+              "start": 608174080
+            },
+            {
+              "alias": "VENCRAM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "VENCRAM_NS",
+                "name": "VENCRAM_S",
+                "size": "0x00020000",
+                "start": "0x34400000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "VENCRAM_S",
+              "size": 131072,
+              "start": 876609536
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "GFXMMU_SLV_NS",
+                "size": "0x01000000",
+                "start": "0x25000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "GFXMMU_SLV_NS",
+              "size": 16777216,
+              "start": 620756992
+            },
+            {
+              "alias": "GFXMMU_SLV_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "GFXMMU_SLV_NS",
+                "name": "GFXMMU_SLV_S",
+                "size": "0x01000000",
+                "start": "0x35000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "GFXMMU_SLV_S",
+              "size": 16777216,
+              "start": 889192448
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "AHBSRAM1_NS",
+                "size": "0x00004000",
+                "start": "0x28000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AHBSRAM1_NS",
+              "size": 16384,
+              "start": 671088640
+            },
+            {
+              "alias": "AHBSRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "AHBSRAM1_NS",
+                "name": "AHBSRAM1_S",
+                "size": "0x00004000",
+                "start": "0x38000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AHBSRAM1_S",
+              "size": 16384,
+              "start": 939524096
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "AHBSRAM2_NS",
+                "size": "0x00004000",
+                "start": "0x28004000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AHBSRAM2_NS",
+              "size": 16384,
+              "start": 671105024
+            },
+            {
+              "alias": "AHBSRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "AHBSRAM2_NS",
+                "name": "AHBSRAM2_S",
+                "size": "0x00004000",
+                "start": "0x38004000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "AHBSRAM2_S",
+              "size": 16384,
+              "start": 939540480
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "Backup_SRAM_NS",
+                "size": "0x00002000",
+                "start": "0x2C000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "Backup_SRAM_NS",
+              "size": 8192,
+              "start": 738197504
+            },
+            {
+              "alias": "Backup_SRAM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "Backup_SRAM_NS",
+                "name": "Backup_SRAM_S",
+                "size": "0x00002000",
+                "start": "0x3C000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "Backup_SRAM_S",
+              "size": 8192,
+              "start": 1006632960
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "ITCM_NS",
+                "size": "0x00040000",
+                "start": "0x00000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "ITCM_NS",
+              "size": 262144,
+              "start": 0
+            },
+            {
+              "alias": "ITCM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "ITCM_NS",
+                "name": "ITCM_S",
+                "size": "0x00040000",
+                "start": "0x10000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "ITCM_S",
+              "size": 262144,
+              "start": 268435456
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "DTCM_NS",
+                "size": "0x00040000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "DTCM_NS",
+              "size": 262144,
+              "start": 536870912
+            },
+            {
+              "alias": "ITCM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "ITCM_NS",
+                "name": "DTCM_S",
+                "size": "0x00040000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32N657",
+              "name": "DTCM_S",
+              "size": 262144,
+              "start": 805306368
+            }
+          ],
+          "nodePath": [
+            "STM32N6 Series",
+            "STM32N657",
+            "STM32N657X0HxQ"
+          ],
+          "sourceCommit": "21d3efcb43e5951dd5d1226d63f8e6f06bbab979",
+          "sourcePdscSha256": "0b3ac08f4d333e459b039a5ac315b11911f7c8fa335e393cf50fe7951cc2fbbf",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32N6xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 0,
+      "catalogRamKiB": 4200,
+      "exactPart": "STM32N657X0H3Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U031R8Tx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1",
+                "size": "0x00002000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U031",
+              "name": "SRAM1",
+              "size": 8192,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2",
+                "size": "0x00001000",
+                "start": "0x20002000"
+              },
+              "declaredAt": "STM32U031",
+              "name": "SRAM2",
+              "size": 4096,
+              "start": 536879104
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00010000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U031R8Tx",
+              "name": "Flash",
+              "size": 65536,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32U0 Series",
+            "STM32U031",
+            "STM32U031R8Tx"
+          ],
+          "sourceCommit": "452a2da433b586dee8c616cc904e59252c15760c",
+          "sourcePdscSha256": "1f334be22a9a1acc1a6167f06e956bbda7d2c9bf2e47eda32fa4765275f7c949",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U0xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 64,
+      "catalogRamKiB": 12,
+      "exactPart": "STM32U031R8T6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U083MCTx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1",
+                "size": "0x00008000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U083",
+              "name": "SRAM1",
+              "size": 32768,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2",
+                "size": "0x00002000",
+                "start": "0x20008000"
+              },
+              "declaredAt": "STM32U083",
+              "name": "SRAM2",
+              "size": 8192,
+              "start": 536903680
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00040000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U083MCTx",
+              "name": "Flash",
+              "size": 262144,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32U0 Series",
+            "STM32U083",
+            "STM32U083MCTx"
+          ],
+          "sourceCommit": "452a2da433b586dee8c616cc904e59252c15760c",
+          "sourcePdscSha256": "1f334be22a9a1acc1a6167f06e956bbda7d2c9bf2e47eda32fa4765275f7c949",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U0xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 256,
+      "catalogRamKiB": 40,
+      "exactPart": "STM32U083MCT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U083RCTx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1",
+                "size": "0x00008000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U083",
+              "name": "SRAM1",
+              "size": 32768,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2",
+                "size": "0x00002000",
+                "start": "0x20008000"
+              },
+              "declaredAt": "STM32U083",
+              "name": "SRAM2",
+              "size": 8192,
+              "start": 536903680
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash",
+                "size": "0x00040000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U083RCTx",
+              "name": "Flash",
+              "size": 262144,
+              "start": 134217728
+            }
+          ],
+          "nodePath": [
+            "STM32U0 Series",
+            "STM32U083",
+            "STM32U083RCTx"
+          ],
+          "sourceCommit": "452a2da433b586dee8c616cc904e59252c15760c",
+          "sourcePdscSha256": "1f334be22a9a1acc1a6167f06e956bbda7d2c9bf2e47eda32fa4765275f7c949",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U0xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 256,
+      "catalogRamKiB": 40,
+      "exactPart": "STM32U083RCT6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U385RGTxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00030000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U385",
+              "name": "SRAM1_NS",
+              "size": 196608,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00030000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32U385",
+              "name": "SRAM1_S",
+              "size": 196608,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x20030000"
+              },
+              "declaredAt": "STM32U385",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537067520
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x30030000"
+              },
+              "declaredAt": "STM32U385",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 805502976
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00100000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U385RGTxQ",
+              "name": "Flash_NS",
+              "size": 1048576,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00100000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32U385RGTxQ",
+              "name": "Flash_S",
+              "size": 1048576,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32U3 Series",
+            "STM32U385",
+            "STM32U385RGTxQ"
+          ],
+          "sourceCommit": "b67fb5d299c581cd6daa7c1dc3e890403ef6c79e",
+          "sourcePdscSha256": "2832e1306397d6538d7dda17a37c2911e42c22429bfa7d4a61063b0b9172fc0a",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U3xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 1024,
+      "catalogRamKiB": 256,
+      "exactPart": "STM32U385RGT6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U3C5ZITxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00030000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U3C5",
+              "name": "SRAM1_NS",
+              "size": 196608,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00030000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32U3C5",
+              "name": "SRAM1_S",
+              "size": 196608,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x20030000"
+              },
+              "declaredAt": "STM32U3C5",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537067520
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x30030000"
+              },
+              "declaredAt": "STM32U3C5",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 805502976
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x00050000",
+                "start": "0x20040000"
+              },
+              "declaredAt": "STM32U3C5",
+              "name": "SRAM3_NS",
+              "size": 327680,
+              "start": 537133056
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x00050000",
+                "start": "0x30040000"
+              },
+              "declaredAt": "STM32U3C5",
+              "name": "SRAM3_S",
+              "size": 327680,
+              "start": 805568512
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM4_NS",
+                "size": "0x00010000",
+                "start": "0x20090000"
+              },
+              "declaredAt": "STM32U3C5",
+              "name": "SRAM4_NS",
+              "size": 65536,
+              "start": 537460736
+            },
+            {
+              "alias": "SRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM4_NS",
+                "name": "SRAM4_S",
+                "size": "0x00010000",
+                "start": "0x30090000"
+              },
+              "declaredAt": "STM32U3C5",
+              "name": "SRAM4_S",
+              "size": 65536,
+              "start": 805896192
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00200000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U3C5ZITxQ",
+              "name": "Flash_NS",
+              "size": 2097152,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00200000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32U3C5ZITxQ",
+              "name": "Flash_S",
+              "size": 2097152,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32U3 Series",
+            "STM32U3C5",
+            "STM32U3C5ZITxQ"
+          ],
+          "sourceCommit": "b67fb5d299c581cd6daa7c1dc3e890403ef6c79e",
+          "sourcePdscSha256": "2832e1306397d6538d7dda17a37c2911e42c22429bfa7d4a61063b0b9172fc0a",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U3xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 2048,
+      "catalogRamKiB": 640,
+      "exactPart": "STM32U3C5ZIT6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U545RETxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00030000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U545",
+              "name": "SRAM1_NS",
+              "size": 196608,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00030000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32U545",
+              "name": "SRAM1_S",
+              "size": 196608,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x20030000"
+              },
+              "declaredAt": "STM32U545",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537067520
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x30030000"
+              },
+              "declaredAt": "STM32U545",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 805502976
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM4_NS",
+                "size": "0x00004000",
+                "start": "0x28000000"
+              },
+              "declaredAt": "STM32U545",
+              "name": "SRAM4_NS",
+              "size": 16384,
+              "start": 671088640
+            },
+            {
+              "alias": "SRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM4_NS",
+                "name": "SRAM4_S",
+                "size": "0x00004000",
+                "start": "0x38000000"
+              },
+              "declaredAt": "STM32U545",
+              "name": "SRAM4_S",
+              "size": 16384,
+              "start": 939524096
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U545RETxQ",
+              "name": "Flash_NS",
+              "size": 524288,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00080000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32U545RETxQ",
+              "name": "Flash_S",
+              "size": 524288,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32U5 Series",
+            "STM32U545",
+            "STM32U545RETxQ"
+          ],
+          "sourceCommit": "dced5faff40a332628e82c173a9730090b888008",
+          "sourcePdscSha256": "c8aa0082c2c73284a6ebd655532c4d65cdee5fb35abb53f0454b4201dcaf4aa2",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 512,
+      "catalogRamKiB": 274,
+      "exactPart": "STM32U545RET6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U575ZITxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00030000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U575",
+              "name": "SRAM1_NS",
+              "size": 196608,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00030000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32U575",
+              "name": "SRAM1_S",
+              "size": 196608,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x20030000"
+              },
+              "declaredAt": "STM32U575",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537067520
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x30030000"
+              },
+              "declaredAt": "STM32U575",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 805502976
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x00080000",
+                "start": "0x20040000"
+              },
+              "declaredAt": "STM32U575",
+              "name": "SRAM3_NS",
+              "size": 524288,
+              "start": 537133056
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x00080000",
+                "start": "0x30040000"
+              },
+              "declaredAt": "STM32U575",
+              "name": "SRAM3_S",
+              "size": 524288,
+              "start": 805568512
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM4_NS",
+                "size": "0x00004000",
+                "start": "0x28000000"
+              },
+              "declaredAt": "STM32U575",
+              "name": "SRAM4_NS",
+              "size": 16384,
+              "start": 671088640
+            },
+            {
+              "alias": "SRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM4_NS",
+                "name": "SRAM4_S",
+                "size": "0x00004000",
+                "start": "0x38000000"
+              },
+              "declaredAt": "STM32U575",
+              "name": "SRAM4_S",
+              "size": 16384,
+              "start": 939524096
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00200000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U575ZITxQ",
+              "name": "Flash_NS",
+              "size": 2097152,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00200000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32U575ZITxQ",
+              "name": "Flash_S",
+              "size": 2097152,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32U5 Series",
+            "STM32U575",
+            "STM32U575ZITxQ"
+          ],
+          "sourceCommit": "dced5faff40a332628e82c173a9730090b888008",
+          "sourcePdscSha256": "c8aa0082c2c73284a6ebd655532c4d65cdee5fb35abb53f0454b4201dcaf4aa2",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 2048,
+      "catalogRamKiB": 786,
+      "exactPart": "STM32U575ZIT6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U585AIIxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00030000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U585",
+              "name": "SRAM1_NS",
+              "size": 196608,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00030000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32U585",
+              "name": "SRAM1_S",
+              "size": 196608,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x20030000"
+              },
+              "declaredAt": "STM32U585",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537067520
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x30030000"
+              },
+              "declaredAt": "STM32U585",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 805502976
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x00080000",
+                "start": "0x20040000"
+              },
+              "declaredAt": "STM32U585",
+              "name": "SRAM3_NS",
+              "size": 524288,
+              "start": 537133056
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x00080000",
+                "start": "0x30040000"
+              },
+              "declaredAt": "STM32U585",
+              "name": "SRAM3_S",
+              "size": 524288,
+              "start": 805568512
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM4_NS",
+                "size": "0x00004000",
+                "start": "0x28000000"
+              },
+              "declaredAt": "STM32U585",
+              "name": "SRAM4_NS",
+              "size": 16384,
+              "start": 671088640
+            },
+            {
+              "alias": "SRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM4_NS",
+                "name": "SRAM4_S",
+                "size": "0x00004000",
+                "start": "0x38000000"
+              },
+              "declaredAt": "STM32U585",
+              "name": "SRAM4_S",
+              "size": 16384,
+              "start": 939524096
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00200000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U585AIIxQ",
+              "name": "Flash_NS",
+              "size": 2097152,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00200000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32U585AIIxQ",
+              "name": "Flash_S",
+              "size": 2097152,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32U5 Series",
+            "STM32U585",
+            "STM32U585AIIxQ"
+          ],
+          "sourceCommit": "dced5faff40a332628e82c173a9730090b888008",
+          "sourcePdscSha256": "c8aa0082c2c73284a6ebd655532c4d65cdee5fb35abb53f0454b4201dcaf4aa2",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 2048,
+      "catalogRamKiB": 786,
+      "exactPart": "STM32U585AII6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U5A5ZJTxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x000C0000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM1_NS",
+              "size": 786432,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x000C0000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM1_S",
+              "size": 786432,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x200C0000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537657344
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x300C0000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 806092800
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x000D0000",
+                "start": "0x200D0000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM3_NS",
+              "size": 851968,
+              "start": 537722880
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x000D0000",
+                "start": "0x300D0000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM3_S",
+              "size": 851968,
+              "start": 806158336
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM5_NS",
+                "size": "0x000D0000",
+                "start": "0x201A0000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM5_NS",
+              "size": 851968,
+              "start": 538574848
+            },
+            {
+              "alias": "SRAM5_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM5_NS",
+                "name": "SRAM5_S",
+                "size": "0x000D0000",
+                "start": "0x301A0000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM5_S",
+              "size": 851968,
+              "start": 807010304
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "SRAM_GFXMM_NS",
+                "size": "0x01000000",
+                "start": "0x24000000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM_GFXMM_NS",
+              "size": 16777216,
+              "start": 603979776
+            },
+            {
+              "alias": "SRAM_GFXMM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM_GFXMM_NS",
+                "name": "SRAM_GFXMM_S",
+                "size": "0x01000000",
+                "start": "0x34000000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM_GFXMM_S",
+              "size": 16777216,
+              "start": 872415232
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM4_NS",
+                "size": "0x00004000",
+                "start": "0x28000000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM4_NS",
+              "size": 16384,
+              "start": 671088640
+            },
+            {
+              "alias": "SRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM4_NS",
+                "name": "SRAM4_S",
+                "size": "0x00004000",
+                "start": "0x38000000"
+              },
+              "declaredAt": "STM32U5A5",
+              "name": "SRAM4_S",
+              "size": 16384,
+              "start": 939524096
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00400000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U5A5ZJTxQ",
+              "name": "Flash_NS",
+              "size": 4194304,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00400000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32U5A5ZJTxQ",
+              "name": "Flash_S",
+              "size": 4194304,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32U5 Series",
+            "STM32U5A5",
+            "STM32U5A5ZJTxQ"
+          ],
+          "sourceCommit": "dced5faff40a332628e82c173a9730090b888008",
+          "sourcePdscSha256": "c8aa0082c2c73284a6ebd655532c4d65cdee5fb35abb53f0454b4201dcaf4aa2",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 4096,
+      "catalogRamKiB": 2514,
+      "exactPart": "STM32U5A5ZJT6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U5G9NJHxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x000C0000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM1_NS",
+              "size": 786432,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x000C0000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM1_S",
+              "size": 786432,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x200C0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537657344
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x300C0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 806092800
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x000D0000",
+                "start": "0x200D0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM3_NS",
+              "size": 851968,
+              "start": 537722880
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x000D0000",
+                "start": "0x300D0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM3_S",
+              "size": 851968,
+              "start": 806158336
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM5_NS",
+                "size": "0x000D0000",
+                "start": "0x201A0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM5_NS",
+              "size": 851968,
+              "start": 538574848
+            },
+            {
+              "alias": "SRAM5_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM5_NS",
+                "name": "SRAM5_S",
+                "size": "0x000D0000",
+                "start": "0x301A0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM5_S",
+              "size": 851968,
+              "start": 807010304
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM6_NS",
+                "size": "0x00080000",
+                "start": "0x20270000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM6_NS",
+              "size": 524288,
+              "start": 539426816
+            },
+            {
+              "alias": "SRAM6_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM6_NS",
+                "name": "SRAM6_S",
+                "size": "0x00080000",
+                "start": "0x30270000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM6_S",
+              "size": 524288,
+              "start": 807862272
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "SRAM_GFXMM_NS",
+                "size": "0x01000000",
+                "start": "0x24000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM_GFXMM_NS",
+              "size": 16777216,
+              "start": 603979776
+            },
+            {
+              "alias": "SRAM_GFXMM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM_GFXMM_NS",
+                "name": "SRAM_GFXMM_S",
+                "size": "0x01000000",
+                "start": "0x34000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM_GFXMM_S",
+              "size": 16777216,
+              "start": 872415232
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM4_NS",
+                "size": "0x00004000",
+                "start": "0x28000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM4_NS",
+              "size": 16384,
+              "start": 671088640
+            },
+            {
+              "alias": "SRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM4_NS",
+                "name": "SRAM4_S",
+                "size": "0x00004000",
+                "start": "0x38000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM4_S",
+              "size": 16384,
+              "start": 939524096
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00400000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U5G9NJHxQ",
+              "name": "Flash_NS",
+              "size": 4194304,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00400000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32U5G9NJHxQ",
+              "name": "Flash_S",
+              "size": 4194304,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32U5 Series",
+            "STM32U5G9",
+            "STM32U5G9NJHxQ"
+          ],
+          "sourceCommit": "dced5faff40a332628e82c173a9730090b888008",
+          "sourcePdscSha256": "c8aa0082c2c73284a6ebd655532c4d65cdee5fb35abb53f0454b4201dcaf4aa2",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 4096,
+      "catalogRamKiB": 3026,
+      "exactPart": "STM32U5G9NJH6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32U5G9ZJTxQ",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x000C0000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM1_NS",
+              "size": 786432,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x000C0000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM1_S",
+              "size": 786432,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x200C0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537657344
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x300C0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 806092800
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM3_NS",
+                "size": "0x000D0000",
+                "start": "0x200D0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM3_NS",
+              "size": 851968,
+              "start": 537722880
+            },
+            {
+              "alias": "SRAM3_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM3_NS",
+                "name": "SRAM3_S",
+                "size": "0x000D0000",
+                "start": "0x300D0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM3_S",
+              "size": 851968,
+              "start": 806158336
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM5_NS",
+                "size": "0x000D0000",
+                "start": "0x201A0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM5_NS",
+              "size": 851968,
+              "start": 538574848
+            },
+            {
+              "alias": "SRAM5_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM5_NS",
+                "name": "SRAM5_S",
+                "size": "0x000D0000",
+                "start": "0x301A0000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM5_S",
+              "size": 851968,
+              "start": 807010304
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM6_NS",
+                "size": "0x00080000",
+                "start": "0x20270000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM6_NS",
+              "size": 524288,
+              "start": 539426816
+            },
+            {
+              "alias": "SRAM6_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM6_NS",
+                "name": "SRAM6_S",
+                "size": "0x00080000",
+                "start": "0x30270000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM6_S",
+              "size": 524288,
+              "start": 807862272
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "init": "0",
+                "name": "SRAM_GFXMM_NS",
+                "size": "0x01000000",
+                "start": "0x24000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM_GFXMM_NS",
+              "size": 16777216,
+              "start": 603979776
+            },
+            {
+              "alias": "SRAM_GFXMM_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM_GFXMM_NS",
+                "name": "SRAM_GFXMM_S",
+                "size": "0x01000000",
+                "start": "0x34000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM_GFXMM_S",
+              "size": 16777216,
+              "start": 872415232
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM4_NS",
+                "size": "0x00004000",
+                "start": "0x28000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM4_NS",
+              "size": 16384,
+              "start": 671088640
+            },
+            {
+              "alias": "SRAM4_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM4_NS",
+                "name": "SRAM4_S",
+                "size": "0x00004000",
+                "start": "0x38000000"
+              },
+              "declaredAt": "STM32U5G9",
+              "name": "SRAM4_S",
+              "size": 16384,
+              "start": 939524096
+            },
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00400000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32U5G9ZJTxQ",
+              "name": "Flash_NS",
+              "size": 4194304,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00400000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32U5G9ZJTxQ",
+              "name": "Flash_S",
+              "size": 4194304,
+              "start": 201326592
+            }
+          ],
+          "nodePath": [
+            "STM32U5 Series",
+            "STM32U5G9",
+            "STM32U5G9ZJTxQ"
+          ],
+          "sourceCommit": "dced5faff40a332628e82c173a9730090b888008",
+          "sourcePdscSha256": "c8aa0082c2c73284a6ebd655532c4d65cdee5fb35abb53f0454b4201dcaf4aa2",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32U5xx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 4096,
+      "catalogRamKiB": 3026,
+      "exactPart": "STM32U5G9ZJT6Q",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WB05KZVx",
+          "matchStrength": "PREFIX_CANDIDATE",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00030000",
+                "start": "0x10040000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WB05",
+              "name": "Main_Flash",
+              "size": 196608,
+              "start": 268697600
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "SRAM0",
+                "size": "0x00002FE8",
+                "start": "0x20000018"
+              },
+              "declaredAt": "STM32WB05",
+              "name": "SRAM0",
+              "size": 12264,
+              "start": 536870936
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00006000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32WB05KZVx",
+              "name": "SRAM1",
+              "size": 24576,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32WB0 Series",
+            "STM32WB05",
+            "STM32WB05KZVx"
+          ],
+          "sourceCommit": "2eae5ea833b10055c3ee3c5c8caf2a691c6bde4f",
+          "sourcePdscSha256": "1a0990df99fe5beb0657c523df47b0141cbc25bfcd949de8f6194d1512d225f4",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WB0x_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 192,
+      "catalogRamKiB": 24,
+      "exactPart": "STM32WB05KZV6TR",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WB07CCVx",
+          "matchStrength": "PREFIX_CANDIDATE",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00040000",
+                "start": "0x10040000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WB07",
+              "name": "Main_Flash",
+              "size": 262144,
+              "start": 268697600
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "SRAM0",
+                "size": "0x00003FE8",
+                "start": "0x20000018"
+              },
+              "declaredAt": "STM32WB07",
+              "name": "SRAM0",
+              "size": 16360,
+              "start": 536870936
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00004000",
+                "start": "0x20004000"
+              },
+              "declaredAt": "STM32WB07",
+              "name": "SRAM1",
+              "size": 16384,
+              "start": 536887296
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM2",
+                "size": "0x00004000",
+                "start": "0x20008000"
+              },
+              "declaredAt": "STM32WB07",
+              "name": "SRAM2",
+              "size": 16384,
+              "start": 536903680
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM3",
+                "size": "0x00004000",
+                "start": "0x2000C000"
+              },
+              "declaredAt": "STM32WB07",
+              "name": "SRAM3",
+              "size": 16384,
+              "start": 536920064
+            }
+          ],
+          "nodePath": [
+            "STM32WB0 Series",
+            "STM32WB07",
+            "STM32WB07CCVx"
+          ],
+          "sourceCommit": "2eae5ea833b10055c3ee3c5c8caf2a691c6bde4f",
+          "sourcePdscSha256": "1a0990df99fe5beb0657c523df47b0141cbc25bfcd949de8f6194d1512d225f4",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WB0x_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 256,
+      "catalogRamKiB": 64,
+      "exactPart": "STM32WB07CCV6TR",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WB09KEVx",
+          "matchStrength": "PREFIX_CANDIDATE",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00080000",
+                "start": "0x10040000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WB09",
+              "name": "Main_Flash",
+              "size": 524288,
+              "start": 268697600
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "0",
+                "name": "SRAM0",
+                "size": "0x00003FE8",
+                "start": "0x20000018"
+              },
+              "declaredAt": "STM32WB09",
+              "name": "SRAM0",
+              "size": 16360,
+              "start": 536870936
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00004000",
+                "start": "0x20004000"
+              },
+              "declaredAt": "STM32WB09",
+              "name": "SRAM1",
+              "size": 16384,
+              "start": 536887296
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM2",
+                "size": "0x00004000",
+                "start": "0x20008000"
+              },
+              "declaredAt": "STM32WB09",
+              "name": "SRAM2",
+              "size": 16384,
+              "start": 536903680
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM3",
+                "size": "0x00004000",
+                "start": "0x2000C000"
+              },
+              "declaredAt": "STM32WB09",
+              "name": "SRAM3",
+              "size": 16384,
+              "start": 536920064
+            }
+          ],
+          "nodePath": [
+            "STM32WB0 Series",
+            "STM32WB09",
+            "STM32WB09KEVx"
+          ],
+          "sourceCommit": "2eae5ea833b10055c3ee3c5c8caf2a691c6bde4f",
+          "sourcePdscSha256": "1a0990df99fe5beb0657c523df47b0141cbc25bfcd949de8f6194d1512d225f4",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WB0x_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 512,
+      "catalogRamKiB": 64,
+      "exactPart": "STM32WB09KEV6TR",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WB15CCUx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00050000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WB15CCUx",
+              "name": "Main_Flash",
+              "size": 327680,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00003000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32WB15CCUx",
+              "name": "SRAM1",
+              "size": 12288,
+              "start": 536870912
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM2",
+                "size": "0x00009000",
+                "start": "0x20030000"
+              },
+              "declaredAt": "STM32WB15CCUx",
+              "name": "SRAM2",
+              "size": 36864,
+              "start": 537067520
+            }
+          ],
+          "nodePath": [
+            "STM32WB Series",
+            "STM32WB15",
+            "STM32WB15CCUx"
+          ],
+          "sourceCommit": "692e842ec6c206da05f96825fc8cf671780d671e",
+          "sourcePdscSha256": "b1ab584c0f99acc5a9ddef7c95da70b0999c5c52bd856805f3aa855cca84f958",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WBxx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 320,
+      "catalogRamKiB": 48,
+      "exactPart": "STM32WB15CCU6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WB55RGVx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00100000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WB55RGVx",
+              "name": "Main_Flash",
+              "size": 1048576,
+              "start": 134217728
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00030000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32WB55RGVx",
+              "name": "SRAM1",
+              "size": 196608,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32WB Series",
+            "STM32WB55",
+            "STM32WB55RGVx"
+          ],
+          "sourceCommit": "692e842ec6c206da05f96825fc8cf671780d671e",
+          "sourcePdscSha256": "b1ab584c0f99acc5a9ddef7c95da70b0999c5c52bd856805f3aa855cca84f958",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WBxx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 1024,
+      "catalogRamKiB": 256,
+      "exactPart": "STM32WB55RGV6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WBA25CEUx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00080000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WBA25CEUx",
+              "name": "Flash_NS",
+              "size": 524288,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00080000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32WBA25CEUx",
+              "name": "Flash_S",
+              "size": 524288,
+              "start": 201326592
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00010000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32WBA25CEUx",
+              "name": "SRAM1_NS",
+              "size": 65536,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00010000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32WBA25CEUx",
+              "name": "SRAM1_S",
+              "size": 65536,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00008000",
+                "start": "0x20010000"
+              },
+              "declaredAt": "STM32WBA25CEUx",
+              "name": "SRAM2_NS",
+              "size": 32768,
+              "start": 536936448
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00008000",
+                "start": "0x30010000"
+              },
+              "declaredAt": "STM32WBA25CEUx",
+              "name": "SRAM2_S",
+              "size": 32768,
+              "start": 805371904
+            }
+          ],
+          "nodePath": [
+            "STM32WBA Series",
+            "STM32WBA25",
+            "STM32WBA25CEUx"
+          ],
+          "sourceCommit": "949afc59632dc6f1362ef93b2dd19cdb00cc0982",
+          "sourcePdscSha256": "336ccc78afb654eb5f0a0f7baead9ba828581b72262b8248097f1291c58ba50b",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WBAxx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 512,
+      "catalogRamKiB": 96,
+      "exactPart": "STM32WBA25CEU7",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WBA52CGUx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00100000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WBA52CGUx",
+              "name": "Flash_NS",
+              "size": 1048576,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00100000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32WBA52CGUx",
+              "name": "Flash_S",
+              "size": 1048576,
+              "start": 201326592
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00010000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32WBA52CGUx",
+              "name": "SRAM1_NS",
+              "size": 65536,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00010000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32WBA52CGUx",
+              "name": "SRAM1_S",
+              "size": 65536,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x20010000"
+              },
+              "declaredAt": "STM32WBA52CGUx",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 536936448
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x30010000"
+              },
+              "declaredAt": "STM32WBA52CGUx",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 805371904
+            }
+          ],
+          "nodePath": [
+            "STM32WBA Series",
+            "STM32WBA52",
+            "STM32WBA52CGUx"
+          ],
+          "sourceCommit": "949afc59632dc6f1362ef93b2dd19cdb00cc0982",
+          "sourcePdscSha256": "336ccc78afb654eb5f0a0f7baead9ba828581b72262b8248097f1291c58ba50b",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WBAxx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 1024,
+      "catalogRamKiB": 128,
+      "exactPart": "STM32WBA52CGU6",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WBA65RIVx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Flash_NS",
+                "size": "0x00200000",
+                "start": "0x08000000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WBA65RIVx",
+              "name": "Flash_NS",
+              "size": 2097152,
+              "start": 134217728
+            },
+            {
+              "alias": "Flash_NS",
+              "attributes": {
+                "access": "rx",
+                "alias": "Flash_NS",
+                "name": "Flash_S",
+                "size": "0x00200000",
+                "start": "0x0C000000"
+              },
+              "declaredAt": "STM32WBA65RIVx",
+              "name": "Flash_S",
+              "size": 2097152,
+              "start": 201326592
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM1_NS",
+                "size": "0x00070000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32WBA65RIVx",
+              "name": "SRAM1_NS",
+              "size": 458752,
+              "start": 536870912
+            },
+            {
+              "alias": "SRAM1_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM1_NS",
+                "name": "SRAM1_S",
+                "size": "0x00070000",
+                "start": "0x30000000"
+              },
+              "declaredAt": "STM32WBA65RIVx",
+              "name": "SRAM1_S",
+              "size": 458752,
+              "start": 805306368
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "init": "0",
+                "name": "SRAM2_NS",
+                "size": "0x00010000",
+                "start": "0x20070000"
+              },
+              "declaredAt": "STM32WBA65RIVx",
+              "name": "SRAM2_NS",
+              "size": 65536,
+              "start": 537329664
+            },
+            {
+              "alias": "SRAM2_NS",
+              "attributes": {
+                "access": "rwx",
+                "alias": "SRAM2_NS",
+                "name": "SRAM2_S",
+                "size": "0x00010000",
+                "start": "0x30070000"
+              },
+              "declaredAt": "STM32WBA65RIVx",
+              "name": "SRAM2_S",
+              "size": 65536,
+              "start": 805765120
+            }
+          ],
+          "nodePath": [
+            "STM32WBA Series",
+            "STM32WBA65",
+            "STM32WBA65RIVx"
+          ],
+          "sourceCommit": "949afc59632dc6f1362ef93b2dd19cdb00cc0982",
+          "sourcePdscSha256": "336ccc78afb654eb5f0a0f7baead9ba828581b72262b8248097f1291c58ba50b",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WBAxx_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 2048,
+      "catalogRamKiB": 512,
+      "exactPart": "STM32WBA65RIV7",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WL33CCVx",
+          "matchStrength": "PREFIX_CANDIDATE",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00040000",
+                "start": "0x10040000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WL33CCVx",
+              "name": "Main_Flash",
+              "size": 262144,
+              "start": 268697600
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00008000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32WL33CCVx",
+              "name": "SRAM1",
+              "size": 32768,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32WL3 Series",
+            "STM32WL33",
+            "STM32WL33CCVx"
+          ],
+          "sourceCommit": "a1a00883ca38e53a2a8ba51ac1b6f51f299d91da",
+          "sourcePdscSha256": "216389bd9221ac41bbc596550813f7b5a3ddac06d6f18d61f2b36646648d5d00",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WL3x_DFP.git",
+          "status": "UNREVIEWED"
+        },
+        {
+          "devicePattern": "STM32WL33CCVxX",
+          "matchStrength": "PREFIX_CANDIDATE",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00040000",
+                "start": "0x10040000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WL33CCVxX",
+              "name": "Main_Flash",
+              "size": 262144,
+              "start": 268697600
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00008000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32WL33CCVxX",
+              "name": "SRAM1",
+              "size": 32768,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32WL3 Series",
+            "STM32WL33",
+            "STM32WL33CCVxX"
+          ],
+          "sourceCommit": "a1a00883ca38e53a2a8ba51ac1b6f51f299d91da",
+          "sourcePdscSha256": "216389bd9221ac41bbc596550813f7b5a3ddac06d6f18d61f2b36646648d5d00",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WL3x_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 256,
+      "catalogRamKiB": 32,
+      "exactPart": "STM32WL33CCV6TR",
+      "status": "UNREVIEWED"
+    },
+    {
+      "candidates": [
+        {
+          "devicePattern": "STM32WL3RKBVx",
+          "matchStrength": "DIRECT_PATTERN",
+          "memories": [
+            {
+              "attributes": {
+                "access": "rx",
+                "default": "1",
+                "name": "Main_Flash",
+                "size": "0x00020000",
+                "start": "0x10040000",
+                "startup": "1"
+              },
+              "declaredAt": "STM32WL3RKBVx",
+              "name": "Main_Flash",
+              "size": 131072,
+              "start": 268697600
+            },
+            {
+              "attributes": {
+                "access": "rwx",
+                "default": "1",
+                "name": "SRAM1",
+                "size": "0x00004000",
+                "start": "0x20000000"
+              },
+              "declaredAt": "STM32WL3RKBVx",
+              "name": "SRAM1",
+              "size": 16384,
+              "start": 536870912
+            }
+          ],
+          "nodePath": [
+            "STM32WL3 Series",
+            "STM32WL3R",
+            "STM32WL3RKBVx"
+          ],
+          "sourceCommit": "a1a00883ca38e53a2a8ba51ac1b6f51f299d91da",
+          "sourcePdscSha256": "216389bd9221ac41bbc596550813f7b5a3ddac06d6f18d61f2b36646648d5d00",
+          "sourceRepository": "https://github.com/Open-CMSIS-Pack/STM32WL3x_DFP.git",
+          "status": "UNREVIEWED"
+        }
+      ],
+      "catalogFlashKiB": 128,
+      "catalogRamKiB": 16,
+      "exactPart": "STM32WL3RKBV6",
+      "status": "UNREVIEWED"
+    }
+  ],
+  "schema": "embedra.stm32.memory-candidates.v1",
+  "sourceAuditSha256": "4f87e2522c648480e455c476764d0a2be6b205b6f1c20ae785a74a71ed239fe3"
+}

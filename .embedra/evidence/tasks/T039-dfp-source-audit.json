@@ -1,0 +1,314 @@
+{
+  "catalogSha256": "afc66a47cd79c2025d115049c8aebd2db671c1112d42531b1db50df8514858f9",
+  "packs": [
+    {
+      "commit": "a2434d9d624a6591cadf8e1c0c2f926d8a4d1beb",
+      "directPatternParts": [
+        "STM32C031C6T3",
+        "STM32C051C8T6",
+        "STM32C071RBT6",
+        "STM32C092RCT6"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "e157463dafbba2d35a39a3e9393724b485807ea184ed3b2188d9da0bbb0f7081",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32C0xx_DFP/a2434d9d624a6591cadf8e1c0c2f926d8a4d1beb/Keil.STM32C0xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32C0xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "02311aec4d8e251d959bf6e5dd95b400ada4e1f7",
+      "directPatternParts": [],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "9abd1f37524ebc53baf7ab685fafa960cc777c97321dbecb3491965f315c3216",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32F2xx_DFP/02311aec4d8e251d959bf6e5dd95b400ada4e1f7/Keil.STM32F2xx_DFP.pdsc",
+      "prefixCandidateParts": [
+        "STM32F207ZGT6"
+      ],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32F2xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "3afdf33b1b92c7175b978982158a5c8f685398ce",
+      "directPatternParts": [],
+      "licenseSetSpdx": [
+        "Apache-2.0",
+        "BSD-3-Clause"
+      ],
+      "pdscSha256": "aa1c339944342d1ca187f7c7bb5f10cdde508cf3e25b879914900140d595e46e",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32F4xx_DFP/3afdf33b1b92c7175b978982158a5c8f685398ce/Keil.STM32F4xx_DFP.pdsc",
+      "prefixCandidateParts": [
+        "STM32F401RET6"
+      ],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32F4xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "c5bcd5c8a5007c3ef0a3f69dcea0dc6f5a22c9a2",
+      "directPatternParts": [],
+      "licenseSetSpdx": [
+        "Apache-2.0",
+        "BSD-3-Clause"
+      ],
+      "pdscSha256": "679a0cd03e9ea9b5b75f924ba863acef91f4719194fb7bc6bb1bedb0c7868a00",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32F7xx_DFP/c5bcd5c8a5007c3ef0a3f69dcea0dc6f5a22c9a2/Keil.STM32F7xx_DFP.pdsc",
+      "prefixCandidateParts": [
+        "STM32F756ZGT6"
+      ],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32F7xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "3334b4fa92aa4eb09dbdc9902f2c9dada23c8944",
+      "directPatternParts": [
+        "STM32G0B1RET6"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "b522e346d20bb394d97270fd91c95fbf9fcf3b3d40841b0bb79bb48cc44e8a29",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32G0xx_DFP/3334b4fa92aa4eb09dbdc9902f2c9dada23c8944/Keil.STM32G0xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32G0xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "697d2262d1986b449fbe9329882bf206171d88f9",
+      "directPatternParts": [
+        "STM32G431RBT6",
+        "STM32G473QET6",
+        "STM32G474RET6",
+        "STM32G491RET6"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0",
+        "BSD-3-Clause"
+      ],
+      "pdscSha256": "5beb24ab0827bea12fa62cb114bc48e86ee5e2e78a695a5c5f2bcbb47a279b36",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32G4xx_DFP/697d2262d1986b449fbe9329882bf206171d88f9/Keil.STM32G4xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32G4xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "f954be2f9afd93c90a2c47d6c339a67a7569ed77",
+      "directPatternParts": [
+        "STM32H503RBT6",
+        "STM32H533RET6",
+        "STM32H553ZGT6",
+        "STM32H573IIK3Q",
+        "STM32H5E5ZJT6",
+        "STM32H5F5LJH7Q"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "e27b9a5170f345226c2ad473aef6645f4b739e82d2b224a859b05007a652ebb0",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32H5xx_DFP/f954be2f9afd93c90a2c47d6c339a67a7569ed77/Keil.STM32H5xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32H5xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "b29144605bd5c531309872afb193097cdb5fecd9",
+      "directPatternParts": [
+        "STM32H7S3L8H6",
+        "STM32H7S7L8H6H"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0",
+        "BSD-3-Clause"
+      ],
+      "pdscSha256": "f610752859fed5abc6d87bc4eb7ecd10eabf476c28c104930b8629f8b70505c4",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32H7RSxx_DFP/b29144605bd5c531309872afb193097cdb5fecd9/Keil.STM32H7RSxx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32H7RSxx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "058af2e871a1ee2f203459f8780c02741079ba5a",
+      "directPatternParts": [
+        "STM32H735IGK6",
+        "STM32H750XBH6"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0",
+        "BSD-3-Clause"
+      ],
+      "pdscSha256": "9b84881a982243977b4a5169fc74187b7bd73394d4c484264dfb54b799e529fa",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32H7xx_DFP/058af2e871a1ee2f203459f8780c02741079ba5a/Keil.STM32H7xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32H7xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "c95bed1673824afa695036dce2db3e7eed1c9823",
+      "directPatternParts": [
+        "STM32L412KBU3",
+        "STM32L412RBT6P",
+        "STM32L4P5CGU6",
+        "STM32L4R5ZIT6"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0",
+        "BSD-3-Clause"
+      ],
+      "pdscSha256": "b53932051459e1590784aeb8bc7dc487e18a88941c3b327d73538ebe7b0db7f1",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32L4xx_DFP/c95bed1673824afa695036dce2db3e7eed1c9823/Keil.STM32L4xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32L4xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "5aee9c972a046a604f40b138f67e396fa14fd8eb",
+      "directPatternParts": [
+        "STM32L552ZET6Q",
+        "STM32L562QEI6Q"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0",
+        "BSD-3-Clause"
+      ],
+      "pdscSha256": "18e668b336033918e7929465f5bff791004ef1ba6191e1e5f2d38958a99f5ddf",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32L5xx_DFP/5aee9c972a046a604f40b138f67e396fa14fd8eb/Keil.STM32L5xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32L5xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "21d3efcb43e5951dd5d1226d63f8e6f06bbab979",
+      "directPatternParts": [
+        "STM32N657X0H3Q"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "0b3ac08f4d333e459b039a5ac315b11911f7c8fa335e393cf50fe7951cc2fbbf",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32N6xx_DFP/21d3efcb43e5951dd5d1226d63f8e6f06bbab979/Keil.STM32N6xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32N6xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "452a2da433b586dee8c616cc904e59252c15760c",
+      "directPatternParts": [
+        "STM32U031R8T6",
+        "STM32U083MCT6",
+        "STM32U083RCT6"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "1f334be22a9a1acc1a6167f06e956bbda7d2c9bf2e47eda32fa4765275f7c949",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32U0xx_DFP/452a2da433b586dee8c616cc904e59252c15760c/Keil.STM32U0xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32U0xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "b67fb5d299c581cd6daa7c1dc3e890403ef6c79e",
+      "directPatternParts": [
+        "STM32U385RGT6Q",
+        "STM32U3C5ZIT6Q"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "2832e1306397d6538d7dda17a37c2911e42c22429bfa7d4a61063b0b9172fc0a",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32U3xx_DFP/b67fb5d299c581cd6daa7c1dc3e890403ef6c79e/Keil.STM32U3xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32U3xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "dced5faff40a332628e82c173a9730090b888008",
+      "directPatternParts": [
+        "STM32U545RET6Q",
+        "STM32U575ZIT6Q",
+        "STM32U585AII6Q",
+        "STM32U5A5ZJT6Q",
+        "STM32U5G9NJH6Q",
+        "STM32U5G9ZJT6Q"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0",
+        "BSD-3-Clause"
+      ],
+      "pdscSha256": "c8aa0082c2c73284a6ebd655532c4d65cdee5fb35abb53f0454b4201dcaf4aa2",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32U5xx_DFP/dced5faff40a332628e82c173a9730090b888008/Keil.STM32U5xx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32U5xx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "2eae5ea833b10055c3ee3c5c8caf2a691c6bde4f",
+      "directPatternParts": [],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "1a0990df99fe5beb0657c523df47b0141cbc25bfcd949de8f6194d1512d225f4",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32WB0x_DFP/2eae5ea833b10055c3ee3c5c8caf2a691c6bde4f/Keil.STM32WB0x_DFP.pdsc",
+      "prefixCandidateParts": [
+        "STM32WB05KZV6TR",
+        "STM32WB07CCV6TR",
+        "STM32WB09KEV6TR"
+      ],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32WB0x_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "949afc59632dc6f1362ef93b2dd19cdb00cc0982",
+      "directPatternParts": [
+        "STM32WBA25CEU7",
+        "STM32WBA52CGU6",
+        "STM32WBA65RIV7"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "336ccc78afb654eb5f0a0f7baead9ba828581b72262b8248097f1291c58ba50b",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32WBAxx_DFP/949afc59632dc6f1362ef93b2dd19cdb00cc0982/Keil.STM32WBAxx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32WBAxx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "692e842ec6c206da05f96825fc8cf671780d671e",
+      "directPatternParts": [
+        "STM32WB15CCU6",
+        "STM32WB55RGV6"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "b1ab584c0f99acc5a9ddef7c95da70b0999c5c52bd856805f3aa855cca84f958",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32WBxx_DFP/692e842ec6c206da05f96825fc8cf671780d671e/Keil.STM32WBxx_DFP.pdsc",
+      "prefixCandidateParts": [],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32WBxx_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    },
+    {
+      "commit": "a1a00883ca38e53a2a8ba51ac1b6f51f299d91da",
+      "directPatternParts": [
+        "STM32WL3RKBV6"
+      ],
+      "licenseSetSpdx": [
+        "Apache-2.0"
+      ],
+      "pdscSha256": "216389bd9221ac41bbc596550813f7b5a3ddac06d6f18d61f2b36646648d5d00",
+      "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32WL3x_DFP/a1a00883ca38e53a2a8ba51ac1b6f51f299d91da/Keil.STM32WL3x_DFP.pdsc",
+      "prefixCandidateParts": [
+        "STM32WL33CCV6TR"
+      ],
+      "repository": "https://github.com/Open-CMSIS-Pack/STM32WL3x_DFP.git",
+      "status": "AUDIT_ONLY_UNRECONCILED"
+    }
+  ],
+  "schema": "embedra-t039-dfp-source-audit-1",
+  "selectionSha256": "1d4b971f0264815492bf644552b8c83abf0393b627216a89640080b8ccf8b3b4",
+  "sourceUse": "RESEARCH_ONLY_NO_PACKAGED_VENDOR_ROWS"
+}

@@ -1,0 +1,37 @@
+{
+  "device": "STM32F756ZGT6",
+  "expectedSnapshot": "src/test/resources/oracles/stm32-core-samples/STM32F756ZGT6.json",
+  "fixtureId": "stm32-core-samples.t033.stm32f756zgt6.hex",
+  "generationCommand": "python3 scripts/generate-stm32-core-samples.py",
+  "generatorRevision": "sha256:91d2698405fb79545609eef440a991752783321dd11d01cdb1ae7e5cb3855dc1",
+  "inputFormat": "Intel HEX",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf --file-header --program-headers <ELF>",
+    "arm-none-eabi-objcopy -O binary <ELF> <BIN>",
+    "arm-none-eabi-objcopy -O ihex <ELF> <HEX>"
+  ],
+  "origin": "Generated from repository-authored freestanding ARM assembly/linker source",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T033",
+    "STM-001",
+    "STM-002",
+    "STM-004"
+  ],
+  "sha256": "cfad8efcfe482054b0e0b2d8982997838e176bb025d4f918d4fcbec040f74a68",
+  "sourceProvenance": {
+    "facts": [
+      "FLASH_BASE",
+      "RAMDTCM_BASE"
+    ],
+    "license": "Apache-2.0",
+    "path": "Include/stm32f756xx.h",
+    "repository": "STMicroelectronics/cmsis-device-f7",
+    "revision": "2352e888e821aa0f4fe549bd5ea81d29c67a3222",
+    "sha256": "616425656fbbbe84d2c038f811a045470f6766c6cfb346f8281e3771fee2c28e",
+    "url": "https://github.com/STMicroelectronics/cmsis-device-f7/blob/2352e888e821aa0f4fe549bd5ea81d29c67a3222/Include/stm32f756xx.h"
+  },
+  "target": "STM32F756ZGT6",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; GNU objcopy (2.42-1ubuntu1+23) 2.42"
+}
