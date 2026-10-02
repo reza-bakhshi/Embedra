@@ -6,9 +6,10 @@
 - Current task: **T049 — STM32MP/heterogeneous parts as distinct providers (`COMPLETE`)**.
 - Last completed task: **T048 — STM32 firmware diff and CTF enrichment using the shared analyzers**.
 - Next task: **T050 — Build the authoritative Raspberry Pi silicon/board catalog and fixtures for RP2040, RP2350A/B, RP2354A/B, UF2, raw BIN, ELF, external/internal flash, both CPU cores, ARM/RISC-V, TrustZone, TinyUSB, Pico/Pico W/Pico 2/Pico 2 W, and PIO** (not started).
-- Future scope: the SpecKit now plans ESP32-branded full-flash expansion as
-  T080-T087, with independent per-series/variant evidence and a separate gate.
-  This specification change does not promote ESP support or reorder STM32 tasks.
+- Future scope: the SpecKit plans ESP32-branded full-flash expansion as
+  T080-T087, and STM8 8-bit MCU family support as T088-T095, with independent
+  per-series/variant evidence and separate gates. These specification changes
+  do not promote existing support states or reorder active tasks (T050 remains next).
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.

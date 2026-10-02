@@ -3,7 +3,7 @@
 **Status**: Authoritative project specification  
 **Created**: 2026-09-21  
 **Document model**: Single source of truth; no feature-version documents  
-**Primary implementation order**: ESP32-S3 → complete ESP32 family → curated STM32 catalog → RP2040 → complete RP2350/RP2354 family
+**Primary implementation order**: ESP32-S3 → complete ESP32 family → curated STM32 catalog → RP2040 → complete RP2350/RP2354 family (future extensions: ESP32 full flash, STM8 8-bit MCU family)
 **Initial build baseline**: Ghidra 12.1.3, 64-bit JDK 21, Gradle Wrapper; later compatibility requires explicit matrix evidence
 
 This document intentionally combines the project constitution, product specification, technical plan, architecture, data model, contracts, test strategy, acceptance criteria, and implementation tasks. It replaces a version-by-version or feature-folder specification model.
@@ -25,6 +25,7 @@ Embedra MUST prefer an explicit target selection over a confident-looking guess.
 | 5 | STM32 heterogeneous/MPU | Add selected dual-core, wireless multi-processor, and STM32MP parts only through explicit core/OS-aware providers |
 | 6 | RP2040 | RP2040 silicon plus board profiles for official Pico/Pico H/Pico W/Pico WH and a data-driven path for third-party boards; UF2, raw XIP, boot2, vector table, peripherals, SDK metadata, both cores, and PIO programs |
 | 7 | RP2350/RP2354 | RP2350A, RP2350B, RP2354A, and RP2354B; ARM Cortex-M33 and Hazard3 RISC-V boot architectures, TrustZone/security metadata, internal/external flash differences, both CPU cores, three PIO blocks, Pico 2 family profiles, and future official variants through catalog updates |
+| 8 | STM8 8-bit MCU family | Curated catalog covering mainstream STM8S, low-power STM8L, automotive STM8A/AF/AL, and touch-sensing STM8T; memory maps (Flash, RAM, EEPROM, peripherals at 0x5000, option bytes), 32-vector table at 0x8000, Intel HEX / S-Record / raw BIN / ELF formats, peripheral register definitions, and 8-bit CISC execution topology distinct from 32-bit STM32 |
 
 “Complete catalog” means that a reproducible generator ingests authoritative vendor sources into exact device records and CI detects additions, removals, renamed parts, and changed properties. A newly discovered model begins as `PLANNED`; it becomes `VERIFIED` only after its provider, architecture, memory map, processor topology, fixtures, and acceptance evidence pass. Modules and development boards are board profiles layered over the exact SoC/MCU and MUST NOT be confused with new processor models.
 
@@ -154,6 +155,12 @@ As an embedded analyst, I can import device-specific peripheral registers/types,
 
 **Independent acceptance**: Device-pack version and exact part number are visible; changing the selected part invalidates and reapplies device-derived artifacts safely.
 
+### US6A — Import and analyze STM8 8-bit MCU firmware (future)
+
+As a reverse engineer, I can import STM8 ELF, Intel HEX, Motorola S-Record, and raw BIN inputs, search the curated STM8 part catalog across STM8S, STM8L, STM8A/AF/AL, and STM8T families, select the exact orderable part, construct the memory map (Flash, RAM, EEPROM, peripheral register block at 0x5000, option bytes), map the 32-vector interrupt table starting at reset vector 0x8000, and apply peripheral registers/interrupt handlers under the 8-bit STM8 architecture without confusing STM8 8-bit and STM32 32-bit Cortex-M memory or register assumptions.
+
+**Independent acceptance**: Address-bearing formats preserve load addresses; raw BIN inputs require explicit part/base selection or user-confirmed vector-table inference; interrupt slots and memory boundaries match ST reference manuals (RM0016, RM0031, RM0013) and exact datasheets; Ghidra language binding fails closed if the 8-bit STM8 language is unavailable.
+
 ### US7 — Analyze RP2040 and RP2350-family firmware (P7)
 
 As a reverse engineer, I can import UF2, ELF, or raw firmware for RP2040, RP2350A/B, and RP2354A/B; select the correct silicon/board; identify ARM or RISC-V architecture where applicable; map internal or external XIP flash; recover both CPU-core startup paths, security domains, boot metadata, peripherals, and PIO programs separately from CPU code.
@@ -249,6 +256,19 @@ As a maintainer, I can run parsing, import, enrichment, diffing, and report gene
 - **STM-019**: Every exact STM32 part record MUST have an explicit `PLANNED`, `EXPERIMENTAL`, `VERIFIED`, or `UNSUPPORTED` state per input format and feature. Verification of one family member MUST NOT automatically verify sibling part numbers.
 - **STM-020**: Model all application cores, real-time cores, network/radio cores, security domains, hardware accelerators with executable firmware, boot ROMs, shared memories, mailboxes, and inter-core boot relationships for dual-core STM32H7, WB/WL and related wireless devices, STM32MP1/MP2, and future multi-processor parts.
 - **STM-021**: STM32MP support MUST distinguish Cortex-A Linux/bootloader artifacts, Cortex-M firmware, trusted firmware/security domains, device-tree data, and shared resources; each executable ISA/security domain receives an appropriate Ghidra program or explicit cross-program relationship.
+
+### 4.3A STM8 8-bit MCU family (future)
+
+- **STM8-001**: Model STM8 as a dedicated 8-bit CISC target provider family completely isolated from 32-bit ARM Cortex-M STM32. No STM32 memory layout, Thumb instruction, Cortex-M exception model, SVD pack, or vector assumptions may be applied to STM8 targets.
+- **STM8-002**: Accept Intel HEX, Motorola S-Record (`.s19`/`.s28`/`.s37`), ELF (SDCC, Cosmic, IAR), and raw BIN/dump inputs. Address-bearing formats MUST preserve their encoded load addresses; raw BIN inputs require explicit part/base selection or user-confirmed vector-table inference.
+- **STM8-003**: Model the linear 24-bit address space (up to 16 MB) and exact per-part memory regions: RAM (base 0x000000), Data EEPROM (typically 0x004000), Option Bytes (typically 0x004800), Peripheral Registers (0x005000 to 0x0057FF), Boot ROM / System Memory (typically 0x006000), and Program Flash (base 0x008000). Fail closed if configured ranges exceed part physical limits or overlap.
+- **STM8-004**: Discover and decode candidate STM8 interrupt vector tables: table anchored at reset vector 0x008000 consisting of up to 32 four-byte entries, where each valid entry starts with opcode `0x82` followed by a big-endian 24-bit jump target within the part's physical Flash range. Vector findings remain heuristic until confirmed by the user or part selection.
+- **STM8-005**: Map the 32 standard STM8 interrupt slots to exact peripheral/subsystem handlers (Reset, TRAP, TLI, AWU, CLK, EXTI0-EXTI4, SPI, TIM1-TIM4, UART1-UART4, I2C, ADC, etc.) derived from pinned ST datasheets and reference manuals RM0016, RM0031, and RM0013.
+- **STM8-006**: Require explicit Ghidra language binding verification for the 8-bit STM8 processor (e.g. `STM8:default:16:default` / `STM8:default:24:default` or user-supplied SLEIGH module); fail closed with a clear diagnostic if the required language definition is unavailable in the host Ghidra installation.
+- **STM8-007**: Curate exact-part records across the four ST STM8 lines: STM8S (mainstream), STM8L (ultra-low-power), STM8A/AF/AL (automotive), and STM8T (touch-sensing). Retain exact part numbers, packages, flash sizes, RAM sizes, EEPROM sizes, peripheral complements, and lifecycle status; forbid wildcard or family-wide fabrication.
+- **STM8-008**: Transform redistributable ST peripheral register definitions into Ghidra registers, types, and comments with 8-bit byte-wide semantics and 1-byte register alignments, preserving peripheral base addresses and bitfield masks.
+- **STM8-009**: Apply STM8 Standard Peripheral Library (SPL) and common open-source runtime (SDCC) signatures only when compiler and memory-model evidence is recorded; keep heuristics distinct from verified symbols.
+- **STM8-010**: All exact STM8 part records MUST initialize in the `PLANNED` state. Promoting any STM8 part to `EXPERIMENTAL` or `VERIFIED` requires passing all acceptance gates, reproducible fixtures, real-Ghidra import verification, rollback, and headless parity.
 
 ### 4.4 Raspberry Pi RP2040 and RP2350/RP2354
 
@@ -552,6 +572,14 @@ STM32 support is device-centric. Address-bearing ELF/HEX inputs can be loaded be
 
 STM32 coverage is a curated, explicit allowlist of exact orderable parts, checked for catalog drift. The machine-readable acceptance list is `catalogs/stm32/2026-09-29/selection.json`; its 53 identities and 20 family labels are reviewed in T032 evidence. STM32F103 was an example, not the catalog boundary. Board CPNs come only from the pinned BSD-3-Clause ST board files; current ST board listings and eStore status justify selection but website pages are not packaged. The family name STM32F103 and ST wildcard/range references never resolve to an exact part without independent evidence or user selection. Further parts require a reviewed source, availability/common-use rationale, and a spec amendment. STM32 MCU support covers cataloged parts only after later import tasks, with state tracked per part and feature. TrustZone, dual-core, wireless companion cores, external flash, and STM32MP devices are separate provider capabilities. The UI must never present “STM32 detected” as an exact part number when only a Cortex-M vector table was found.
 
+### 8.2A STM8
+
+STM8 support is dedicated to ST's 8-bit microcontroller families and is architecturally independent from the 32-bit Cortex-M STM32 line. While sharing ST naming conventions and peripheral naming patterns (e.g., TIM, UART, SPI, I2C), STM8 devices employ an 8-bit CISC architecture with a 24-bit program counter, 16-bit stack pointer and index registers (X, Y), and an 8-bit accumulator (A).
+
+Memory maps are unified and linear, with RAM starting at 0x000000, data EEPROM at 0x004000, option bytes at 0x004800, peripheral registers mapped directly into byte-addressable space at 0x005000–0x0057FF, optional boot ROM at 0x006000, and Flash program memory beginning at 0x008000. The interrupt vector table is located at the base of Flash (0x008000), consisting of 32 4-byte entries (`0x82` opcode followed by 24-bit handler address).
+
+Address-bearing formats (Intel HEX, Motorola S-Record, ELF) load directly into memory by physical address. Raw BIN imports require explicit part selection or vector-table confirmation anchored at 0x8000. Ghidra language binding requires an 8-bit STM8 SLEIGH definition, failing closed if unavailable. Catalog data is curated from official ST reference manuals (RM0016 for STM8S/STM8A, RM0031 for STM8L, RM0013 for STM8 core) and licensed header packages. All parts initialize as `PLANNED`.
+
 ### 8.3 RP2040 and RP2350/RP2354
 
 UF2 blocks are reconstructed by target address. RP2040 external XIP flash, boot2, and vector tables are distinct regions. RP2350A/B use external flash while RP2354A/B include stacked 2 MiB flash; board profiles may add supported external flash/PSRAM without changing silicon identity.
@@ -766,6 +794,17 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 - [ ] T086 Wire each proven target plan into real-Ghidra GUI and headless multi-program import. Verify bootloader and every populated app byte/address/language/entry, opaque artifact handling, OTA metadata, collision preservation, cancellation, rollback, repeat-import idempotence, and canonical GUI/headless equality on positive and negative corpora. Apply only target-matched optional packs.
 - [ ] T087 Review the per-series and per-exact-variant support table against current catalog drift; run clean, reproducible unit and Ghidra suites, regression-check the S3 gate, publish fixture/oracle and source-license evidence, and issue a separate full-flash expansion gate report. Promote only target/input/variant combinations with complete evidence; leave all other combinations visibly `PLANNED` or `UNSUPPORTED`.
 
+### Future STM8 8-bit MCU family support
+
+- [ ] T088 Audit and catalog specification for STM8 across STM8S, STM8L, STM8A/AF/AL, and STM8T families against pinned ST reference manuals (RM0016, RM0031, RM0013), datasheets, SPL headers, and license terms. Record an exact-part allowlist with flash/RAM/EEPROM sizes, peripheral sets, packages, and an explicit capability matrix.
+- [ ] T089 [P] Build independently generated, redistributable STM8 fixtures and official-tool oracles (Intel HEX, Motorola S-Record, ELF, raw BIN) for representative STM8S003/103/208, STM8L151/152, STM8AF/AL, and STM8T parts. Add malformed, truncated, wrong-checksum, overlapping, and invalid-vector fixtures.
+- [ ] T090 Implement pure STM8 target providers, exact-part catalog registry, and memory planners (Flash, RAM, EEPROM, Option bytes, Peripherals at 0x5000, Boot ROM) under shared `ParserLimits` and `CancellationToken`, strictly isolated from STM32 Cortex-M contracts.
+- [ ] T091 Implement STM8 interrupt vector table parsing, scoring, entry-point resolution, and handler label generation for the 32-vector table at 0x8000 (0x82 opcode + 24-bit jump address) with heuristic confidence gating.
+- [ ] T092 Implement STM8 peripheral register data packs, bitfield definitions, and schema transforms from redistributable ST device definitions for STM8S, STM8L, and STM8A families.
+- [ ] T093 Wire STM8 target plans into real-Ghidra GUI and headless multi-program import for raw BIN, Intel HEX, Motorola S-Record, and ELF with Ghidra language binding verification, transactional rollback, user artifact preservation, and headless parity.
+- [ ] T094 Implement STM8 Standard Peripheral Library (SPL) and open-source compiler runtime (SDCC, Cosmic) signatures and CTF/string/lead enrichment using the shared analyzers.
+- [ ] T095 Complete STM8 verification, test coverage, support matrix documentation, and acceptance gate review across all cataloged STM8 parts, promoting only verified parts and leaving all other combinations `PLANNED` or `UNSUPPORTED`.
+
 ## 12. Acceptance Gates by Workstream
 
 | Workstream | Gate before moving on |
@@ -777,6 +816,7 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 | ESP family full flash (T080-T087) | Each promoted series has pinned flash-layout evidence, independent valid/malformed full-flash corpora and official-tool oracles, exact bootloader/app/artifact mappings in real Ghidra, rollback and GUI/headless equality; every exact variant and new catalog series retains an explicit state |
 | STM32 core | Every selected catalog part has explicit metadata/state; representative selected parts import with exact selected-device maps; raw BIN requires confirmation |
 | STM32 advanced | TrustZone, dual-core, wireless/network-core, STM32MP, and external memory do not contaminate simple-device behavior and cross-program relationships are verified |
+| STM8 8-bit MCU family (T088-T095) | Curated STM8S/L/A/T catalog snapshot is complete with pinned provenance; 8-bit CISC memory maps, 0x8000 vector tables, and peripheral registers are verified against vendor datasheets and independent oracles without 32-bit Cortex-M contamination; imports pass in real Ghidra with rollback, user preservation, and headless equality |
 | RP2040/RP2350 family | RP2040 and RP2350A/B/RP2354A/B UF2/ELF/raw, flash, ARM/RISC-V, dual-core, TrustZone, vector/trap, and PIO results match official tools and builds |
 | Crypto analysis | Positive/negative multi-ISA corpus reports measured precision/recall and hardware/software/inlined coverage without promoting weak candidates to verified secrets/functions |
 | Shared analyzers | Known-positive/negative corpus and false-positive measurements documented |
@@ -903,6 +943,10 @@ The baseline is Ghidra 12.1.3 and JDK 21. Any change to the build baseline or ad
 - [ST STM32 MCU developer resources](https://www.st.com/content/st_com/en/stm32-mcu-developer-zone.html)
 - [ST STM32 MCU portfolio](https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html)
 - [ST CMSIS device components](https://github.com/STMicroelectronics)
+- [ST STM8 microcontroller family documentation](https://www.st.com/en/microcontrollers-microprocessors/stm8-8-bit-mcus.html)
+- [ST RM0016 STM8S and STM8AF microcontroller family reference manual](https://www.st.com/resource/en/reference_manual/rm0016-stm8s-series-and-stm8af-series-8bit-microcontrollers-stmicroelectronics.pdf)
+- [ST RM0031 STM8L05xx, STM8L15xx, STM8L162x, and STM8AL31xx/3Lxx reference manual](https://www.st.com/resource/en/reference_manual/rm0031-stm8l05xx-stm8l15xx-stm8l162x-and-stm8al31xx3lxx-microcontrollers-stmicroelectronics.pdf)
+- [ST PM0044 / RM0013 STM8 CPU programming manual](https://www.st.com/resource/en/programming_manual/pm0044-stm8-cpu-programming-manual-stmicroelectronics.pdf)
 - [Microsoft UF2 specification](https://github.com/microsoft/uf2)
 - [Raspberry Pi official RP2040/RP2350 silicon documentation](https://www.raspberrypi.com/documentation/microcontrollers/microcontroller-chips.html)
 - [Raspberry Pi picotool](https://github.com/raspberrypi/picotool)
