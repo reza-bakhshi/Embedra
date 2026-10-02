@@ -21,7 +21,10 @@
   T030 provider-foundation slice is committed at `365d7af`; its independent
   fixture slice is committed at `e3c5ee0`, enrichment implementation at
   `3206d71`, and support documentation at `e2cf1bb`.
-  The revised T032 implementation is committed at `e051a59`.
+  The revised T032 implementation is committed at `e051a59`. T033-T038 groundwork
+  and T039 checkpoint are committed at `2805114`. T039-T043 STM32 device support
+  and review fixes are committed at `f356879` with T044 prompt refresh at `07f9b61`.
+  The completed T044-T049 STM32 milestone is committed at `dc6be57`.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
