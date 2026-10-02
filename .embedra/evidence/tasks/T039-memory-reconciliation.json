@@ -1,0 +1,2619 @@
+{
+  "candidateSha256": "773d944cd529fd29058a8e01d13b82db2a7b3d61688f83f5ee226585d74f02ad",
+  "catalogSha256": "afc66a47cd79c2025d115049c8aebd2db671c1112d42531b1db50df8514858f9",
+  "f103AuditSha256": "641da7b981ea265c7490d8979c834e616fa871a6c372c78b58cec0b1e846b955",
+  "headerEvidenceSha256": "491c148f623de7ac3e14f2c1e99ec919b3223afda470d57de3040405ed07a4a5",
+  "records": [
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32C031C6T3",
+      "flashCapacityReview": {
+        "candidateKiB": 32,
+        "memoryName": "Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32C031C6Tx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-c0/Include/stm32c031xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32C031C6Tx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 12,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32C051C8T6",
+      "flashCapacityReview": {
+        "catalogKiB": 64,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-c0/Include/stm32c051xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32C051C8Tx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 12,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32C071RBT6",
+      "flashCapacityReview": {
+        "catalogKiB": 128,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-c0/Include/stm32c071xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32C071RBTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 24,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32C092RCT6",
+      "flashCapacityReview": {
+        "catalogKiB": 256,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-c0/Include/stm32c092xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32C092RCTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 30,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32F103C8T6",
+      "f103SpecialReview": {
+        "bootAlias": "At zero; flash/system/SRAM boot selection is documented. Actual boot pins and remap state are unknown.",
+        "datasheet": "DS5319 Rev 20, section 4, figure 9, page 34; section 2.3.8 boot modes",
+        "documentSha256": null,
+        "manualUrl": "https://www.st.com/resource/en/programming_manual/pm0075-stm32f10xxx-flash-memory-microcontrollers-stmicroelectronics.pdf",
+        "optionSize": 16,
+        "otp": "UNKNOWN; no OTP inferred from omission in a memory diagram",
+        "programmingManual": "PM0075 Doc ID 17863 Rev 2, table 3, page 7",
+        "sramBitBand": "SRAM_BB_BASE is a bit-band view, not an ordinary byte alias. Extent/translation review pending.",
+        "systemSize": 2048,
+        "systemStart": 536866816
+      },
+      "flashCapacityReview": {
+        "catalogKiB": 64,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-f1/Include/stm32f103xb.h"
+      ],
+      "knownRegions": [
+        {
+          "capacityEvidence": "T039-f103-source-audit.json:partPages; header FLASH_BANK1_END is a 128-KiB shared-header limit, not C8 capacity.",
+          "headerSymbols": [
+            "FLASH_BASE"
+          ],
+          "id": "FLASH",
+          "kind": "FLASH",
+          "size": 65536,
+          "start": 134217728,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "capacityEvidence": "T039-f103-source-audit.json:partPages",
+          "headerSymbols": [
+            "SRAM_BASE"
+          ],
+          "id": "SRAM",
+          "kind": "RAM",
+          "size": 20480,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "OB_BASE"
+          ],
+          "id": "OPTION",
+          "kind": "OPTION",
+          "size": 16,
+          "start": 536868864,
+          "status": "BASE_PINNED_SIZE_DOCUMENT_REVISION_ONLY"
+        }
+      ],
+      "nameReview": {
+        "selectedDevicePattern": null,
+        "status": "INDEPENDENT_F103_HEADER_SCOPE"
+      },
+      "optionApplicability": "BASE_PINNED_SIZE_DOCUMENT_REVISION_ONLY",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 20,
+        "physicalKiB": 20,
+        "status": "CORROBORATED"
+      },
+      "remaining": [
+        "DOCUMENT_BYTES_AND_REVISION_PIN",
+        "OTP_APPLICABILITY",
+        "BIT_BAND_EXTENTS_AND_TRANSLATION",
+        "BOOT_ALIAS_CONFIGURATION",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "DOCUMENT_REVISION_CORROBORATED_NOT_BYTE_PINNED",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32F103CBT6",
+      "f103SpecialReview": {
+        "bootAlias": "At zero; flash/system/SRAM boot selection is documented. Actual boot pins and remap state are unknown.",
+        "datasheet": "DS5319 Rev 20, section 4, figure 9, page 34; section 2.3.8 boot modes",
+        "documentSha256": null,
+        "manualUrl": "https://www.st.com/resource/en/programming_manual/pm0075-stm32f10xxx-flash-memory-microcontrollers-stmicroelectronics.pdf",
+        "optionSize": 16,
+        "otp": "UNKNOWN; no OTP inferred from omission in a memory diagram",
+        "programmingManual": "PM0075 Doc ID 17863 Rev 2, table 3, page 7",
+        "sramBitBand": "SRAM_BB_BASE is a bit-band view, not an ordinary byte alias. Extent/translation review pending.",
+        "systemSize": 2048,
+        "systemStart": 536866816
+      },
+      "flashCapacityReview": {
+        "catalogKiB": 128,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-f1/Include/stm32f103xb.h"
+      ],
+      "knownRegions": [
+        {
+          "capacityEvidence": "T039-f103-source-audit.json:partPages; header FLASH_BANK1_END is a 128-KiB shared-header limit, not C8 capacity.",
+          "headerSymbols": [
+            "FLASH_BASE"
+          ],
+          "id": "FLASH",
+          "kind": "FLASH",
+          "size": 131072,
+          "start": 134217728,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "capacityEvidence": "T039-f103-source-audit.json:partPages",
+          "headerSymbols": [
+            "SRAM_BASE"
+          ],
+          "id": "SRAM",
+          "kind": "RAM",
+          "size": 20480,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "OB_BASE"
+          ],
+          "id": "OPTION",
+          "kind": "OPTION",
+          "size": 16,
+          "start": 536868864,
+          "status": "BASE_PINNED_SIZE_DOCUMENT_REVISION_ONLY"
+        }
+      ],
+      "nameReview": {
+        "selectedDevicePattern": null,
+        "status": "INDEPENDENT_F103_HEADER_SCOPE"
+      },
+      "optionApplicability": "BASE_PINNED_SIZE_DOCUMENT_REVISION_ONLY",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 20,
+        "physicalKiB": 20,
+        "status": "CORROBORATED"
+      },
+      "remaining": [
+        "DOCUMENT_BYTES_AND_REVISION_PIN",
+        "OTP_APPLICABILITY",
+        "BIT_BAND_EXTENTS_AND_TRANSLATION",
+        "BOOT_ALIAS_CONFIGURATION",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "DOCUMENT_REVISION_CORROBORATED_NOT_BYTE_PINNED",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32F103RBT6",
+      "f103SpecialReview": {
+        "bootAlias": "At zero; flash/system/SRAM boot selection is documented. Actual boot pins and remap state are unknown.",
+        "datasheet": "DS5319 Rev 20, section 4, figure 9, page 34; section 2.3.8 boot modes",
+        "documentSha256": null,
+        "manualUrl": "https://www.st.com/resource/en/programming_manual/pm0075-stm32f10xxx-flash-memory-microcontrollers-stmicroelectronics.pdf",
+        "optionSize": 16,
+        "otp": "UNKNOWN; no OTP inferred from omission in a memory diagram",
+        "programmingManual": "PM0075 Doc ID 17863 Rev 2, table 3, page 7",
+        "sramBitBand": "SRAM_BB_BASE is a bit-band view, not an ordinary byte alias. Extent/translation review pending.",
+        "systemSize": 2048,
+        "systemStart": 536866816
+      },
+      "flashCapacityReview": {
+        "catalogKiB": 128,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-f1/Include/stm32f103xb.h"
+      ],
+      "knownRegions": [
+        {
+          "capacityEvidence": "T039-f103-source-audit.json:partPages; header FLASH_BANK1_END is a 128-KiB shared-header limit, not C8 capacity.",
+          "headerSymbols": [
+            "FLASH_BASE"
+          ],
+          "id": "FLASH",
+          "kind": "FLASH",
+          "size": 131072,
+          "start": 134217728,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "capacityEvidence": "T039-f103-source-audit.json:partPages",
+          "headerSymbols": [
+            "SRAM_BASE"
+          ],
+          "id": "SRAM",
+          "kind": "RAM",
+          "size": 20480,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "OB_BASE"
+          ],
+          "id": "OPTION",
+          "kind": "OPTION",
+          "size": 16,
+          "start": 536868864,
+          "status": "BASE_PINNED_SIZE_DOCUMENT_REVISION_ONLY"
+        }
+      ],
+      "nameReview": {
+        "selectedDevicePattern": null,
+        "status": "INDEPENDENT_F103_HEADER_SCOPE"
+      },
+      "optionApplicability": "BASE_PINNED_SIZE_DOCUMENT_REVISION_ONLY",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 20,
+        "physicalKiB": 20,
+        "status": "CORROBORATED"
+      },
+      "remaining": [
+        "DOCUMENT_BYTES_AND_REVISION_PIN",
+        "OTP_APPLICABILITY",
+        "BIT_BAND_EXTENTS_AND_TRANSLATION",
+        "BOOT_ALIAS_CONFIGURATION",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "DOCUMENT_REVISION_CORROBORATED_NOT_BYTE_PINNED",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32F207ZGT6",
+      "flashCapacityReview": {
+        "candidateKiB": 1024,
+        "memoryName": "Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32F207ZGTx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-f2/Include/stm32f207xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32F207ZGTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 128,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32F401RET6",
+      "flashCapacityReview": {
+        "candidateKiB": 512,
+        "memoryName": "Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32F401RETx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-f4/Include/stm32f401xe.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32F401RETx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 96,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32F756ZGT6",
+      "flashAliasReview": {
+        "physicalFlashKiB": 1024,
+        "resolution": "AXIM and ITCM views expose the same embedded flash. Do not sum to 2 MiB. ST header names the two interfaces; DS10915 Rev 5 section 5 page 91 corroborates the views. Byte-pinned manual relationship still required."
+      },
+      "flashCapacityReview": {
+        "catalogKiB": 1024,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-f7/Include/stm32f756xx.h"
+      ],
+      "knownRegions": [
+        {
+          "headerSymbols": [
+            "RAMDTCM_BASE"
+          ],
+          "id": "DTCM",
+          "kind": "RAM",
+          "size": 65536,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM1_BASE"
+          ],
+          "id": "SRAM1",
+          "kind": "RAM",
+          "size": 245760,
+          "start": 536936448,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM2_BASE"
+          ],
+          "id": "SRAM2",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 537182208,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "RAMITCM_BASE"
+          ],
+          "id": "ITCM",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 0,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "BKPSRAM_BASE"
+          ],
+          "id": "BACKUP",
+          "kind": "RAM",
+          "size": 4096,
+          "start": 1073889280,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "FLASHAXI_BASE",
+            "FLASH_END"
+          ],
+          "id": "FLASH",
+          "kind": "FLASH",
+          "size": 1048576,
+          "start": 134217728,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "aliasOf": "FLASH",
+          "headerSymbols": [
+            "FLASHITCM_BASE"
+          ],
+          "id": "FLASH_ITCM_VIEW",
+          "kind": "FLASH",
+          "size": 1048576,
+          "start": 2097152,
+          "status": "RELATIONSHIP_REQUIRES_MANUAL_BYTE_PIN"
+        }
+      ],
+      "nameReview": {
+        "selectedDevicePattern": "STM32F756ZGTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "otpReview": {
+        "headerInclusiveEnd": 535884831,
+        "resolution": "Header comment says 1024-byte OTP but the inclusive interval is 1056 bytes; do not declare a 1056-byte OTP payload.",
+        "start": 535883776,
+        "status": "PAYLOAD_AND_LOCK_BYTE_SPLIT_REQUIRES_REVIEW"
+      },
+      "ramCapacityReview": {
+        "catalogKiB": 320,
+        "physicalKiB": 340,
+        "resolution": "Catalog 320 KiB is DTCM + SRAM1 + SRAM2; ITCM 16 KiB and backup 4 KiB are separate.",
+        "status": "CAPACITY_SCOPE_RECONCILED"
+      },
+      "remaining": [
+        "FLASH_ALIAS_MANUAL_BYTE_PIN",
+        "SYSTEM_AND_OPTION_APPLICABILITY",
+        "OTP_PAYLOAD_VERSUS_LOCK_BYTES",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32G0B1RET6",
+      "flashCapacityReview": {
+        "candidateKiB": 512,
+        "memoryName": "Main_Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32G0B1RETx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-g0/Include/stm32g0b1xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32G0B1RETx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 144,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32G431RBT6",
+      "flashCapacityReview": {
+        "candidateKiB": 128,
+        "memoryName": "Main_Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32G431RBTx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-g4/Include/stm32g431xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32G431RBTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 32,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32G473QET6",
+      "flashCapacityReview": {
+        "candidateKiB": 512,
+        "memoryName": "Main_Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32G473QETx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-g4/Include/stm32g473xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32G473QETx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 128,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32G474RET6",
+      "flashCapacityReview": {
+        "candidateKiB": 512,
+        "memoryName": "Main_Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32G474RETx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-g4/Include/stm32g474xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32G474RETx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 128,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32G491RET6",
+      "flashCapacityReview": {
+        "candidateKiB": 512,
+        "memoryName": "Main_Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32G491RETx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-g4/Include/stm32g491xx.h"
+      ],
+      "knownRegions": [
+        {
+          "headerSymbols": [
+            "SRAM1_BASE",
+            "SRAM1_SIZE_MAX"
+          ],
+          "id": "SRAM1",
+          "kind": "RAM",
+          "size": 81920,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM2_BASE",
+            "SRAM2_SIZE"
+          ],
+          "id": "SRAM2",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536952832,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "CCMSRAM_BASE",
+            "CCMSRAM_SIZE"
+          ],
+          "id": "CCM",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 268435456,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "aliasOf": "CCM",
+          "headerSymbols": [],
+          "id": "CCM_SYSTEM_VIEW",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536969216,
+          "status": "RELATIONSHIP_REQUIRES_MANUAL_BYTE_PIN"
+        }
+      ],
+      "nameReview": {
+        "selectedDevicePattern": "STM32G491RETx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 128,
+        "datasheet": "DS13122 Rev 4, sections 3.5/page 18-19 and table 2/page 14",
+        "documentSha256": null,
+        "physicalKiB": 112,
+        "resolution": "80 KiB SRAM1 + 16 KiB SRAM2 + 16 KiB CCM = 112 KiB. DFP 112-KiB contiguous SRAM includes the CCM alias; adding CCM again would produce 128 KiB.",
+        "status": "CONFLICT_RESOLVED_IN_REVIEW_NOT_CATALOG",
+        "url": "https://www.st.com/resource/en/datasheet/stm32g491re.pdf"
+      },
+      "remaining": [
+        "INDEPENDENT_FLASH_CAPACITY_REVIEW",
+        "ALIAS_MANUAL_BYTE_PIN",
+        "BIT_BAND_TRANSLATION",
+        "SYSTEM_OTP_OPTION_APPLICABILITY",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H503RBT6",
+      "flashCapacityReview": {
+        "catalogKiB": 128,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h5/Include/stm32h503xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H503RBTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 32,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 5,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H533RET6",
+      "flashCapacityReview": {
+        "catalogKiB": 512,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h5/Include/stm32h533xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H533RETx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 272,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 4,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H553ZGT6",
+      "flashCapacityReview": {
+        "catalogKiB": 1024,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h5/Include/stm32h553xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H553ZGTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 304,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 5,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H573IIK3Q",
+      "flashCapacityReview": {
+        "catalogKiB": 2048,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h5/Include/stm32h573xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H573IIKxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 640,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 7,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H5E5ZJT6",
+      "flashCapacityReview": {
+        "catalogKiB": 4096,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h5/Include/stm32h5e5xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H5E5ZJTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 1536,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 7,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H5F5LJH7Q",
+      "flashCapacityReview": {
+        "catalogKiB": 4096,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h5/Include/stm32h5f5xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H5F5LJHxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 1536,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H735IGK6",
+      "flashCapacityReview": {
+        "catalogKiB": 1024,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h7/Include/stm32h735xx.h"
+      ],
+      "knownRegions": [
+        {
+          "headerSymbols": [
+            "D1_ITCMRAM_BASE"
+          ],
+          "id": "ITCM_FIXED",
+          "kind": "RAM",
+          "size": 65536,
+          "start": 0,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D1_DTCMRAM_BASE"
+          ],
+          "id": "DTCM",
+          "kind": "RAM",
+          "size": 131072,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D3_BKPSRAM_BASE"
+          ],
+          "id": "BACKUP",
+          "kind": "RAM",
+          "size": 4096,
+          "start": 947912704,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D1_AXISRAM1_BASE"
+          ],
+          "id": "AXI_FIXED",
+          "kind": "RAM",
+          "size": 131072,
+          "start": 603979776,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "condition": "Only the AXI allocation when all 192 KiB shared memory is assigned to AXI; allocation register state unknown.",
+          "headerSymbols": [
+            "D1_AXISRAM2_BASE"
+          ],
+          "id": "AXI_ITCM_SHARED",
+          "kind": "RAM",
+          "size": 196608,
+          "start": 604110848,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D2_AHBSRAM1_BASE"
+          ],
+          "id": "SRAM1",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 805306368,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D2_AHBSRAM2_BASE"
+          ],
+          "id": "SRAM2",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 805322752,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D3_SRAM_BASE"
+          ],
+          "id": "SRAM4",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 939524096,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        }
+      ],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H735IGKx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 564,
+        "datasheet": "DS13312 Rev 4 section 3.3.2",
+        "documentSha256": null,
+        "physicalKiB": 564,
+        "resolution": "DFP 496 KiB omits fixed ITCM 64 KiB and backup 4 KiB. 192 KiB shared AXI/ITCM allocation is not additional memory; do not expose both allocation maxima simultaneously.",
+        "status": "CAPACITY_SCOPE_RECONCILED_CONFIGURATION_UNKNOWN",
+        "url": "https://www.st.com/resource/en/datasheet/stm32h735ig.pdf"
+      },
+      "remaining": [
+        "BANK_SPLITS_AND_ALIAS_REVIEW",
+        "CONFIGURATION_AND_REMAP_STATE",
+        "SYSTEM_OTP_OPTION_APPLICABILITY",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H750XBH6",
+      "flashCapacityReview": {
+        "catalogKiB": 128,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h7/Include/stm32h750xx.h"
+      ],
+      "knownRegions": [
+        {
+          "headerSymbols": [
+            "D1_ITCMRAM_BASE"
+          ],
+          "id": "ITCM_FIXED",
+          "kind": "RAM",
+          "size": 65536,
+          "start": 0,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D1_DTCMRAM_BASE"
+          ],
+          "id": "DTCM",
+          "kind": "RAM",
+          "size": 131072,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D3_BKPSRAM_BASE"
+          ],
+          "id": "BACKUP",
+          "kind": "RAM",
+          "size": 4096,
+          "start": 947912704,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D1_AXISRAM_BASE"
+          ],
+          "id": "AXI_SRAM",
+          "kind": "RAM",
+          "size": 524288,
+          "start": 603979776,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "D2_AHBSRAM_BASE"
+          ],
+          "id": "D2_SRAM_WINDOW",
+          "kind": "RAM",
+          "size": 294912,
+          "start": 805306368,
+          "status": "AGGREGATE_WINDOW_PHYSICAL_SPLIT_PENDING"
+        },
+        {
+          "headerSymbols": [
+            "D3_SRAM_BASE"
+          ],
+          "id": "SRAM4",
+          "kind": "RAM",
+          "size": 65536,
+          "start": 939524096,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        }
+      ],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H750XBHx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 864,
+        "datasheet": "DS12556 Rev 8 section 3.3.3/page 24",
+        "documentSha256": null,
+        "physicalKiB": 1060,
+        "resolution": "864 KiB = 512+288+64 user SRAM, excludes TCM 192 KiB and backup 4 KiB. DFP 992 KiB adds DTCM128 but omits ITCM64 and backup4. Header legacy FLASH_BANK2_BASE explicitly unavailable; do not create a second bank.",
+        "status": "CAPACITY_SCOPE_RECONCILED",
+        "url": "https://www.st.com/resource/en/datasheet/stm32h750xb.pdf"
+      },
+      "remaining": [
+        "BANK_SPLITS_AND_ALIAS_REVIEW",
+        "CONFIGURATION_AND_REMAP_STATE",
+        "SYSTEM_OTP_OPTION_APPLICABILITY",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H7S3L8H6",
+      "flashCapacityReview": {
+        "catalogKiB": 64,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h7rs/Include/stm32h7s3xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H7S3L8Hx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 620,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32H7S7L8H6H",
+      "flashCapacityReview": {
+        "catalogKiB": 64,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-h7rs/Include/stm32h7s7xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32H7S7L8HxH",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 620,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32L412KBU3",
+      "flashCapacityReview": {
+        "catalogKiB": 128,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-l4/Include/stm32l412xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32L412KBUx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 40,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32L412RBT6P",
+      "flashCapacityReview": {
+        "catalogKiB": 128,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-l4/Include/stm32l412xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32L412RBTxP",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 40,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32L4P5CGU6",
+      "flashCapacityReview": {
+        "candidateKiB": 1024,
+        "memoryName": "Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32L4P5CGUx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-l4/Include/stm32l4p5xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32L4P5CGUx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 320,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32L4R5ZIT6",
+      "flashCapacityReview": {
+        "candidateKiB": 2048,
+        "memoryName": "Flash",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32L4R5ZITx",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-l4/Include/stm32l4r5xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32L4R5ZITx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 640,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 2,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32L552ZET6Q",
+      "flashCapacityReview": {
+        "candidateKiB": 512,
+        "memoryName": "Flash-non-secure",
+        "remaining": "Independent exact-part capacity corroboration and flash bank/configuration review",
+        "sourceDevicePattern": "STM32L552ZETxQ",
+        "status": "PINNED_EXACT_DFP_CANDIDATE_NOT_PROMOTED"
+      },
+      "headers": [
+        "cmsis-device-l5/Include/stm32l552xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32L552ZETxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 256,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 2,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32L562QEI6Q",
+      "flashCapacityReview": {
+        "catalogKiB": 512,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-l5/Include/stm32l562xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32L562QEIxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 256,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 16,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32N657X0H3Q",
+      "flashCapacityReview": {
+        "catalogKiB": 0,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-n6/Include/stm32n657xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32N657X0HxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 4200,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS",
+        "DTCM_ALIAS_TARGET_RECONCILIATION",
+        "FSBL_LAYOUT_VERSUS_PHYSICAL_BANKS",
+        "FLEXRAM_ITCM_DTCM_ALLOCATION",
+        "NPU_AND_VENC_MEMORY_TOPOLOGY",
+        "GFXMMU_VIRTUAL_WINDOW_TRANSLATION"
+      ],
+      "sourceAnomalies": [
+        {
+          "declaredAlias": "ITCM_NS",
+          "resolution": "Do not follow or silently repair the source alias. ST header DTCM_BASE_NS=0x20000000 and DTCM_BASE_S=0x30000000 distinguish DTCM from ITCM_BASE_NS=0x00000000 and ITCM_BASE_S=0x10000000. Manual relationship and RAM allocation still need review. Distinct bases alone do not establish physical backing; this is a suspect target, not a confirmed silicon mapping error.",
+          "sourceName": "DTCM_S",
+          "status": "SUSPECT_DFP_ALIAS_TARGET_REQUIRES_RECONCILIATION"
+        }
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN",
+      "virtualWindowReview": {
+        "resolution": "GFXMMU virtual-buffer windows must not be counted as physical SRAM. Extent/backing/configuration relationships remain unknown.",
+        "status": "PINNED_HEADER_NAMES_VIRTUAL_BUFFERS"
+      }
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U031R8T6",
+      "flashCapacityReview": {
+        "catalogKiB": 64,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u0/Include/stm32u031xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U031R8Tx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 12,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U083MCT6",
+      "flashCapacityReview": {
+        "catalogKiB": 256,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u0/Include/stm32u083xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U083MCTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 40,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U083RCT6",
+      "flashCapacityReview": {
+        "catalogKiB": 256,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u0/Include/stm32u083xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U083RCTx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 40,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 3,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U385RGT6Q",
+      "flashCapacityReview": {
+        "catalogKiB": 1024,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u3/Include/stm32u385xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U385RGTxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 256,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 5,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U3C5ZIT6Q",
+      "flashCapacityReview": {
+        "catalogKiB": 2048,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u3/Include/stm32u3c5xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U3C5ZITxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 640,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 4,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U545RET6Q",
+      "flashCapacityReview": {
+        "catalogKiB": 512,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u5/Include/stm32u545xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U545RETxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 274,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 5,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U575ZIT6Q",
+      "flashCapacityReview": {
+        "catalogKiB": 2048,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u5/Include/stm32u575xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U575ZITxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 786,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 5,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U585AII6Q",
+      "flashCapacityReview": {
+        "catalogKiB": 2048,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u5/Include/stm32u585xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U585AIIxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 786,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 7,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U5A5ZJT6Q",
+      "flashCapacityReview": {
+        "catalogKiB": 4096,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u5/Include/stm32u5a5xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U5A5ZJTxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 2514,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS",
+        "GFXMMU_VIRTUAL_WINDOW_TRANSLATION"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN",
+      "virtualWindowReview": {
+        "resolution": "GFXMMU virtual-buffer windows must not be counted as physical SRAM. Extent/backing/configuration relationships remain unknown.",
+        "status": "PINNED_HEADER_NAMES_VIRTUAL_BUFFERS"
+      }
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 8,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U5G9NJH6Q",
+      "flashCapacityReview": {
+        "catalogKiB": 4096,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u5/Include/stm32u5g9xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U5G9NJHxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 3026,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS",
+        "GFXMMU_VIRTUAL_WINDOW_TRANSLATION"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN",
+      "virtualWindowReview": {
+        "resolution": "GFXMMU virtual-buffer windows must not be counted as physical SRAM. Extent/backing/configuration relationships remain unknown.",
+        "status": "PINNED_HEADER_NAMES_VIRTUAL_BUFFERS"
+      }
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 8,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32U5G9ZJT6Q",
+      "flashCapacityReview": {
+        "catalogKiB": 4096,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-u5/Include/stm32u5g9xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32U5G9ZJTxQ",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 3026,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS",
+        "GFXMMU_VIRTUAL_WINDOW_TRANSLATION"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN",
+      "virtualWindowReview": {
+        "resolution": "GFXMMU virtual-buffer windows must not be counted as physical SRAM. Extent/backing/configuration relationships remain unknown.",
+        "status": "PINNED_HEADER_NAMES_VIRTUAL_BUFFERS"
+      }
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WB05KZV6TR",
+      "flashCapacityReview": {
+        "catalogKiB": 192,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wb0/Include/stm32wb05.h"
+      ],
+      "knownRegions": [
+        {
+          "headerSymbols": [
+            "SRAM0_BASE",
+            "SRAM0_END_ADDR"
+          ],
+          "id": "SRAM0",
+          "kind": "RAM",
+          "size": 12288,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM1_BASE",
+            "SRAM1_END_ADDR"
+          ],
+          "id": "SRAM1",
+          "kind": "RAM",
+          "size": 12288,
+          "start": 536883200,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SYSTEM_MEMORY_BASE",
+            "SYSTEM_MEMORY_END_ADDR"
+          ],
+          "id": "SYSTEM",
+          "kind": "SYSTEM",
+          "size": 6144,
+          "start": 268435456,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "OTP_AREA_BASE",
+            "OTP_AREA_END_ADDR"
+          ],
+          "id": "OTP",
+          "kind": "OTP",
+          "size": 1024,
+          "start": 268441600,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        }
+      ],
+      "nameReview": {
+        "datasheetUrl": "https://www.st.com/resource/en/datasheet/stm32wb05kz.pdf",
+        "limitation": "ST ordering scheme corroborated via web; PDF byte digest unavailable. No global suffix-removal rule.",
+        "packingSuffix": "TR",
+        "rejectedDevicePatterns": [],
+        "selectedDevicePattern": "STM32WB05KZVx",
+        "siliconPart": "STM32WB05KZV6",
+        "status": "EXACT_ALLOWLIST_SUFFIX_REVIEW"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "PINNED_HEADER_EXTENTS_CORROBORATED",
+      "ramCapacityReview": {
+        "catalogKiB": 24,
+        "physicalKiB": 24,
+        "resolution": "Use complete physical banks from ST header; DFP debugger windows are not physical-bank boundaries.",
+        "status": "CORROBORATED"
+      },
+      "remaining": [
+        "ORDERING_DOCUMENT_BYTE_PIN",
+        "FLASH_BANK_REVIEW",
+        "OPTION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "PINNED_HEADER_EXTENTS_CORROBORATED",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WB07CCV6TR",
+      "flashCapacityReview": {
+        "catalogKiB": 256,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wb0/Include/stm32wb07.h"
+      ],
+      "knownRegions": [
+        {
+          "headerSymbols": [
+            "SRAM0_BASE",
+            "SRAM0_END_ADDR"
+          ],
+          "id": "SRAM0",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM1_BASE",
+            "SRAM1_END_ADDR"
+          ],
+          "id": "SRAM1",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536887296,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM2_BASE",
+            "SRAM2_END_ADDR"
+          ],
+          "id": "SRAM2",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536903680,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM3_BASE",
+            "SRAM3_END_ADDR"
+          ],
+          "id": "SRAM3",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536920064,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SYSTEM_MEMORY_BASE",
+            "SYSTEM_MEMORY_END_ADDR"
+          ],
+          "id": "SYSTEM",
+          "kind": "SYSTEM",
+          "size": 6144,
+          "start": 268435456,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "OTP_AREA_BASE",
+            "OTP_AREA_END_ADDR"
+          ],
+          "id": "OTP",
+          "kind": "OTP",
+          "size": 1024,
+          "start": 268441600,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        }
+      ],
+      "nameReview": {
+        "datasheetUrl": "https://www.st.com/resource/en/datasheet/stm32wb07cc.pdf",
+        "limitation": "ST ordering scheme corroborated via web; PDF byte digest unavailable. No global suffix-removal rule.",
+        "packingSuffix": "TR",
+        "rejectedDevicePatterns": [],
+        "selectedDevicePattern": "STM32WB07CCVx",
+        "siliconPart": "STM32WB07CCV6",
+        "status": "EXACT_ALLOWLIST_SUFFIX_REVIEW"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "PINNED_HEADER_EXTENTS_CORROBORATED",
+      "ramCapacityReview": {
+        "catalogKiB": 64,
+        "physicalKiB": 64,
+        "resolution": "Use complete physical banks from ST header; DFP debugger windows are not physical-bank boundaries.",
+        "status": "CORROBORATED"
+      },
+      "remaining": [
+        "ORDERING_DOCUMENT_BYTE_PIN",
+        "FLASH_BANK_REVIEW",
+        "OPTION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "PINNED_HEADER_EXTENTS_CORROBORATED",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WB09KEV6TR",
+      "flashCapacityReview": {
+        "catalogKiB": 512,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wb0/Include/stm32wb09.h"
+      ],
+      "knownRegions": [
+        {
+          "headerSymbols": [
+            "SRAM0_BASE",
+            "SRAM0_END_ADDR"
+          ],
+          "id": "SRAM0",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM1_BASE",
+            "SRAM1_END_ADDR"
+          ],
+          "id": "SRAM1",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536887296,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM2_BASE",
+            "SRAM2_END_ADDR"
+          ],
+          "id": "SRAM2",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536903680,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM3_BASE",
+            "SRAM3_END_ADDR"
+          ],
+          "id": "SRAM3",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536920064,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SYSTEM_MEMORY_BASE",
+            "SYSTEM_MEMORY_END_ADDR"
+          ],
+          "id": "SYSTEM",
+          "kind": "SYSTEM",
+          "size": 6144,
+          "start": 268435456,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "OTP_AREA_BASE",
+            "OTP_AREA_END_ADDR"
+          ],
+          "id": "OTP",
+          "kind": "OTP",
+          "size": 1024,
+          "start": 268441600,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        }
+      ],
+      "nameReview": {
+        "datasheetUrl": "https://www.st.com/resource/en/datasheet/stm32wb09ke.pdf",
+        "limitation": "ST ordering scheme corroborated via web; PDF byte digest unavailable. No global suffix-removal rule.",
+        "packingSuffix": "TR",
+        "rejectedDevicePatterns": [],
+        "selectedDevicePattern": "STM32WB09KEVx",
+        "siliconPart": "STM32WB09KEV6",
+        "status": "EXACT_ALLOWLIST_SUFFIX_REVIEW"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "PINNED_HEADER_EXTENTS_CORROBORATED",
+      "ramCapacityReview": {
+        "catalogKiB": 64,
+        "physicalKiB": 64,
+        "resolution": "Use complete physical banks from ST header; DFP debugger windows are not physical-bank boundaries.",
+        "status": "CORROBORATED"
+      },
+      "remaining": [
+        "ORDERING_DOCUMENT_BYTE_PIN",
+        "FLASH_BANK_REVIEW",
+        "OPTION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "PINNED_HEADER_EXTENTS_CORROBORATED",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WB15CCU6",
+      "flashCapacityReview": {
+        "catalogKiB": 320,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wb/Include/stm32wb15xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32WB15CCUx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 48,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WB55RGV6",
+      "flashCapacityReview": {
+        "catalogKiB": 1024,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wb/Include/stm32wb55xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32WB55RGVx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 256,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 3,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WBA25CEU7",
+      "flashCapacityReview": {
+        "catalogKiB": 512,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wba/Include/stm32wba25xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32WBA25CEUx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 96,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 3,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WBA52CGU6",
+      "flashCapacityReview": {
+        "catalogKiB": 1024,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wba/Include/stm32wba52xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32WBA52CGUx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 128,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 3,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WBA65RIV7",
+      "flashCapacityReview": {
+        "catalogKiB": 2048,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wba/Include/stm32wba65xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32WBA65RIVx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 512,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WL33CCV6TR",
+      "flashCapacityReview": {
+        "catalogKiB": 256,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wl3/Include/stm32wl3xx.h"
+      ],
+      "knownRegions": [
+        {
+          "headerSymbols": [
+            "SRAM0_BASE",
+            "SRAM0_END_ADDR"
+          ],
+          "id": "SRAM0",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536870912,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SRAM1_BASE",
+            "SRAM1_END_ADDR"
+          ],
+          "id": "SRAM1",
+          "kind": "RAM",
+          "size": 16384,
+          "start": 536887296,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "SYSTEM_MEMORY_BASE",
+            "SYSTEM_MEMORY_END_ADDR"
+          ],
+          "id": "SYSTEM",
+          "kind": "SYSTEM",
+          "size": 6144,
+          "start": 268435456,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        },
+        {
+          "headerSymbols": [
+            "OTP_AREA_BASE",
+            "OTP_AREA_END_ADDR"
+          ],
+          "id": "OTP",
+          "kind": "OTP",
+          "size": 1024,
+          "start": 268441600,
+          "status": "PINNED_DECLARATION_CORROBORATED"
+        }
+      ],
+      "nameReview": {
+        "datasheetUrl": "https://www.st.com/resource/en/datasheet/stm32wl33cc.pdf",
+        "limitation": "ST ordering scheme corroborated via web; PDF byte digest unavailable. No global suffix-removal rule.",
+        "packingSuffix": "TR",
+        "rejectedDevicePatterns": [
+          "STM32WL33CCVxX"
+        ],
+        "selectedDevicePattern": "STM32WL33CCVx",
+        "siliconPart": "STM32WL33CCV6",
+        "status": "EXACT_ALLOWLIST_SUFFIX_REVIEW"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "PINNED_HEADER_EXTENTS_CORROBORATED",
+      "ramCapacityReview": {
+        "catalogKiB": 32,
+        "physicalKiB": 32,
+        "resolution": "Use complete physical banks from ST header; DFP debugger windows are not physical-bank boundaries.",
+        "status": "CORROBORATED"
+      },
+      "remaining": [
+        "ORDERING_DOCUMENT_BYTE_PIN",
+        "FLASH_BANK_REVIEW",
+        "OPTION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "BOOT_ROM_TOPOLOGY"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "PINNED_HEADER_EXTENTS_CORROBORATED",
+      "topologyRelationships": "UNKNOWN"
+    },
+    {
+      "aliasApplicability": "UNKNOWN",
+      "dfpAliasReview": {
+        "declarationCount": 0,
+        "status": "SOURCE_DECLARED_RELATIONSHIPS_NOT_VALIDATED_RUNTIME_ALIASES"
+      },
+      "exactPart": "STM32WL3RKBV6",
+      "flashCapacityReview": {
+        "catalogKiB": 128,
+        "status": "CATALOG_VALUE_RETAINED"
+      },
+      "headers": [
+        "cmsis-device-wl3/Include/stm32wl3rx.h",
+        "cmsis-device-wl3/Include/stm32wl3xx.h"
+      ],
+      "knownRegions": [],
+      "nameReview": {
+        "selectedDevicePattern": "STM32WL3RKBVx",
+        "status": "DIRECT_PATTERN_CONFIRMED"
+      },
+      "optionApplicability": "UNKNOWN",
+      "otpApplicability": "UNKNOWN",
+      "ramCapacityReview": {
+        "catalogKiB": 16,
+        "status": "UNREVIEWED"
+      },
+      "remaining": [
+        "PHYSICAL_BANK_REVIEW",
+        "SPECIAL_REGION_APPLICABILITY",
+        "ALIAS_AND_BOOT_CONFIGURATION",
+        "EXECUTION_TOPOLOGY_RELATIONSHIPS"
+      ],
+      "status": "INCOMPLETE_NOT_RUNTIME_MAP",
+      "systemApplicability": "UNKNOWN",
+      "topologyRelationships": "UNKNOWN"
+    }
+  ],
+  "reviewDate": "2026-09-30",
+  "schema": "embedra.stm32.memory-reconciliation.v1",
+  "sourcePolicy": "Pinned ST CMSIS declarations and DFP candidates; ST datasheet revision corroboration has no claimed PDF byte hash. Every unknown remains a gap.",
+  "status": "PARTIAL_SOURCE_REVIEW_NO_RUNTIME_MAPS"
+}

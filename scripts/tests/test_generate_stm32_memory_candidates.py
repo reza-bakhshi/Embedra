@@ -41,9 +41,30 @@ class MemoryCandidateTest(unittest.TestCase):
         self.assertEqual('Flash', match['memories'][1]['alias'])
         self.assertNotIn('physicalFlashBytes', match)
 
+    def test_package_variants_match_complete_names_without_suffix_inference(self):
+        for pattern, part in [('STM32F207ZGTx', 'STM32F207ZGT6'),
+                              ('STM32F401RETx', 'STM32F401RET6'),
+                              ('STM32F756ZGTx', 'STM32F756ZGT6')]:
+            self.assertTrue(GEN.direct_match(pattern, part))
+            self.assertFalse(GEN.direct_match(pattern, part + 'TR'))
+            self.assertFalse(GEN.direct_match(pattern, part[:-2] + 'U6'))
+
+    def test_direct_matches_are_not_misclassified_in_pinned_audit(self):
+        audit = json.loads((ROOT / '.embedra/evidence/tasks/'
+                           'T039-dfp-source-audit.json').read_text())
+        direct = {part for pack in audit['packs'] for part in pack['directPatternParts']}
+        prefix = {part for pack in audit['packs'] for part in pack['prefixCandidateParts']}
+        self.assertEqual(46, len(direct))
+        self.assertEqual({'STM32WB05KZV6TR', 'STM32WB07CCV6TR',
+                          'STM32WB09KEV6TR', 'STM32WL33CCV6TR'}, prefix)
+        self.assertFalse(direct & prefix)
+
     def test_reject_dtd_and_entity(self):
         with self.assertRaises(ValueError):
             GEN.parse_pdsc(b'<!DOCTYPE package [<!ENTITY x "bad">]><package/>')
+        with self.assertRaises(ValueError):
+            GEN.parse_pdsc('<!DOCTYPE package [<!ENTITY x "bad">]><package/>'
+                           .encode('utf-16'))
 
     def test_local_sources_match_pinned_hashes(self):
         audit = json.loads((ROOT / '.embedra/evidence/tasks/T039-dfp-source-audit.json').read_text())

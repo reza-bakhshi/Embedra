@@ -141,7 +141,8 @@ public final class Stm32DevicePackRegistry implements Stm32PartSelection {
             return List.of();
         }
         return parts().stream().filter(part -> part.exactPart().contains(needle)
-            || part.family().contains(needle) || part.line().contains(needle)).toList();
+            || part.family().toUpperCase(Locale.ROOT).contains(needle)
+            || part.line().toUpperCase(Locale.ROOT).contains(needle)).toList();
     }
 
     /** A unique partial match is still only a suggestion until its exact ID is selected. */

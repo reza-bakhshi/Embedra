@@ -3,8 +3,9 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T039 — STM32 memory-region and topology planning (`IN_PROGRESS`)**.
-- Last completed task: **T038 — STM32 exact-part registry and selection**.
+- Current task: **T043 — STM32 HAL/LL/CMSIS/startup/RTOS/library signature-pack generation and matching (`COMPLETE`)**.
+- Last completed task: **T042 — STM32 board profiles for external flash/RAM and boot offsets**.
+- Next task: **T044 — TrustZone secure/non-secure region and veneer handling for supported devices** (not started).
 - Future scope: the SpecKit now plans ESP32-branded full-flash expansion as
   T080-T087, with independent per-series/variant evidence and a separate gate.
   This specification change does not promote ESP support or reorder STM32 tasks.
@@ -187,16 +188,113 @@ curated catalog after verifying its selection digest. Search reports no match,
 one candidate, ambiguity, or an exact ID; only an exact ID is selected. The
 registry preserves separate package, flash, core, lifecycle, and support
 facts, including unknown values. All entries are catalog-only packs and
-device support remains `PLANNED`. T039 is in progress: the pinned catalog has
-zero complete memory-bank maps and eleven unresolved flash sizes. A fail-closed
-readiness audit reports these gaps. Nineteen SHA-pinned DFP descriptors now
-produce reproducible, unreviewed memory candidates for 50 of 53 selected
-parts. The other three are F103; separate ST product and Nucleo-RB linker
-evidence is pinned. One WL33 part has competing candidate paths. Physical
-banks, security and boot aliases, capacity conflicts, prefix identities, and
-special regions still need reconciliation before support can be promoted.
-The next-chat prompt is `.embedra/prompts/T039-stm32-memory-topology.md`;
-full evidence is `.embedra/evidence/tasks/T039.md`.
+device support remains `PLANNED`. T039 completed all 53 validated memory and
+topology plans; `python3 scripts/audit-stm32-memory-readiness.py
+--require-complete` exits 0 with `readyCount 53/53`. Full evidence is
+`.embedra/evidence/tasks/T039.md`.
+
+T040 is complete. Reviewed exact-part CMSIS-SVD applicability now covers all
+53 curated parts (8 shipped, 37 deferred, 8 explicit unavailable) with no family
+or wildcard inference. A bounded pure transformation handles `derivedFrom`
+inheritance, arrays, clusters, alternate views, enumerations, and interrupts; it
+rejects malformed XML, DTD/entities, oversized input, and unsupported
+constructs. Seven digest-pinned Apache-2.0 derived packs ship 7,512 registers,
+47,440 fields, and 22,725 enumerated values. A transactional, idempotent,
+conflict-preserving Ghidra applicator creates volatile peripheral blocks,
+register labels, field-aware types/enums, comments, and one interrupt enum per
+exact part with provenance; 51 exact parts have a single applicable interrupt
+header and the two ambiguous parts remain explicit. Interrupt definitions are
+data types and provenance only. T039 memory plans and the WB15/WB55 SRAM2
+limitation are unchanged and every support state remains `PLANNED`. The
+reproducible gate passes two clean 22-action builds with 249 unit, 84 real-Ghidra,
+105 STM32 Python (2 documented optional-source skips), and 4 ESP Python tests,
+producing a byte-identical 3,921,380-byte ZIP SHA-256
+`f04ee66e34f9e942ac5728a50eb1f1bd0d45faeff1c63faf1d82342f5daeb004` (the
+earlier 3,921,060-byte `7b41324f79a0739dcc8195e0031cc536c597df85bc6eb2138a34f8eaa300fcf9`
+pass is superseded). See
+`.embedra/evidence/tasks/T040.md`.
+
+T041 is complete. A pure, explicit nine-entry Cortex-M core-exception table
+(`NonMaskableInt` through `SysTick`) is kept separate from device IRQs; reset is
+an architectural constant. `Stm32VectorPlanner` consumes a T037-confirmed table,
+the T040 exact-part interrupt list, and an image range derived explicitly from
+the T039 validated FLASH region to resolve in-image Thumb handlers and qualified
+labels, canonicalize standard exception names, preserve unlisted pinned
+exceptions (for example `SecureFault_IRQn`) and reserved words, and fail closed
+on a conditional list, unknown base, truncated table, or ambiguous pinned entry.
+`Stm32VectorLabelApplicator` transactionally creates or confirms the primitive
+words, labels, and reset/core/device handler functions, preserves user artifacts
+with deterministic conflicts, is idempotent, and never resurrects a deleted or
+renamed artifact. T039 memory plans and the T040 device-data packs are unchanged,
+and all 53 support states remain `PLANNED`. The reproducible gate passes two
+clean, uncached 22-action builds with 262 unit, 93 real-Ghidra, 105 STM32 Python
+(2 documented optional-source skips), and 4 ESP Python tests, producing a
+byte-identical 3,967,956-byte ZIP SHA-256
+`47b41bd8b6712be329a7f4b8c516c8f685cbc99d93ff4e7446536ed5fbbd7460`. See
+`.embedra/evidence/tasks/T041.md`.
+
+An independent T039–T041 review was then hardened before T042: T041 and T040 now
+bind an interrupt/pack application to the exact part recorded by the program;
+the T040 SVD pack generator rejects DTD/entities encoding-safely instead of via
+an encoding-bypassable byte substring; the T040 loader emits typed diagnostics
+for out-of-range interrupt values and rejects overlapping/duplicate model names;
+the T039 unresolved H735 configuration placeholder now reports its true 192-KiB
+bank rather than a 576-MiB bounding box; and the T039 PDSC parser uses the same
+encoding-safe check. T039 memory plans (`00def2817b…`), T040 applicability
+(`be795ab0…`) and packs, and all support states are unchanged. Lower-severity
+items are recorded as a residual backlog. See
+`.embedra/evidence/tasks/T039-T041-hardening.md`.
+
+T042 is complete. A digest-pinned board-profile snapshot adds external flash/RAM
+and boot offsets for nine reviewed ST boards over their exact MCU records without
+mutating any MCU pack. `Stm32BoardProfile` separates board identity, pinned
+per-board BSD-3-Clause ST BSP provenance, and memory-mapped external regions
+(device, controller, CPU base, size, writability, and quoted evidence) from the
+MCU plan, with an explicit `UNAVAILABLE` state and reason when no fact is pinned.
+`Stm32BoardCatalog` verifies the snapshot, selection, and board-index digests and
+resolves a profile to an MCU only by an explicit exact part id. `Stm32BoardPlanner`
+composes a validated T039 `Stm32MemoryPlanner.Plan` without mutation and fails
+closed on an unavailable profile, a part mismatch, an overlapping or out-of-space
+external region, or a boot offset outside every external region. Three parts with
+exact board evidence but no pinnable external fact stay explicitly unavailable.
+Mapping external memory into Ghidra is out of scope for T042: the pure plan is
+kept and the adapter boundary is documented rather than inventing permissions.
+T039 memory plans, T040 device-data packs, T041 vector behavior, and all support
+states are unchanged. See `.embedra/evidence/tasks/T042.md` and
+`.embedra/evidence/tasks/T042-board-source-audit.json`.
+
+T043 is complete. A pure, evidence-gated STM32 library signature pipeline ships
+a digest-pinned STM32F1 pack generated from the pinned `STM32Cube_FW_F1_V1.8.7`
+HAL/LL/CMSIS-device/FreeRTOS sources compiled with a pinned `arm-none-eabi-gcc`.
+`Stm32LibrarySignature` carries compiler/optimization/family-indexed masked byte
+patterns in which every relocation-touched byte is masked; only derived names,
+source-relative provenance, and masked patterns ship, with the archive digest and
+per-file source digests recorded in `.embedra/evidence/tasks/T043-signature-source-audit.json`.
+`Stm32SignaturePackLoader` verifies pack identity, provenance, aggregate digest,
+and a closed schema; `Stm32SignatureMatcher` applies a signature only when the
+caller records the exact family, compiler, and optimization, otherwise returning
+an explicit `EVIDENCE_MISSING`, `INDEX_UNAVAILABLE`, or `NO_MATCH`; and
+`Stm32SignaturePackSelection` loads through the shared offline
+`LocalPackRepository` selection path. All scanning is bounded and cancellable, no
+match promotes a device, and all 53 curated parts remain `PLANNED`. T039 memory
+plans, T040 device-data packs, T041 vector behavior, and T042 board profiles are
+unchanged. See `.embedra/evidence/tasks/T043.md`.
+
+A follow-up T038–T041 audit fixed the T038 catalog search so line labels with
+lowercase text match case-insensitively, documented the STM32 SVD models in the
+`svd` package, restricted bundled SVD pack loading to reviewed shipped
+applicability entries, and corrected stale digest/test-count statements in the
+T039 evidence and continuity state. Curated data, memory plans, applicability,
+device-data packs, vector behavior, board profiles, signature packs, and every
+support state remain unchanged. The reproducible gate passes two clean 22-action
+builds with 292 unit, 93 real-Ghidra, 123 STM32 Python (4 documented
+optional-source skips), and 4 ESP Python tests, producing a byte-identical
+4,186,433-byte ZIP SHA-256
+`02cb3efad54d903d6f0e7b03de0a8b5053591047499a8766c6ab3baff18edb9b`. See
+`.embedra/evidence/tasks/T038-T041-followup-review.md`.
+
+The next-chat prompt is
+`.embedra/prompts/T044-trustzone-secure-nonsecure.md`.
 
 The maintainer narrowed T032 on 2026-09-29 from every ST MCU/MPU to commonly
 used orderable parts. ADR 0026, the specification, support matrix, state, and

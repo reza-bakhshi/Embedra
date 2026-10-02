@@ -698,14 +698,14 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 - [x] T036 Implement raw BIN import requiring explicit device/base or confirmed inference.
 - [x] T037 Implement Cortex-M vector-table discovery, scoring, user confirmation, vector creation, and false-positive tests.
 - [x] T038 Implement STM32 exact-part search/selection, lifecycle/support state, ambiguity handling, package/flash/core variant identity, and device-pack registry covering the curated catalog.
-- [ ] T039 Implement catalog-driven STM32 memory-region and execution-topology planning for internal flash/RAM/system/OTP/option/alias regions and every selected part record; catalog validation fails on incomplete mandatory properties.
-- [ ] T040 Implement CMSIS-SVD/device-data transformation into Ghidra registers, types, enums, and interrupts with provenance.
-- [ ] T041 Implement vector labels/functions and Cortex-M core exception structures.
-- [ ] T042 Add board profiles for external flash/RAM and boot offsets without mutating MCU packs.
+- [x] T039 Implement catalog-driven STM32 memory-region and execution-topology planning for internal flash/RAM/system/OTP/option/alias regions and every selected part record; catalog validation fails on incomplete mandatory properties.
+- [x] T040 Implement CMSIS-SVD/device-data transformation into Ghidra registers, types, enums, and interrupts with provenance.
+- [x] T041 Implement vector labels/functions and Cortex-M core exception structures.
+- [x] T042 Add board profiles for external flash/RAM and boot offsets without mutating MCU packs.
 
 ### STM32 advanced support
 
-- [ ] T043 Implement STM32 HAL/LL/CMSIS/startup/RTOS/library signature-pack generation and matching.
+- [x] T043 Implement STM32 HAL/LL/CMSIS/startup/RTOS/library signature-pack generation and matching.
 - [ ] T044 Implement TrustZone secure/non-secure region and veneer handling for supported devices.
 - [ ] T045 Implement dual-core/heterogeneous workspace planning, shared memory, mailboxes/semaphores, boot relationships, and cross-program navigation for every applicable H7 and other cataloged multi-core device.
 - [ ] T046 Implement WB/WB0/WL/WBA wireless/network-core distinctions, separately supplied coprocessor firmware, shared resources, and related packs.

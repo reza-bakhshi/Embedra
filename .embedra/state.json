@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "specification": {
     "path": "Embedra-SpecKit.md",
-    "sha256": "f430f57504522d020d18d63918bda6ca939707f71c7c0805679947d0c5129f07"
+    "sha256": "3db2933fbba4a51175baa6850ba55dcdcbfec10f0c6d5cfbfcc77a691823ace0"
   },
   "projectClassification": "NEW",
   "currentTask": {
-    "id": "T039",
-    "status": "IN_PROGRESS",
-    "reasonCode": "STM32_MEMORY_FACTS_INCOMPLETE_SOURCE_RECONCILIATION"
+    "id": "T043",
+    "status": "COMPLETE",
+    "reasonCode": "STM32_HAL_LL_CMSIS_FREERTOS_SIGNATURE_PACKS_EVIDENCE_GATED_VERIFIED"
   },
   "completedTasks": [
     "T001",
@@ -49,7 +49,12 @@
     "T035",
     "T036",
     "T037",
-    "T038"
+    "T038",
+    "T039",
+    "T040",
+    "T041",
+    "T042",
+    "T043"
   ],
   "blockedTasks": [],
   "acceptanceGates": {
@@ -80,15 +85,24 @@
     "commit": "e051a59"
   },
   "workingTree": {
-    "state": "CLEAN",
-    "uncommittedWork": []
+    "state": "MODIFIED",
+    "uncommittedWork": [
+      "T043 complete: digest-pinned, evidence-gated STM32F1 HAL/LL/CMSIS-device/FreeRTOS signature pack generated deterministically from a pinned redistributable STM32Cube F1 build with relocation-masked byte patterns; pure loader/matcher/selection with explicit non-match diagnostics, bounded scanning, and shared limits; all 53 parts PLANNED and T039-T042 artifacts unchanged",
+      "T042 complete: digest-pinned reviewed STM32 board profiles layering external flash/RAM and boot offsets over an exact MCU record without mutating MCU packs. Pure Stm32BoardProfile/Stm32BoardCatalog/Stm32BoardPlanner; nine reviewed boards and three explicit unavailable profiles; exact-part-only links; overlap, address space, and boot-offset fail-closed checks; T039 memory plans and T040 device-data packs unchanged; every device-support state PLANNED",
+      "T041 complete: pure explicit Cortex-M core-exception table and confirmed vector-slot planner plus a transactional, idempotent, user-preserving Ghidra adapter",
+      "T040 complete: CMSIS-SVD device-data transformation with provenance",
+      "T039 complete: validated STM32 memory-region and topology plans",
+      "T038 complete: STM32 exact-part catalog registry",
+      "T038-T041 follow-up review fixes: case-insensitive line search, STM32 svd package documentation, shipped-only bundled SVD pack loading, and continuity digest/count corrections; all curated data, plans, packs, and support states unchanged"
+    ]
   },
   "toolchains": {
     "ghidra": {
       "version": "12.1.3",
       "release": "PUBLIC",
       "buildDate": "2026-08-17",
-      "revision": "8b4c91d4d5bd1549622bfbade0df199585b98365"
+      "revision": "8b4c91d4d5bd1549622bfbade0df199585b98365",
+      "localPath": "ghidra_12.1.3_PUBLIC_20260817/ghidra_12.1.3_PUBLIC"
     },
     "java": {
       "observedVersion": "21.0.12",
@@ -111,6 +125,22 @@
       "source": "https://github.com/espressif/svd",
       "revision": "be20aa12560889d6125d144cdb48cf615ac17628",
       "license": "Apache-2.0"
+    },
+    "stm32SignatureGeneration": {
+      "sourcePackage": "STM32Cube_FW_F1_V1.8.7",
+      "sourceUrl": "https://github.com/STMicroelectronics/STM32CubeF1",
+      "archiveSha256": "1b5f99f86982efe5e4931063de4a0f0af80e38a05d4835b0b8f82aefad634b29",
+      "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+      "optimizations": [
+        "-Os",
+        "-O2"
+      ],
+      "licenses": [
+        "BSD-3-Clause",
+        "Apache-2.0",
+        "MIT"
+      ],
+      "redistribution": "DERIVED_MASKED_SIGNATURES_ONLY_NO_SOURCE_BUNDLED"
     },
     "host": {
       "os": "Linux",
@@ -401,7 +431,7 @@
     }
   ],
   "evidence": {
-    "task": ".embedra/evidence/tasks/T039.md",
+    "task": ".embedra/evidence/tasks/T043.md",
     "preT033Audit": ".embedra/evidence/audits/pre-t033-t001-t032.md",
     "remediation": ".embedra/evidence/tasks/T025-remediation.md",
     "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
@@ -416,7 +446,7 @@
     "taskT030": ".embedra/evidence/tasks/T030.md",
     "taskT031": ".embedra/evidence/tasks/T031.md",
     "adrT031": "docs/adr/0025-esp8266-separate-legacy-provider.md",
-    "nextTaskPrompt": ".embedra/prompts/T039-stm32-memory-topology.md",
+    "nextTaskPrompt": ".embedra/prompts/T044-trustzone-secure-nonsecure.md",
     "taskT027": ".embedra/evidence/tasks/T027.md",
     "adrT027": "docs/adr/0022-shared-esp-target-services.md",
     "taskT026A": ".embedra/evidence/tasks/T026A.md",
@@ -427,11 +457,25 @@
       "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb",
       "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.json",
       "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.audit.json"
-    ]
+    ],
+    "memoryReconciliationT039": ".embedra/evidence/tasks/T039-memory-reconciliation.json",
+    "memoryHeaderFactsT039": ".embedra/evidence/tasks/T039-memory-header-evidence.json",
+    "taskT040": ".embedra/evidence/tasks/T040.md",
+    "svdApplicabilityT040": "catalogs/stm32/2026-09-29/svd-applicability.json",
+    "svdApplicabilitySha256T040": "catalogs/stm32/2026-09-29/svd-applicability.sha256",
+    "taskT041": ".embedra/evidence/tasks/T041.md",
+    "hardeningReviewT039T041": ".embedra/evidence/tasks/T039-T041-hardening.md",
+    "taskT042": ".embedra/evidence/tasks/T042.md",
+    "boardProfilesT042": "catalogs/stm32/2026-09-29/board-profiles.json",
+    "boardProfilesSha256T042": "catalogs/stm32/2026-09-29/board-profiles.sha256",
+    "boardSourceAuditT042": ".embedra/evidence/tasks/T042-board-source-audit.json",
+    "taskT043": ".embedra/evidence/tasks/T043.md",
+    "signatureSourceAuditT043": ".embedra/evidence/tasks/T043-signature-source-audit.json",
+    "signaturePackT043": "packs/stm32.stm32f1.signatures/1.0.0"
   },
   "knownFailures": [],
-  "nextTask": "T039",
-  "nextAction": "Continue T039: reconcile 50 pinned DFP candidates and F103 C8/CB address evidence, resolve seven prefix cases and capacity conflicts, then validate physical banks and aliases before accepting exact-part plans.",
+  "nextTask": "T044",
+  "nextAction": "Begin T044: implement STM32 TrustZone secure/non-secure region and veneer handling for supported devices, using the pinned T039-T043 evidence and without promoting support states.",
   "artifacts": [
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -582,6 +626,60 @@
       "sha256": "3507efb96c994f8c8b70bdc619dd79037fa9d028719486e4730a0c084bf1dbcc",
       "sizeBytes": 2738313,
       "status": "T038_COMPLETE_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+      "sha256": "68a45831c37b9085f9bfcf46e6350ba1a21850ac5aca9cea8235d636bbed91ba",
+      "sizeBytes": 2820787,
+      "status": "T039_ALLOCATION_RESOLUTION_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+      "sha256": "7b41324f79a0739dcc8195e0031cc536c597df85bc6eb2138a34f8eaa300fcf9",
+      "sizeBytes": 3921060,
+      "status": "T040_STM32_SVD_DEVICE_DATA_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20261001_Embedra.zip",
+      "sha256": "7f3c421b4dc28008e6541daf563788fe42861b355632d7b0f5103db17cf896bc",
+      "sizeBytes": 2818481,
+      "status": "T039_CORRECTNESS_FIXES_REPRODUCIBLE_ARTIFACT_SUPERSEDED"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20261001_Embedra.zip",
+      "sha256": "abf0151fd03d2ff2eb87a3b18e641af753f2d70cc378d778661949d8fe544f80",
+      "sizeBytes": 2815209,
+      "status": "T039_COMPLETE_REPRODUCIBLE_ARTIFACT_SUPERSEDED"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+      "sha256": "f04ee66e34f9e942ac5728a50eb1f1bd0d45faeff1c63faf1d82342f5daeb004",
+      "sizeBytes": 3921380,
+      "status": "T040_FINAL_REVIEW_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+      "sha256": "47b41bd8b6712be329a7f4b8c516c8f685cbc99d93ff4e7446536ed5fbbd7460",
+      "sizeBytes": 3967956,
+      "status": "T041_HARDENED_COMPLETE_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+      "sha256": "49486842fd383d6a48cc725abea402ab61ca1052a02bb6f082cfe4793ceb2c5d",
+      "sizeBytes": 4002516,
+      "status": "T042_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+      "sha256": "867e619d081c7dd922ed1b0f6d59ac50db2d2aa6305cb6fb228ff526f698aa14",
+      "sizeBytes": 4186407,
+      "status": "T043_REPRODUCIBLE_ARTIFACT"
+    },
+    {
+      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+      "sha256": "02cb3efad54d903d6f0e7b03de0a8b5053591047499a8766c6ab3baff18edb9b",
+      "sizeBytes": 4186433,
+      "status": "T038_T041_FOLLOWUP_REVIEW_REPRODUCIBLE_ARTIFACT"
     }
   ],
   "resolvedFailures": [
@@ -749,6 +847,131 @@
       "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
       "exitStatus": 0,
       "result": "T039 HANDOFF PASS: two clean 22-action builds; unit, real-Ghidra, 67 STM32 Python, 4 ESP Python, fixture, formatting, scaffold, Checkstyle, and JaCoCo checks; byte-identical ZIP SHA-256 3507efb96c994f8c8b70bdc619dd79037fa9d028719486e4730a0c084bf1dbcc. T039 remains IN_PROGRESS."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<local-ghidra-12.1.3> ./gradlew verifySTM32CatalogGenerator verifyFormatting --no-daemon --quiet",
+      "exitStatus": 0,
+      "result": "T039 SOURCE REVIEW PASS: 86 STM32 Python tests and formatting. 53 part gap records, 48 pinned ST headers, 1905 raw declarations, 54 partial region facts for 11 parts. No runtime topology implementation or support promotion."
+    },
+    {
+      "command": "python3 scripts/audit-stm32-memory-reconciliation.py",
+      "exitStatus": 0,
+      "result": "T039 PARTIAL EVIDENCE CONSISTENT: 53 selected parts, 11 with partial region facts, 54 reviewed region facts, 0 complete runtime maps."
+    },
+    {
+      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
+      "exitStatus": 1,
+      "result": "T039 EXPECTED INCOMPLETE: 0/53 ready; 53 missing validated bank maps and 11 unpaired catalog flash sizes. Full reproducible completion gate deferred until evidence and runtime plans are ready."
+    },
+    {
+      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
+      "exitStatus": 0,
+      "result": "T039 CORRECTNESS FIXES COMPLETE: readyCount 53/53 under the strengthened audit. WB15 now dual-core (Cortex-M4 + Cortex-M0+, IPCC/HSEM); H735 shared 192 KiB RAM is configuration-dependent (placed only with an explicit ITCM_AXI_SHARED allocation); WB55/WB15 shared-memory access no longer overclaims CPU1 write access to CPU2-secure SRAM2; and the audit now rejects missing IPCC/HSEM ranges, profile/core-count mismatches, invalid availability values, and invalid shared access. memory-plans.json SHA-256 2ba6e67a6947dc0cc6b4aa40a09543c9bebe8e1eed02b8ac9633b2c39bdbb2e6."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T039 PASS: two clean 22-action builds; 234 unit, 75 real-Ghidra, 90 STM32 Python, 4 ESP Python tests with no failures or skips; Checkstyle, JaCoCo, formatting, fixture, scaffold and ZIP-entry oracle checks; byte-identical 2,815,209-byte ZIP SHA-256 abf0151fd03d2ff2eb87a3b18e641af753f2d70cc378d778661949d8fe544f80. Excluded the handoff-committed .codex/** tool config from the extension package."
+    },
+    {
+      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete && python3 -m unittest discover -s scripts/tests -p 'test_*stm32*.py'",
+      "exitStatus": 0,
+      "result": "T039 INDEPENDENT VERIFICATION: readyCount 53/53; H735 ITCM_AXI_SHARED_128_256 reproduced with both ranges at 0x24020000 yields CONFIGURATION_RANGE_OVERLAP; 95 STM32 Python tests OK (skipped=2); plan SHA-256 00def2817ba0660644a4bc6cea3ffb756e11aff4d7236a466f82de838c280c66 matches. No discrepancy."
+    },
+    {
+      "command": "python3 scripts/generate-stm32-svd-applicability.py generate --curated catalogs/stm32/2026-09-29/curated-catalog.json --rules catalogs/stm32/2026-09-28/svd-rules.json --output catalogs/stm32/2026-09-29/svd-applicability.json",
+      "exitStatus": 0,
+      "result": "T040 applicability generated: 53 exact parts; 8 EXACT_SVD_SHIPPED across 7 device lines, 37 EXACT_SVD_DEFERRED, 8 UNAVAILABLE with reasons; digest be795ab0d0d5da1b218428361690753fb39e8f962b3de8c160ae9a43d7970518. No family or wildcard inference."
+    },
+    {
+      "command": "python3 scripts/generate-stm32-svd-packs.py --applicability catalogs/stm32/2026-09-29/svd-applicability.json --curated catalogs/stm32/2026-09-29/curated-catalog.json --svd-root <pinned-svd-cache> --output packs/",
+      "exitStatus": 0,
+      "result": "T040 packs generated deterministically from 7 pinned Apache-2.0 SVD files (41 SVD sources fetched and SHA-256 verified against the pinned rule index): 400 peripheral windows, 7,512 registers, 47,440 fields, 22,725 enumerated values; raw SVD XML not redistributed."
+    },
+    {
+      "command": "python3 -m unittest discover -s scripts/tests -p 'test_*stm32*.py'",
+      "exitStatus": 0,
+      "result": "T040 FOCUSED PYTHON PASS: 105 STM32 Python tests OK (skipped=2 optional pinned-source downloads), including 10 new SVD applicability/pack tests."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check verifyFormatting --no-daemon",
+      "exitStatus": 0,
+      "result": "T040 FOCUSED JAVA PASS: 249 unit and 83 real-Ghidra tests, including new STM32 SVD model/loader/applicability/interrupt and 8 applicator preservation/idempotence/interrupt tests; Checkstyle, JaCoCo, formatting, STM32 catalog/fixture, ESP catalog, scaffold checks pass."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T040 PASS: two clean, uncached 22-action builds; 249 unit, 83 real-Ghidra, 105 STM32 Python (2 documented optional-source skips), 4 ESP Python tests; Checkstyle, JaCoCo, formatting, fixture, scaffold and ZIP-entry oracle checks; byte-identical 3,921,060-byte ZIP SHA-256 7b41324f79a0739dcc8195e0031cc536c597df85bc6eb2138a34f8eaa300fcf9."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew ghidraIntegrationTest --tests 'io.github.rezabakhshi.embedra.ghidra.stm32.Stm32SvdApplicatorTest'",
+      "exitStatus": 0,
+      "result": "T040 exact-part provenance regressions pass: applyAll rejects a mismatched interrupt Entry before mutation; bundled pack loading rejects a source digest that differs from the reviewed exact applicability entry. 9 STM32 SVD applicator integration tests pass."
+    },
+    {
+      "command": "scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "Final independent T039/T040 verification: 2 clean uncached 22-action builds; 249 unit, 84 real-Ghidra, 105 STM32 Python (2 documented skips), and 4 ESP Python tests; all checks pass; byte-identical 3,921,380-byte ZIP SHA-256 f04ee66e34f9e942ac5728a50eb1f1bd0d45faeff1c63faf1d82342f5daeb004."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check verifyFormatting --no-daemon",
+      "exitStatus": 0,
+      "result": "T041 FOCUSED JAVA PASS: 260 unit and 90 real-Ghidra tests, including the T041 pure core-exception/vector-plan suite and 6 real-Ghidra label/function/idempotence/preservation/ambiguous/truncated tests; Checkstyle, JaCoCo, formatting, STM32 catalog/fixture, ESP catalog, and scaffold checks pass."
+    },
+    {
+      "command": "python3 -m unittest discover -s scripts/tests -p 'test_*stm32*.py' && python3 -m unittest scripts/tests/test_generate_esp_catalog.py",
+      "exitStatus": 0,
+      "result": "T041 FOCUSED PYTHON PASS: 105 STM32 Python tests OK (skipped=2 optional pinned-source downloads) and 4 ESP Python tests OK; no STM32 generator changes."
+    },
+    {
+      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
+      "exitStatus": 0,
+      "result": "T041 READINESS PASS: readyCount 53/53, missingMemoryBanks 0, missingProcessors 0, unresolvedFlash 11; catalog SHA-256 afc66a47 and memory-plan SHA-256 00def2817b unchanged."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T041 HARDENED PASS: two clean, uncached 22-action builds; 262 unit, 93 real-Ghidra, 105 STM32 Python (2 documented optional-source skips), and 4 ESP Python tests; Checkstyle, JaCoCo, formatting, fixture, scaffold, and ZIP-entry oracle checks; byte-identical 3,967,956-byte ZIP SHA-256 47b41bd8b6712be329a7f4b8c516c8f685cbc99d93ff4e7446536ed5fbbd7460. Includes the T039/T040/T041 hardening review fixes (exact-part binding, encoding-safe DTD rejection, typed loader errors, model overlap/duplicate rejection, H735 placeholder extent, T039 PDSC encoding); T039 memory plans, T040 applicability and packs, and all support states unchanged."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check verifyFormatting --no-daemon",
+      "exitStatus": 0,
+      "result": "T042 FOCUSED JAVA PASS: 271 unit and 93 real-Ghidra tests, including the T042 pure board-profile model/catalog/planner suite; Checkstyle, JaCoCo, formatting, STM32 catalog/fixture, ESP catalog, and scaffold checks pass."
+    },
+    {
+      "command": "python3 -m unittest discover -s scripts/tests -p 'test_*stm32*.py'",
+      "exitStatus": 0,
+      "result": "T042 FOCUSED PYTHON PASS: 112 STM32 Python tests OK (skipped=2 optional pinned-source downloads); includes 7 board-profile generator tests."
+    },
+    {
+      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
+      "exitStatus": 0,
+      "result": "T042 READINESS PASS: readyCount 53/53, missingMemoryBanks 0, missingProcessors 0, unresolvedFlash 11; catalog SHA-256 afc66a47 and memory-plan SHA-256 00def2817b unchanged."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T042 PASS: two clean, uncached 22-action builds; 271 unit, 93 real-Ghidra, 112 STM32 Python (2 documented optional-source skips), and 4 ESP Python tests; Checkstyle, JaCoCo, formatting, fixture, scaffold, and ZIP-entry oracle checks; byte-identical 4,002,516-byte ZIP SHA-256 49486842fd383d6a48cc725abea402ab61ca1052a02bb6f082cfe4793ceb2c5d. T039 memory plans, T040 applicability and packs, T041 vector behavior, T042 board profiles, and all support states unchanged."
+    },
+    {
+      "command": "python3 scripts/generate-stm32-signatures.py generate --cube-root <pinned-stm32cube-f1> --cube-zip <pinned-zip> --pack-dir packs/stm32.stm32f1.signatures/1.0.0 --audit .embedra/evidence/tasks/T043-signature-source-audit.json",
+      "exitStatus": 0,
+      "result": "T043 GENERATION PASS: 1,543 relocation-masked signatures across five permissively licensed components; 0 compile skips; 420 low-specificity functions excluded; content digest ebb0e4e72b435d13b23f42945fc5e62056d82b390921e5ad5a007bc2b227a191, signatures.json SHA-256 c21f553e30a5d02b30aaafa4bd0584ac3deaf304b23d895d7d692cedbbd8dc70."
+    },
+    {
+      "command": "EMBEDRA_STM32CUBE_ROOT=<pinned-stm32cube-f1> EMBEDRA_STM32CUBE_ZIP=<pinned-zip> python3 -m unittest scripts/tests/test_generate_stm32_signatures.py",
+      "exitStatus": 0,
+      "result": "T043 REGENERATION PASS: 11 tests OK; regeneration reproduced the committed pack and source audit byte-for-byte and rejected a tampered copy."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check verifyFormatting --no-daemon",
+      "exitStatus": 0,
+      "result": "T043 FOCUSED JAVA PASS: 291 unit and 93 real-Ghidra tests, including the T043 pure signature model/loader/matcher and shared pack-selection suite; Checkstyle, JaCoCo, formatting, STM32 catalog/fixture, ESP catalog, and scaffold checks pass."
+    },
+    {
+      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
+      "exitStatus": 0,
+      "result": "T043 PASS: two clean, uncached 22-action builds; 291 unit, 93 real-Ghidra, 123 STM32 Python (4 documented optional-source skips), and 4 ESP Python tests; Checkstyle, JaCoCo, formatting, fixture, scaffold, and ZIP-entry oracle checks; byte-identical 4,186,407-byte ZIP SHA-256 867e619d081c7dd922ed1b0f6d59ac50db2d2aa6305cb6fb228ff526f698aa14. T039 memory plans, T040 applicability and packs, T041 vector behavior, T042 board profiles, and all support states unchanged."
     }
   ],
   "buildQuality": {
@@ -763,9 +986,9 @@
     "minimumCoreClassBranchCoverage": 0.92,
     "packInstructionCoverage": 0.9226,
     "packBranchCoverage": 0.7759,
-    "unitTests": 220,
-    "ghidraIntegrationTests": 73,
-    "pythonGeneratorTests": 62
+    "unitTests": 291,
+    "ghidraIntegrationTests": 93,
+    "pythonGeneratorTests": 123
   },
   "architecture": {
     "pureBoundaries": [
@@ -1238,5 +1461,296 @@
     "auditEvidencePath": ".embedra/evidence/tasks/T032-market-audit.json",
     "currentMatchedDistinctExactCpnCandidates": 56,
     "moduleCandidatesExcluded": 1
+  },
+  "stm32MemoryReview": {
+    "status": "COMPLETE_ALL_53_VALIDATED_PLANS",
+    "selectedParts": 53,
+    "directDfpPatternParts": 46,
+    "packingSuffixParts": 4,
+    "partsWithPartialRegionFacts": 11,
+    "partialRegionFacts": 54,
+    "validatedRuntimeMaps": 53,
+    "unpairedCatalogFlashSizes": 0,
+    "catalogFlashFieldsUnpaired": 11,
+    "catalogFlashLimitation": "11 curated catalog flashKiB fields remain null (audit unresolvedFlash=11); every exact part has a validated plan flash size, so the memory review has no unpaired plan capacity",
+    "sourceHeaders": 48,
+    "rawHeaderDeclarations": 1905,
+    "reconciliationPath": ".embedra/evidence/tasks/T039-memory-reconciliation.json",
+    "reconciliationSha256": "4bbd84e3f4fa32811ef308f5426505d981c511bda2e4ed00a99801a1ef76393c",
+    "headerEvidencePath": ".embedra/evidence/tasks/T039-memory-header-evidence.json",
+    "headerEvidenceSha256": "491c148f623de7ac3e14f2c1e99ec919b3223afda470d57de3040405ed07a4a5",
+    "documentBytesStatus": "PINNED_DOCUMENTS_VERIFIED_LOCAL_CACHE",
+    "catalogUnchanged": true,
+    "supportState": "PLANNED",
+    "remainingIncompleteParts": 0,
+    "memoryPlansPath": "catalogs/stm32/2026-09-29/memory-plans.json",
+    "memoryPlansSha256": "00def2817ba0660644a4bc6cea3ffb756e11aff4d7236a466f82de838c280c66",
+    "validatedExactParts": "ALL_53",
+    "sourceDocuments": 88,
+    "explicitAvailabilityFields": [
+      "flashAvailability UNAVAILABLE (STM32N657X0H3Q, ROMless)",
+      "systemAvailability UNAVAILABLE (STM32WL3RKBV6, RM0551 table 3)",
+      "optionAvailability NOT_MEMORY_MAPPED (register-only option bytes)",
+      "bitBandAvailability UNAVAILABLE (M0+/M33/M55/M7)",
+      "bootAliasAvailability CONFIGURATION_DEPENDENT (BOOT_ADD/NSBOOTADD/SECBOOTADD/REMAP)"
+    ],
+    "dualCoreProfiles": [
+      "WB_DUAL_CORE (STM32WB55RGV6 and STM32WB15CCU6, Cortex-M4 + Cortex-M0+)"
+    ],
+    "configurationDependentRegions": {
+      "STM32H735IGK6": "ITCM_AXI_SHARED 192 KiB; four TCM_AXI_SHARED allocations resolved to concrete ITCM/AXI ranges"
+    },
+    "documentAuditPath": ".embedra/evidence/tasks/T039-document-source-audit.json",
+    "documentAuditSha256": "9f9a0b7b9d03ab5a98290557f4687194c19770511905d276f9d7682456b47d75",
+    "focusedVerification": {
+      "plannerUnitTests": 17,
+      "rawBinAndMemoryGhidraTests": 7,
+      "stm32PythonTests": 95,
+      "javaBaseline": 21,
+      "ghidraVersion": "12.1.3",
+      "readinessRequireComplete": "PASS_53_OF_53",
+      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+    }
+  },
+  "stm32SvdEnrichment": {
+    "status": "COMPLETE_T040",
+    "supportState": "PLANNED",
+    "catalogUnchanged": true,
+    "memoryPlansUnchanged": true,
+    "source": {
+      "identity": "ST-authored SVD via modm-io/cmsis-svd-stm32",
+      "url": "https://github.com/modm-io/cmsis-svd-stm32",
+      "revision": "e79021accd49bf19bd0b16065f5471fb073ff3ac",
+      "license": "Apache-2.0",
+      "redistribution": "DERIVED_FACTS_ONLY_RAW_XML_NOT_BUNDLED"
+    },
+    "applicabilityPath": "catalogs/stm32/2026-09-29/svd-applicability.json",
+    "applicabilitySha256": "be795ab0d0d5da1b218428361690753fb39e8f962b3de8c160ae9a43d7970518",
+    "selectionRule": "EXACT_DEVICE_LINE_OR_NAMED_REVIEW_OVERRIDE_NO_FAMILY_OR_WILDCARD",
+    "coveredExactParts": 53,
+    "shippedParts": 8,
+    "shippedDeviceLines": 7,
+    "deferredParts": 37,
+    "unavailableParts": 8,
+    "shippedPacks": [
+      "packs/stm32.stm32c031.svd/1.0.0",
+      "packs/stm32.stm32f103.svd/1.0.0",
+      "packs/stm32.stm32f401.svd/1.0.0",
+      "packs/stm32.stm32h503.svd/1.0.0",
+      "packs/stm32.stm32h735.svd/1.0.0",
+      "packs/stm32.stm32wb55-cm0p.svd/1.0.0",
+      "packs/stm32.stm32wb55-cm4.svd/1.0.0"
+    ],
+    "shippedTotals": {
+      "peripherals": 400,
+      "registers": 7512,
+      "fields": 47440,
+      "enumeratedValues": 22725
+    },
+    "interruptPlan": {
+      "coveredExactParts": 53,
+      "applicableExactParts": 51,
+      "ambiguousExactParts": [
+        "STM32N657X0H3Q (CONDITIONAL_REVIEW)",
+        "STM32WL3RKBV6 (MAPPED_VARIANTS)"
+      ],
+      "vectorLabelsOrFunctionsCreated": false,
+      "note": "T040 applies interrupt definitions as Ghidra enum data types and provenance only; T041 owns vector labels/functions and core exception structures."
+    },
+    "verifiedApplication": "TRANSACTIONAL_IDEMPOTENT_CONFLICT_PRESERVING_USER_PRESERVING_EXACT_PART_AND_SOURCE_PIN_ENFORCED",
+    "focusedVerification": {
+      "modelUnitTests": 3,
+      "packLoaderTests": 5,
+      "applicabilityTests": 3,
+      "interruptPlanTests": 2,
+      "ghidraApplicatorTests": 10,
+      "stm32PythonTests": 105,
+      "javaBaseline": 21,
+      "ghidraVersion": "12.1.3",
+      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+    }
+  },
+  "stm32VectorLabels": {
+    "status": "COMPLETE_T041",
+    "supportState": "PLANNED",
+    "catalogUnchanged": true,
+    "memoryPlansUnchanged": true,
+    "deviceDataPacksUnchanged": true,
+    "coreExceptionTable": [
+      "NonMaskableInt=-14",
+      "HardFault=-13",
+      "MemManage=-12",
+      "BusFault=-11",
+      "UsageFault=-10",
+      "SVCall=-5",
+      "DebugMonitor=-4",
+      "PendSV=-2",
+      "SysTick=-1"
+    ],
+    "reset": "Reset_IRQn=-15 slot 1 architectural",
+    "naming": "EXACT_PART_QUALIFIED_FROM_PINNED_INTERRUPT_NAMES_AND_EXPLICIT_CORE_TABLE",
+    "confirmedTableRequired": true,
+    "conditionalOrVariantInterruptListAppliesNothing": true,
+    "unlistedCoreExceptionPreserved": "pinned_name_with_UNLISTED_CORE_EXCEPTION_diagnostic",
+    "application": "TRANSACTIONAL_IDEMPOTENT_USER_PRESERVING_NON_RESURRECTING",
+    "focusedVerification": {
+      "purePlannerTests": 12,
+      "realGhidraTests": 8,
+      "applicableCuratedPartsSwept": 51,
+      "javaBaseline": 21,
+      "ghidraVersion": "12.1.3",
+      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+    },
+    "notClaimed": [
+      "No exact STM32 device support promotion; all 53 records remain PLANNED",
+      "No automatic vector-table base inference or family/wildcard inference",
+      "No ST startup-style _Handler rename; no fabricated handler names or addresses",
+      "No new Ghidra struct data type over the T037 primitive words"
+    ]
+  },
+  "stm32BoardProfiles": {
+    "status": "COMPLETE_T042",
+    "supportState": "PLANNED",
+    "catalogUnchanged": true,
+    "memoryPlansUnchanged": true,
+    "deviceDataPacksUnchanged": true,
+    "vectorLabelsUnchanged": true,
+    "catalogSha256": "78a3e0e41cc14585ad3c4140aed80fff6d53fcd367d6beec3d2cc787950c75f3",
+    "boardIndexSha256": "2b9c7c2cc5e2838c50190a507cc0d96792d3a3e5eba8a5aee4e21d50cc77b6a7",
+    "sourceAuditPath": ".embedra/evidence/tasks/T042-board-source-audit.json",
+    "sourceAuditSha256": "725d0c69a2323275752f4c66fee1be169d782d6279e847fbf6ea1bfc96564413",
+    "reviewedProfiles": 9,
+    "unavailableProfiles": 3,
+    "reviewedBoards": [
+      "STM32H735G-DK (STM32H735IGK6)",
+      "STM32H750B-DK (STM32H750XBH6)",
+      "STM32H7S78-DK (STM32H7S7L8H6H)",
+      "STM32H573I-DK (STM32H573IIK3Q)",
+      "STM32H5F5J-DK (STM32H5F5LJH7Q)",
+      "STM32L562E-DK (STM32L562QEI6Q)",
+      "B-U585I-IOT02A (STM32U585AII6Q)",
+      "STM32U5G9J-DK1 (STM32U5G9NJH6Q)",
+      "STM32N6570-DK (STM32N657X0H3Q)"
+    ],
+    "unavailableParts": [
+      "STM32G473QET6 (NO_PINNED_BSP_EXTERNAL_MEMORY_FACT)",
+      "STM32U083MCT6 (BOARD_HAS_NO_EXTERNAL_MEMORY_IN_PINNED_BSP)",
+      "STM32L552ZET6Q (BOTH_EXTERNAL_DEVICES_SHARE_OCTOSPI1_MAPPED_WINDOW)"
+    ],
+    "externalAddressSpace": "ext-mem",
+    "composition": "PURE_NON_MUTATING_EXACT_PART_COMPOSED_WITH_T039_MEMORY_PLAN",
+    "ghidraAdapter": "NOT_IMPLEMENTED_PURE_PLAN_ONLY_NO_FABRICATED_PERMISSIONS",
+    "focusedVerification": {
+      "pureModelTests": 9,
+      "boardProfilePythonTests": 7,
+      "javaBaseline": 21,
+      "ghidraVersion": "12.1.3",
+      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+    },
+    "notClaimed": [
+      "No exact STM32 device support promotion; all 53 records remain PLANNED",
+      "No board profile mutates or extends an MCU pack",
+      "No invented external size, address, boot offset, or board-to-part link",
+      "No family or wildcard board link; exact-part id only",
+      "No Ghidra external-memory mapping and no fabricated memory permission"
+    ]
+  },
+  "stm32SignaturePacks": {
+    "status": "COMPLETE_T043",
+    "supportState": "PLANNED",
+    "catalogUnchanged": true,
+    "memoryPlansUnchanged": true,
+    "deviceDataPacksUnchanged": true,
+    "vectorLabelsUnchanged": true,
+    "boardProfilesUnchanged": true,
+    "sourceAuditPath": ".embedra/evidence/tasks/T043-signature-source-audit.json",
+    "sourceAuditSha256": "9bcffd9259e43c9bc256b67bba5f7c7bb8b5dd54d685efb7ec9eee598c05fddf",
+    "sourcePackage": "STM32Cube_FW_F1_V1.8.7",
+    "sourceArchiveSha256": "1b5f99f86982efe5e4931063de4a0f0af80e38a05d4835b0b8f82aefad634b29",
+    "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+    "optimizations": [
+      "-Os",
+      "-O2"
+    ],
+    "packId": "stm32.stm32f1.signatures",
+    "packVersion": "1.0.0",
+    "supportedFamily": "STM32F1",
+    "signatureCount": 1543,
+    "signaturesSha256": "c21f553e30a5d02b30aaafa4bd0584ac3deaf304b23d895d7d692cedbbd8dc70",
+    "packContentDigest": "ebb0e4e72b435d13b23f42945fc5e62056d82b390921e5ad5a007bc2b227a191",
+    "components": {
+      "stm32f1xx-hal": 1111,
+      "freertos-kernel": 225,
+      "stm32f1xx-ll": 179,
+      "freertos-port": 24,
+      "cmsis-device": 4
+    },
+    "lowSpecificityExcluded": 420,
+    "compileSkips": 0,
+    "matching": "EVIDENCE_GATED_FAMILY_COMPILER_OPTIMIZATION_EXPLICIT_NON_MATCH",
+    "ghidraAdapter": "NOT_IMPLEMENTED_PURE_MATCH_AND_SHARED_PACK_SELECTION_ONLY",
+    "focusedVerification": {
+      "pureSignatureTests": 20,
+      "stm32PythonTests": 123,
+      "generatorRegenerationTests": 11,
+      "javaBaseline": 21,
+      "ghidraVersion": "12.1.3",
+      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+    },
+    "notClaimed": [
+      "No exact STM32 device support promotion; all 53 records remain PLANNED",
+      "No other STM32 family, HAL version, compiler, optimization, or RTOS/library version is claimed",
+      "A family-level signature match never resolves an exact part number",
+      "No vendor source, object, or toolchain runtime is redistributed",
+      "No Ghidra mutation or functional rename is applied by T043"
+    ]
+  },
+  "hardeningReview": {
+    "status": "COMPLETE_2026-10-02",
+    "evidencePath": ".embedra/evidence/tasks/T039-T041-hardening.md",
+    "fixedFindings": [
+      "T041 program-recorded exact-part binding in Stm32VectorLabelApplicator",
+      "T040 program-recorded exact-part binding in Stm32SvdApplicator",
+      "T040 encoding-safe DTD/entity rejection in generate-stm32-svd-packs.py with UTF-16 regression",
+      "T040 typed PACK_CONTENT_INVALID for out-of-range interrupt values in the pack loader and interrupt plan",
+      "T040 loader/model rejection of overlapping fields and duplicate field/enumerated-value names",
+      "T039 unresolved configuration placeholder sized by physicalKiB instead of an allocation bounding box",
+      "T039 PDSC encoding-safe DTD/entity rejection with UTF-16 regression"
+    ],
+    "residualBacklog": [
+      "T040 additively annotates a user-preserved peripheral block (documented design choice)",
+      "T040 non-enumerated fields wider than 32 bits are not yet materialized",
+      "Register-level modifiedWriteValues, array-name collisions, and createdEnumerations reapply over-count",
+      "Remaining T032 STM32 source generators and the ESP32-S3 SVD generator use raw byte-substring DTD checks",
+      "T039 Java planner does not yet assert topology.physicalCoreCount; malformed IPCC/HSEM bounds surface as NPE"
+    ],
+    "supportState": "PLANNED",
+    "artifactsUnchanged": [
+      "catalogs/stm32/2026-09-29/memory-plans.json",
+      "catalogs/stm32/2026-09-29/svd-applicability.json",
+      "packs/stm32.*.svd/1.0.0"
+    ]
+  },
+  "followupReview": {
+    "status": "COMPLETE_2026-10-02",
+    "evidencePath": ".embedra/evidence/tasks/T038-T041-followup-review.md",
+    "fixedFindings": [
+      "T038 catalog search normalizes family and line labels so lowercase line text matches case-insensitively",
+      "T040 svd package documentation names both Espressif and STM32 CMSIS-SVD models",
+      "T040 bundled SVD pack loading is restricted to reviewed EXACT_SVD_SHIPPED applicability entries",
+      "T039 evidence status cites the final allocation-resolution ZIP digest 68a45831c37b9085f9bfcf46e6350ba1a21850ac5aca9cea8235d636bbed91ba",
+      "PROJECT_STATE T040 result cites the final review gate f04ee66e34f9e942ac5728a50eb1f1bd0d45faeff1c63faf1d82342f5daeb004 with 84 real-Ghidra tests",
+      "State test counts updated and the 11 null catalog flashKiB fields documented as the known catalog limitation"
+    ],
+    "residualNotes": [
+      "Stm32InterruptPlan out-of-int-range interrupt handling is unreachable under the pinned catalog digest and has no dedicated regression",
+      "The documented T040 residual backlog is unchanged"
+    ],
+    "artifactsUnchanged": [
+      "catalogs/stm32/2026-09-29/curated-catalog.json",
+      "catalogs/stm32/2026-09-29/memory-plans.json",
+      "catalogs/stm32/2026-09-29/svd-applicability.json",
+      "packs/stm32.*.svd/1.0.0"
+    ]
   }
 }

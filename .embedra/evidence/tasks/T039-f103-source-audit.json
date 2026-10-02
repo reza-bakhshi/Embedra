@@ -3,7 +3,7 @@
     {
       "exactPart": "STM32F103C8T6",
       "flashKiB": 64,
-      "note": "Product page gives size; address and region applicability need separate reconciliation.",
+      "note": "Flash/SRAM bases corroborated by pinned ST CMSIS header for this selected exact scope. Special regions remain incomplete.",
       "product": "STM32F103C8",
       "ramKiB": 20,
       "stProductUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103c8.html"
@@ -11,7 +11,7 @@
     {
       "exactPart": "STM32F103CBT6",
       "flashKiB": 128,
-      "note": "Product page gives size; address and region applicability need separate reconciliation.",
+      "note": "Flash/SRAM bases corroborated by pinned ST CMSIS header for this selected exact scope. Special regions remain incomplete.",
       "product": "STM32F103CB",
       "ramKiB": 20,
       "stProductUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103cb.html"
@@ -19,7 +19,7 @@
     {
       "exactPart": "STM32F103RBT6",
       "flashKiB": 128,
-      "note": "Product page gives size; address and region applicability need separate reconciliation.",
+      "note": "Flash/SRAM bases corroborated by pinned ST CMSIS header for this selected exact scope. Special regions remain incomplete.",
       "product": "STM32F103RB",
       "ramKiB": 20,
       "stProductUrl": "https://www.st.com/en/microcontrollers-microprocessors/stm32f103rb.html"
@@ -27,6 +27,53 @@
   ],
   "reviewDate": "2026-09-30",
   "schema": "embedra.stm32.f103-source-audit.v1",
+  "specialRegionReview": {
+    "bootAndBitBandConfiguration": "UNKNOWN",
+    "datasheet": {
+      "identity": "DS5319 Rev 20",
+      "sections": [
+        "2.3.8",
+        "4"
+      ],
+      "sha256": null,
+      "url": "https://www.st.com/resource/en/datasheet/stm32f103c8.pdf"
+    },
+    "noOtpIsNotInferredFromOmission": true,
+    "optionSize": 16,
+    "otpApplicability": "UNKNOWN",
+    "programmingManual": {
+      "identity": "PM0075 Doc ID 17863 Rev 2",
+      "page": 7,
+      "sha256": null,
+      "table": 3,
+      "url": "https://www.st.com/resource/en/programming_manual/pm0075-stm32f10xxx-flash-memory-microcontrollers-stmicroelectronics.pdf"
+    },
+    "status": "DOCUMENT_REVISION_CORROBORATED_BYTES_UNAVAILABLE",
+    "systemSize": 2048,
+    "systemStart": 536866816
+  },
+  "stCmsisAddressEvidence": {
+    "appliesToExactParts": [
+      "STM32F103C8T6",
+      "STM32F103CBT6",
+      "STM32F103RBT6"
+    ],
+    "commit": "c8e9a4a4f16b6d2cb2a2083cbe5161025280fb22",
+    "flashStart": 134217728,
+    "license": "Apache-2.0",
+    "limitation": "The shared header FLASH_BANK1_END is the maximum 128-KiB boundary; C8 remains 64 KiB per exact product evidence.",
+    "optionStart": 536868864,
+    "path": "Include/stm32f103xb.h",
+    "ramStart": 536870912,
+    "repository": "https://github.com/STMicroelectronics/cmsis-device-f1",
+    "selectedScopeEvidence": "Pinned curated records and CMSIS mapping STM32F103C(8-B)Tx / STM32F103RBTx -> stm32f103xb.h",
+    "sha256": "d9c7c613d9fea74220892b4fbc3e80617493acad82a04bafadab2b4a7198399c",
+    "symbols": {
+      "FLASH_BASE": 572,
+      "OB_BASE": 628,
+      "SRAM_BASE": 574
+    }
+  },
   "stCubeF1Linker": {
     "appliesDirectlyTo": "STM32F103RBT6",
     "commit": "c7656f1fee178058be2f8ebfc8df9eaf91dc565e",
@@ -40,5 +87,5 @@
     "repository": "https://github.com/STMicroelectronics/STM32CubeF1.git",
     "sha256": "72b435fe05d052d6e4dd02ae4a7549d6e42bd94efe2761ec6275e2e4787408cf"
   },
-  "status": "SOURCE_RESEARCH_ONLY"
+  "status": "ADDRESSES_CORROBORATED_SPECIAL_APPLICABILITY_INCOMPLETE"
 }

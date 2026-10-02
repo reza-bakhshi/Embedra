@@ -226,7 +226,7 @@
       "candidates": [
         {
           "devicePattern": "STM32F207ZGTx",
-          "matchStrength": "PREFIX_CANDIDATE",
+          "matchStrength": "DIRECT_PATTERN",
           "memories": [
             {
               "attributes": {
@@ -277,7 +277,7 @@
       "candidates": [
         {
           "devicePattern": "STM32F401RETx",
-          "matchStrength": "PREFIX_CANDIDATE",
+          "matchStrength": "DIRECT_PATTERN",
           "memories": [
             {
               "attributes": {
@@ -328,7 +328,7 @@
       "candidates": [
         {
           "devicePattern": "STM32F756ZGTx",
-          "matchStrength": "PREFIX_CANDIDATE",
+          "matchStrength": "DIRECT_PATTERN",
           "memories": [
             {
               "attributes": {
@@ -5435,5 +5435,5 @@
     }
   ],
   "schema": "embedra.stm32.memory-candidates.v1",
-  "sourceAuditSha256": "4f87e2522c648480e455c476764d0a2be6b205b6f1c20ae785a74a71ed239fe3"
+  "sourceAuditSha256": "9b81bbf70efa3531dbfceb0c354aab835bf567da30e1f39b64dfdc7d583f87ba"
 }

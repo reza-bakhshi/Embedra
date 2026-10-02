@@ -20,45 +20,45 @@
     },
     {
       "commit": "02311aec4d8e251d959bf6e5dd95b400ada4e1f7",
-      "directPatternParts": [],
+      "directPatternParts": [
+        "STM32F207ZGT6"
+      ],
       "licenseSetSpdx": [
         "Apache-2.0"
       ],
       "pdscSha256": "9abd1f37524ebc53baf7ab685fafa960cc777c97321dbecb3491965f315c3216",
       "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32F2xx_DFP/02311aec4d8e251d959bf6e5dd95b400ada4e1f7/Keil.STM32F2xx_DFP.pdsc",
-      "prefixCandidateParts": [
-        "STM32F207ZGT6"
-      ],
+      "prefixCandidateParts": [],
       "repository": "https://github.com/Open-CMSIS-Pack/STM32F2xx_DFP.git",
       "status": "AUDIT_ONLY_UNRECONCILED"
     },
     {
       "commit": "3afdf33b1b92c7175b978982158a5c8f685398ce",
-      "directPatternParts": [],
+      "directPatternParts": [
+        "STM32F401RET6"
+      ],
       "licenseSetSpdx": [
         "Apache-2.0",
         "BSD-3-Clause"
       ],
       "pdscSha256": "aa1c339944342d1ca187f7c7bb5f10cdde508cf3e25b879914900140d595e46e",
       "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32F4xx_DFP/3afdf33b1b92c7175b978982158a5c8f685398ce/Keil.STM32F4xx_DFP.pdsc",
-      "prefixCandidateParts": [
-        "STM32F401RET6"
-      ],
+      "prefixCandidateParts": [],
       "repository": "https://github.com/Open-CMSIS-Pack/STM32F4xx_DFP.git",
       "status": "AUDIT_ONLY_UNRECONCILED"
     },
     {
       "commit": "c5bcd5c8a5007c3ef0a3f69dcea0dc6f5a22c9a2",
-      "directPatternParts": [],
+      "directPatternParts": [
+        "STM32F756ZGT6"
+      ],
       "licenseSetSpdx": [
         "Apache-2.0",
         "BSD-3-Clause"
       ],
       "pdscSha256": "679a0cd03e9ea9b5b75f924ba863acef91f4719194fb7bc6bb1bedb0c7868a00",
       "pdscUrl": "https://raw.githubusercontent.com/Open-CMSIS-Pack/STM32F7xx_DFP/c5bcd5c8a5007c3ef0a3f69dcea0dc6f5a22c9a2/Keil.STM32F7xx_DFP.pdsc",
-      "prefixCandidateParts": [
-        "STM32F756ZGT6"
-      ],
+      "prefixCandidateParts": [],
       "repository": "https://github.com/Open-CMSIS-Pack/STM32F7xx_DFP.git",
       "status": "AUDIT_ONLY_UNRECONCILED"
     },

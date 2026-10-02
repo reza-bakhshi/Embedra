@@ -126,6 +126,16 @@ The transport is separately identified because it is not an ST-controlled
 repository. Candidate mappings are not asserted as verified exact-device packs.
 The broad SVD index is excluded from the extension ZIP.
 
+T040 materializes derived register, field, enumeration, and interrupt packs for
+a reviewed exact-part subset (STM32C031C6T3, the three F103 parts,
+STM32F401RET6, STM32H503RBT6, STM32H735IGK6, and STM32WB55RGV6) from the same
+pinned Apache-2.0 transport. Each pack records the exact source file path, its
+SHA-256, the reviewed exact device-line applicability, and canonical derived
+facts. The raw SVD XML is not redistributed; only derived JSON facts are
+bundled. The applicability artifact records all 53 selected parts, with 8
+explicit unavailability decisions, a reviewed shipped subset, and the
+remainder deferred without a support claim.
+
 The curated 2026-09-29 snapshot ships 53 exact factual identifiers across 20
 family labels, with package/memory/core facts from pinned BSD-3-Clause ST
 pin/board sources and IRQ facts from pinned Apache-2.0 CMSIS headers where a
@@ -135,6 +145,38 @@ only factual status, URLs, and response digests, not ST website content;
 the extension ZIP contains no page HTML. Stock is dated evidence, not a
 permanent product claim. Unknown flash pairing, lifecycle, device ID,
 security status, and exact SVD applicability are stated as unknown.
+
+T042 ships a reviewed board-profile snapshot for nine ST boards
+(STM32H735G-DK, STM32H750B-DK, STM32H7S78-DK, STM32H573I-DK, STM32H5F5J-DK,
+STM32L562E-DK, B-U585I-IOT02A, STM32U5G9J-DK1, and STM32N6570-DK). Each
+external-memory size and boot fact is derived from a pinned per-board
+BSD-3-Clause ST BSP repository at the commit referenced by the STM32Cube
+release (for example `stm32h735g-dk-bsp` at
+`4d2e91db442e525b8b879fba260fc3c6369a87d5`), and each memory-mapped CPU base
+comes from the pinned ST CMSIS device header already used by T039. The exact
+repository, commit, path, and SHA-256 of every source are recorded in
+`.embedra/evidence/tasks/T042-board-source-audit.json`. Raw vendor sources are
+local research inputs and are not bundled; only derived JSON facts are shipped.
+Three parts with exact board evidence but no pinnable external-memory fact
+(STM32G473QET6, STM32U083MCT6, STM32L552ZET6Q) are recorded as explicitly
+unavailable with a reason, and no board profile mutates or extends an MCU pack.
+
+T043 ships a digest-pinned STM32F1 library signature pack derived from the
+pinned `STM32Cube_FW_F1_V1.8.7` package compiled with the pinned
+`arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009`. Only permissively
+licensed components are used: the STM32F1 HAL and LL drivers (BSD-3-Clause),
+the CMSIS Device component (Apache-2.0), and the FreeRTOS kernel and its GCC
+Cortex-M3 port (MIT). The pack contains only derived function names,
+source-relative provenance, and masked byte patterns in which every byte
+touched by an ELF relocation is masked out; no vendor source, header, object,
+or toolchain runtime is copied or bundled. The exact package archive digest,
+per-file source digests, compiler identity, defines, flags, optimizations, and
+excluded low-specificity functions are recorded in
+`.embedra/evidence/tasks/T043-signature-source-audit.json`; the pack's manifest
+pins the aggregate content digest. These signatures are evidence-gated: they are
+applied only when compiler, optimization, and family evidence is recorded, they
+never promote an exact-part support state, and all 53 curated parts remain
+`PLANNED`.
 
 The STMicroelectronics `stm32c5xx-dfp` repository at
 `a5f65bc64535cfa723e9d25f58d7ce23d0937aed` provides the C5 pack

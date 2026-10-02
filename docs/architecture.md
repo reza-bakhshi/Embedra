@@ -325,6 +325,92 @@ has `CATALOG_ONLY` pack status. Mapping bytes or selecting a descriptor does
 not establish a device-specific memory map or prove the program language is
 the exact core variant; those checks belong to T039.
 
+## STM32 memory plans and device-data enrichment
+
+T039 added a digest-pinned additive memory plan for all 53 curated exact parts.
+`Stm32MemoryPlanner` turns validated physical regions, conditional aliases,
+nonlinear bit-band translations, and execution topology into a pure plan;
+incomplete parts fail closed, and configurable H735 TCM/AXI allocations and
+dual-core WB15/WB55 shared-access metadata are explicit rather than defaulted.
+
+T040 transforms CMSIS-SVD and exact-part device data into STM32 registers,
+field-aware types, enumerations, and interrupt definitions with provenance.
+A pure `svd` model (`Stm32SvdDevice`/`Peripheral`/`Register`/`Field`/
+`EnumeratedValue`/`Interrupt`) represents flattened, validated data, and
+`Stm32SvdPackLoader` admits only closed, integrity-checked packs whose
+provenance is the pinned Apache-2.0 `modm-io/cmsis-svd-stm32` transport.
+`Stm32SvdApplicability` resolves every curated exact part by an exact device-name
+prefix or a named review override; wildcard and neighbouring device lines never
+establish applicability, unresolved parts stay explicit, and family names are
+not expanded. `Stm32InterruptPlan` exposes exact-part CMSIS interrupt data and
+marks variant/conditional mappings as inapplicable. The Python generator
+expands `derivedFrom` inheritance, `dim` arrays, and clusters, retains alternate
+views and read side effects, bounds input, rejects DTD/entities and unsupported
+constructs, and emits deterministic packs.
+
+`Stm32SvdApplicator` applies a verified pack inside one rollback-capable
+transaction: volatile, read/write, non-executable peripheral blocks; qualified
+register labels; `IMPORTED` field-aware structures with bit fields and enums;
+namespaced comments; and one interrupt enumeration per exact part. Existing
+blocks, symbols, instructions, data types, and comments are preserved with
+deterministic conflicts, and reapplication is idempotent. Interrupt definitions
+are data types and provenance, not vector labels or functions; those remain
+T041. Bundled packs resolve from the installed module or the source tree, and a
+shipped applicability entry whose pack is missing fails closed.
+
+T041 consumes a T037 confirmation, the T040 exact-part interrupt list, and an
+explicit image range. `Stm32VectorPlanner` is pure: it fixes an explicit
+nine-entry Cortex-M core-exception table, canonicalizes the standard exception
+names, preserves negative pinned exceptions the table does not list (for example
+`SecureFault_IRQn`), always represents architectural reset, and leaves reserved
+or unnamed words unknown. Handler addresses resolve only from the confirmed
+vector words and image range, and the plan stays explicitly non-applicable for a
+conditional/variant interrupt list or an unknown base. `Stm32VectorLabelApplicator`
+then creates or confirms the primitive vector words, qualified `IMPORTED` labels,
+and handler functions inside one rollback-capable transaction, preserves user
+symbols, functions, data, instructions, and comments, records deterministic
+conflicts, and never resurrects a deleted or renamed artifact because receipt
+addresses are retained. No support state is promoted, and no family or wildcard
+inference is introduced.
+
+T042 adds additive STM32 board profiles for external flash/RAM and boot offsets
+without mutating any MCU pack. `Stm32BoardProfile` separates board identity, the
+pinned per-board ST BSP provenance, and memory-mapped external regions (device,
+controller, CPU base, size, writability, and the quoted size/start evidence) from
+the MCU memory plan, and keeps an explicit `UNAVAILABLE` state with a reason for a
+board whose facts are not pinned. `Stm32BoardCatalog` digest-checks the snapshot,
+the curated selection, and the reviewed board index before exposing profiles, and
+resolves a profile to an MCU only by an explicit exact part id — family, wildcard,
+and neighbouring-board links are never substituted. `Stm32BoardPlanner.compose`
+pairs a validated `Stm32MemoryPlanner.Plan` with one reviewed profile and returns a
+new view whose MCU regions, aliases, and topology are unchanged; it fails closed
+on an unavailable profile, a part mismatch, an external region that overlaps an
+MCU region or another external region, a region beyond the 32-bit space, or a boot
+offset outside every external region. External regions are tagged with a distinct
+`ext-mem` address space so a board offset is never confused with a CPU address in
+reports, while true numeric collisions still fail closed. The T042 snapshot ships
+nine reviewed profiles and three explicit unavailable profiles; every one of the
+53 curated parts remains `PLANNED`. Mapping external memory into a Ghidra program
+is deliberately out of scope: T042 keeps the pure plan and documents the adapter
+boundary rather than fabricating memory permissions.
+
+T043 adds a pure, evidence-gated STM32 library signature-pack pipeline. The
+`Stm32LibrarySignature` payload is a compiler/optimization/family-indexed masked
+byte pattern; the pack is generated by `scripts/generate-stm32-signatures.py`
+from the pinned `STM32Cube_FW_F1_V1.8.7` HAL/LL/CMSIS-device/FreeRTOS sources
+compiled with a pinned `arm-none-eabi-gcc`, masking every byte touched by an ELF
+relocation. Only derived names, source-relative provenance, and masked patterns
+ship; `T043-signature-source-audit.json` records the archive digest, per-file
+source digests, toolchain identity, flags, and optimizations. `Stm32SignatureMatcher`
+applies a signature only when the caller records the exact family, compiler, and
+optimization; otherwise it returns an explicit `EVIDENCE_MISSING`,
+`INDEX_UNAVAILABLE`, or `NO_MATCH` non-match and scans nothing. All scanning is
+bounded by the shared parser limits and cooperative cancellation, and no match
+promotes an exact-part support state. `Stm32SignaturePackLoader` re-verifies the
+pack identity, provenance, aggregate digest, and closed content schema, and
+`Stm32SignaturePackSelection` wires loading through the shared offline
+`LocalPackRepository` selection path.
+
 ## Offline packs
 
 Pack manifests are strict, closed, versioned JSON contracts parsed with the shared limits and cooperative cancellation. They expose pack identity/version, exact supported-device IDs, source URI and revision, license, transformation, redistribution status, per-file size/SHA-256, and an aggregate descriptor digest. File paths are normalized relative forward-slash paths; absolute, parent-traversal, Windows-drive, backslash, duplicate, manifest-shadowing, symlink, non-regular, missing, and unexpected entries are rejected.

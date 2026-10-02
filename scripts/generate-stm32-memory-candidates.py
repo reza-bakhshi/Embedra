@@ -25,12 +25,26 @@ def sha256(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def ensure_safe_xml(data, label):
+    if data.startswith(b'\xef\xbb\xbf'):
+        data = data[3:]
+    if data[:4] in (b'\xff\xfe\x00\x00', b'\x00\x00\xfe\xff', b'\xff\xfe', b'\xfe\xff') \
+            or b'\x00' in data[:256]:
+        raise ValueError(f'{label} uses an unsupported encoding')
+    try:
+        text_data = data.decode('utf-8')
+    except UnicodeDecodeError as exc:
+        raise ValueError(f'{label} uses an unsupported encoding') from exc
+    upper = text_data.upper()
+    if '<!DOCTYPE' in upper or '<!ENTITY' in upper:
+        raise ValueError(f'{label} DTD/entity declaration forbidden')
+    return data
+
+
 def parse_pdsc(data):
     if len(data) > MAX_PDSC_BYTES:
         raise ValueError('PDSC exceeds size bound')
-    if re.search(br'<!\s*(?:DOCTYPE|ENTITY)\b', data, re.IGNORECASE):
-        raise ValueError('PDSC DTD/entity declaration forbidden')
-    root = ET.fromstring(data)
+    root = ET.fromstring(ensure_safe_xml(data, 'PDSC'))
     if root.tag != 'package':
         raise ValueError('PDSC package root required')
     return root
@@ -127,6 +141,11 @@ def generate(source_dir):
                 if part not in selected:
                     raise ValueError(f'audit part absent from catalog: {part}')
                 matches = match_nodes(root, part, strength)
+                if not matches:
+                    raise ValueError(f'audit match absent from pinned PDSC: {part}')
+                if strength == 'PREFIX_CANDIDATE' and match_nodes(
+                        root, part, 'DIRECT_PATTERN'):
+                    raise ValueError(f'audit misclassifies direct PDSC match: {part}')
                 for match in matches:
                     results[part].append({'sourceRepository': pack['repository'],
                                           'sourceCommit': pack['commit'],

@@ -50,8 +50,12 @@ firmware support is claimed.
 | Address-bearing ELF/AXF and Intel HEX | EXPERIMENTAL | T033-T034 golden pairs and representative Ghidra native imports | The pure model preserves encoded addresses; exact device map selection is pending |
 | DfuSe v1 container | EXPERIMENTAL | T035 bounded parser and malformed/CRC tests | Pure parsed ranges only; no direct Ghidra workspace import |
 | Raw BIN at selected exact part and explicit base | EXPERIMENTAL | T036 F103 and N6 native Ghidra imports and rollback tests | Requires an existing ARM program; base and exact part are supplied, not inferred |
-| Cortex-M vector candidates and confirmed primitive words | EXPERIMENTAL | T037 F103/relocated/false-positive pure tests and real-Ghidra confirmation/byte-conflict tests | Caller supplies a proposed image base and known RAM ranges, selects a candidate explicitly; no part inference, automatic base selection, vector labels, functions, or exact device map |
+| Cortex-M vector candidates and confirmed primitive words | EXPERIMENTAL | T037 F103/relocated/false-positive pure tests and real-Ghidra confirmation/byte-conflict tests; T041 confirmed-table label/function apply tests | Caller supplies a proposed image base and known RAM ranges, selects a candidate explicitly; no part inference, automatic base selection, or exact device map |
 | Exact-part catalog search and selection | VERIFIED catalog lookup | T038 digest-pinned 53-record registry, identity/ambiguity/variant tests | Search candidates never become an inferred part; all descriptor pack states are `CATALOG_ONLY` and all device-support states remain `PLANNED` |
+| STM32 exact-part SVD registers, field types, enums, and interrupt definitions | EXPERIMENTAL, reviewed subset | T040 pinned Apache-2.0 SVD packs for 8 exact parts across 7 device lines; pure inheritance/array/cluster/malformed tests; 51-part exact-header interrupt plan; transactional real-Ghidra register/type/enum/interrupt apply, idempotence, and preservation tests | Only the reviewed shipped parts materialize registers; 37 exact SVD mappings are deferred and 8 parts are explicitly unavailable; all device-support states remain `PLANNED` |
+| Confirmed Cortex-M vector labels, handler functions, and core exception structures | EXPERIMENTAL | T041 explicit nine-entry core-exception table; exact-part interrupt naming; 51-part pure plan; real-Ghidra reset/core/device label and function apply, idempotence, user-preservation, non-resurrection, ambiguous no-op, and truncated-table tests | Requires a T037-confirmed table, an exact applicable interrupt list, and a caller-supplied image range; unresolved, unmapped, or conditional handlers create nothing; no family or wildcard inference; all device-support states remain `PLANNED` |
+| STM32 board profiles for external flash/RAM and boot offsets | EXPERIMENTAL, reviewed subset | T042 digest-pinned snapshot; exact-part link, external-region math, overlap, boot-offset, digest-tamper, and MCU-plan immutability tests | Nine reviewed boards cite a pinned BSD-3-Clause ST BSP and the pinned CMSIS mapped alias; three parts are explicitly unavailable; a profile never mutates or extends an MCU pack, never infers a board-to-part link, and maps no Ghidra memory; all device-support states remain `PLANNED` |
+| STM32F1 HAL/LL/CMSIS-device/FreeRTOS library signatures | EXPERIMENTAL, reviewed F1 slice | T043 digest-pinned masked-byte pack from a pinned STM32Cube F1 build; generator determinism/tamper, closed-schema/malformed, evidence-gating, index-availability, bounded-non-match, limit, cancellation, and shared pack-selection tests | Signatures are indexed by family/compiler/optimization and applied only when all three are recorded; the F1 pack is not a part-support claim and every one of the 53 curated parts remains `PLANNED`; no other STM32 family or RTOS/version ships in this slice |
 
 All 53 curated exact STM32 part records remain `PLANNED` for device support.
 
@@ -105,8 +109,12 @@ variants and flags conditional IRQ enumerations. The 126 unmatched references
 remain gaps in the broad index; they do not extend the curated acceptance set.
 
 A provisional ST-authored SVD index covers 1,725 source references with at
-least one candidate file; 515 have no candidate. The mapping remains
-unverified and supplies no Ghidra registers or device-support claim.
+least one candidate file; 515 have no candidate. The broad mapping remains
+unverified and supplies no Ghidra registers. T040 instead resolves the curated
+selection explicitly: it ships reviewed derived register/type/enum packs for 8
+exact parts (7 device lines), keeps 37 exact mappings deferred, and records 8
+parts as unavailable without inferring a neighbouring device line. Every
+resolved part still has a `PLANNED` device-support state.
 
 STM32C5 has 157 exact orderable records from a separately pinned,
 redistributable ST DFP. These records include package/memory variants,

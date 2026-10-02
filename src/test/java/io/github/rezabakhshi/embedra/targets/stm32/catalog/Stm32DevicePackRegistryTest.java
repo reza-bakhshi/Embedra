@@ -82,6 +82,16 @@ class Stm32DevicePackRegistryTest {
     }
 
     @Test
+    void searchIsCaseInsensitiveForLineLabelsWithLowercaseText() throws Exception {
+        var registry = load();
+        assertEquals(3, registry.search("stm32c0x1").size());
+        assertEquals(Stm32DevicePackRegistry.SearchStatus.SINGLE_CANDIDATE,
+            registry.resolve("h750 value line").status());
+        assertEquals("STM32H750XBH6",
+            registry.search("h750 value line").getFirst().exactPart());
+    }
+
+    @Test
     void rejectsTamperedMissingAndWrongSelection() throws Exception {
         var ids = Stm32CuratedPartIds.load(SELECTION, ParserLimits.defaults(),
             CancellationToken.none());
