@@ -1,0 +1,89 @@
+/dts-v1/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	model = "STMicroelectronics STM32MP157C Minimal Evaluation";
+	compatible = "st,stm32mp157c", "st,stm32mp157";
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu0: cpu@0 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			reg = <0>;
+		};
+
+		cpu1: cpu@1 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			reg = <1>;
+		};
+	};
+
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		mcuram: mcuram@30000000 {
+			reg = <0x30000000 0x20000>;
+			no-map;
+		};
+
+		mcuram2: mcuram2@30020000 {
+			reg = <0x30020000 0x20000>;
+			no-map;
+		};
+
+		vdev0vring0: vdev0vring0@10040000 {
+			reg = <0x10040000 0x1000>;
+			no-map;
+		};
+
+		vdev0vring1: vdev0vring1@10041000 {
+			reg = <0x10041000 0x1000>;
+			no-map;
+		};
+
+		vdev0buffer: vdev0buffer@10042000 {
+			reg = <0x10042000 0x2000>;
+			no-map;
+		};
+
+		retram: retram@38000000 {
+			reg = <0x38000000 0x10000>;
+			no-map;
+		};
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		ranges;
+
+		ipcc: mailbox@5c001000 {
+			compatible = "st,stm32mp1-ipcc";
+			reg = <0x5c001000 0x400>;
+			#mbox-cells = <1>;
+		};
+
+		hsem: hwspinlock@5c000000 {
+			compatible = "st,stm32-hwspinlock";
+			reg = <0x5c000000 0x400>;
+			#hwlock-cells = <1>;
+		};
+
+		m4_rproc: m4@0 {
+			compatible = "st,stm32mp1-m4";
+			reg = <0x0 0x0>;
+			memory-region = <&retram>, <&mcuram>, <&mcuram2>, <&vdev0vring0>, <&vdev0vring1>, <&vdev0buffer>;
+			mboxes = <&ipcc 0>, <&ipcc 1>, <&ipcc 2>;
+			mbox-names = "vq0", "vq1", "shutdown";
+			hwlocks = <&hsem 0>;
+		};
+	};
+};

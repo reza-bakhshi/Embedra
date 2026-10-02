@@ -3,9 +3,9 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T043 — STM32 HAL/LL/CMSIS/startup/RTOS/library signature-pack generation and matching (`COMPLETE`)**.
-- Last completed task: **T042 — STM32 board profiles for external flash/RAM and boot offsets**.
-- Next task: **T044 — TrustZone secure/non-secure region and veneer handling for supported devices** (not started).
+- Current task: **T049 — STM32MP/heterogeneous parts as distinct providers (`COMPLETE`)**.
+- Last completed task: **T048 — STM32 firmware diff and CTF enrichment using the shared analyzers**.
+- Next task: **T050 — Build the authoritative Raspberry Pi silicon/board catalog and fixtures for RP2040, RP2350A/B, RP2354A/B, UF2, raw BIN, ELF, external/internal flash, both CPU cores, ARM/RISC-V, TrustZone, TinyUSB, Pico/Pico W/Pico 2/Pico 2 W, and PIO** (not started).
 - Future scope: the SpecKit now plans ESP32-branded full-flash expansion as
   T080-T087, with independent per-series/variant evidence and a separate gate.
   This specification change does not promote ESP support or reorder STM32 tasks.
@@ -280,6 +280,31 @@ match promotes a device, and all 53 curated parts remain `PLANNED`. T039 memory
 plans, T040 device-data packs, T041 vector behavior, and T042 board profiles are
 unchanged. See `.embedra/evidence/tasks/T043.md`.
 
+T044 is complete. A pure, evidence-gated STM32 TrustZone layer ships a
+digest-pinned `catalogs/stm32/2026-09-29/security-domains.json` snapshot derived
+only from the pinned T039 header evidence, CMSIS interrupt index, curated
+catalog, and memory plans. Nineteen exact parts whose pinned Apache-2.0 CMSIS
+header declares a literal `*_BASE_S`/`*_BASE_NS` pair and whose reviewed T039
+secure-view alias agrees on extent carry `SECURE` alias apertures with header
+path/commit/SHA-256/line/declaration provenance; the other 34 parts stay
+explicitly `UNAVAILABLE` with a reason and no window. Secure/non-secure
+partitions and non-secure-callable boundaries are configuration-dependent
+(`FLASH_SECWM*`), so they are recorded `UNAVAILABLE` with the configuration
+evidence and no veneer address or instruction semantic is fabricated.
+`Stm32SecurityPlanner.compose` pairs one validated T039 plan with one record
+without mutation and fails closed on every unavailable, mismatched, overlapping,
+unpaired, out-of-space, or unknown-configuration case; `Stm32VeneerPlanner`
+matches only when a pinned NSC boundary, a declared transition, and the
+evidence id agree, and never promotes a support state. No Ghidra adapter is
+added (pure plan only). T039 memory plans, T040 device-data packs, T041 vector
+behavior, T042 board profiles, T043 signature packs, and all 53 `PLANNED`
+support states are unchanged. The reproducible gate passes two clean 22-action
+builds with 316 unit, 93 real-Ghidra, 131 STM32 Python (4 documented
+optional-source skips), and 4 ESP Python tests, producing a byte-identical
+4,256,466-byte ZIP SHA-256
+`9b3ab2e3577786a6b37f39d038eec16d5c0b7b71375c48ecc8a7f2f1d3e623f6`. See
+`.embedra/evidence/tasks/T044.md`.
+
 A follow-up T038–T041 audit fixed the T038 catalog search so line labels with
 lowercase text match case-insensitively, documented the STM32 SVD models in the
 `svd` package, restricted bundled SVD pack loading to reviewed shipped
@@ -293,8 +318,143 @@ optional-source skips), and 4 ESP Python tests, producing a byte-identical
 `02cb3efad54d903d6f0e7b03de0a8b5053591047499a8766c6ab3baff18edb9b`. See
 `.embedra/evidence/tasks/T038-T041-followup-review.md`.
 
+T045 is complete. A pure, evidence-gated dual-core/heterogeneous workspace layer
+ships in `targets/stm32/workspace`: `Stm32WorkspacePlanner.compose` pairs one
+validated T039 `Stm32MemoryPlanner.Plan` with the T044 `Stm32SecurityRecord`
+for the same exact part without mutating either and returns an immutable
+`Stm32WorkspacePlan`. Exactly the pinned multi-core executives `STM32WB55RGV6`
+and `STM32WB15CCU6` are planned `MULTI_CORE_PINNED`: one program slot per
+independently supplied executable domain (the CPU1 flash-image program and a
+CPU2 program whose image stays explicitly
+`UNAVAILABLE_INDEPENDENTLY_SUPPLIED` with no invented range), per-region
+shared/private memory attribution derived only from the pinned `sharedAccess`
+facts, the pinned IPCC (`0x58000C00`) and HSEM (`0x58001400`) register windows
+and the `RELEASES_FROM_RESET` boot order re-emitted as typed cross-program
+references with provenance, and the CPU2 C2OPT/SBRV fetch view kept as an
+explicit configuration-dependent unresolved view. Every other cataloged part,
+including all four single-Cortex-M7 H7 parts, is an explicit `UNAVAILABLE`
+workspace with the recorded reason; no second core, image, mailbox, semaphore,
+or boot order is invented, and no family, sibling, or wildcard inference
+exists. Composition fails closed with stable `WORKSPACE_*` diagnostics on
+mismatched parts, unknown configuration, ambiguous or duplicate cores,
+undetermined images, missing memory attribution, slot overlaps outside a
+documented shared range, and missing or ambiguous mailbox, semaphore, or
+boot-order evidence. No Ghidra adapter is added (pure plan only). The 53-part
+sweep test proves the 2/51 pinned/unavailable partition. T039 memory plans,
+T040 device-data packs, T041 vector behavior, T042 board profiles, T043
+signature packs, T044 security domains, and all support states are unchanged.
+See `.embedra/evidence/tasks/T045.md`.
+
+T046 is complete. A pure wireless/network-core layer ships in
+`targets/stm32/wireless`: `Stm32WirelessPlanner.compose` pairs the digest-pinned
+T032 curated catalog part, T039 memory plan, T040 SVD applicability entry, T044
+security record, and T045 workspace plan for the same exact part without
+mutating any input and classifies the wireless scope from the pinned topology
+only. `STM32WB55RGV6` and `STM32WB15CCU6` are planned `NETWORK_CORE_PINNED`:
+the CPU2 network processor carries the independently supplied coprocessor
+firmware contract with the pinned configuration-dependent C2BOOT/C2OPT/SBRV
+binding citation, the pinned IPCC (`0x58000C00`) and HSEM (`0x58001400`)
+communication windows, and the per-core register-model links reviewed by T040
+(the CM0P file for WB55; for WB15 the CM0P device line is absent with its
+pinned review reason, so the network register model is explicitly unavailable).
+The other eight WB/WB0/WBA/WL3 parts are planned `SINGLE_APPLICATION_CORE`:
+no second core or coprocessor image is invented, radio-to-CPU memory
+attribution is explicitly unavailable, and the radio register model is
+deferred or unavailable per the pinned applicability status — both shipped
+WB55 CM4/CM0P register models were verified in-repository to contain no
+RF/RADIO/BLE peripheral, so no radio register window is fabricated for any
+part. The 43 non-wireless parts fail closed with `WIRELESS_FAMILY_OUT_OF_SCOPE`,
+and
+`Stm32WirelessPlanner.evaluateNetworkCoreImage` classifies a caller-supplied
+CPU2 image range only against pinned CPU2 memory attribution (bound ranges
+stay `BINDABLE_UNRESOLVED_FETCH_VIEW`, device-flash ranges stay
+configuration-dependent, and partial or unattributed ranges fail closed) —
+no byte is placed and no fetch view is resolved. No Ghidra adapter is added.
+T039-T045 artifacts and all support states are unchanged. See
+`.embedra/evidence/tasks/T046.md`.
+
+T047 is complete. A pure external-memory layer ships in `targets/stm32/extmem`:
+`Stm32ExternalMemoryPlanner.compose` pairs one validated T039
+`Stm32MemoryPlanner.Plan` with one confirmed board fact source — the
+digest-pinned T042 board profile (resolved from `Stm32BoardCatalog` by exact
+part; 9 pinned-mapped parts, 3 explicitly unavailable with their pinned
+`BOARD_*` reasons, and 41 `NO_CONFIRMED_BOARD_PROFILE` parts) or a confirmed
+user-supplied custom profile (STM-016) — and emits an immutable plan of
+controller windows: the pinned `ext-mem` aperture (numeric CPU base and mapped
+device extent), the pinned controller, a mechanical OCTOSPI/XSPI/QUADSPI/FMC
+family projection of the confirmed controller name, the pinned writability,
+and the quoted BSP/CMSIS evidence. The aperture (CPU addresses) and the device
+extent (device offsets `0..size`) stay separated with checked translation;
+numeric collisions with MCU plan regions or sibling windows, out-of-space
+windows, boot offsets outside every external region, duplicate ids,
+unrecognized controllers, and part mismatches all fail closed with stable
+`EXTERNAL_*` diagnostics. `planLoad` plans one bounded external load as a
+device-offset range against one pinned window, derives the CPU aperture
+address, and fails closed on absent, empty, negative, out-of-extent, or
+over-limit loads; `classifyCpuAddress` classifies numeric CPU addresses against
+the pinned apertures only. Custom profiles are bounded closed-schema user JSON
+files with a mandatory `USER_ASSERTION` confirmation, an exact curated part,
+and regions reusing the T042 `ExternalRegion` contract; malformed, truncated,
+oversized, unknown-kind, non-integer, non-curated, duplicate, and overlapping
+inputs fail closed and no pinned snapshot is mutated.
+`Stm32ExternalMemoryApplicator` is the one T047 Ghidra adapter: `mapWindows`
+creates each pinned aperture as an uninitialized block with the pinned
+permissions, and `loadInto` creates one initialized block holding
+caller-supplied bytes at the planned device offset; both are bound to the
+program-recorded exact part (unbound or disagreeing programs fail closed), run
+in one rollback-capable transaction, are idempotent, preserve user blocks/
+labels/bytes as deterministic conflicts, and never remove, split, overwrite,
+or resurrect an existing block — so window mapping and byte loading are
+alternative workflows for one program. Real-Ghidra tests cover the
+transaction, idempotence, preservation, non-resurrection, truncated/oversized
+inputs, binding, and a mid-application cancellation rollback. T039-T046
+artifacts, every pinned snapshot, and all support states are unchanged; all 53
+curated parts remain `PLANNED`. The reproducible gate passes two clean,
+uncached 22-action builds with 353 unit, 104 real-Ghidra, 131 STM32 Python (4
+documented optional-source skips), and 4 ESP Python tests, producing a
+byte-identical 4,391,353-byte ZIP SHA-256
+`0f50ba57c2cd68c112f93f1259de5490f1d0722e9428f74c31cd56ca2aee3bcf`. See
+`.embedra/evidence/tasks/T047.md`.
+
 The next-chat prompt is
-`.embedra/prompts/T044-trustzone-secure-nonsecure.md`.
+`.embedra/prompts/T049-stm32mp-heterogeneous-providers.md`.
+
+T048 is complete. A pure, evidence-gated STM32 firmware diff and CTF enrichment
+layer ships in `analyzers/stm32`, consuming the implemented shared analyzers
+verbatim. `Stm32FirmwareArtifact` carries the confirmed comparison metadata of
+one validated STM32 image: the bound exact part, the caller's artifact identity
+and role, the confirmed image extent (reusing the T041 `ImageRange` contract),
+the validated content SHA-256, and the confirming import provenance.
+`Stm32FirmwareDiffAnalyzer` applies the shared T025 diff contract — the
+`EspArtifactChangeKind` vocabulary and the ADR-0017 digest-before-extent
+ordering — over those artifacts, failing closed on cross-part binding
+(`DIFF_EXACT_PART_MISMATCH`) and uncurated parts (`DIFF_EXACT_PART_UNCURATED`)
+against the digest-pinned curated selection; the diff is a provenance-bearing
+lead, never a device-support or exploitability claim.
+`Stm32CtfEnrichmentAnalyzer` applies the shared analyzers to STM32 inputs:
+signature identification runs through the T043 `Stm32SignatureMatcher` evidence
+gates with caller-recorded family/compiler/optimization evidence, each match
+becoming a ranked `STM32_SIGNATURE_LIBRARY_FUNCTION` lead that carries the
+shared match's confidence and evidence verbatim (a regression asserts the
+report equals a direct shared-matcher call), and every missing piece of
+evidence staying an explicit shared non-match plus capability entry; TrustZone
+evidence is consumed only from a digest-pinned T044 record (pinned parts
+restate their secure alias apertures, confirmed image extents inside a pinned
+`SECURE` aperture become `STM32_IMAGE_IN_SECURE_ALIAS` leads, and unpinned or
+unsupplied records stay explicitly `UNAVAILABLE`/`NOT_SUPPLIED`); and
+logging/assert recovery stays the explicit `stm32-logging-assert-recovery`
+capability gap because no STM32 logging/assert target is pinned (the shipped F1
+pack carries no assert/printf/log-named signature). Contexts reject duplicate
+artifact ids/roles, duplicate candidate function addresses, and beyond-32-bit
+candidate addresses; leads rank deterministically by severity, code, then
+address; shared limits, cancellation, and redaction rules bound every run; no
+Ghidra adapter is added (`NO_ADAPTER_PURE_PLAN_ONLY`); function/string-level
+diffing remains T056-T064; and all 53 curated parts remain `PLANNED`. The
+reproducible gate passes two clean, uncached 22-action builds with 380 unit,
+104 real-Ghidra, 131 STM32 Python (4 documented optional-source skips), and 4
+ESP Python tests, producing a byte-identical 4,433,407-byte ZIP SHA-256
+`ba872aeaf067ae07fd25e6e02c0c80edf485caddab1eb10fad056250dc0e8bbf`. See
+`.embedra/evidence/tasks/T048.md`.
 
 The maintainer narrowed T032 on 2026-09-29 from every ST MCU/MPU to commonly
 used orderable parts. ADR 0026, the specification, support matrix, state, and
@@ -552,3 +712,26 @@ all 53 exact catalog records. Two final clean 22-action builds passed 201
 unit, 60 real-Ghidra, 58 STM32 Python, and 4 ESP Python tests with no failures
 or skips. The byte-identical 2,667,205-byte ZIPs have SHA-256
 `e5f683a13969337200bc0e1738716aeb5a00e2c592dc4458a596e9efdcb8748e`.
+
+## T049 completion (2026-10-02)
+
+T049 researched and implemented dedicated STM32MP heterogeneous target providers
+under `targets/stm32/mp`, modeling Cortex-A application cores, Cortex-M firmware,
+multi-stage boot chains, device tree bindings, TrustZone security domains, and
+shared resources as distinct execution units and separate programs per TOPO-004
+and STM-015 without weakening MCU assumptions. The 53 curated MCU parts remain
+untouched and isolated from MPU workflows. Flagship targets include STM32MP157
+(dual Cortex-A7 + Cortex-M4), STM32MP257 (dual 64-bit Cortex-A35 + Cortex-M33 +
+SmartRun Cortex-M0+), and STM32MP135 (single Cortex-A7). Redistributable inputs
+are audited and pinned (Linux kernel DTS, ARM TF-A, ST CMSIS headers, ST open
+pin data, OpenOCD scripts). A pure DTS parser operates under `ParserLimits` and
+cooperative `CancellationToken`. Selectable boot flavors (`A35_TRUSTED_DOMAIN`
+vs `M33_TRUSTED_DOMAIN` on MP257) are supported per TOPO-006. No Ghidra mutation
+adapter is added (`NO_ADAPTER_PURE_PLAN_ONLY`).
+
+All 53 curated MCU parts and all STM32MP targets remain `PLANNED`. The verification
+suite reports 394 unit, 104 real-Ghidra, 131 STM32 Python (4 documented
+optional-source skips), and 4 ESP Python tests. The reproducible completion gate
+passes with two clean, uncached 22-action builds and a byte-identical ZIP SHA-256
+`13f6fde3544aefca18fef29788074d6718fba62ef68d05e08af1a22c882822b2` (4,512,940 bytes).
+

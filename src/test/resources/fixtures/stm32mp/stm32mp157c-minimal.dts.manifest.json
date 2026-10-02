@@ -1,0 +1,26 @@
+{
+  "expectedSnapshot": "src/test/resources/fixtures/stm32mp/stm32mp157c-minimal.dts",
+  "fixtureId": "stm32mp157c.t049.minimal.dts",
+  "generationCommand": "authoring repository test fixture",
+  "generatorRevision": "Linux kernel arch/arm/boot/dts/st/stm32mp157c.dtsi v6.6",
+  "inputFormat": "Device Tree Source",
+  "license": "BSD-3-Clause",
+  "oracleCommands": [
+    "grep -E 'm4_rproc|ipcc|hsem' <fixture>"
+  ],
+  "origin": "Representative repository-authored device tree excerpt adapted under BSD-3-Clause dual license from upstream Linux stm32mp157c.dtsi",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T049",
+    "STM-015",
+    "STM-020",
+    "STM-021",
+    "TOPO-001",
+    "TOPO-002",
+    "TOPO-003",
+    "TOPO-004"
+  ],
+  "sha256": "ba7b56bb78b49aa289fd9222abddadd54f0cf4be01cc8e41eb213717f0d6ba4c",
+  "target": "STM32MP157CAA3",
+  "toolchain": "dtc 1.7.0"
+}

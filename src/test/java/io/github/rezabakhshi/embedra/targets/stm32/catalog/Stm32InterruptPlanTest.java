@@ -46,6 +46,10 @@ class Stm32InterruptPlanTest {
             () -> new Stm32InterruptPlan.Interrupt("", 0));
         assertThrows(IllegalArgumentException.class,
             () -> new Stm32InterruptPlan.Interrupt("IRQ", -17));
+        assertThrows(IllegalArgumentException.class,
+            () -> new Stm32InterruptPlan.Interrupt("IRQ", 65536));
+        assertThrows(IllegalArgumentException.class,
+            () -> new Stm32InterruptPlan.Interrupt("IRQ", Integer.MAX_VALUE));
     }
 
     @Test

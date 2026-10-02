@@ -706,12 +706,12 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 ### STM32 advanced support
 
 - [x] T043 Implement STM32 HAL/LL/CMSIS/startup/RTOS/library signature-pack generation and matching.
-- [ ] T044 Implement TrustZone secure/non-secure region and veneer handling for supported devices.
-- [ ] T045 Implement dual-core/heterogeneous workspace planning, shared memory, mailboxes/semaphores, boot relationships, and cross-program navigation for every applicable H7 and other cataloged multi-core device.
-- [ ] T046 Implement WB/WB0/WL/WBA wireless/network-core distinctions, separately supplied coprocessor firmware, shared resources, and related packs.
-- [ ] T047 Implement external-memory loaders and OCTOSPI/FMC mapping through confirmed board/device profiles.
-- [ ] T048 Implement STM32 firmware diff and CTF enrichment using the shared analyzers.
-- [ ] T049 Research and implement selected STM32MP/heterogeneous parts as distinct providers covering Cortex-A artifacts, Cortex-M firmware, boot chain, device tree, trusted/security domains, and shared resources without weakening MCU assumptions.
+- [x] T044 Implement TrustZone secure/non-secure region and veneer handling for supported devices.
+- [x] T045 Implement dual-core/heterogeneous workspace planning, shared memory, mailboxes/semaphores, boot relationships, and cross-program navigation for every applicable H7 and other cataloged multi-core device.
+- [x] T046 Implement WB/WB0/WL/WBA wireless/network-core distinctions, separately supplied coprocessor firmware, shared resources, and related packs.
+- [x] T047 Implement external-memory loaders and OCTOSPI/FMC mapping through confirmed board/device profiles.
+- [x] T048 Implement STM32 firmware diff and CTF enrichment using the shared analyzers.
+- [x] T049 Research and implement selected STM32MP/heterogeneous parts as distinct providers covering Cortex-A artifacts, Cortex-M firmware, boot chain, device tree, trusted/security domains, and shared resources without weakening MCU assumptions.
 
 ### RP2040 and RP2350/RP2354 family
 

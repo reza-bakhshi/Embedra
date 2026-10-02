@@ -86,6 +86,8 @@ Embedra/catalogs/stm32/2026-09-29/curated-catalog.json
 Embedra/catalogs/stm32/2026-09-29/curated-catalog.sha256
 Embedra/catalogs/stm32/2026-09-29/memory-plans.json
 Embedra/catalogs/stm32/2026-09-29/memory-plans.sha256
+Embedra/catalogs/stm32/2026-09-29/security-domains.json
+Embedra/catalogs/stm32/2026-09-29/security-domains.sha256
 Embedra/catalogs/stm32/2026-09-29/selection.json
 Embedra/catalogs/stm32/2026-09-29/svd-applicability.json
 Embedra/catalogs/stm32/2026-09-29/svd-applicability.sha256

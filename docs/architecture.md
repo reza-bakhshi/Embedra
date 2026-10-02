@@ -411,6 +411,185 @@ pack identity, provenance, aggregate digest, and closed content schema, and
 `Stm32SignaturePackSelection` wires loading through the shared offline
 `LocalPackRepository` selection path.
 
+T044 adds a pure, evidence-gated STM32 TrustZone security-domain layer.
+`Stm32SecurityCatalog` verifies the digest-pinned `security-domains.json`
+snapshot plus the curated-selection, T039 header-evidence, CMSIS interrupt-index,
+and memory-plan digests before exposing per-exact-part records. A record whose
+pinned Apache-2.0 CMSIS header declares a literal secure alias base (`*_BASE_S`)
+paired with its non-secure base (`*_BASE_NS`) and whose reviewed T039 secure-view
+alias agrees on extent carries `SECURE` alias apertures with the header path,
+SHA-256, line, and quoted declaration as provenance; every other exact part stays
+explicitly `UNAVAILABLE` with a reason and no window. The secure/non-secure
+partition inside an aperture and the non-secure-callable region are
+configuration-dependent (`FLASH_SECWM*` and option bytes), so the snapshot marks
+both `UNAVAILABLE` with the configuration-register evidence and never models a
+veneer address or instruction semantic. `Stm32SecurityPlanner.compose` pairs one
+validated `Stm32MemoryPlanner.Plan` with one record without mutation; it fails
+closed on an unavailable part, a part mismatch, an unresolved T039
+configuration, a window overlapping a memory region, a window whose alias pair
+disagrees with the plan, a window beyond the 32-bit space, an unknown partition
+input, or a veneer outside its non-secure-callable boundary. Partition sizes are
+only ever explicit caller input. `Stm32VeneerPlanner` matches a candidate only
+when a pinned NSC boundary, a declared transition, and the transition's evidence
+id all agree, and a match never promotes a support state. No Ghidra mutation is
+added; T044 stays pure-plan only.
+
+T045 adds pure, evidence-gated dual-core/heterogeneous workspace planning in the
+`targets/stm32/workspace` package. `Stm32WorkspacePlanner.compose` pairs one
+validated T039 `Stm32MemoryPlanner.Plan` with the T044
+`Stm32SecurityRecord`, both for the same exact part and both unchanged. A part
+whose pinned topology carries two `CPU_CORE` nodes is planned as
+`MULTI_CORE_PINNED`: one program slot per independently supplied executable
+domain, per-region core attribution derived only from the pinned
+`sharedAccess` facts (`PRIVATE` versus `SHARED` with named peer slots), a
+pinned device-image domain for the shared-image core, and an explicit
+`UNAVAILABLE_INDEPENDENTLY_SUPPLIED` image domain for the independently
+supplied second-core firmware whose bytes stay unstated. The pinned IPCC
+mailbox and HSEM hardware-semaphore register windows and the pinned
+`RELEASES_FROM_RESET` boot order are reused and re-emitted as typed
+cross-program references with the shared ranges, mechanism, confidence, and
+evidence of their pinned source, and the CPU2 reset-vector fetch view stays an
+explicit configuration-dependent unresolved view (C2OPT/SBRV). The curated
+`STM32WB55RGV6` and `STM32WB15CCU6` parts are the only pinned multi-core
+executives; every other cataloged part, including all four single-Cortex-M7 H7
+parts, returns an explicit `UNAVAILABLE` workspace plan: no second core or
+independently supplied coprocessor image exists in the pinned sources and none
+is ever inferred from a family label, sibling part, or wildcard reference.
+Composition fails closed with stable diagnostics on a part mismatch, an unknown
+configuration input, an unresolved plan configuration, ambiguous or duplicate
+cores, an undetermined image, non-RAM or missing core attribution, slot ranges
+overlapping outside a documented shared range, and a missing or ambiguous
+mailbox, semaphore, or boot-order fact. No Ghidra adapter is added; T045 stays
+pure-plan only and never promotes a support state.
+
+T046 adds pure, evidence-gated wireless/network-core distinctions in the
+`targets/stm32/wireless` package. `Stm32WirelessPlanner.compose` pairs the
+digest-pinned T032 curated catalog part, T039 memory plan, T040 SVD
+applicability entry, T044 security record, and (for the dual-core parts) the
+T045 workspace plan for the same exact part without mutating any of them. The
+pinned topology decides the classification: `STM32WB55RGV6` and `STM32WB15CCU6`
+are planned `NETWORK_CORE_PINNED` — a CPU2 network processor fed by
+independently supplied coprocessor firmware whose release and reset-vector
+fetch basis stay the pinned configuration-dependent C2BOOT/C2OPT/SBRV
+citation, whose communication windows are the pinned IPCC (`0x58000C00`) and
+HSEM (`0x58001400`) ranges, and whose per-core register-model link (the CM0P
+line for WB55, explicitly absent for WB15 per the pinned T040 review) is
+recorded. The other eight WB/WB0/WBA/WL3 parts are planned
+`SINGLE_APPLICATION_CORE`: the pinned topology declares one executable CPU
+core, so no second core or coprocessor image is ever invented, radio-to-CPU
+memory attribution is explicitly unavailable, and the radio register model is
+deferred or unavailable per the pinned applicability status — the shipped WB55
+CM4/CM0P register models themselves contain no radio peripheral (verified
+against the shipped pack contents), so no radio register window is fabricated
+for any part. Per-core register tags project mechanically onto the pinned core
+labels (CM4/CM0/CM33). Anything outside the four wireless families fails
+closed with `WIRELESS_FAMILY_OUT_OF_SCOPE`; a two-core topology without a
+pinned workspace and a single-core topology with one fail closed.
+`Stm32WirelessPlanner.evaluateNetworkCoreImage` classifies a caller-supplied
+CPU2 image range against the pinned CPU2 memory attribution only: ranges fully
+inside CPU2-attributed SRAM are `BINDABLE_UNRESOLVED_FETCH_VIEW`, a range
+inside the CPU1 flash image is `FLASH_VIEW_CONFIGURATION_DEPENDENT`, and
+partial or unattributed ranges fail closed — no byte is placed and no fetch
+view is ever resolved. Every part keeps `PLANNED`; no Ghidra adapter is added
+and no Ghidra program, image, or range is created by T046.
+
+T047 adds pure external-memory loading and OCTOSPI/FMC window mapping in the
+`targets/stm32/extmem` package. `Stm32ExternalMemoryPlanner.compose` pairs one
+validated T039 `Stm32MemoryPlanner.Plan` with one confirmed board fact source —
+the digest-pinned T042 board profile (resolved from `Stm32BoardCatalog` by exact
+part, with an explicit `UNAVAILABLE` plan and reason when the snapshot carries
+no profile), or a confirmed custom profile. A mapped plan carries one
+`MappingWindow` per external device: the pinned `ext-mem` aperture (numeric CPU
+base and device extent), the pinned controller name, the pinned writability,
+and the quoted start/size evidence — with the controller-family projection onto
+the modeled OCTOSPI/XSPI/QUADSPI/FMC families performed mechanically from the
+confirmed name; an unrecognized controller name fails closed. The separation
+between the controller aperture (CPU addresses) and the device extent (device
+offsets `0..size`) is checked and exposed: numeric collision with an MCU plan
+region or another window, a window beyond the 32-bit space, a boot offset
+outside every external region, a duplicate window id, and a part mismatch all
+fail closed. `planLoad` plans one bounded external load as a device-offset
+range against one pinned window and derives the CPU aperture address; absent,
+empty, negative, out-of-extent, or over-limit loads fail closed.
+`classifyCpuAddress` classifies a numeric CPU address against the pinned
+apertures only. Custom profiles (STM-016) are user-supplied JSON files with a
+mandatory `USER_ASSERTION` confirmation, an exact curated part, regions reusing
+the T042 `ExternalRegion` contract (quoted evidence, `ext-mem` space, positive
+size), and closed schemas; malformed, truncated, oversized, unknown-kind,
+non-integer, non-curated, duplicate, and overlapping inputs fail closed, and no
+pinned snapshot is mutated. `Stm32ExternalMemoryApplicator` is the only T047
+Ghidra adapter: `mapWindows` creates each pinned aperture as an uninitialized
+block with the pinned permissions, and `loadInto` creates one initialized block
+holding caller-supplied bytes at the planned device offset. Both run in one
+rollback-capable transaction, require the program to record exactly the plan's
+part (unbound or disagreeing programs fail closed), are idempotent, preserve
+existing user blocks/labels/bytes as deterministic `MEMORY_PRESERVED`,
+`NAME_CONFLICT`, `CONTENT_DIFFERS`, and `PRESERVED_ABSENT` conflicts, and never
+remove, split, overwrite, or resurrect an existing block — so window mapping
+and byte loading are alternative workflows for one program and a load into an
+already mapped aperture is preserved rather than merged. Every one of the 53
+curated parts remains `PLANNED`.
+
+T048 adds pure STM32 firmware diff and CTF enrichment in the `analyzers/stm32`
+package, consuming the shared analyzers without duplicating or weakening them.
+`Stm32FirmwareArtifact` carries the confirmed comparison metadata of one
+validated STM32 image: the bound exact part, the caller's artifact identity and
+role, the confirmed image extent (reusing the T041 `ImageRange` contract), the
+validated content SHA-256, and the confirming import provenance.
+`Stm32FirmwareDiffAnalyzer` applies the shared T025 diff contract — the
+`EspArtifactChangeKind` vocabulary and the ADR-0017 rule that content digests
+are compared before physical extents — over those artifacts; both artifacts bind
+to one exact part and to the digest-pinned curated selection (typed `DIFF_*`
+diagnostics otherwise), and the diff is a provenance-bearing lead, never a
+device-support or exploitability claim. `Stm32CtfEnrichmentAnalyzer` applies the
+shared analyzers to STM32 inputs: signature identification runs through the T043
+`Stm32SignatureMatcher` evidence gates with caller-recorded
+family/compiler/optimization evidence, each match becoming a ranked lead that
+carries the shared match's confidence and evidence verbatim, and every missing
+piece of evidence staying an explicit shared non-match (`EVIDENCE_MISSING`,
+`INDEX_UNAVAILABLE`, `NO_MATCH`) plus an explicit capability entry. TrustZone
+evidence is consumed only from a digest-pinned T044 `Stm32SecurityRecord`:
+pinned parts restate their secure alias apertures, confirmed image extents
+falling entirely inside a pinned `SECURE` aperture become
+`STM32_IMAGE_IN_SECURE_ALIAS` leads, and unpinned or unsupplied records stay
+explicitly `UNAVAILABLE`/`NOT_SUPPLIED` with no invented window. Logging/assert
+recovery is the one shared contract the layer cannot permit for STM32 inputs
+today (its evidence contract requires a resolved target and constant
+tag/format pointers, and no STM32 logging/assert target is pinned in this
+repository), so it stays the explicit `stm32-logging-assert-recovery`
+capability gap and never produces a lead. Contexts reject duplicate artifact
+ids or roles, duplicate candidate function addresses, and candidate addresses
+beyond the 32-bit space; shared limits, cancellation, deterministic
+severity-based lead ranking, and the shared redaction rules (no secret material
+is produced) bound every run. No Ghidra adapter is added
+(`NO_ADAPTER_PURE_PLAN_ONLY`); function/string-level image diffing remains
+T056-T064, and every one of the 53 curated parts remains `PLANNED`.
+
+T049 implements dedicated STM32MP heterogeneous target providers under the
+`targets/stm32/mp` package, modeling Cortex-A application cores, Cortex-M
+firmware, multi-stage boot chains, device tree bindings, TrustZone security
+domains, and shared resources as distinct execution units and separate programs
+per TOPO-004 and STM-015 without weakening MCU assumptions. The 53 curated MCU
+parts remain untouched and isolated from MPU workflows. Flagship targets include
+STM32MP157 (dual Cortex-A7 plus Cortex-M4), STM32MP257 (dual 64-bit Cortex-A35
+plus Cortex-M33 and low-power SmartRun Cortex-M0+), and STM32MP135 (single
+Cortex-A7 application processor without coprocessor). Redistributable inputs are
+audited and pinned: Linux kernel device tree DTS (`GPL-2.0+ OR BSD-3-Clause`),
+ARM TF-A (`BSD-3-Clause`), ST CMSIS device headers (`Apache-2.0`), ST open pin data
+(`BSD-3-Clause`), and OpenOCD target scripts (`GPL-2.0-or-later`). The boot chain
+plan models multi-stage boot sequences (BootROM, TF-A BL2 FSBL, OP-TEE BL32 Secure
+OS, U-Boot BL33 SSBL, Linux OS, and remoteproc coprocessor firmware) with
+selectable boot flavors (A35-master vs M33-master on MP257). Device tree plans
+model remoteproc nodes, mailbox controllers (IPCC), hardware semaphores (HSEM),
+and reserved memory carving under shared `ParserLimits` and cooperative
+`CancellationToken`. Security plans model TrustZone firewalls (ETZPC on MP1,
+RIF on MP2) and non-volatile OTP security (BSEC / BSEC3). The workspace plan maps
+each security domain and instruction set architecture to distinct Ghidra program
+slots with explicit cross-program references (`BOOT_HANDOFF`, `SHARED_MAILBOX`,
+`SHARED_SEMAPHORE`, `SHARED_MEMORY`). No Ghidra mutation adapter is added
+(`NO_ADAPTER_PURE_PLAN_ONLY`), preserving the pure planning boundary. All
+STM32MP providers remain `PLANNED`.
+
 ## Offline packs
 
 Pack manifests are strict, closed, versioned JSON contracts parsed with the shared limits and cooperative cancellation. They expose pack identity/version, exact supported-device IDs, source URI and revision, license, transformation, redistribution status, per-file size/SHA-256, and an aggregate descriptor digest. File paths are normalized relative forward-slash paths; absolute, parent-traversal, Windows-drive, backslash, duplicate, manifest-shadowing, symlink, non-regular, missing, and unexpected entries are rejected.

@@ -354,6 +354,20 @@ class Stm32MemoryPlannerTest {
         assertThrows(IOException.class, () -> load(changed));
     }
 
+    @Test
+    void bitBandViewAndRegionValidateInvariants() {
+        var ram = new io.github.rezabakhshi.embedra.core.io.AddressRange("ram", 0x20000000L, 0x1000L);
+        var badExt = new io.github.rezabakhshi.embedra.core.io.AddressRange("ram", 0x22000000L, 0x1000L);
+        assertThrows(IllegalArgumentException.class,
+            () -> new Stm32MemoryPlanner.BitBandView("BB", badExt, ram));
+        assertThrows(IllegalArgumentException.class,
+            () -> new Stm32MemoryPlanner.Region("", "RAM", ram, "rwx", "FIXED", Map.of()));
+        assertThrows(IllegalArgumentException.class,
+            () -> new Stm32MemoryPlanner.Region("R", "INVALID_KIND", ram, "rwx", "FIXED", Map.of()));
+        assertThrows(IllegalArgumentException.class,
+            () -> new Stm32MemoryPlanner.Region("R", "RAM", ram, "invalid_access", "FIXED", Map.of()));
+    }
+
     private static Stm32MemoryPlanner load(Path path) throws Exception {
         var limits = ParserLimits.defaults();
         var ids = Stm32CuratedPartIds.load(Path.of("catalogs/stm32/2026-09-29/selection.json"),

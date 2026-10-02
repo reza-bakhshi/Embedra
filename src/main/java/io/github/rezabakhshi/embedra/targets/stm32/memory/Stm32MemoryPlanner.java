@@ -385,8 +385,18 @@ public final class Stm32MemoryPlanner {
     private static ExecutionTopology topology(Map<?, ?> record, List<Region> regions,
             List<Alias> aliases, List<Evidence> evidence) {
         Map<?, ?> topology = (Map<?, ?>) record.get("topology");
+        if (topology == null || !(topology.get("physicalCoreCount") instanceof Number count)) {
+            throw new IllegalArgumentException("Topology requires physicalCoreCount");
+        }
+        int physicalCoreCount = count.intValue();
         if ("WB_DUAL_CORE".equals(record.get("profile"))) {
+            if (physicalCoreCount != 2) {
+                throw new IllegalArgumentException("WB_DUAL_CORE profile requires physicalCoreCount 2");
+            }
             return dualCoreTopology(topology, regions, aliases, evidence);
+        }
+        if (physicalCoreCount != 1) {
+            throw new IllegalArgumentException("Single-core profile requires physicalCoreCount 1");
         }
         SecurityDomain domain = new SecurityDomain("unpartitioned", SecurityDomainKind.CUSTOM);
         List<ProcessorNode> nodes = List.of(
@@ -471,9 +481,16 @@ public final class Stm32MemoryPlanner {
     }
 
     private static AddressRange peripheralRange(Object raw) {
-        List<?> bounds = (List<?>) raw;
-        long start = ((Number) bounds.get(0)).longValue();
-        long end = ((Number) bounds.get(1)).longValue();
+        if (!(raw instanceof List<?> bounds) || bounds.size() != 2
+                || !(bounds.get(0) instanceof Number startNum)
+                || !(bounds.get(1) instanceof Number endNum)) {
+            throw new IllegalArgumentException("Malformed peripheral range bounds");
+        }
+        long start = startNum.longValue();
+        long end = endNum.longValue();
+        if (start < 0 || end <= start || end > 0x1_0000_0000L) {
+            throw new IllegalArgumentException("Peripheral range out of bounds: " + start + ".." + end);
+        }
         return new AddressRange("peripheral", start, end - start);
     }
 

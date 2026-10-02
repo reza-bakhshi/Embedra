@@ -1,1756 +1,2067 @@
 {
-  "schemaVersion": 1,
-  "specification": {
-    "path": "Embedra-SpecKit.md",
-    "sha256": "3db2933fbba4a51175baa6850ba55dcdcbfec10f0c6d5cfbfcc77a691823ace0"
+ "schemaVersion": 1,
+ "specification": {
+  "path": "Embedra-SpecKit.md",
+  "sha256": "dff6b43f80053bcedc5d6bdba9106cdeecd1618db0997146111ba74a5e1a41a3"
+ },
+ "projectClassification": "NEW",
+ "currentTask": {
+  "id": "T049",
+  "status": "COMPLETE",
+  "reasonCode": "STM32MP_HETEROGENEOUS_PROVIDERS_IMPLEMENTED"
+ },
+ "completedTasks": [
+  "T001",
+  "T002",
+  "T003",
+  "T004",
+  "T005",
+  "T006",
+  "T007",
+  "T008",
+  "T009",
+  "T010",
+  "T011",
+  "T012",
+  "T013",
+  "T014",
+  "T015",
+  "T016",
+  "T017",
+  "T018",
+  "T019",
+  "T020",
+  "T021",
+  "T022",
+  "T023",
+  "T024",
+  "T025",
+  "T026",
+  "T026A",
+  "T027",
+  "T028",
+  "T029",
+  "T030",
+  "T031",
+  "T032",
+  "T033",
+  "T034",
+  "T035",
+  "T036",
+  "T037",
+  "T038",
+  "T039",
+  "T040",
+  "T041",
+  "T042",
+  "T043",
+  "T044",
+  "T045",
+  "T046",
+  "T047",
+  "T048",
+  "T049"
+ ],
+ "blockedTasks": [],
+ "acceptanceGates": {
+  "foundation": {
+   "result": "PASS",
+   "approval": "APPROVED",
+   "approvedDate": "2026-09-22",
+   "evidence": ".embedra/evidence/gates/foundation.md"
   },
-  "projectClassification": "NEW",
-  "currentTask": {
-    "id": "T043",
-    "status": "COMPLETE",
-    "reasonCode": "STM32_HAL_LL_CMSIS_FREERTOS_SIGNATURE_PACKS_EVIDENCE_GATED_VERIFIED"
+  "esp32s3Application": {
+   "result": "PASS",
+   "approval": "APPROVED",
+   "approvedDate": "2026-09-23",
+   "evidence": ".embedra/evidence/gates/esp32s3-application.md"
   },
-  "completedTasks": [
-    "T001",
-    "T002",
-    "T003",
-    "T004",
-    "T005",
-    "T006",
-    "T007",
-    "T008",
-    "T009",
-    "T010",
-    "T011",
-    "T012",
-    "T013",
-    "T014",
-    "T015",
-    "T016",
-    "T017",
-    "T018",
-    "T019",
-    "T020",
-    "T021",
-    "T022",
-    "T023",
-    "T024",
-    "T025",
-    "T026",
-    "T026A",
-    "T027",
-    "T028",
-    "T029",
-    "T030",
-    "T031",
-    "T032",
-    "T033",
-    "T034",
-    "T035",
-    "T036",
-    "T037",
-    "T038",
-    "T039",
-    "T040",
-    "T041",
-    "T042",
-    "T043"
-  ],
-  "blockedTasks": [],
-  "acceptanceGates": {
-    "foundation": {
-      "result": "PASS",
-      "approval": "APPROVED",
-      "approvedDate": "2026-09-22",
-      "evidence": ".embedra/evidence/gates/foundation.md"
-    },
-    "esp32s3Application": {
-      "result": "PASS",
-      "approval": "APPROVED",
-      "approvedDate": "2026-09-23",
-      "evidence": ".embedra/evidence/gates/esp32s3-application.md"
-    },
-    "esp32s3_full_flash": {
-      "result": "PASS",
-      "approval": "APPROVED",
-      "approvedDate": "2026-09-23",
-      "evidence": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
-      "approvalEvidence": ".embedra/evidence/gates/esp32s3-full-flash-r2-approval.md",
-      "supersedes": ".embedra/evidence/gates/esp32s3-full-flash.md"
-    }
-  },
-  "versionControl": {
-    "present": true,
-    "branch": "main",
-    "commit": "e051a59"
-  },
-  "workingTree": {
-    "state": "MODIFIED",
-    "uncommittedWork": [
-      "T043 complete: digest-pinned, evidence-gated STM32F1 HAL/LL/CMSIS-device/FreeRTOS signature pack generated deterministically from a pinned redistributable STM32Cube F1 build with relocation-masked byte patterns; pure loader/matcher/selection with explicit non-match diagnostics, bounded scanning, and shared limits; all 53 parts PLANNED and T039-T042 artifacts unchanged",
-      "T042 complete: digest-pinned reviewed STM32 board profiles layering external flash/RAM and boot offsets over an exact MCU record without mutating MCU packs. Pure Stm32BoardProfile/Stm32BoardCatalog/Stm32BoardPlanner; nine reviewed boards and three explicit unavailable profiles; exact-part-only links; overlap, address space, and boot-offset fail-closed checks; T039 memory plans and T040 device-data packs unchanged; every device-support state PLANNED",
-      "T041 complete: pure explicit Cortex-M core-exception table and confirmed vector-slot planner plus a transactional, idempotent, user-preserving Ghidra adapter",
-      "T040 complete: CMSIS-SVD device-data transformation with provenance",
-      "T039 complete: validated STM32 memory-region and topology plans",
-      "T038 complete: STM32 exact-part catalog registry",
-      "T038-T041 follow-up review fixes: case-insensitive line search, STM32 svd package documentation, shipped-only bundled SVD pack loading, and continuity digest/count corrections; all curated data, plans, packs, and support states unchanged"
-    ]
-  },
-  "toolchains": {
-    "ghidra": {
-      "version": "12.1.3",
-      "release": "PUBLIC",
-      "buildDate": "2026-08-17",
-      "revision": "8b4c91d4d5bd1549622bfbade0df199585b98365",
-      "localPath": "ghidra_12.1.3_PUBLIC_20260817/ghidra_12.1.3_PUBLIC"
-    },
-    "java": {
-      "observedVersion": "21.0.12",
-      "requiredBaseline": "21",
-      "compatibleBaselineVerified": true
-    },
-    "gradle": {
-      "wrapperVersion": "9.6.1",
-      "distributionCached": true
-    },
-    "espFixtureGeneration": {
-      "compiler": "xtensa-esp-elf esp-15.2.0_20251204",
-      "legacyCompiler": "xtensa-lx106-elf GCC 10.3.0",
-      "riscvCompiler": "riscv32-esp-elf esp-15.2.0_20251204",
-      "esptool": "5.4.0",
-      "espIdfReferenceVersion": "v6.0",
-      "espIdfReferenceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800"
-    },
-    "espSvdGeneration": {
-      "source": "https://github.com/espressif/svd",
-      "revision": "be20aa12560889d6125d144cdb48cf615ac17628",
-      "license": "Apache-2.0"
-    },
-    "stm32SignatureGeneration": {
-      "sourcePackage": "STM32Cube_FW_F1_V1.8.7",
-      "sourceUrl": "https://github.com/STMicroelectronics/STM32CubeF1",
-      "archiveSha256": "1b5f99f86982efe5e4931063de4a0f0af80e38a05d4835b0b8f82aefad634b29",
-      "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
-      "optimizations": [
-        "-Os",
-        "-O2"
-      ],
-      "licenses": [
-        "BSD-3-Clause",
-        "Apache-2.0",
-        "MIT"
-      ],
-      "redistribution": "DERIVED_MASKED_SIGNATURES_ONLY_NO_SOURCE_BUNDLED"
-    },
-    "host": {
-      "os": "Linux",
-      "architecture": "x86-64",
-      "kernel": "7.0.0-31-generic"
-    }
-  },
-  "catalogSnapshots": [
-    {
-      "catalogId": "espressif.esp32-family",
-      "snapshotDate": "2026-09-23",
-      "path": "catalogs/espressif/2026-09-23/catalog.json",
-      "sha256": "a012ee03ad12ec075b8b782cd8b3abd66cc236216cfe4001cf2c2a2a92990a00",
-      "sourceFactsPath": "catalogs/espressif/sources/source-facts.json",
-      "sourceFactsSha256": "c7866b0c4fe5e336c02cfbfe16402901b0448184b3f6587d8835ae6ec919be58",
-      "siliconRecords": 53,
-      "moduleProfiles": 161,
-      "boardProfiles": 58,
-      "supportState": "PLANNED"
-    },
-    {
-      "catalogId": "stm32.source-reference",
-      "snapshotDate": "2026-09-28",
-      "path": "catalogs/stm32/2026-09-28/source-catalog.json",
-      "sha256": "6ecc64d28e086d6135dbf664674c259fc2cf29e9111b10b4be3a14305ab5a417",
-      "sourceRevision": "7d1f1514ed5583ec5007ad91236b4e1d377295b1",
-      "sourceReferenceRecords": 2240,
-      "supportState": "PLANNED",
-      "acceptance": "INCOMPLETE"
-    },
-    {
-      "catalogId": "stm32.cmsis-interrupt-index",
-      "snapshotDate": "2026-09-28",
-      "path": "catalogs/stm32/2026-09-28/cmsis-interrupts.json",
-      "sha256": "2c312786d907f85babde522944141d0672094749e787ce87078c14bc07495f72",
-      "sourceReferenceRecords": 2240,
-      "supportState": "PLANNED",
-      "acceptance": "INCOMPLETE"
-    },
-    {
-      "catalogId": "stm32.svd-rule-candidates",
-      "snapshotDate": "2026-09-28",
-      "path": "catalogs/stm32/2026-09-28/svd-rules.json",
-      "sha256": "16cb39d558e249f9c6a4020e39b77644d70af2d07b2df01becc732e4d6056ace",
-      "sourceReferenceRecords": 2240,
-      "supportState": "PLANNED",
-      "acceptance": "INCOMPLETE"
-    },
-    {
-      "catalogId": "stm32.c5-exact-dfp",
-      "snapshotDate": "2026-09-28",
-      "path": "catalogs/stm32/2026-09-28/c5-exact-parts.json",
-      "sha256": "ea899df4ac99089d482eb4e7ec676a4702bfac912fd3ab10f638a3222eaccc35",
-      "exactParts": 157,
-      "supportState": "PLANNED",
-      "acceptance": "PARTIAL_T032"
-    },
-    {
-      "catalogId": "stm32.curated-board-backed-exact",
-      "snapshotDate": "2026-09-29",
-      "path": "catalogs/stm32/2026-09-29/curated-catalog.json",
-      "sha256": "afc66a47cd79c2025d115049c8aebd2db671c1112d42531b1db50df8514858f9",
-      "selectionPath": "catalogs/stm32/2026-09-29/selection.json",
-      "exactParts": 53,
-      "supportState": "PLANNED",
-      "acceptance": "REVISED_T032_COMPLETE",
-      "families": 20
-    },
-    {
-      "catalogId": "stm32.board-source-candidates",
-      "snapshotDate": "2026-09-29",
-      "path": "catalogs/stm32/sources/board-index.json",
-      "sha256": "2b9c7c2cc5e2838c50190a507cc0d96792d3a3e5eba8a5aee4e21d50cc77b6a7",
-      "sourceRevision": "7d1f1514ed5583ec5007ad91236b4e1d377295b1",
-      "sourceLicense": "BSD-3-Clause",
-      "boardConfigurations": 277,
-      "explicitExactCpnRows": 148,
-      "distinctExactCpnCandidates": 89,
-      "acceptance": "CANDIDATE_ONLY_NOT_SHIPPED",
-      "distinctNucleoDiscoveryCpnCandidates": 67
-    },
-    {
-      "catalogId": "stm32.board-part-candidates",
-      "snapshotDate": "2026-09-29",
-      "path": "catalogs/stm32/sources/board-part-candidates.json",
-      "sha256": "448d1d701777b22bfc7ceb6064710c57c8868be0e1f5d6b59c70a151393e6d76",
-      "explicitExactParts": 89,
-      "marketVerifiedParts": 50,
-      "singleIrqMappings": 78,
-      "unpairedFlashAlternatives": 14,
-      "familyAliasReview": 3,
-      "acceptance": "CANDIDATE_ONLY_NOT_SHIPPED"
-    }
-  ],
-  "stm32CoverageDiagnostic": {
-    "tool": "scripts/check-stm32-cubemx-coverage.py",
-    "cubemxArchiveSha256": "9b5a52038e1dbbda98aaa36e370bc19c866db3b187af9add22147a3f2300e076",
-    "cubemxDatabaseSha256": "78543ddc8c7667a7ebb8d0e30498f566404b635068ed6f504142dc7b6af39089",
-    "productClasses": 2,
-    "vendorReferenceProducts": 1846,
-    "vendorCommercialParts": 5366,
-    "vendorExactParts": 5322,
-    "vendorWildcardParts": 44,
-    "vendorPartsMatchingEmbedraReferencePattern": 5213,
-    "embedraReferencePatterns": 2240,
-    "embedraReferencePatternsAttested": 2220,
-    "embedraExactParts": 157,
-    "vendorPartsWithDieId": 5327,
-    "vendorPartsWithSecurityAttribute": 3487,
-    "vendorSeriesAbsentFromEmbedra": [
-      "STM32V8"
-    ],
-    "acceptance": "INCOMPLETE",
-    "redistribution": "AGGREGATE_ONLY_SLA0048_LOCAL_DIAGNOSTIC"
-  },
-  "fixtureEvidence": [
-    {
-      "fixtureId": "esp32c3.esptool-v5.4.0.esp32c3-freestanding-minimal",
-      "path": "src/test/resources/fixtures/esp32c3/esp32c3-freestanding-minimal.bin",
-      "sha256": "25d33ca47189ca5020eacee980bdf4d52fdfee99720067ac33135366890133e0",
-      "sizeBytes": 65600,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32c3/esp32c3-freestanding-minimal.expectations.json"
-    },
-    {
-      "fixtureId": "esp32.esptool-v5.4.0.esp32-freestanding-minimal",
-      "path": "src/test/resources/fixtures/esp32/esp32-freestanding-minimal.bin",
-      "sha256": "6bd5981e4c4ae4a245d41cd9ffcd27bb1b24f11210220b785db9cfc79bb4895d",
-      "sizeBytes": 416,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32/esp32-freestanding-minimal.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s2.esptool-v5.4.0.esp32s2-freestanding-minimal",
-      "path": "src/test/resources/fixtures/esp32s2/esp32s2-freestanding-minimal.bin",
-      "sha256": "79e6befbb34c2f1fbbf1a5ed5d03ec9d4290e56d6d7a08fa5ff38f9c992d19d7",
-      "sizeBytes": 416,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s2/esp32s2-freestanding-minimal.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.esptool-v5.4.0.esp32s3-freestanding-minimal",
-      "path": "src/test/resources/fixtures/esp32s3/esp32s3-freestanding-minimal.bin",
-      "sha256": "f17b265cb900c385c53a6ee4bd72ae371c22ed1ba2e92354faf84093fbb6d85d",
-      "sizeBytes": 432,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/esp32s3-freestanding-minimal.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.esptool-v5.4.0.esp32s3-freestanding-minimal-no-digest",
-      "path": "src/test/resources/fixtures/esp32s3/esp32s3-freestanding-minimal-no-digest.bin",
-      "sha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
-      "sizeBytes": 400,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/esp32s3-freestanding-minimal-no-digest.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.malformed.malformed-truncated-segment-data",
-      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-truncated-segment-data.bin",
-      "sha256": "4641e566106a295665812eb77d9bc25d4375c6e8d58040498fef80dca00713a8",
-      "sizeBytes": 350,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-truncated-segment-data.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.malformed.malformed-segment-length-overflow",
-      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-segment-length-overflow.bin",
-      "sha256": "97ae4aff29e84a894c89bbf26b21060417ddd93b67285c5689fc3b015f1852fa",
-      "sizeBytes": 400,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-segment-length-overflow.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.malformed.malformed-overlapping-segments",
-      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-overlapping-segments.bin",
-      "sha256": "450ccc4447b805f005677aec70ffd30a7b4113389b359a2faa64484f9822b40a",
-      "sizeBytes": 400,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-overlapping-segments.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.malformed.malformed-wrong-chip",
-      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-wrong-chip.bin",
-      "sha256": "7f9544aec9d09774b93034094274b8baff14dba5349b0d99307e203b247dd802",
-      "sizeBytes": 400,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-wrong-chip.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.malformed.malformed-checksum",
-      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-checksum.bin",
-      "sha256": "56686515f40fb2874644e3c539e5952138368a8fbe39ad448bcdd6e2d52c57e9",
-      "sizeBytes": 400,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-checksum.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.malformed.malformed-digest",
-      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-digest.bin",
-      "sha256": "9f8426ea35927ec2d2d6535e2d4a8ef2551def779535e786b250699bc7a89dcd",
-      "sizeBytes": 432,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-digest.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.malformed.malformed-entry-unaligned",
-      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-entry-unaligned.bin",
-      "sha256": "42427fc50f1843dd2a8f593fe3d6e859cec26db4754471536c72f16d48d34e81",
-      "sizeBytes": 400,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-entry-unaligned.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.malformed.malformed-trailing-data",
-      "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-trailing-data.bin",
-      "sha256": "23bd40d77d07120c9879652b2d5a538f846eb0d88b44f0786cb432a8fb8b8b80",
-      "sizeBytes": 404,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-trailing-data.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.full-flash.default-factory",
-      "path": "src/test/resources/fixtures/esp32s3/full-flash/default-factory.bin",
-      "sha256": "45cac3c72a7c4215cceef05e7b750def8372304586d9d2e022969c48e4963650",
-      "sizeBytes": 524288,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/full-flash/default-factory.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.full-flash.custom-offset-misleading-magic",
-      "path": "src/test/resources/fixtures/esp32s3/full-flash/custom-offset-misleading-magic.bin",
-      "sha256": "7abf06a8e02a1eef3ff71bda02241acdb8fcde0e82e5d4a63f5f3b47d6b4a2b5",
-      "sizeBytes": 524288,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/full-flash/custom-offset-misleading-magic.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.full-flash.ota-custom-encrypted",
-      "path": "src/test/resources/fixtures/esp32s3/full-flash/ota-custom-encrypted.bin",
-      "sha256": "905ef03489998e54539c68733e1b2fb1b89ebdd44319169e2f0c024a44448546",
-      "sizeBytes": 524288,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/full-flash/ota-custom-encrypted.expectations.json"
-    },
-    {
-      "fixtureId": "esp32s3.full-flash.invalid-partition-md5",
-      "path": "src/test/resources/fixtures/esp32s3/full-flash/invalid-partition-md5.bin",
-      "sha256": "7841f56a0ad2af7fc98d987ec3300bcd7c8054dcd02d108397aa57e0f5321ac0",
-      "sizeBytes": 524288,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp32s3/full-flash/invalid-partition-md5.expectations.json"
-    },
-    {
-      "fixtureId": "esp8266.esptool-v5.4.0.freestanding-v1",
-      "path": "src/test/resources/fixtures/esp8266/esp8266-freestanding-v1-0x00000.bin",
-      "sha256": "5d6596092012160ef08af2e2c8dc5feb3ee8b37c9b974dbb65bfcdd2aacc5d8f",
-      "sizeBytes": 80,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json"
-    },
-    {
-      "fixtureId": "esp8266.esptool-v5.4.0.freestanding-v1-irom-companion",
-      "path": "src/test/resources/fixtures/esp8266/esp8266-freestanding-v1-0x01010.bin",
-      "sha256": "9a82ca2c932d83424e62cb63ed0acdf2d687550df86e1b7e5094cb8df14b8747",
-      "sizeBytes": 16,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json"
-    },
-    {
-      "fixtureId": "esp8266.esptool-v5.4.0.freestanding-v2",
-      "path": "src/test/resources/fixtures/esp8266/esp8266-freestanding-v2-0x01000.bin",
-      "sha256": "99175667a2bcf43a794599d0737eec25f8ce1fa541d535a9e26fc390d88f561b",
-      "sizeBytes": 116,
-      "redistributionStatus": "REDISTRIBUTABLE",
-      "oracle": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json"
-    }
-  ],
-  "restrictedFixtureEvidence": [
-    {
-      "fixtureId": "esp32s3.user-supplied.4mib-full-flash",
-      "path": "<repository-local-restricted>/esp32s3_ctf_dump_4MB.bin",
-      "sha256": "837ee155de84403f84330179d52edfd2dba239cc11af5e55c2d0c28bc38a71de",
-      "sizeBytes": 4194304,
-      "origin": "USER_SUPPLIED",
-      "provenance": "UNKNOWN",
-      "redistributionStatus": "RESTRICTED_LOCAL",
-      "oracle": ".embedra/evidence/tasks/T021.md"
-    }
-  ],
-  "evidence": {
-    "task": ".embedra/evidence/tasks/T043.md",
-    "preT033Audit": ".embedra/evidence/audits/pre-t033-t001-t032.md",
-    "remediation": ".embedra/evidence/tasks/T025-remediation.md",
-    "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
-    "commands": ".embedra/evidence/commands.jsonl",
-    "logDrivenRemediation": ".embedra/evidence/tasks/T025-log-driven-remediation.md",
-    "gateAddendum": ".embedra/evidence/gates/esp32s3-full-flash-r2-language-addendum.md",
-    "taskT028": ".embedra/evidence/tasks/T028.md",
-    "adrT028": "docs/adr/0023-esp32-esp32s2-independent-support.md",
-    "preT029Audit": ".embedra/evidence/audits/pre-t029-t001-t028.md",
-    "taskT029": ".embedra/evidence/tasks/T029.md",
-    "adrT029": "docs/adr/0024-esp32c3-riscv-provider.md",
-    "taskT030": ".embedra/evidence/tasks/T030.md",
-    "taskT031": ".embedra/evidence/tasks/T031.md",
-    "adrT031": "docs/adr/0025-esp8266-separate-legacy-provider.md",
-    "nextTaskPrompt": ".embedra/prompts/T044-trustzone-secure-nonsecure.md",
-    "taskT027": ".embedra/evidence/tasks/T027.md",
-    "adrT027": "docs/adr/0022-shared-esp-target-services.md",
-    "taskT026A": ".embedra/evidence/tasks/T026A.md",
-    "adrT026A": "docs/adr/0021-esp32s3-function-id-pilot.md",
-    "fidbT026A": "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb",
-    "specification": "Embedra-SpecKit.md",
-    "fidArtifacts": [
-      "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb",
-      "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.json",
-      "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.audit.json"
-    ],
-    "memoryReconciliationT039": ".embedra/evidence/tasks/T039-memory-reconciliation.json",
-    "memoryHeaderFactsT039": ".embedra/evidence/tasks/T039-memory-header-evidence.json",
-    "taskT040": ".embedra/evidence/tasks/T040.md",
-    "svdApplicabilityT040": "catalogs/stm32/2026-09-29/svd-applicability.json",
-    "svdApplicabilitySha256T040": "catalogs/stm32/2026-09-29/svd-applicability.sha256",
-    "taskT041": ".embedra/evidence/tasks/T041.md",
-    "hardeningReviewT039T041": ".embedra/evidence/tasks/T039-T041-hardening.md",
-    "taskT042": ".embedra/evidence/tasks/T042.md",
-    "boardProfilesT042": "catalogs/stm32/2026-09-29/board-profiles.json",
-    "boardProfilesSha256T042": "catalogs/stm32/2026-09-29/board-profiles.sha256",
-    "boardSourceAuditT042": ".embedra/evidence/tasks/T042-board-source-audit.json",
-    "taskT043": ".embedra/evidence/tasks/T043.md",
-    "signatureSourceAuditT043": ".embedra/evidence/tasks/T043-signature-source-audit.json",
-    "signaturePackT043": "packs/stm32.stm32f1.signatures/1.0.0"
-  },
-  "knownFailures": [],
-  "nextTask": "T044",
-  "nextAction": "Begin T044: implement STM32 TrustZone secure/non-secure region and veneer handling for supported devices, using the pinned T039-T043 evidence and without promoting support states.",
-  "artifacts": [
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
-      "sha256": "5e764521fb3fefb7fdda20256fdb7af4db89a799647b05f22c4f441ac6c51dbc",
-      "sizeBytes": 821611,
-      "status": "T026_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
-      "sha256": "fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb",
-      "sizeBytes": 1005367,
-      "status": "T026A_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
-      "sha256": "e7a44da789159dd00a6d50dabf73a7c2fa5b590720f2c837f645b41751e5604e",
-      "sizeBytes": 1017483,
-      "status": "T027_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
-      "sha256": "288bad7a1ea4334c46bbfdf44eebc18576bfd50348d8d33958329d9be99bca0d",
-      "sizeBytes": 1413370,
-      "status": "T028_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260925_Embedra.zip",
-      "sha256": "0824df264b671cc81372733a807e3eb61469484eeb8a1d188525895a3226c4c6",
-      "sizeBytes": 1413971,
-      "status": "PRE_T029_AUDIT_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260925_Embedra.zip",
-      "sha256": "42f8af1b0b90b7a57f822e6210e8a1c67109580ff2f08ef30661a2d3c976ca1d",
-      "sizeBytes": 1556399,
-      "status": "T029_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260926_Embedra.zip",
-      "sha256": "b97421ba772511eedf313dc49c321f0ff7463bac4b55a7baeeef2184cf27af1e",
-      "sizeBytes": 2587489,
-      "status": "T030_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
-      "sha256": "0113152d589dcfc08cefeb21bcbc117c9af02e50a19c6aeb25652813a014ad2e",
-      "sizeBytes": 2632122,
-      "status": "T031_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
-      "sha256": "435975910273e96cb9e4c0b0e7aa0e9646f6be10c98b7d5ebb2b920f74e7aa17",
-      "sizeBytes": 2772307,
-      "status": "T032_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
-      "sha256": "7f5d151e234c1445fc14adb8313be6467ee684447e13a28ef3e148e084b163e5",
-      "sizeBytes": 2887986,
-      "status": "T032_IN_PROGRESS_CMSIS_SVD_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
-      "sha256": "cdcb179f63c0b74423f39d55de16add75a2cdcabcb9f95ed34353ec4f7a92e87",
-      "sizeBytes": 2893566,
-      "status": "T032_IN_PROGRESS_C5_EXACT_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
-      "sha256": "b8923f7e410ec31d90075cbefdaff682de7d72e86b77729f1020a96fa1ff65bc",
-      "sizeBytes": 2894012,
-      "status": "T032_IN_PROGRESS_CUBEMX_COVERAGE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
-      "sha256": "fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c",
-      "sizeBytes": 2637415,
-      "status": "T032_CURATED_COMPLETE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
-      "sha256": "973c53e6857b0cafd2972dfffc4ad8b594de785916634d26cd60040bd3945a50",
-      "sizeBytes": 2665769,
-      "status": "T032_REVISED_INTERMEDIATE_SUPERSEDED"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
-      "sha256": "e49ab7a474bd5b7326dcf23cf4078dacb86743e10cd20e1113a0270cd5010687",
-      "sizeBytes": 2665303,
-      "status": "T032_REVISED_53_PART_COMPLETE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
-      "sha256": "599266f88c6793a186df0a9b0f6dfec4768f32ee289c73b7d3ac505e0cadc53d",
-      "sizeBytes": 2665777,
-      "status": "T033_F103_SLICE_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
-      "sha256": "5dad3335e6e789f48ebafac4d0383334ece30d5515700de67d8ca2972d384b30",
-      "sizeBytes": 2666019,
-      "status": "T033_F103_C051_SLICES_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
-      "sha256": "7b262ae0d9c0b9b5411c810c047214383813b703e33370477a8f27063d91293b",
-      "sizeBytes": 2666051,
-      "status": "T033_F103_THREE_C0_SLICES_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
-      "sha256": "c64793c6d4fc83f6c6d9da65222c46b7bcbf9bd10f8465c3760c9e1e8fe53cd8",
-      "sizeBytes": 2666799,
-      "status": "T033_TEN_FIXTURE_SLICES_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
-      "sha256": "e5f683a13969337200bc0e1738716aeb5a00e2c592dc4458a596e9efdcb8748e",
-      "sizeBytes": 2667205,
-      "status": "T033_COMPLETE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
-      "sha256": "3c0e02fb026fd4691a92900dbcf9395560146cf3d29bd22760c1082b900eef75",
-      "sizeBytes": 2687642,
-      "status": "T034_COMPLETE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
-      "sha256": "72bfa9009dcd2ac4357b2bbd08b631a47aada0e09f65add7f8659f80c389b767",
-      "sizeBytes": 2700596,
-      "status": "T035_COMPLETE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
-      "sha256": "04448eead9df859fc739eff25877f24d3ecc9f61e74fe4bc98011d3daa753f55",
-      "sizeBytes": 2711239,
-      "status": "T036_COMPLETE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
-      "sha256": "d5b5603982c1e661cf035e8c332b0b7934a45608ff460236ae0922c46a93edab",
-      "sizeBytes": 2724923,
-      "status": "T037_COMPLETE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
-      "sha256": "3507efb96c994f8c8b70bdc619dd79037fa9d028719486e4730a0c084bf1dbcc",
-      "sizeBytes": 2738313,
-      "status": "T038_COMPLETE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
-      "sha256": "68a45831c37b9085f9bfcf46e6350ba1a21850ac5aca9cea8235d636bbed91ba",
-      "sizeBytes": 2820787,
-      "status": "T039_ALLOCATION_RESOLUTION_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
-      "sha256": "7b41324f79a0739dcc8195e0031cc536c597df85bc6eb2138a34f8eaa300fcf9",
-      "sizeBytes": 3921060,
-      "status": "T040_STM32_SVD_DEVICE_DATA_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20261001_Embedra.zip",
-      "sha256": "7f3c421b4dc28008e6541daf563788fe42861b355632d7b0f5103db17cf896bc",
-      "sizeBytes": 2818481,
-      "status": "T039_CORRECTNESS_FIXES_REPRODUCIBLE_ARTIFACT_SUPERSEDED"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20261001_Embedra.zip",
-      "sha256": "abf0151fd03d2ff2eb87a3b18e641af753f2d70cc378d778661949d8fe544f80",
-      "sizeBytes": 2815209,
-      "status": "T039_COMPLETE_REPRODUCIBLE_ARTIFACT_SUPERSEDED"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
-      "sha256": "f04ee66e34f9e942ac5728a50eb1f1bd0d45faeff1c63faf1d82342f5daeb004",
-      "sizeBytes": 3921380,
-      "status": "T040_FINAL_REVIEW_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
-      "sha256": "47b41bd8b6712be329a7f4b8c516c8f685cbc99d93ff4e7446536ed5fbbd7460",
-      "sizeBytes": 3967956,
-      "status": "T041_HARDENED_COMPLETE_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
-      "sha256": "49486842fd383d6a48cc725abea402ab61ca1052a02bb6f082cfe4793ceb2c5d",
-      "sizeBytes": 4002516,
-      "status": "T042_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
-      "sha256": "867e619d081c7dd922ed1b0f6d59ac50db2d2aa6305cb6fb228ff526f698aa14",
-      "sizeBytes": 4186407,
-      "status": "T043_REPRODUCIBLE_ARTIFACT"
-    },
-    {
-      "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
-      "sha256": "02cb3efad54d903d6f0e7b03de0a8b5053591047499a8766c6ab3baff18edb9b",
-      "sizeBytes": 4186433,
-      "status": "T038_T041_FOLLOWUP_REVIEW_REPRODUCIBLE_ARTIFACT"
-    }
-  ],
-  "resolvedFailures": [
-    {
-      "code": "T001_JDK21_UNAVAILABLE",
-      "resolution": "OpenJDK 21.0.12 became available and was used for all passing build evidence."
-    },
-    {
-      "code": "T001_WRAPPER_ABSENT",
-      "resolution": "Standard Gradle 9.6.1 Wrapper generated and verified."
-    },
-    {
-      "code": "T001_PACKAGE_INCLUDED_TOOLCHAIN",
-      "resolution": "Local Ghidra, continuity, and specification paths excluded; final ZIP reduced to intended 5,402-byte contents."
-    },
-    {
-      "code": "T002_MISSING_BUILD_QUALITY_TASKS",
-      "resolution": "Pinned test, coverage, formatting, and static-analysis tasks configured and verified."
-    },
-    {
-      "code": "T002_PACKAGE_DEVELOPMENT_FILES",
-      "resolution": "Development-only Gradle/config/script inputs excluded; exact package contents validated."
-    },
-    {
-      "code": "T002_ACCEPTANCE_SCRIPT_SYNTAX",
-      "resolution": "Expected-entry string repaired and validated with sh -n before the final passing run."
-    },
-    {
-      "code": "T003_CHECKSTYLE_TEST_LAYOUT",
-      "resolution": "Five empty-line-separator violations in the new architecture test were corrected without suppressions before acceptance."
-    },
-    {
-      "code": "T004_SERIAL_LINT_FAILURE",
-      "resolution": "The checked diagnostic exception payload was made transient so Java serialization lint passes without disabling -Werror."
-    },
-    {
-      "code": "T004_STYLE_AND_COVERAGE_GAPS",
-      "resolution": "Five formatting violations were corrected and missing boundary tests raised every core class with branches above the configured 90% threshold without exclusions."
-    },
-    {
-      "code": "T005_NULL_CANONICALIZATION",
-      "resolution": "Canonical map sorting now uses immutable entries that permit required JSON null values."
-    },
-    {
-      "code": "T005_STYLE_AND_COVERAGE_GAPS",
-      "resolution": "Two style violations and missing model boundary cases were corrected without suppressions or coverage exclusions."
-    },
-    {
-      "code": "T006_CHECKSTYLE_LAYOUT",
-      "resolution": "Six field-separator violations were corrected without suppressions."
-    },
-    {
-      "code": "T006_REPRODUCIBILITY_ORACLE",
-      "resolution": "The obsolete dated T005 ZIP was moved out of dist and the exact package oracle was extended for the new pack-format documentation before the final passing reproducibility run."
-    },
-    {
-      "code": "T007_INTEGRATION_CLASSPATH",
-      "resolution": "Gradle file-collection composition was corrected before the Ghidra integration source set compiled."
-    },
-    {
-      "code": "T007_REAL_API_TRANSACTION_RETURN",
-      "resolution": "The integration proxy was corrected to honor Ghidra Program.endTransaction's boolean return contract."
-    },
-    {
-      "code": "T007_PACKAGED_REPOSITORY_AUTOMATION",
-      "resolution": "The exact-content oracle caught .github workflow files in the extension; buildExtension now excludes repository automation."
-    },
-    {
-      "code": "T008_FULL_IDF_LICENSE_SCOPE",
-      "resolution": "The exploratory full ESP-IDF image was discarded; final fixtures link no vendor or compiler runtime and adapt only the attributed Apache-2.0 application-description layout."
-    },
-    {
-      "code": "T008_EXPECTED_SYMBOL_SNAPSHOT_CHANGE",
-      "resolution": "The first regeneration after adding application-description evidence changed only the intended ELF symbol snapshot; the next complete regeneration was byte-identical."
-    },
-    {
-      "code": "T008_PACKAGED_FIXTURE_GENERATOR",
-      "resolution": "The exact-content oracle caught repository-only fixture source in the extension ZIP; buildExtension now excludes fixtures and the repeated package gate passes."
-    },
-    {
-      "code": "ESP32S3_GATE_REVIEW_PACKAGED_LOCAL_FIRMWARE",
-      "resolution": "The exact-content oracle caught untracked flash_dump.bin before release. It is now absent; ignore and explicit package-exclusion safeguards remain. The repeated package and restricted-path scan pass."
-    },
-    {
-      "code": "ESP32S3_GHIDRA_XTENSA_SALT_UNSUPPORTED",
-      "resolution": "ESP32-S3 extension language decodes and decompiles SALT/SALTU in Ghidra 12.1.3; fixture and digest-gated real dump tests pass. Comprehensive ISA coverage remains experimental."
-    },
-    {
-      "code": "T026A_AUDIT_HOST_PATH_PACKAGED",
-      "resolution": "The FID license audit recorded an absolute toolchain path. The committed audit now stores the pinned toolchain identifier, the generator records identifiers only, and verify-build-quality.sh fails on host paths or restricted capture names in extension ZIP text content. Reverified reproducible ZIP SHA-256 fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb."
-    }
-  ],
-  "mostRecentCommands": [
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "PASS: two complete uncached clean builds, all 20 quality actions each; 152 unit, 53 real-Ghidra, and 4 Python tests; byte-identical ZIP, SHA-256 fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb. The first packaged license audit had embedded the host toolchain path; the audit tool now records a host-independent toolchain identifier and the package gate scans archive text content for host paths and restricted capture names."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T027 PASS: two complete uncached clean builds, all 20 quality actions each; 156 unit, 53 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 1,017,483-byte ZIP, SHA-256 e7a44da789159dd00a6d50dabf73a7c2fa5b590720f2c837f645b41751e5604e."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T028 PASS: two complete uncached clean builds, all 20 quality actions each; 162 unit, 55 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 1,413,370-byte ZIP, SHA-256 288bad7a1ea4334c46bbfdf44eebc18576bfd50348d8d33958329d9be99bca0d."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check --no-daemon",
-      "exitStatus": 0,
-      "result": "PRE-T029-AUDIT PASS: 163 unit, 55 real-Ghidra, and 4 Python tests with zero failures or skips; Checkstyle, JaCoCo, formatting, scaffold, and catalog drift checks pass with the corrected ESP32/ESP32-S2 enrichment namespaces and strengthened handoff validator."
-    },
-    {
-      "command": "sh scripts/validate-handoff.sh && sh scripts/validate-fixture-provenance.sh",
-      "exitStatus": 0,
-      "result": "PRE-T029-AUDIT PASS: continuity and fixture-provenance validators accept the strengthened T001-T028 evidence checks."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "PRE-T029-AUDIT PASS: two complete uncached clean builds, all 20 quality actions each; 163 unit, 55 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 1,413,971-byte ZIP, SHA-256 0824df264b671cc81372733a807e3eb61469484eeb8a1d188525895a3226c4c6."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T029 PASS: two complete uncached builds, all 20 quality actions each; 169 unit, 55 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 1,556,399-byte ZIP, SHA-256 42f8af1b0b90b7a57f822e6210e8a1c67109580ff2f08ef30661a2d3c976ca1d."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T030 PASS: two complete clean builds, all 20 quality actions each; 191 unit, 56 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 2,587,489-byte ZIP, SHA-256 b97421ba772511eedf313dc49c321f0ff7463bac4b55a7baeeef2184cf27af1e."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T031 PASS: two complete clean builds, all 20 quality actions each; 201 unit, 60 real-Ghidra, and 4 Python tests with no failures or skips; byte-identical 2,632,122-byte ZIP, SHA-256 0113152d589dcfc08cefeb21bcbc117c9af02e50a19c6aeb25652813a014ad2e."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> sh scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T032 IN-PROGRESS PASS: added aggregate-only CubeMX coverage diagnostic and ST DFP source watch; two clean 21-action builds; 201 unit, 60 real-Ghidra, and 36 Python tests with no failures or skips; byte-identical 2,894,012-byte ZIP, SHA-256 b8923f7e410ec31d90075cbefdaff682de7d72e86b77729f1020a96fa1ff65bc. Exact-part/lifecycle source gap remains."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T037 PASS: two clean 22-action builds; 217 unit, 73 real-Ghidra, 58 STM32 Python, 4 ESP Python tests; byte-identical 2,724,923-byte ZIP SHA-256 d5b5603982c1e661cf035e8c332b0b7934a45608ff460236ae0922c46a93edab."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T038 PASS: two clean 22-action builds; 220 unit, 73 real-Ghidra, 58 STM32 Python, 4 ESP Python tests; byte-identical 2,738,313-byte ZIP SHA-256 3507efb96c994f8c8b70bdc619dd79037fa9d028719486e4730a0c084bf1dbcc."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew verifySTM32CatalogGenerator --no-daemon --quiet",
-      "exitStatus": 0,
-      "result": "T039 CHECKPOINT PASS: 61 STM32 Python tests, including fail-closed memory-readiness tests."
-    },
-    {
-      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
-      "exitStatus": 1,
-      "result": "T039 EXPECTED INCOMPLETE: 53 unknown memory-bank maps, 11 unresolved flash sizes, 0 complete exact-part plans."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T039 HANDOFF PASS: two clean 22-action builds; unit, real-Ghidra, 67 STM32 Python, 4 ESP Python, fixture, formatting, scaffold, Checkstyle, and JaCoCo checks; byte-identical ZIP SHA-256 3507efb96c994f8c8b70bdc619dd79037fa9d028719486e4730a0c084bf1dbcc. T039 remains IN_PROGRESS."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<local-ghidra-12.1.3> ./gradlew verifySTM32CatalogGenerator verifyFormatting --no-daemon --quiet",
-      "exitStatus": 0,
-      "result": "T039 SOURCE REVIEW PASS: 86 STM32 Python tests and formatting. 53 part gap records, 48 pinned ST headers, 1905 raw declarations, 54 partial region facts for 11 parts. No runtime topology implementation or support promotion."
-    },
-    {
-      "command": "python3 scripts/audit-stm32-memory-reconciliation.py",
-      "exitStatus": 0,
-      "result": "T039 PARTIAL EVIDENCE CONSISTENT: 53 selected parts, 11 with partial region facts, 54 reviewed region facts, 0 complete runtime maps."
-    },
-    {
-      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
-      "exitStatus": 1,
-      "result": "T039 EXPECTED INCOMPLETE: 0/53 ready; 53 missing validated bank maps and 11 unpaired catalog flash sizes. Full reproducible completion gate deferred until evidence and runtime plans are ready."
-    },
-    {
-      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
-      "exitStatus": 0,
-      "result": "T039 CORRECTNESS FIXES COMPLETE: readyCount 53/53 under the strengthened audit. WB15 now dual-core (Cortex-M4 + Cortex-M0+, IPCC/HSEM); H735 shared 192 KiB RAM is configuration-dependent (placed only with an explicit ITCM_AXI_SHARED allocation); WB55/WB15 shared-memory access no longer overclaims CPU1 write access to CPU2-secure SRAM2; and the audit now rejects missing IPCC/HSEM ranges, profile/core-count mismatches, invalid availability values, and invalid shared access. memory-plans.json SHA-256 2ba6e67a6947dc0cc6b4aa40a09543c9bebe8e1eed02b8ac9633b2c39bdbb2e6."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T039 PASS: two clean 22-action builds; 234 unit, 75 real-Ghidra, 90 STM32 Python, 4 ESP Python tests with no failures or skips; Checkstyle, JaCoCo, formatting, fixture, scaffold and ZIP-entry oracle checks; byte-identical 2,815,209-byte ZIP SHA-256 abf0151fd03d2ff2eb87a3b18e641af753f2d70cc378d778661949d8fe544f80. Excluded the handoff-committed .codex/** tool config from the extension package."
-    },
-    {
-      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete && python3 -m unittest discover -s scripts/tests -p 'test_*stm32*.py'",
-      "exitStatus": 0,
-      "result": "T039 INDEPENDENT VERIFICATION: readyCount 53/53; H735 ITCM_AXI_SHARED_128_256 reproduced with both ranges at 0x24020000 yields CONFIGURATION_RANGE_OVERLAP; 95 STM32 Python tests OK (skipped=2); plan SHA-256 00def2817ba0660644a4bc6cea3ffb756e11aff4d7236a466f82de838c280c66 matches. No discrepancy."
-    },
-    {
-      "command": "python3 scripts/generate-stm32-svd-applicability.py generate --curated catalogs/stm32/2026-09-29/curated-catalog.json --rules catalogs/stm32/2026-09-28/svd-rules.json --output catalogs/stm32/2026-09-29/svd-applicability.json",
-      "exitStatus": 0,
-      "result": "T040 applicability generated: 53 exact parts; 8 EXACT_SVD_SHIPPED across 7 device lines, 37 EXACT_SVD_DEFERRED, 8 UNAVAILABLE with reasons; digest be795ab0d0d5da1b218428361690753fb39e8f962b3de8c160ae9a43d7970518. No family or wildcard inference."
-    },
-    {
-      "command": "python3 scripts/generate-stm32-svd-packs.py --applicability catalogs/stm32/2026-09-29/svd-applicability.json --curated catalogs/stm32/2026-09-29/curated-catalog.json --svd-root <pinned-svd-cache> --output packs/",
-      "exitStatus": 0,
-      "result": "T040 packs generated deterministically from 7 pinned Apache-2.0 SVD files (41 SVD sources fetched and SHA-256 verified against the pinned rule index): 400 peripheral windows, 7,512 registers, 47,440 fields, 22,725 enumerated values; raw SVD XML not redistributed."
-    },
-    {
-      "command": "python3 -m unittest discover -s scripts/tests -p 'test_*stm32*.py'",
-      "exitStatus": 0,
-      "result": "T040 FOCUSED PYTHON PASS: 105 STM32 Python tests OK (skipped=2 optional pinned-source downloads), including 10 new SVD applicability/pack tests."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check verifyFormatting --no-daemon",
-      "exitStatus": 0,
-      "result": "T040 FOCUSED JAVA PASS: 249 unit and 83 real-Ghidra tests, including new STM32 SVD model/loader/applicability/interrupt and 8 applicator preservation/idempotence/interrupt tests; Checkstyle, JaCoCo, formatting, STM32 catalog/fixture, ESP catalog, scaffold checks pass."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T040 PASS: two clean, uncached 22-action builds; 249 unit, 83 real-Ghidra, 105 STM32 Python (2 documented optional-source skips), 4 ESP Python tests; Checkstyle, JaCoCo, formatting, fixture, scaffold and ZIP-entry oracle checks; byte-identical 3,921,060-byte ZIP SHA-256 7b41324f79a0739dcc8195e0031cc536c597df85bc6eb2138a34f8eaa300fcf9."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew ghidraIntegrationTest --tests 'io.github.rezabakhshi.embedra.ghidra.stm32.Stm32SvdApplicatorTest'",
-      "exitStatus": 0,
-      "result": "T040 exact-part provenance regressions pass: applyAll rejects a mismatched interrupt Entry before mutation; bundled pack loading rejects a source digest that differs from the reviewed exact applicability entry. 9 STM32 SVD applicator integration tests pass."
-    },
-    {
-      "command": "scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "Final independent T039/T040 verification: 2 clean uncached 22-action builds; 249 unit, 84 real-Ghidra, 105 STM32 Python (2 documented skips), and 4 ESP Python tests; all checks pass; byte-identical 3,921,380-byte ZIP SHA-256 f04ee66e34f9e942ac5728a50eb1f1bd0d45faeff1c63faf1d82342f5daeb004."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check verifyFormatting --no-daemon",
-      "exitStatus": 0,
-      "result": "T041 FOCUSED JAVA PASS: 260 unit and 90 real-Ghidra tests, including the T041 pure core-exception/vector-plan suite and 6 real-Ghidra label/function/idempotence/preservation/ambiguous/truncated tests; Checkstyle, JaCoCo, formatting, STM32 catalog/fixture, ESP catalog, and scaffold checks pass."
-    },
-    {
-      "command": "python3 -m unittest discover -s scripts/tests -p 'test_*stm32*.py' && python3 -m unittest scripts/tests/test_generate_esp_catalog.py",
-      "exitStatus": 0,
-      "result": "T041 FOCUSED PYTHON PASS: 105 STM32 Python tests OK (skipped=2 optional pinned-source downloads) and 4 ESP Python tests OK; no STM32 generator changes."
-    },
-    {
-      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
-      "exitStatus": 0,
-      "result": "T041 READINESS PASS: readyCount 53/53, missingMemoryBanks 0, missingProcessors 0, unresolvedFlash 11; catalog SHA-256 afc66a47 and memory-plan SHA-256 00def2817b unchanged."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T041 HARDENED PASS: two clean, uncached 22-action builds; 262 unit, 93 real-Ghidra, 105 STM32 Python (2 documented optional-source skips), and 4 ESP Python tests; Checkstyle, JaCoCo, formatting, fixture, scaffold, and ZIP-entry oracle checks; byte-identical 3,967,956-byte ZIP SHA-256 47b41bd8b6712be329a7f4b8c516c8f685cbc99d93ff4e7446536ed5fbbd7460. Includes the T039/T040/T041 hardening review fixes (exact-part binding, encoding-safe DTD rejection, typed loader errors, model overlap/duplicate rejection, H735 placeholder extent, T039 PDSC encoding); T039 memory plans, T040 applicability and packs, and all support states unchanged."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check verifyFormatting --no-daemon",
-      "exitStatus": 0,
-      "result": "T042 FOCUSED JAVA PASS: 271 unit and 93 real-Ghidra tests, including the T042 pure board-profile model/catalog/planner suite; Checkstyle, JaCoCo, formatting, STM32 catalog/fixture, ESP catalog, and scaffold checks pass."
-    },
-    {
-      "command": "python3 -m unittest discover -s scripts/tests -p 'test_*stm32*.py'",
-      "exitStatus": 0,
-      "result": "T042 FOCUSED PYTHON PASS: 112 STM32 Python tests OK (skipped=2 optional pinned-source downloads); includes 7 board-profile generator tests."
-    },
-    {
-      "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
-      "exitStatus": 0,
-      "result": "T042 READINESS PASS: readyCount 53/53, missingMemoryBanks 0, missingProcessors 0, unresolvedFlash 11; catalog SHA-256 afc66a47 and memory-plan SHA-256 00def2817b unchanged."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T042 PASS: two clean, uncached 22-action builds; 271 unit, 93 real-Ghidra, 112 STM32 Python (2 documented optional-source skips), and 4 ESP Python tests; Checkstyle, JaCoCo, formatting, fixture, scaffold, and ZIP-entry oracle checks; byte-identical 4,002,516-byte ZIP SHA-256 49486842fd383d6a48cc725abea402ab61ca1052a02bb6f082cfe4793ceb2c5d. T039 memory plans, T040 applicability and packs, T041 vector behavior, T042 board profiles, and all support states unchanged."
-    },
-    {
-      "command": "python3 scripts/generate-stm32-signatures.py generate --cube-root <pinned-stm32cube-f1> --cube-zip <pinned-zip> --pack-dir packs/stm32.stm32f1.signatures/1.0.0 --audit .embedra/evidence/tasks/T043-signature-source-audit.json",
-      "exitStatus": 0,
-      "result": "T043 GENERATION PASS: 1,543 relocation-masked signatures across five permissively licensed components; 0 compile skips; 420 low-specificity functions excluded; content digest ebb0e4e72b435d13b23f42945fc5e62056d82b390921e5ad5a007bc2b227a191, signatures.json SHA-256 c21f553e30a5d02b30aaafa4bd0584ac3deaf304b23d895d7d692cedbbd8dc70."
-    },
-    {
-      "command": "EMBEDRA_STM32CUBE_ROOT=<pinned-stm32cube-f1> EMBEDRA_STM32CUBE_ZIP=<pinned-zip> python3 -m unittest scripts/tests/test_generate_stm32_signatures.py",
-      "exitStatus": 0,
-      "result": "T043 REGENERATION PASS: 11 tests OK; regeneration reproduced the committed pack and source audit byte-for-byte and rejected a tampered copy."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check verifyFormatting --no-daemon",
-      "exitStatus": 0,
-      "result": "T043 FOCUSED JAVA PASS: 291 unit and 93 real-Ghidra tests, including the T043 pure signature model/loader/matcher and shared pack-selection suite; Checkstyle, JaCoCo, formatting, STM32 catalog/fixture, ESP catalog, and scaffold checks pass."
-    },
-    {
-      "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
-      "exitStatus": 0,
-      "result": "T043 PASS: two clean, uncached 22-action builds; 291 unit, 93 real-Ghidra, 123 STM32 Python (4 documented optional-source skips), and 4 ESP Python tests; Checkstyle, JaCoCo, formatting, fixture, scaffold, and ZIP-entry oracle checks; byte-identical 4,186,407-byte ZIP SHA-256 867e619d081c7dd922ed1b0f6d59ac50db2d2aa6305cb6fb228ff526f698aa14. T039 memory plans, T040 applicability and packs, T041 vector behavior, T042 board profiles, and all support states unchanged."
-    }
-  ],
-  "buildQuality": {
-    "junit": "6.1.3",
-    "jacoco": "0.8.15",
-    "checkstyle": "14.1.0",
-    "dependencyLock": "gradle.lockfile",
-    "reproducibilityScript": "scripts/verify-build-quality.sh",
-    "coreBranchThreshold": 0.9,
-    "coreThresholdMeasured": true,
-    "coreBranchCoverage": 0.9776,
-    "minimumCoreClassBranchCoverage": 0.92,
-    "packInstructionCoverage": 0.9226,
-    "packBranchCoverage": 0.7759,
-    "unitTests": 291,
-    "ghidraIntegrationTests": 93,
-    "pythonGeneratorTests": 123
-  },
-  "architecture": {
-    "pureBoundaries": [
-      "core",
-      "formats",
-      "targets",
-      "analyzers",
-      "pack",
-      "svd"
-    ],
-    "adapterBoundary": "ghidra",
-    "enforcementTest": "io.github.rezabakhshi.embedra.build.ArchitectureBoundaryTest"
-  },
-  "coreFoundation": {
-    "rangeCoordinates": "NON_NEGATIVE_SIGNED_LONG",
-    "rangeSemantics": "HALF_OPEN_CHECKED",
-    "diagnosticCodes": "STABLE_ENUM_IDS",
-    "defaultParserLimits": {
-      "maxInputBytes": 268435456,
-      "maxAllocationBytes": 16777216,
-      "maxExtractedBytes": 536870912,
-      "maxObjects": 1000000,
-      "maxNestingDepth": 32,
-      "maxWallTimeSeconds": 30
-    },
-    "topologyModel": "VALIDATED_IMMUTABLE_GRAPH",
-    "canonicalReportSchema": "urn:embedra:schema:canonical-report:1",
-    "executionTopologySchema": "urn:embedra:schema:execution-topology:1",
-    "deviceCatalogSnapshotSchema": "urn:embedra:schema:device-catalog-snapshot:1",
-    "deviceCatalogDiffSchema": "urn:embedra:schema:device-catalog-diff:1",
-    "packManifestSchema": "urn:embedra:schema:pack-manifest:1"
-  },
-  "packFoundation": {
-    "manifestVersion": 1,
-    "versionSyntax": "MAJOR.MINOR.PATCH",
-    "installation": "VERIFY_COPY_REVERIFY_ATOMIC_MOVE",
-    "selection": "LOCAL_ONLY_HIGHEST_COMPATIBLE",
-    "networkRequired": false,
-    "publisherAuthentication": false
-  },
-  "esp32EnrichmentPacks": {
-    "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
-    "license": "Apache-2.0",
-    "rom": {
-      "packId": "espressif.esp32.rom",
-      "version": "1.0.0",
-      "contentDigest": "b0f2ed4387261945ae538e5c142fc475927990c62fd1e2d4b68267c965f2c49d",
-      "symbolCount": 1997
-    },
-    "peripherals": {
-      "packId": "espressif.esp32.peripherals",
-      "version": "1.0.0",
-      "contentDigest": "7b7a45186fffc48b82cc70f479887484c527e1dd7828f2801d9e7bb8712e2d8f",
-      "peripheralCount": 52,
-      "registerAddressCount": 1418
-    }
-  },
-  "esp32s2EnrichmentPacks": {
-    "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
-    "license": "Apache-2.0",
-    "rom": {
-      "packId": "espressif.esp32s2.rom",
-      "version": "1.0.0",
-      "contentDigest": "00210b4c148735f22c8713a0c783c07398f98400e19be9ea6649870b1475ddc6",
-      "symbolCount": 1014
-    },
-    "peripherals": {
-      "packId": "espressif.esp32s2.peripherals",
-      "version": "1.0.0",
-      "contentDigest": "601fc3e34aced1b3f7f847aebd36c41c655a8a572ab39b904cf5d32879454198",
-      "peripheralCount": 53,
-      "registerAddressCount": 1286
-    }
-  },
-  "esp32s3EnrichmentPacks": {
-    "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
-    "license": "Apache-2.0",
-    "rom": {
-      "packId": "espressif.esp32s3.rom",
-      "version": "1.0.0",
-      "contentDigest": "1b3e5577500bf2f6ae117ebe9755ce1b09c353ea6869bdbdfc16c635685edbc4",
-      "symbolCount": 2197
-    },
-    "peripherals": {
-      "packId": "espressif.esp32s3.peripherals",
-      "version": "1.0.0",
-      "contentDigest": "311ef2d3a33fa7f1cd302e42fa00ad7f3af972f6b89d4046a9c35e290c9b25ee",
-      "peripheralCount": 61,
-      "registerAddressCount": 2173
-    },
-    "application": "TRANSACTIONAL_IDEMPOTENT_RECEIPT_REMOVABLE_USER_PRESERVING"
-  },
-  "esp32c3EnrichmentPacks": {
-    "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
-    "license": "Apache-2.0",
-    "rom": {
-      "packId": "espressif.esp32c3.rom",
-      "version": "1.0.0",
-      "contentDigest": "372df6ba5e6177999e9bb806283eac89ef25f326d85704160881105ac97a72a1",
-      "symbolCount": 1902
-    },
-    "peripherals": {
-      "packId": "espressif.esp32c3.peripherals",
-      "version": "1.0.0",
-      "contentDigest": "3a8d9bde919c848cb2c2229df17f99a6ce37095f11bc2bd130cd511daa8e6935",
-      "peripheralCount": 46,
-      "registerAddressCount": 1053
-    },
-    "svd": {
-      "packId": "espressif.esp32c3.svd",
-      "version": "1.0.0",
-      "contentDigest": "0154f2e56311195530c37191880f5c4e8722cb9aec7d129611f9edb4cea69b7e",
-      "peripheralCount": 37,
-      "registerCount": 2606,
-      "fieldCount": 5020,
-      "reconciliationPolicy": "record-conflicts-prefer-svd"
-    }
-  },
-  "remainingEspEnrichmentPacks": {
-    "espIdfRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
-    "svdRevision": "be20aa12560889d6125d144cdb48cf615ac17628",
-    "license": "Apache-2.0",
-    "reconciliationPolicy": "record-conflicts-prefer-svd",
-    "deterministicRegenerationVerified": true,
-    "targets": {
-      "esp32p4": {
-        "romSymbols": 732,
-        "headerPeripherals": 122,
-        "headerRegisters": 5259,
-        "svdPeripherals": 89,
-        "svdRegisters": 6029
-      },
-      "esp32c2": {
-        "romSymbols": 2258,
-        "headerPeripherals": 39,
-        "headerRegisters": 905,
-        "svdPeripherals": 27,
-        "svdRegisters": 1013
-      },
-      "esp32c5": {
-        "romSymbols": 1171,
-        "headerPeripherals": 82,
-        "headerRegisters": 2796,
-        "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
-      },
-      "esp32c6": {
-        "romSymbols": 1300,
-        "headerPeripherals": 75,
-        "headerRegisters": 2392,
-        "svdPeripherals": 65,
-        "svdRegisters": 3944
-      },
-      "esp32c61": {
-        "romSymbols": 1133,
-        "headerPeripherals": 57,
-        "headerRegisters": 2232,
-        "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
-      },
-      "esp32h2": {
-        "romSymbols": 623,
-        "headerPeripherals": 66,
-        "headerRegisters": 2111,
-        "svdPeripherals": 55,
-        "svdRegisters": 3481
-      },
-      "esp32h21": {
-        "romSymbols": 624,
-        "headerPeripherals": 58,
-        "headerRegisters": 1645,
-        "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
-      },
-      "esp32h4": {
-        "romSymbols": 588,
-        "headerPeripherals": 78,
-        "headerRegisters": 1803,
-        "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
-      },
-      "esp32s31": {
-        "status": "UNAVAILABLE_IN_PINNED_SOURCES"
-      },
-      "esp32e22": {
-        "status": "UNAVAILABLE_IN_PINNED_SOURCES"
-      }
-    }
-  },
-  "targetProviders": {
-    "esp8266Legacy": {
-      "supportState": "EXPERIMENTAL",
-      "identity": "ESP8266EX_OR_ESP8285_NOT_ENCODED",
-      "languageId": "Xtensa:LE:32:default",
-      "compilerSpecId": "default",
-      "processorTopology": "ONE_LX106_APPLICATION_CPU",
-      "imageVersions": [
-        1,
-        2
-      ],
-      "version2FlashBaseRequired": true,
-      "mappedProgramVerified": true,
-      "esp32ChipIdRegistryMember": false
-    },
-    "esp32": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 0,
-      "languageId": "Xtensa:LE:32:default",
-      "compilerSpecId": "default",
-      "processorTopology": "TWO_SYMMETRIC_LX6_SHARED_IMAGE",
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true,
-      "fullFlashWorkspaceVerified": false
-    },
-    "esp32s2": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 2,
-      "languageId": "Xtensa:LE:32:default",
-      "compilerSpecId": "default",
-      "processorTopology": "ONE_LX7_APPLICATION_CPU",
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true,
-      "fullFlashWorkspaceVerified": false
-    },
-    "esp32c3": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 5,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "instructionAlignmentBytes": 2,
-      "processorTopology": "ONE_RV32IMC_APPLICATION_CPU",
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true,
-      "fullFlashWorkspaceVerified": false
-    },
-    "esp32s31": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 32,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "TWO_APPLICATION_CPUS",
-      "exactVariantCount": 2,
-      "mappedProgramVerified": true,
-      "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
-    },
-    "esp32p4": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 18,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "TWO_APPLICATION_CPUS_AND_ONE_LP_CPU",
-      "exactVariantCount": 4,
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true
-    },
-    "esp32c2": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 12,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU",
-      "exactVariantCount": 2,
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true
-    },
-    "esp32c5": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 23,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU",
-      "exactVariantCount": 4,
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true
-    },
-    "esp32c6": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 13,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU",
-      "exactVariantCount": 3,
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true
-    },
-    "esp32c61": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 20,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU",
-      "exactVariantCount": 4,
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true
-    },
-    "esp32e22": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 31,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "TWO_APPLICATION_CPUS",
-      "exactVariantCount": 1,
-      "mappedProgramVerified": true,
-      "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
-    },
-    "esp32h2": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 16,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU",
-      "exactVariantCount": 2,
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true
-    },
-    "esp32h21": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 25,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "ONE_APPLICATION_CPU",
-      "exactVariantCount": 1,
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true
-    },
-    "esp32h4": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 28,
-      "languageId": "RISCV:LE:32:default",
-      "compilerSpecId": "gcc",
-      "processorTopology": "TWO_APPLICATION_CPUS",
-      "exactVariantCount": 2,
-      "mappedProgramVerified": true,
-      "enrichmentVerified": true
-    },
-    "esp32s3": {
-      "supportState": "EXPERIMENTAL",
-      "chipId": 9,
-      "languageId": "Xtensa:LE:32:esp32s3",
-      "compilerSpecId": "default",
-      "instructionAlignmentBytes": 1,
-      "memoryEvidence": "ESP-IDF v6.0 soc.h",
-      "chipEvidence": "esptool v5.4.0 targets/esp32s3.py",
-      "mappedProgramVerified": true,
-      "fullFlashWorkspaceVerified": true,
-      "fullFlashFixtureClass": "SYNTHETIC",
-      "partitionPayloadHandling": "EXPLICIT_CONSERVATIVE_HANDLERS",
-      "restrictedFullFlashDigestVerified": true,
-      "restrictedFullFlashRedistributable": false
-    }
-  },
-  "foundationAutomation": {
-    "pureTask": "pureTest",
-    "ghidraIntegrationTask": "ghidraIntegrationTest",
-    "transactionPolicy": "ROLLBACK_UNLESS_EXPLICIT_COMMIT",
-    "fixtureValidator": "scripts/validate-fixture-provenance.sh",
-    "handoffValidator": "scripts/validate-handoff.sh",
-    "hostedCiExecuted": false
-  },
-  "stm32CuratedScope": {
-    "status": "COMPLETE_REVISED_53_PART_ALLOWLIST",
-    "exactParts": [
-      "STM32C031C6T3",
-      "STM32C051C8T6",
-      "STM32C071RBT6",
-      "STM32C092RCT6",
-      "STM32F103C8T6",
-      "STM32F103CBT6",
-      "STM32F103RBT6",
-      "STM32F207ZGT6",
-      "STM32F401RET6",
-      "STM32F756ZGT6",
-      "STM32G0B1RET6",
-      "STM32G431RBT6",
-      "STM32G473QET6",
-      "STM32G474RET6",
-      "STM32G491RET6",
-      "STM32H503RBT6",
-      "STM32H533RET6",
-      "STM32H553ZGT6",
-      "STM32H573IIK3Q",
-      "STM32H5E5ZJT6",
-      "STM32H5F5LJH7Q",
-      "STM32H735IGK6",
-      "STM32H750XBH6",
-      "STM32H7S3L8H6",
-      "STM32H7S7L8H6H",
-      "STM32L412KBU3",
-      "STM32L412RBT6P",
-      "STM32L4P5CGU6",
-      "STM32L4R5ZIT6",
-      "STM32L552ZET6Q",
-      "STM32L562QEI6Q",
-      "STM32N657X0H3Q",
-      "STM32U031R8T6",
-      "STM32U083MCT6",
-      "STM32U083RCT6",
-      "STM32U385RGT6Q",
-      "STM32U3C5ZIT6Q",
-      "STM32U545RET6Q",
-      "STM32U575ZIT6Q",
-      "STM32U585AII6Q",
-      "STM32U5A5ZJT6Q",
-      "STM32U5G9NJH6Q",
-      "STM32U5G9ZJT6Q",
-      "STM32WB05KZV6TR",
-      "STM32WB07CCV6TR",
-      "STM32WB09KEV6TR",
-      "STM32WB15CCU6",
-      "STM32WB55RGV6",
-      "STM32WBA25CEU7",
-      "STM32WBA52CGU6",
-      "STM32WBA65RIV7",
-      "STM32WL33CCV6TR",
-      "STM32WL3RKBV6"
-    ],
-    "identityPolicy": "EXACT_PART_ONLY_NO_FAMILY_OR_WILDCARD_INFERENCE",
-    "sourcePolicy": "REDISTRIBUTABLE_ST_CMSIS_OFFLINE_FACTS",
-    "catalogDoesNotImplyImportSupport": true,
-    "nextTask": "T033_NOT_STARTED",
-    "snapshotPath": "catalogs/stm32/2026-09-29/curated-catalog.json",
-    "sourceReferenceCount": 52,
-    "exactPartCount": 53,
-    "verification": {
-      "unitTests": 201,
-      "realGhidraTests": 60,
-      "stm32PythonTests": 50,
-      "espPythonTests": 4,
-      "provenanceValidator": "PASS",
-      "handoffValidator": "PASS",
-      "twoBuildReproducibility": "PASS",
-      "extensionSha256": "e49ab7a474bd5b7326dcf23cf4078dacb86743e10cd20e1113a0270cd5010687"
-    },
-    "acceptance": "COMPLETE_REVISED_T032",
-    "acceptanceFamilies": [
-      "STM32C0",
-      "STM32F103",
-      "STM32F2",
-      "STM32F4",
-      "STM32F7",
-      "STM32G0",
-      "STM32G4",
-      "STM32H5",
-      "STM32H7",
-      "STM32L4",
-      "STM32L4+",
-      "STM32L5",
-      "STM32N6",
-      "STM32U0",
-      "STM32U3",
-      "STM32U5",
-      "STM32WB",
-      "STM32WB0",
-      "STM32WBA",
-      "STM32WL3"
-    ]
-  },
-  "stm32MarketSurvey": {
-    "status": "REVIEWED_SELECTION_COMPLETE_2026_09_29",
-    "officialNucleoProductCount": 91,
-    "officialDiscoveryProductCount": 61,
-    "boardSourceConfigurations": 277,
-    "explicitExactCpnRows": 148,
-    "distinctExactCpnCandidates": 89,
-    "candidateIndexPath": "catalogs/stm32/sources/board-index.json",
-    "redistribution": "BSD_3_CLAUSE_SOURCE_FACTS_REPOSITORY_ONLY",
-    "marketAvailability": "32_IN_STOCK_18_ACTIVE_OUT_OF_STOCK_5_UNVERIFIED_1_MODULE_EXCLUDED",
-    "discoveryIncludesMpuAndApplicationBoards": true,
-    "currentNucleoBoardNameMatches": 85,
-    "currentDiscoveryBoardNameMatches": 41,
-    "candidateFactsPath": "catalogs/stm32/sources/board-part-candidates.json",
-    "reviewedActiveBoardParts": 50,
-    "selectionPath": "catalogs/stm32/2026-09-29/selection.json",
-    "auditEvidencePath": ".embedra/evidence/tasks/T032-market-audit.json",
-    "currentMatchedDistinctExactCpnCandidates": 56,
-    "moduleCandidatesExcluded": 1
-  },
-  "stm32MemoryReview": {
-    "status": "COMPLETE_ALL_53_VALIDATED_PLANS",
-    "selectedParts": 53,
-    "directDfpPatternParts": 46,
-    "packingSuffixParts": 4,
-    "partsWithPartialRegionFacts": 11,
-    "partialRegionFacts": 54,
-    "validatedRuntimeMaps": 53,
-    "unpairedCatalogFlashSizes": 0,
-    "catalogFlashFieldsUnpaired": 11,
-    "catalogFlashLimitation": "11 curated catalog flashKiB fields remain null (audit unresolvedFlash=11); every exact part has a validated plan flash size, so the memory review has no unpaired plan capacity",
-    "sourceHeaders": 48,
-    "rawHeaderDeclarations": 1905,
-    "reconciliationPath": ".embedra/evidence/tasks/T039-memory-reconciliation.json",
-    "reconciliationSha256": "4bbd84e3f4fa32811ef308f5426505d981c511bda2e4ed00a99801a1ef76393c",
-    "headerEvidencePath": ".embedra/evidence/tasks/T039-memory-header-evidence.json",
-    "headerEvidenceSha256": "491c148f623de7ac3e14f2c1e99ec919b3223afda470d57de3040405ed07a4a5",
-    "documentBytesStatus": "PINNED_DOCUMENTS_VERIFIED_LOCAL_CACHE",
-    "catalogUnchanged": true,
-    "supportState": "PLANNED",
-    "remainingIncompleteParts": 0,
-    "memoryPlansPath": "catalogs/stm32/2026-09-29/memory-plans.json",
-    "memoryPlansSha256": "00def2817ba0660644a4bc6cea3ffb756e11aff4d7236a466f82de838c280c66",
-    "validatedExactParts": "ALL_53",
-    "sourceDocuments": 88,
-    "explicitAvailabilityFields": [
-      "flashAvailability UNAVAILABLE (STM32N657X0H3Q, ROMless)",
-      "systemAvailability UNAVAILABLE (STM32WL3RKBV6, RM0551 table 3)",
-      "optionAvailability NOT_MEMORY_MAPPED (register-only option bytes)",
-      "bitBandAvailability UNAVAILABLE (M0+/M33/M55/M7)",
-      "bootAliasAvailability CONFIGURATION_DEPENDENT (BOOT_ADD/NSBOOTADD/SECBOOTADD/REMAP)"
-    ],
-    "dualCoreProfiles": [
-      "WB_DUAL_CORE (STM32WB55RGV6 and STM32WB15CCU6, Cortex-M4 + Cortex-M0+)"
-    ],
-    "configurationDependentRegions": {
-      "STM32H735IGK6": "ITCM_AXI_SHARED 192 KiB; four TCM_AXI_SHARED allocations resolved to concrete ITCM/AXI ranges"
-    },
-    "documentAuditPath": ".embedra/evidence/tasks/T039-document-source-audit.json",
-    "documentAuditSha256": "9f9a0b7b9d03ab5a98290557f4687194c19770511905d276f9d7682456b47d75",
-    "focusedVerification": {
-      "plannerUnitTests": 17,
-      "rawBinAndMemoryGhidraTests": 7,
-      "stm32PythonTests": 95,
-      "javaBaseline": 21,
-      "ghidraVersion": "12.1.3",
-      "readinessRequireComplete": "PASS_53_OF_53",
-      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
-    }
-  },
-  "stm32SvdEnrichment": {
-    "status": "COMPLETE_T040",
-    "supportState": "PLANNED",
-    "catalogUnchanged": true,
-    "memoryPlansUnchanged": true,
-    "source": {
-      "identity": "ST-authored SVD via modm-io/cmsis-svd-stm32",
-      "url": "https://github.com/modm-io/cmsis-svd-stm32",
-      "revision": "e79021accd49bf19bd0b16065f5471fb073ff3ac",
-      "license": "Apache-2.0",
-      "redistribution": "DERIVED_FACTS_ONLY_RAW_XML_NOT_BUNDLED"
-    },
-    "applicabilityPath": "catalogs/stm32/2026-09-29/svd-applicability.json",
-    "applicabilitySha256": "be795ab0d0d5da1b218428361690753fb39e8f962b3de8c160ae9a43d7970518",
-    "selectionRule": "EXACT_DEVICE_LINE_OR_NAMED_REVIEW_OVERRIDE_NO_FAMILY_OR_WILDCARD",
-    "coveredExactParts": 53,
-    "shippedParts": 8,
-    "shippedDeviceLines": 7,
-    "deferredParts": 37,
-    "unavailableParts": 8,
-    "shippedPacks": [
-      "packs/stm32.stm32c031.svd/1.0.0",
-      "packs/stm32.stm32f103.svd/1.0.0",
-      "packs/stm32.stm32f401.svd/1.0.0",
-      "packs/stm32.stm32h503.svd/1.0.0",
-      "packs/stm32.stm32h735.svd/1.0.0",
-      "packs/stm32.stm32wb55-cm0p.svd/1.0.0",
-      "packs/stm32.stm32wb55-cm4.svd/1.0.0"
-    ],
-    "shippedTotals": {
-      "peripherals": 400,
-      "registers": 7512,
-      "fields": 47440,
-      "enumeratedValues": 22725
-    },
-    "interruptPlan": {
-      "coveredExactParts": 53,
-      "applicableExactParts": 51,
-      "ambiguousExactParts": [
-        "STM32N657X0H3Q (CONDITIONAL_REVIEW)",
-        "STM32WL3RKBV6 (MAPPED_VARIANTS)"
-      ],
-      "vectorLabelsOrFunctionsCreated": false,
-      "note": "T040 applies interrupt definitions as Ghidra enum data types and provenance only; T041 owns vector labels/functions and core exception structures."
-    },
-    "verifiedApplication": "TRANSACTIONAL_IDEMPOTENT_CONFLICT_PRESERVING_USER_PRESERVING_EXACT_PART_AND_SOURCE_PIN_ENFORCED",
-    "focusedVerification": {
-      "modelUnitTests": 3,
-      "packLoaderTests": 5,
-      "applicabilityTests": 3,
-      "interruptPlanTests": 2,
-      "ghidraApplicatorTests": 10,
-      "stm32PythonTests": 105,
-      "javaBaseline": 21,
-      "ghidraVersion": "12.1.3",
-      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
-    }
-  },
-  "stm32VectorLabels": {
-    "status": "COMPLETE_T041",
-    "supportState": "PLANNED",
-    "catalogUnchanged": true,
-    "memoryPlansUnchanged": true,
-    "deviceDataPacksUnchanged": true,
-    "coreExceptionTable": [
-      "NonMaskableInt=-14",
-      "HardFault=-13",
-      "MemManage=-12",
-      "BusFault=-11",
-      "UsageFault=-10",
-      "SVCall=-5",
-      "DebugMonitor=-4",
-      "PendSV=-2",
-      "SysTick=-1"
-    ],
-    "reset": "Reset_IRQn=-15 slot 1 architectural",
-    "naming": "EXACT_PART_QUALIFIED_FROM_PINNED_INTERRUPT_NAMES_AND_EXPLICIT_CORE_TABLE",
-    "confirmedTableRequired": true,
-    "conditionalOrVariantInterruptListAppliesNothing": true,
-    "unlistedCoreExceptionPreserved": "pinned_name_with_UNLISTED_CORE_EXCEPTION_diagnostic",
-    "application": "TRANSACTIONAL_IDEMPOTENT_USER_PRESERVING_NON_RESURRECTING",
-    "focusedVerification": {
-      "purePlannerTests": 12,
-      "realGhidraTests": 8,
-      "applicableCuratedPartsSwept": 51,
-      "javaBaseline": 21,
-      "ghidraVersion": "12.1.3",
-      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
-    },
-    "notClaimed": [
-      "No exact STM32 device support promotion; all 53 records remain PLANNED",
-      "No automatic vector-table base inference or family/wildcard inference",
-      "No ST startup-style _Handler rename; no fabricated handler names or addresses",
-      "No new Ghidra struct data type over the T037 primitive words"
-    ]
-  },
-  "stm32BoardProfiles": {
-    "status": "COMPLETE_T042",
-    "supportState": "PLANNED",
-    "catalogUnchanged": true,
-    "memoryPlansUnchanged": true,
-    "deviceDataPacksUnchanged": true,
-    "vectorLabelsUnchanged": true,
-    "catalogSha256": "78a3e0e41cc14585ad3c4140aed80fff6d53fcd367d6beec3d2cc787950c75f3",
-    "boardIndexSha256": "2b9c7c2cc5e2838c50190a507cc0d96792d3a3e5eba8a5aee4e21d50cc77b6a7",
-    "sourceAuditPath": ".embedra/evidence/tasks/T042-board-source-audit.json",
-    "sourceAuditSha256": "725d0c69a2323275752f4c66fee1be169d782d6279e847fbf6ea1bfc96564413",
-    "reviewedProfiles": 9,
-    "unavailableProfiles": 3,
-    "reviewedBoards": [
-      "STM32H735G-DK (STM32H735IGK6)",
-      "STM32H750B-DK (STM32H750XBH6)",
-      "STM32H7S78-DK (STM32H7S7L8H6H)",
-      "STM32H573I-DK (STM32H573IIK3Q)",
-      "STM32H5F5J-DK (STM32H5F5LJH7Q)",
-      "STM32L562E-DK (STM32L562QEI6Q)",
-      "B-U585I-IOT02A (STM32U585AII6Q)",
-      "STM32U5G9J-DK1 (STM32U5G9NJH6Q)",
-      "STM32N6570-DK (STM32N657X0H3Q)"
-    ],
-    "unavailableParts": [
-      "STM32G473QET6 (NO_PINNED_BSP_EXTERNAL_MEMORY_FACT)",
-      "STM32U083MCT6 (BOARD_HAS_NO_EXTERNAL_MEMORY_IN_PINNED_BSP)",
-      "STM32L552ZET6Q (BOTH_EXTERNAL_DEVICES_SHARE_OCTOSPI1_MAPPED_WINDOW)"
-    ],
-    "externalAddressSpace": "ext-mem",
-    "composition": "PURE_NON_MUTATING_EXACT_PART_COMPOSED_WITH_T039_MEMORY_PLAN",
-    "ghidraAdapter": "NOT_IMPLEMENTED_PURE_PLAN_ONLY_NO_FABRICATED_PERMISSIONS",
-    "focusedVerification": {
-      "pureModelTests": 9,
-      "boardProfilePythonTests": 7,
-      "javaBaseline": 21,
-      "ghidraVersion": "12.1.3",
-      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
-    },
-    "notClaimed": [
-      "No exact STM32 device support promotion; all 53 records remain PLANNED",
-      "No board profile mutates or extends an MCU pack",
-      "No invented external size, address, boot offset, or board-to-part link",
-      "No family or wildcard board link; exact-part id only",
-      "No Ghidra external-memory mapping and no fabricated memory permission"
-    ]
-  },
-  "stm32SignaturePacks": {
-    "status": "COMPLETE_T043",
-    "supportState": "PLANNED",
-    "catalogUnchanged": true,
-    "memoryPlansUnchanged": true,
-    "deviceDataPacksUnchanged": true,
-    "vectorLabelsUnchanged": true,
-    "boardProfilesUnchanged": true,
-    "sourceAuditPath": ".embedra/evidence/tasks/T043-signature-source-audit.json",
-    "sourceAuditSha256": "9bcffd9259e43c9bc256b67bba5f7c7bb8b5dd54d685efb7ec9eee598c05fddf",
-    "sourcePackage": "STM32Cube_FW_F1_V1.8.7",
-    "sourceArchiveSha256": "1b5f99f86982efe5e4931063de4a0f0af80e38a05d4835b0b8f82aefad634b29",
-    "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
-    "optimizations": [
-      "-Os",
-      "-O2"
-    ],
-    "packId": "stm32.stm32f1.signatures",
-    "packVersion": "1.0.0",
-    "supportedFamily": "STM32F1",
-    "signatureCount": 1543,
-    "signaturesSha256": "c21f553e30a5d02b30aaafa4bd0584ac3deaf304b23d895d7d692cedbbd8dc70",
-    "packContentDigest": "ebb0e4e72b435d13b23f42945fc5e62056d82b390921e5ad5a007bc2b227a191",
-    "components": {
-      "stm32f1xx-hal": 1111,
-      "freertos-kernel": 225,
-      "stm32f1xx-ll": 179,
-      "freertos-port": 24,
-      "cmsis-device": 4
-    },
-    "lowSpecificityExcluded": 420,
-    "compileSkips": 0,
-    "matching": "EVIDENCE_GATED_FAMILY_COMPILER_OPTIMIZATION_EXPLICIT_NON_MATCH",
-    "ghidraAdapter": "NOT_IMPLEMENTED_PURE_MATCH_AND_SHARED_PACK_SELECTION_ONLY",
-    "focusedVerification": {
-      "pureSignatureTests": 20,
-      "stm32PythonTests": 123,
-      "generatorRegenerationTests": 11,
-      "javaBaseline": 21,
-      "ghidraVersion": "12.1.3",
-      "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
-    },
-    "notClaimed": [
-      "No exact STM32 device support promotion; all 53 records remain PLANNED",
-      "No other STM32 family, HAL version, compiler, optimization, or RTOS/library version is claimed",
-      "A family-level signature match never resolves an exact part number",
-      "No vendor source, object, or toolchain runtime is redistributed",
-      "No Ghidra mutation or functional rename is applied by T043"
-    ]
-  },
-  "hardeningReview": {
-    "status": "COMPLETE_2026-10-02",
-    "evidencePath": ".embedra/evidence/tasks/T039-T041-hardening.md",
-    "fixedFindings": [
-      "T041 program-recorded exact-part binding in Stm32VectorLabelApplicator",
-      "T040 program-recorded exact-part binding in Stm32SvdApplicator",
-      "T040 encoding-safe DTD/entity rejection in generate-stm32-svd-packs.py with UTF-16 regression",
-      "T040 typed PACK_CONTENT_INVALID for out-of-range interrupt values in the pack loader and interrupt plan",
-      "T040 loader/model rejection of overlapping fields and duplicate field/enumerated-value names",
-      "T039 unresolved configuration placeholder sized by physicalKiB instead of an allocation bounding box",
-      "T039 PDSC encoding-safe DTD/entity rejection with UTF-16 regression"
-    ],
-    "residualBacklog": [
-      "T040 additively annotates a user-preserved peripheral block (documented design choice)",
-      "T040 non-enumerated fields wider than 32 bits are not yet materialized",
-      "Register-level modifiedWriteValues, array-name collisions, and createdEnumerations reapply over-count",
-      "Remaining T032 STM32 source generators and the ESP32-S3 SVD generator use raw byte-substring DTD checks",
-      "T039 Java planner does not yet assert topology.physicalCoreCount; malformed IPCC/HSEM bounds surface as NPE"
-    ],
-    "supportState": "PLANNED",
-    "artifactsUnchanged": [
-      "catalogs/stm32/2026-09-29/memory-plans.json",
-      "catalogs/stm32/2026-09-29/svd-applicability.json",
-      "packs/stm32.*.svd/1.0.0"
-    ]
-  },
-  "followupReview": {
-    "status": "COMPLETE_2026-10-02",
-    "evidencePath": ".embedra/evidence/tasks/T038-T041-followup-review.md",
-    "fixedFindings": [
-      "T038 catalog search normalizes family and line labels so lowercase line text matches case-insensitively",
-      "T040 svd package documentation names both Espressif and STM32 CMSIS-SVD models",
-      "T040 bundled SVD pack loading is restricted to reviewed EXACT_SVD_SHIPPED applicability entries",
-      "T039 evidence status cites the final allocation-resolution ZIP digest 68a45831c37b9085f9bfcf46e6350ba1a21850ac5aca9cea8235d636bbed91ba",
-      "PROJECT_STATE T040 result cites the final review gate f04ee66e34f9e942ac5728a50eb1f1bd0d45faeff1c63faf1d82342f5daeb004 with 84 real-Ghidra tests",
-      "State test counts updated and the 11 null catalog flashKiB fields documented as the known catalog limitation"
-    ],
-    "residualNotes": [
-      "Stm32InterruptPlan out-of-int-range interrupt handling is unreachable under the pinned catalog digest and has no dedicated regression",
-      "The documented T040 residual backlog is unchanged"
-    ],
-    "artifactsUnchanged": [
-      "catalogs/stm32/2026-09-29/curated-catalog.json",
-      "catalogs/stm32/2026-09-29/memory-plans.json",
-      "catalogs/stm32/2026-09-29/svd-applicability.json",
-      "packs/stm32.*.svd/1.0.0"
-    ]
+  "esp32s3_full_flash": {
+   "result": "PASS",
+   "approval": "APPROVED",
+   "approvedDate": "2026-09-23",
+   "evidence": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
+   "approvalEvidence": ".embedra/evidence/gates/esp32s3-full-flash-r2-approval.md",
+   "supersedes": ".embedra/evidence/gates/esp32s3-full-flash.md"
   }
+ },
+ "versionControl": {
+  "present": true,
+  "branch": "main",
+  "commit": "e051a59"
+ },
+ "workingTree": {
+  "state": "MODIFIED",
+  "uncommittedWork": [
+   "T049 complete: dedicated STM32MP heterogeneous target providers under targets/stm32/mp covering Cortex-A application cores, Cortex-M firmware, multi-stage boot chains, device tree bindings, TrustZone security domains, and shared resources as distinct execution units and separate programs per TOPO-004 and STM-015 without weakening MCU assumptions. Isolates MPU targets from ordinary MCU workflows; flagship targets STM32MP157 (dual A7 + M4), STM32MP257 (dual 64-bit A35 + M33 + SmartRun M0+), and STM32MP135 (single A7 without coprocessor); pure DTS parser under ParserLimits and CancellationToken; selectable boot flavors (A35 vs M33 master on MP257); multi-domain workspace slots with cross-program references (BOOT_HANDOFF, SHARED_MAILBOX, SHARED_SEMAPHORE, SHARED_MEMORY); no Ghidra adapter (NO_ADAPTER_PURE_PLAN_ONLY); all 53 curated MCU parts PLANNED; all STM32MP targets PLANNED; T039-T048 artifacts unchanged",
+   "T048 complete: pure STM32 firmware diff and CTF enrichment in analyzers/stm32 consuming the shared analyzers verbatim. Stm32FirmwareDiffAnalyzer applies the shared T025 diff contract (EspArtifactChangeKind vocabulary, digest-before-extent ordering, ADR-0017) over confirmed per-part artifacts carrying the T041 ImageRange contract and validated SHA-256 plus import provenance, failing closed on part mismatch (DIFF_EXACT_PART_MISMATCH) and uncurated parts (DIFF_EXACT_PART_UNCURATED) against the digest-pinned selection; Stm32CtfEnrichmentAnalyzer runs signature identification through the T043 Stm32SignatureMatcher evidence gates (EVIDENCE_MISSING/INDEX_UNAVAILABLE/NO_MATCH stay explicit shared non-matches and capability gaps, never findings), carries the shared Stm32SignatureMatchReport verbatim, consumes only digest-pinned T044 security records (pinned apertures restated; confirmed image extents inside a pinned SECURE alias aperture become STM32_IMAGE_IN_SECURE_ALIAS leads; unpinned/unsupplied stay explicitly UNAVAILABLE/NOT_SUPPLIED), and keeps logging/assert recovery as the explicit stm32-logging-assert-recovery gap because no STM32 logging/assert target is pinned; deterministic severity-ranked leads, shared limits/cancellation, no Ghidra adapter (NO_ADAPTER_PURE_PLAN_ONLY), all 53 parts PLANNED, and T039-T047 artifacts unchanged",
+   "T047 complete: pure external-memory loaders and OCTOSPI/FMC window mapping under targets/stm32/extmem. compose pairs the validated T039 plan with one confirmed board fact source - the digest-pinned T042 board profile (9 pinned-mapped parts, 3 explicitly unavailable with their pinned reasons, 41 NO_CONFIRMED_BOARD_PROFILE) or a confirmed USER_ASSERTION custom profile (STM-016) - and emits immutable controller windows (pinned ext-mem aperture, controller, mechanical OCTOSPI/XSPI/QUADSPI/FMC family projection, pinned writability, quoted evidence) separate from device-offset space; planLoad plans bounded device-offset loads with derived CPU aperture addresses and typed fail-closed diagnostics; the one T047 Ghidra adapter maps pinned apertures and loads caller bytes in one rollback-capable transaction bound to the program-recorded exact part, idempotent, preserving and never resurrecting or splitting existing memory; all 53 parts PLANNED and T039-T046 artifacts unchanged",
+   "T046 complete: pure wireless/network-core distinctions under targets/stm32/wireless. The pinned topology classifies exactly WB55 and WB15 as NETWORK_CORE_PINNED with a CPU2 network processor, the independently supplied coprocessor-firmware contract (C2BOOT/C2OPT/SBRV explicitly unresolved), the pinned IPCC/HSEM windows, and per-core register-model links (CM0P shipped for WB55, absent for WB15 per the T040 review); the other eight WB/WB0/WBA/WL3 parts are SINGLE_APPLICATION_CORE with no invented core, coprocessor image, radio register window, or radio-to-CPU memory attribution; the 43 non-wireless parts fail closed; a CPU2 image-binding evaluator classifies ranges against pinned CPU2 attribution only and never resolves a fetch view; no Ghidra adapter; all 53 parts PLANNED and T039-T045 artifacts unchanged",
+   "T045 complete: pure dual-core/heterogeneous workspace planning under targets/stm32/workspace. Program slots per independently supplied executable domain, pinned IPCC mailbox and HSEM windows, the RELEASES_FROM_RESET boot order, typed cross-program references with provenance, and explicit configuration-dependent views; exactly the pinned WB55 and WB15 parts are MULTI_CORE_PINNED and every other cataloged part including the four H7 parts is explicitly UNAVAILABLE; no second core, image, mailbox, or boot order is invented; no Ghidra adapter; all 53 parts PLANNED and T039-T044 artifacts unchanged",
+   "T044 complete: digest-pinned TrustZone security-domain snapshot plus pure catalog/composer/veneer planner. Secure alias apertures are derived only where the pinned Apache-2.0 ST CMSIS header, the T039 header evidence, and the reviewed T039 secure-view alias agree (19 exact parts); 34 parts are explicitly UNAVAILABLE with a reason; secure partitions and non-secure-callable boundaries stay configuration-dependent and unguessed; composition with a validated T039 plan is non-mutating and fails closed; no Ghidra adapter; all 53 parts PLANNED and T039-T043 artifacts unchanged",
+   "T043 complete: digest-pinned, evidence-gated STM32F1 HAL/LL/CMSIS-device/FreeRTOS signature pack generated deterministically from a pinned redistributable STM32Cube F1 build with relocation-masked byte patterns; pure loader/matcher/selection with explicit non-match diagnostics, bounded scanning, and shared limits; all 53 parts PLANNED and T039-T042 artifacts unchanged",
+   "T042 complete: digest-pinned reviewed STM32 board profiles layering external flash/RAM and boot offsets over an exact MCU record without mutating MCU packs. Pure Stm32BoardProfile/Stm32BoardCatalog/Stm32BoardPlanner; nine reviewed boards and three explicit unavailable profiles; exact-part-only links; overlap, address space, and boot-offset fail-closed checks; T039 memory plans and T040 device-data packs unchanged; every device-support state PLANNED",
+   "T041 complete: pure explicit Cortex-M core-exception table and confirmed vector-slot planner plus a transactional, idempotent, user-preserving Ghidra adapter",
+   "T040 complete: CMSIS-SVD device-data transformation with provenance",
+   "T039 complete: validated STM32 memory-region and topology plans",
+   "T038 complete: STM32 exact-part catalog registry",
+   "T038-T041 follow-up review fixes: case-insensitive line search, STM32 svd package documentation, shipped-only bundled SVD pack loading, and continuity digest/count corrections; all curated data, plans, packs, and support states unchanged"
+  ]
+ },
+ "toolchains": {
+  "ghidra": {
+   "version": "12.1.3",
+   "release": "PUBLIC",
+   "buildDate": "2026-08-17",
+   "revision": "8b4c91d4d5bd1549622bfbade0df199585b98365",
+   "localPath": "ghidra_12.1.3_PUBLIC_20260817/ghidra_12.1.3_PUBLIC"
+  },
+  "java": {
+   "observedVersion": "21.0.12",
+   "requiredBaseline": "21",
+   "compatibleBaselineVerified": true
+  },
+  "gradle": {
+   "wrapperVersion": "9.6.1",
+   "distributionCached": true
+  },
+  "espFixtureGeneration": {
+   "compiler": "xtensa-esp-elf esp-15.2.0_20251204",
+   "legacyCompiler": "xtensa-lx106-elf GCC 10.3.0",
+   "riscvCompiler": "riscv32-esp-elf esp-15.2.0_20251204",
+   "esptool": "5.4.0",
+   "espIdfReferenceVersion": "v6.0",
+   "espIdfReferenceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800"
+  },
+  "espSvdGeneration": {
+   "source": "https://github.com/espressif/svd",
+   "revision": "be20aa12560889d6125d144cdb48cf615ac17628",
+   "license": "Apache-2.0"
+  },
+  "stm32SignatureGeneration": {
+   "sourcePackage": "STM32Cube_FW_F1_V1.8.7",
+   "sourceUrl": "https://github.com/STMicroelectronics/STM32CubeF1",
+   "archiveSha256": "1b5f99f86982efe5e4931063de4a0f0af80e38a05d4835b0b8f82aefad634b29",
+   "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+   "optimizations": [
+    "-Os",
+    "-O2"
+   ],
+   "licenses": [
+    "BSD-3-Clause",
+    "Apache-2.0",
+    "MIT"
+   ],
+   "redistribution": "DERIVED_MASKED_SIGNATURES_ONLY_NO_SOURCE_BUNDLED"
+  },
+  "host": {
+   "os": "Linux",
+   "architecture": "x86-64",
+   "kernel": "7.0.0-31-generic"
+  }
+ },
+ "catalogSnapshots": [
+  {
+   "catalogId": "espressif.esp32-family",
+   "snapshotDate": "2026-09-23",
+   "path": "catalogs/espressif/2026-09-23/catalog.json",
+   "sha256": "a012ee03ad12ec075b8b782cd8b3abd66cc236216cfe4001cf2c2a2a92990a00",
+   "sourceFactsPath": "catalogs/espressif/sources/source-facts.json",
+   "sourceFactsSha256": "c7866b0c4fe5e336c02cfbfe16402901b0448184b3f6587d8835ae6ec919be58",
+   "siliconRecords": 53,
+   "moduleProfiles": 161,
+   "boardProfiles": 58,
+   "supportState": "PLANNED"
+  },
+  {
+   "catalogId": "stm32.source-reference",
+   "snapshotDate": "2026-09-28",
+   "path": "catalogs/stm32/2026-09-28/source-catalog.json",
+   "sha256": "6ecc64d28e086d6135dbf664674c259fc2cf29e9111b10b4be3a14305ab5a417",
+   "sourceRevision": "7d1f1514ed5583ec5007ad91236b4e1d377295b1",
+   "sourceReferenceRecords": 2240,
+   "supportState": "PLANNED",
+   "acceptance": "INCOMPLETE"
+  },
+  {
+   "catalogId": "stm32.cmsis-interrupt-index",
+   "snapshotDate": "2026-09-28",
+   "path": "catalogs/stm32/2026-09-28/cmsis-interrupts.json",
+   "sha256": "2c312786d907f85babde522944141d0672094749e787ce87078c14bc07495f72",
+   "sourceReferenceRecords": 2240,
+   "supportState": "PLANNED",
+   "acceptance": "INCOMPLETE"
+  },
+  {
+   "catalogId": "stm32.svd-rule-candidates",
+   "snapshotDate": "2026-09-28",
+   "path": "catalogs/stm32/2026-09-28/svd-rules.json",
+   "sha256": "16cb39d558e249f9c6a4020e39b77644d70af2d07b2df01becc732e4d6056ace",
+   "sourceReferenceRecords": 2240,
+   "supportState": "PLANNED",
+   "acceptance": "INCOMPLETE"
+  },
+  {
+   "catalogId": "stm32.c5-exact-dfp",
+   "snapshotDate": "2026-09-28",
+   "path": "catalogs/stm32/2026-09-28/c5-exact-parts.json",
+   "sha256": "ea899df4ac99089d482eb4e7ec676a4702bfac912fd3ab10f638a3222eaccc35",
+   "exactParts": 157,
+   "supportState": "PLANNED",
+   "acceptance": "PARTIAL_T032"
+  },
+  {
+   "catalogId": "stm32.curated-board-backed-exact",
+   "snapshotDate": "2026-09-29",
+   "path": "catalogs/stm32/2026-09-29/curated-catalog.json",
+   "sha256": "afc66a47cd79c2025d115049c8aebd2db671c1112d42531b1db50df8514858f9",
+   "selectionPath": "catalogs/stm32/2026-09-29/selection.json",
+   "exactParts": 53,
+   "supportState": "PLANNED",
+   "acceptance": "REVISED_T032_COMPLETE",
+   "families": 20
+  },
+  {
+   "catalogId": "stm32.board-source-candidates",
+   "snapshotDate": "2026-09-29",
+   "path": "catalogs/stm32/sources/board-index.json",
+   "sha256": "2b9c7c2cc5e2838c50190a507cc0d96792d3a3e5eba8a5aee4e21d50cc77b6a7",
+   "sourceRevision": "7d1f1514ed5583ec5007ad91236b4e1d377295b1",
+   "sourceLicense": "BSD-3-Clause",
+   "boardConfigurations": 277,
+   "explicitExactCpnRows": 148,
+   "distinctExactCpnCandidates": 89,
+   "acceptance": "CANDIDATE_ONLY_NOT_SHIPPED",
+   "distinctNucleoDiscoveryCpnCandidates": 67
+  },
+  {
+   "catalogId": "stm32.board-part-candidates",
+   "snapshotDate": "2026-09-29",
+   "path": "catalogs/stm32/sources/board-part-candidates.json",
+   "sha256": "448d1d701777b22bfc7ceb6064710c57c8868be0e1f5d6b59c70a151393e6d76",
+   "explicitExactParts": 89,
+   "marketVerifiedParts": 50,
+   "singleIrqMappings": 78,
+   "unpairedFlashAlternatives": 14,
+   "familyAliasReview": 3,
+   "acceptance": "CANDIDATE_ONLY_NOT_SHIPPED"
+  }
+ ],
+ "stm32CoverageDiagnostic": {
+  "tool": "scripts/check-stm32-cubemx-coverage.py",
+  "cubemxArchiveSha256": "9b5a52038e1dbbda98aaa36e370bc19c866db3b187af9add22147a3f2300e076",
+  "cubemxDatabaseSha256": "78543ddc8c7667a7ebb8d0e30498f566404b635068ed6f504142dc7b6af39089",
+  "productClasses": 2,
+  "vendorReferenceProducts": 1846,
+  "vendorCommercialParts": 5366,
+  "vendorExactParts": 5322,
+  "vendorWildcardParts": 44,
+  "vendorPartsMatchingEmbedraReferencePattern": 5213,
+  "embedraReferencePatterns": 2240,
+  "embedraReferencePatternsAttested": 2220,
+  "embedraExactParts": 157,
+  "vendorPartsWithDieId": 5327,
+  "vendorPartsWithSecurityAttribute": 3487,
+  "vendorSeriesAbsentFromEmbedra": [
+   "STM32V8"
+  ],
+  "acceptance": "INCOMPLETE",
+  "redistribution": "AGGREGATE_ONLY_SLA0048_LOCAL_DIAGNOSTIC"
+ },
+ "fixtureEvidence": [
+  {
+   "fixtureId": "esp32c3.esptool-v5.4.0.esp32c3-freestanding-minimal",
+   "path": "src/test/resources/fixtures/esp32c3/esp32c3-freestanding-minimal.bin",
+   "sha256": "25d33ca47189ca5020eacee980bdf4d52fdfee99720067ac33135366890133e0",
+   "sizeBytes": 65600,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32c3/esp32c3-freestanding-minimal.expectations.json"
+  },
+  {
+   "fixtureId": "esp32.esptool-v5.4.0.esp32-freestanding-minimal",
+   "path": "src/test/resources/fixtures/esp32/esp32-freestanding-minimal.bin",
+   "sha256": "6bd5981e4c4ae4a245d41cd9ffcd27bb1b24f11210220b785db9cfc79bb4895d",
+   "sizeBytes": 416,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32/esp32-freestanding-minimal.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s2.esptool-v5.4.0.esp32s2-freestanding-minimal",
+   "path": "src/test/resources/fixtures/esp32s2/esp32s2-freestanding-minimal.bin",
+   "sha256": "79e6befbb34c2f1fbbf1a5ed5d03ec9d4290e56d6d7a08fa5ff38f9c992d19d7",
+   "sizeBytes": 416,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s2/esp32s2-freestanding-minimal.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.esptool-v5.4.0.esp32s3-freestanding-minimal",
+   "path": "src/test/resources/fixtures/esp32s3/esp32s3-freestanding-minimal.bin",
+   "sha256": "f17b265cb900c385c53a6ee4bd72ae371c22ed1ba2e92354faf84093fbb6d85d",
+   "sizeBytes": 432,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/esp32s3-freestanding-minimal.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.esptool-v5.4.0.esp32s3-freestanding-minimal-no-digest",
+   "path": "src/test/resources/fixtures/esp32s3/esp32s3-freestanding-minimal-no-digest.bin",
+   "sha256": "1992971280432b69f5bd205a22c71408cd487dc059c64108f42b7eaab3c11cbd",
+   "sizeBytes": 400,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/esp32s3-freestanding-minimal-no-digest.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.malformed.malformed-truncated-segment-data",
+   "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-truncated-segment-data.bin",
+   "sha256": "4641e566106a295665812eb77d9bc25d4375c6e8d58040498fef80dca00713a8",
+   "sizeBytes": 350,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-truncated-segment-data.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.malformed.malformed-segment-length-overflow",
+   "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-segment-length-overflow.bin",
+   "sha256": "97ae4aff29e84a894c89bbf26b21060417ddd93b67285c5689fc3b015f1852fa",
+   "sizeBytes": 400,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-segment-length-overflow.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.malformed.malformed-overlapping-segments",
+   "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-overlapping-segments.bin",
+   "sha256": "450ccc4447b805f005677aec70ffd30a7b4113389b359a2faa64484f9822b40a",
+   "sizeBytes": 400,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-overlapping-segments.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.malformed.malformed-wrong-chip",
+   "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-wrong-chip.bin",
+   "sha256": "7f9544aec9d09774b93034094274b8baff14dba5349b0d99307e203b247dd802",
+   "sizeBytes": 400,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-wrong-chip.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.malformed.malformed-checksum",
+   "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-checksum.bin",
+   "sha256": "56686515f40fb2874644e3c539e5952138368a8fbe39ad448bcdd6e2d52c57e9",
+   "sizeBytes": 400,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-checksum.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.malformed.malformed-digest",
+   "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-digest.bin",
+   "sha256": "9f8426ea35927ec2d2d6535e2d4a8ef2551def779535e786b250699bc7a89dcd",
+   "sizeBytes": 432,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-digest.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.malformed.malformed-entry-unaligned",
+   "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-entry-unaligned.bin",
+   "sha256": "42427fc50f1843dd2a8f593fe3d6e859cec26db4754471536c72f16d48d34e81",
+   "sizeBytes": 400,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-entry-unaligned.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.malformed.malformed-trailing-data",
+   "path": "src/test/resources/fixtures/esp32s3/malformed/malformed-trailing-data.bin",
+   "sha256": "23bd40d77d07120c9879652b2d5a538f846eb0d88b44f0786cb432a8fb8b8b80",
+   "sizeBytes": 404,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/malformed/malformed-trailing-data.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.full-flash.default-factory",
+   "path": "src/test/resources/fixtures/esp32s3/full-flash/default-factory.bin",
+   "sha256": "45cac3c72a7c4215cceef05e7b750def8372304586d9d2e022969c48e4963650",
+   "sizeBytes": 524288,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/full-flash/default-factory.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.full-flash.custom-offset-misleading-magic",
+   "path": "src/test/resources/fixtures/esp32s3/full-flash/custom-offset-misleading-magic.bin",
+   "sha256": "7abf06a8e02a1eef3ff71bda02241acdb8fcde0e82e5d4a63f5f3b47d6b4a2b5",
+   "sizeBytes": 524288,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/full-flash/custom-offset-misleading-magic.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.full-flash.ota-custom-encrypted",
+   "path": "src/test/resources/fixtures/esp32s3/full-flash/ota-custom-encrypted.bin",
+   "sha256": "905ef03489998e54539c68733e1b2fb1b89ebdd44319169e2f0c024a44448546",
+   "sizeBytes": 524288,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/full-flash/ota-custom-encrypted.expectations.json"
+  },
+  {
+   "fixtureId": "esp32s3.full-flash.invalid-partition-md5",
+   "path": "src/test/resources/fixtures/esp32s3/full-flash/invalid-partition-md5.bin",
+   "sha256": "7841f56a0ad2af7fc98d987ec3300bcd7c8054dcd02d108397aa57e0f5321ac0",
+   "sizeBytes": 524288,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp32s3/full-flash/invalid-partition-md5.expectations.json"
+  },
+  {
+   "fixtureId": "esp8266.esptool-v5.4.0.freestanding-v1",
+   "path": "src/test/resources/fixtures/esp8266/esp8266-freestanding-v1-0x00000.bin",
+   "sha256": "5d6596092012160ef08af2e2c8dc5feb3ee8b37c9b974dbb65bfcdd2aacc5d8f",
+   "sizeBytes": 80,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json"
+  },
+  {
+   "fixtureId": "esp8266.esptool-v5.4.0.freestanding-v1-irom-companion",
+   "path": "src/test/resources/fixtures/esp8266/esp8266-freestanding-v1-0x01010.bin",
+   "sha256": "9a82ca2c932d83424e62cb63ed0acdf2d687550df86e1b7e5094cb8df14b8747",
+   "sizeBytes": 16,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json"
+  },
+  {
+   "fixtureId": "esp8266.esptool-v5.4.0.freestanding-v2",
+   "path": "src/test/resources/fixtures/esp8266/esp8266-freestanding-v2-0x01000.bin",
+   "sha256": "99175667a2bcf43a794599d0737eec25f8ce1fa541d535a9e26fc390d88f561b",
+   "sizeBytes": 116,
+   "redistributionStatus": "REDISTRIBUTABLE",
+   "oracle": "src/test/resources/oracles/esp8266/esp8266-freestanding.expectations.json"
+  }
+ ],
+ "restrictedFixtureEvidence": [
+  {
+   "fixtureId": "esp32s3.user-supplied.4mib-full-flash",
+   "path": "<repository-local-restricted>/esp32s3_ctf_dump_4MB.bin",
+   "sha256": "837ee155de84403f84330179d52edfd2dba239cc11af5e55c2d0c28bc38a71de",
+   "sizeBytes": 4194304,
+   "origin": "USER_SUPPLIED",
+   "provenance": "UNKNOWN",
+   "redistributionStatus": "RESTRICTED_LOCAL",
+   "oracle": ".embedra/evidence/tasks/T021.md"
+  }
+ ],
+ "evidence": {
+  "task": ".embedra/evidence/tasks/T049.md",
+  "preT033Audit": ".embedra/evidence/audits/pre-t033-t001-t032.md",
+  "remediation": ".embedra/evidence/tasks/T025-remediation.md",
+  "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
+  "commands": ".embedra/evidence/commands.jsonl",
+  "logDrivenRemediation": ".embedra/evidence/tasks/T025-log-driven-remediation.md",
+  "gateAddendum": ".embedra/evidence/gates/esp32s3-full-flash-r2-language-addendum.md",
+  "taskT028": ".embedra/evidence/tasks/T028.md",
+  "adrT028": "docs/adr/0023-esp32-esp32s2-independent-support.md",
+  "preT029Audit": ".embedra/evidence/audits/pre-t029-t001-t028.md",
+  "taskT029": ".embedra/evidence/tasks/T029.md",
+  "adrT029": "docs/adr/0024-esp32c3-riscv-provider.md",
+  "taskT030": ".embedra/evidence/tasks/T030.md",
+  "taskT031": ".embedra/evidence/tasks/T031.md",
+  "adrT031": "docs/adr/0025-esp8266-separate-legacy-provider.md",
+  "nextTaskPrompt": ".embedra/prompts/T050-raspberry-pi-catalog-and-fixtures.md",
+  "taskT027": ".embedra/evidence/tasks/T027.md",
+  "adrT027": "docs/adr/0022-shared-esp-target-services.md",
+  "taskT026A": ".embedra/evidence/tasks/T026A.md",
+  "adrT026A": "docs/adr/0021-esp32s3-function-id-pilot.md",
+  "fidbT026A": "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb",
+  "specification": "Embedra-SpecKit.md",
+  "fidArtifacts": [
+   "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb",
+   "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.json",
+   "fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.audit.json"
+  ],
+  "memoryReconciliationT039": ".embedra/evidence/tasks/T039-memory-reconciliation.json",
+  "memoryHeaderFactsT039": ".embedra/evidence/tasks/T039-memory-header-evidence.json",
+  "taskT040": ".embedra/evidence/tasks/T040.md",
+  "svdApplicabilityT040": "catalogs/stm32/2026-09-29/svd-applicability.json",
+  "svdApplicabilitySha256T040": "catalogs/stm32/2026-09-29/svd-applicability.sha256",
+  "taskT041": ".embedra/evidence/tasks/T041.md",
+  "hardeningReviewT039T041": ".embedra/evidence/tasks/T039-T041-hardening.md",
+  "taskT042": ".embedra/evidence/tasks/T042.md",
+  "boardProfilesT042": "catalogs/stm32/2026-09-29/board-profiles.json",
+  "boardProfilesSha256T042": "catalogs/stm32/2026-09-29/board-profiles.sha256",
+  "boardSourceAuditT042": ".embedra/evidence/tasks/T042-board-source-audit.json",
+  "taskT043": ".embedra/evidence/tasks/T043.md",
+  "signatureSourceAuditT043": ".embedra/evidence/tasks/T043-signature-source-audit.json",
+  "signaturePackT043": "packs/stm32.stm32f1.signatures/1.0.0",
+  "taskT044": ".embedra/evidence/tasks/T044.md",
+  "securityDomainsT044": "catalogs/stm32/2026-09-29/security-domains.json",
+  "securityDomainsSha256T044": "catalogs/stm32/2026-09-29/security-domains.sha256",
+  "taskT045": ".embedra/evidence/tasks/T045.md",
+  "taskT046": ".embedra/evidence/tasks/T046.md",
+  "taskT047": ".embedra/evidence/tasks/T047.md",
+  "taskT048": ".embedra/evidence/tasks/T048.md",
+  "taskT049": ".embedra/evidence/tasks/T049.md"
+ },
+ "knownFailures": [],
+ "nextTask": "T050",
+ "nextAction": "Begin T050: build the authoritative Raspberry Pi silicon/board catalog and fixtures for RP2040, RP2350A/B, RP2354A/B, UF2, raw BIN, ELF, external/internal flash, both CPU cores, ARM/RISC-V, TrustZone, TinyUSB, Pico/Pico W/Pico 2/Pico 2 W, and PIO without mutating existing evidence.",
+ "artifacts": [
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
+   "sha256": "5e764521fb3fefb7fdda20256fdb7af4db89a799647b05f22c4f441ac6c51dbc",
+   "sizeBytes": 821611,
+   "status": "T026_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
+   "sha256": "fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb",
+   "sizeBytes": 1005367,
+   "status": "T026A_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
+   "sha256": "e7a44da789159dd00a6d50dabf73a7c2fa5b590720f2c837f645b41751e5604e",
+   "sizeBytes": 1017483,
+   "status": "T027_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260924_Embedra.zip",
+   "sha256": "288bad7a1ea4334c46bbfdf44eebc18576bfd50348d8d33958329d9be99bca0d",
+   "sizeBytes": 1413370,
+   "status": "T028_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260925_Embedra.zip",
+   "sha256": "0824df264b671cc81372733a807e3eb61469484eeb8a1d188525895a3226c4c6",
+   "sizeBytes": 1413971,
+   "status": "PRE_T029_AUDIT_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260925_Embedra.zip",
+   "sha256": "42f8af1b0b90b7a57f822e6210e8a1c67109580ff2f08ef30661a2d3c976ca1d",
+   "sizeBytes": 1556399,
+   "status": "T029_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260926_Embedra.zip",
+   "sha256": "b97421ba772511eedf313dc49c321f0ff7463bac4b55a7baeeef2184cf27af1e",
+   "sizeBytes": 2587489,
+   "status": "T030_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
+   "sha256": "0113152d589dcfc08cefeb21bcbc117c9af02e50a19c6aeb25652813a014ad2e",
+   "sizeBytes": 2632122,
+   "status": "T031_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
+   "sha256": "435975910273e96cb9e4c0b0e7aa0e9646f6be10c98b7d5ebb2b920f74e7aa17",
+   "sizeBytes": 2772307,
+   "status": "T032_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
+   "sha256": "7f5d151e234c1445fc14adb8313be6467ee684447e13a28ef3e148e084b163e5",
+   "sizeBytes": 2887986,
+   "status": "T032_IN_PROGRESS_CMSIS_SVD_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260928_Embedra.zip",
+   "sha256": "cdcb179f63c0b74423f39d55de16add75a2cdcabcb9f95ed34353ec4f7a92e87",
+   "sizeBytes": 2893566,
+   "status": "T032_IN_PROGRESS_C5_EXACT_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+   "sha256": "b8923f7e410ec31d90075cbefdaff682de7d72e86b77729f1020a96fa1ff65bc",
+   "sizeBytes": 2894012,
+   "status": "T032_IN_PROGRESS_CUBEMX_COVERAGE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+   "sha256": "fe073839881284f6ffd48b94e86277d68faef187d867dd0b7c1ea47bf73e5a7c",
+   "sizeBytes": 2637415,
+   "status": "T032_CURATED_COMPLETE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+   "sha256": "973c53e6857b0cafd2972dfffc4ad8b594de785916634d26cd60040bd3945a50",
+   "sizeBytes": 2665769,
+   "status": "T032_REVISED_INTERMEDIATE_SUPERSEDED"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+   "sha256": "e49ab7a474bd5b7326dcf23cf4078dacb86743e10cd20e1113a0270cd5010687",
+   "sizeBytes": 2665303,
+   "status": "T032_REVISED_53_PART_COMPLETE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+   "sha256": "599266f88c6793a186df0a9b0f6dfec4768f32ee289c73b7d3ac505e0cadc53d",
+   "sizeBytes": 2665777,
+   "status": "T033_F103_SLICE_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+   "sha256": "5dad3335e6e789f48ebafac4d0383334ece30d5515700de67d8ca2972d384b30",
+   "sizeBytes": 2666019,
+   "status": "T033_F103_C051_SLICES_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+   "sha256": "7b262ae0d9c0b9b5411c810c047214383813b703e33370477a8f27063d91293b",
+   "sizeBytes": 2666051,
+   "status": "T033_F103_THREE_C0_SLICES_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260929_Embedra.zip",
+   "sha256": "c64793c6d4fc83f6c6d9da65222c46b7bcbf9bd10f8465c3760c9e1e8fe53cd8",
+   "sizeBytes": 2666799,
+   "status": "T033_TEN_FIXTURE_SLICES_IN_PROGRESS_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
+   "sha256": "e5f683a13969337200bc0e1738716aeb5a00e2c592dc4458a596e9efdcb8748e",
+   "sizeBytes": 2667205,
+   "status": "T033_COMPLETE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
+   "sha256": "3c0e02fb026fd4691a92900dbcf9395560146cf3d29bd22760c1082b900eef75",
+   "sizeBytes": 2687642,
+   "status": "T034_COMPLETE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
+   "sha256": "72bfa9009dcd2ac4357b2bbd08b631a47aada0e09f65add7f8659f80c389b767",
+   "sizeBytes": 2700596,
+   "status": "T035_COMPLETE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
+   "sha256": "04448eead9df859fc739eff25877f24d3ecc9f61e74fe4bc98011d3daa753f55",
+   "sizeBytes": 2711239,
+   "status": "T036_COMPLETE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
+   "sha256": "d5b5603982c1e661cf035e8c332b0b7934a45608ff460236ae0922c46a93edab",
+   "sizeBytes": 2724923,
+   "status": "T037_COMPLETE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20260930_Embedra.zip",
+   "sha256": "3507efb96c994f8c8b70bdc619dd79037fa9d028719486e4730a0c084bf1dbcc",
+   "sizeBytes": 2738313,
+   "status": "T038_COMPLETE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "68a45831c37b9085f9bfcf46e6350ba1a21850ac5aca9cea8235d636bbed91ba",
+   "sizeBytes": 2820787,
+   "status": "T039_ALLOCATION_RESOLUTION_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "7b41324f79a0739dcc8195e0031cc536c597df85bc6eb2138a34f8eaa300fcf9",
+   "sizeBytes": 3921060,
+   "status": "T040_STM32_SVD_DEVICE_DATA_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261001_Embedra.zip",
+   "sha256": "7f3c421b4dc28008e6541daf563788fe42861b355632d7b0f5103db17cf896bc",
+   "sizeBytes": 2818481,
+   "status": "T039_CORRECTNESS_FIXES_REPRODUCIBLE_ARTIFACT_SUPERSEDED"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261001_Embedra.zip",
+   "sha256": "abf0151fd03d2ff2eb87a3b18e641af753f2d70cc378d778661949d8fe544f80",
+   "sizeBytes": 2815209,
+   "status": "T039_COMPLETE_REPRODUCIBLE_ARTIFACT_SUPERSEDED"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "f04ee66e34f9e942ac5728a50eb1f1bd0d45faeff1c63faf1d82342f5daeb004",
+   "sizeBytes": 3921380,
+   "status": "T040_FINAL_REVIEW_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "47b41bd8b6712be329a7f4b8c516c8f685cbc99d93ff4e7446536ed5fbbd7460",
+   "sizeBytes": 3967956,
+   "status": "T041_HARDENED_COMPLETE_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "49486842fd383d6a48cc725abea402ab61ca1052a02bb6f082cfe4793ceb2c5d",
+   "sizeBytes": 4002516,
+   "status": "T042_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "867e619d081c7dd922ed1b0f6d59ac50db2d2aa6305cb6fb228ff526f698aa14",
+   "sizeBytes": 4186407,
+   "status": "T043_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "02cb3efad54d903d6f0e7b03de0a8b5053591047499a8766c6ab3baff18edb9b",
+   "sizeBytes": 4186433,
+   "status": "T038_T041_FOLLOWUP_REVIEW_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "9b3ab2e3577786a6b37f39d038eec16d5c0b7b71375c48ecc8a7f2f1d3e623f6",
+   "sizeBytes": 4256466,
+   "status": "T044_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "6ad9a71f94f5af9a0cd9777fd2f2e9b7dc385bde9958b77c2cf2a70265fa6133",
+   "sizeBytes": 4294974,
+   "status": "T045_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "462d3ddc99378a5ec7ef7fadf3892b413e6f4d02efcc2adb60f701c95c2bf364",
+   "sizeBytes": 4335725,
+   "status": "T046_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "0f50ba57c2cd68c112f93f1259de5490f1d0722e9428f74c31cd56ca2aee3bcf",
+   "sizeBytes": 4391353,
+   "status": "T047_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "ba872aeaf067ae07fd25e6e02c0c80edf485caddab1eb10fad056250dc0e8bbf",
+   "sizeBytes": 4433407,
+   "status": "T048_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "13f6fde3544aefca18fef29788074d6718fba62ef68d05e08af1a22c882822b2",
+   "sizeBytes": 4512940,
+   "status": "T049_REPRODUCIBLE_ARTIFACT"
+  }
+ ],
+ "resolvedFailures": [
+  {
+   "code": "T001_JDK21_UNAVAILABLE",
+   "resolution": "OpenJDK 21.0.12 became available and was used for all passing build evidence."
+  },
+  {
+   "code": "T001_WRAPPER_ABSENT",
+   "resolution": "Standard Gradle 9.6.1 Wrapper generated and verified."
+  },
+  {
+   "code": "T001_PACKAGE_INCLUDED_TOOLCHAIN",
+   "resolution": "Local Ghidra, continuity, and specification paths excluded; final ZIP reduced to intended 5,402-byte contents."
+  },
+  {
+   "code": "T002_MISSING_BUILD_QUALITY_TASKS",
+   "resolution": "Pinned test, coverage, formatting, and static-analysis tasks configured and verified."
+  },
+  {
+   "code": "T002_PACKAGE_DEVELOPMENT_FILES",
+   "resolution": "Development-only Gradle/config/script inputs excluded; exact package contents validated."
+  },
+  {
+   "code": "T002_ACCEPTANCE_SCRIPT_SYNTAX",
+   "resolution": "Expected-entry string repaired and validated with sh -n before the final passing run."
+  },
+  {
+   "code": "T003_CHECKSTYLE_TEST_LAYOUT",
+   "resolution": "Five empty-line-separator violations in the new architecture test were corrected without suppressions before acceptance."
+  },
+  {
+   "code": "T004_SERIAL_LINT_FAILURE",
+   "resolution": "The checked diagnostic exception payload was made transient so Java serialization lint passes without disabling -Werror."
+  },
+  {
+   "code": "T004_STYLE_AND_COVERAGE_GAPS",
+   "resolution": "Five formatting violations were corrected and missing boundary tests raised every core class with branches above the configured 90% threshold without exclusions."
+  },
+  {
+   "code": "T005_NULL_CANONICALIZATION",
+   "resolution": "Canonical map sorting now uses immutable entries that permit required JSON null values."
+  },
+  {
+   "code": "T005_STYLE_AND_COVERAGE_GAPS",
+   "resolution": "Two style violations and missing model boundary cases were corrected without suppressions or coverage exclusions."
+  },
+  {
+   "code": "T006_CHECKSTYLE_LAYOUT",
+   "resolution": "Six field-separator violations were corrected without suppressions."
+  },
+  {
+   "code": "T006_REPRODUCIBILITY_ORACLE",
+   "resolution": "The obsolete dated T005 ZIP was moved out of dist and the exact package oracle was extended for the new pack-format documentation before the final passing reproducibility run."
+  },
+  {
+   "code": "T007_INTEGRATION_CLASSPATH",
+   "resolution": "Gradle file-collection composition was corrected before the Ghidra integration source set compiled."
+  },
+  {
+   "code": "T007_REAL_API_TRANSACTION_RETURN",
+   "resolution": "The integration proxy was corrected to honor Ghidra Program.endTransaction's boolean return contract."
+  },
+  {
+   "code": "T007_PACKAGED_REPOSITORY_AUTOMATION",
+   "resolution": "The exact-content oracle caught .github workflow files in the extension; buildExtension now excludes repository automation."
+  },
+  {
+   "code": "T008_FULL_IDF_LICENSE_SCOPE",
+   "resolution": "The exploratory full ESP-IDF image was discarded; final fixtures link no vendor or compiler runtime and adapt only the attributed Apache-2.0 application-description layout."
+  },
+  {
+   "code": "T008_EXPECTED_SYMBOL_SNAPSHOT_CHANGE",
+   "resolution": "The first regeneration after adding application-description evidence changed only the intended ELF symbol snapshot; the next complete regeneration was byte-identical."
+  },
+  {
+   "code": "T008_PACKAGED_FIXTURE_GENERATOR",
+   "resolution": "The exact-content oracle caught repository-only fixture source in the extension ZIP; buildExtension now excludes fixtures and the repeated package gate passes."
+  },
+  {
+   "code": "ESP32S3_GATE_REVIEW_PACKAGED_LOCAL_FIRMWARE",
+   "resolution": "The exact-content oracle caught untracked flash_dump.bin before release. It is now absent; ignore and explicit package-exclusion safeguards remain. The repeated package and restricted-path scan pass."
+  },
+  {
+   "code": "ESP32S3_GHIDRA_XTENSA_SALT_UNSUPPORTED",
+   "resolution": "ESP32-S3 extension language decodes and decompiles SALT/SALTU in Ghidra 12.1.3; fixture and digest-gated real dump tests pass. Comprehensive ISA coverage remains experimental."
+  },
+  {
+   "code": "T026A_AUDIT_HOST_PATH_PACKAGED",
+   "resolution": "The FID license audit recorded an absolute toolchain path. The committed audit now stores the pinned toolchain identifier, the generator records identifiers only, and verify-build-quality.sh fails on host paths or restricted capture names in extension ZIP text content. Reverified reproducible ZIP SHA-256 fa62116eec6088f952d7ee4696f8c08ea8f031b819bb19e38460b78d606293eb."
+  }
+ ],
+ "mostRecentCommands": [
+  {
+   "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> ./gradlew check verifyFormatting --no-daemon",
+   "exitStatus": 0,
+   "result": "T048 PASS: 378 unit and 104 real-Ghidra tests; Checkstyle, JaCoCo, formatting, STM32 catalog/fixture (53 records), ESP catalog, and scaffold checks pass.",
+   "artifacts": []
+  },
+  {
+   "command": "python3 -m unittest discover -s scripts/tests -p 'test_*stm32*.py'",
+   "exitStatus": 0,
+   "result": "T048 STM32 PYTHON PASS: 131 tests, OK (skipped=4): the same pre-existing optional pinned-source checks; T048 adds no new skip.",
+   "artifacts": []
+  },
+  {
+   "command": "python3 -m unittest scripts/tests/test_generate_esp_catalog.py",
+   "exitStatus": 0,
+   "result": "T048 ESP PYTHON PASS: 4 tests OK; no ESP behavior changed.",
+   "artifacts": []
+  },
+  {
+   "command": "python3 scripts/audit-stm32-memory-readiness.py --require-complete",
+   "exitStatus": 0,
+   "result": "T048 READINESS PASS: readyCount 53/53, incompleteParts {}, unresolvedFlash 11; catalog SHA-256 afc66a47 and memory-plan SHA-256 00def2817b unchanged.",
+   "artifacts": []
+  },
+  {
+   "command": "JAVA_HOME=<jdk21> GHIDRA_INSTALL_DIR=<ghidra-12.1.3> scripts/verify-build-quality.sh",
+   "exitStatus": 0,
+   "result": "T048 PASS: two clean, uncached 22-action builds; 380 unit, 104 real-Ghidra, 131 STM32 Python (4 documented optional-source skips), and 4 ESP Python tests; Checkstyle, JaCoCo, formatting, fixture, scaffold, and ZIP-entry oracle checks; byte-identical 4,433,407-byte ZIP SHA-256 ba872aeaf067ae07fd25e6e02c0c80edf485caddab1eb10fad056250dc0e8bbf. T039-T047 artifacts and all support states unchanged.",
+   "artifacts": [
+    "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip"
+   ]
+  },
+  {
+   "command": "sh scripts/validate-handoff.sh && sh scripts/validate-fixture-provenance.sh",
+   "exitStatus": 0,
+   "result": "T048 CONTINUITY PASS: both validators accept the T048 state, the refreshed spec digest, completed tasks through T048 with evidence, next task T049, and fixture provenance.",
+   "artifacts": []
+  }
+ ],
+ "buildQuality": {
+  "junit": "6.1.3",
+  "jacoco": "0.8.15",
+  "checkstyle": "14.1.0",
+  "dependencyLock": "gradle.lockfile",
+  "reproducibilityScript": "scripts/verify-build-quality.sh",
+  "coreBranchThreshold": 0.9,
+  "coreThresholdMeasured": true,
+  "coreBranchCoverage": 0.9776,
+  "minimumCoreClassBranchCoverage": 0.92,
+  "packInstructionCoverage": 0.9226,
+  "packBranchCoverage": 0.7759,
+  "unitTests": 378,
+  "ghidraIntegrationTests": 104,
+  "pythonGeneratorTests": 131
+ },
+ "architecture": {
+  "pureBoundaries": [
+   "core",
+   "formats",
+   "targets",
+   "analyzers",
+   "pack",
+   "svd"
+  ],
+  "adapterBoundary": "ghidra",
+  "enforcementTest": "io.github.rezabakhshi.embedra.build.ArchitectureBoundaryTest"
+ },
+ "coreFoundation": {
+  "rangeCoordinates": "NON_NEGATIVE_SIGNED_LONG",
+  "rangeSemantics": "HALF_OPEN_CHECKED",
+  "diagnosticCodes": "STABLE_ENUM_IDS",
+  "defaultParserLimits": {
+   "maxInputBytes": 268435456,
+   "maxAllocationBytes": 16777216,
+   "maxExtractedBytes": 536870912,
+   "maxObjects": 1000000,
+   "maxNestingDepth": 32,
+   "maxWallTimeSeconds": 30
+  },
+  "topologyModel": "VALIDATED_IMMUTABLE_GRAPH",
+  "canonicalReportSchema": "urn:embedra:schema:canonical-report:1",
+  "executionTopologySchema": "urn:embedra:schema:execution-topology:1",
+  "deviceCatalogSnapshotSchema": "urn:embedra:schema:device-catalog-snapshot:1",
+  "deviceCatalogDiffSchema": "urn:embedra:schema:device-catalog-diff:1",
+  "packManifestSchema": "urn:embedra:schema:pack-manifest:1"
+ },
+ "packFoundation": {
+  "manifestVersion": 1,
+  "versionSyntax": "MAJOR.MINOR.PATCH",
+  "installation": "VERIFY_COPY_REVERIFY_ATOMIC_MOVE",
+  "selection": "LOCAL_ONLY_HIGHEST_COMPATIBLE",
+  "networkRequired": false,
+  "publisherAuthentication": false
+ },
+ "esp32EnrichmentPacks": {
+  "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+  "license": "Apache-2.0",
+  "rom": {
+   "packId": "espressif.esp32.rom",
+   "version": "1.0.0",
+   "contentDigest": "b0f2ed4387261945ae538e5c142fc475927990c62fd1e2d4b68267c965f2c49d",
+   "symbolCount": 1997
+  },
+  "peripherals": {
+   "packId": "espressif.esp32.peripherals",
+   "version": "1.0.0",
+   "contentDigest": "7b7a45186fffc48b82cc70f479887484c527e1dd7828f2801d9e7bb8712e2d8f",
+   "peripheralCount": 52,
+   "registerAddressCount": 1418
+  }
+ },
+ "esp32s2EnrichmentPacks": {
+  "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+  "license": "Apache-2.0",
+  "rom": {
+   "packId": "espressif.esp32s2.rom",
+   "version": "1.0.0",
+   "contentDigest": "00210b4c148735f22c8713a0c783c07398f98400e19be9ea6649870b1475ddc6",
+   "symbolCount": 1014
+  },
+  "peripherals": {
+   "packId": "espressif.esp32s2.peripherals",
+   "version": "1.0.0",
+   "contentDigest": "601fc3e34aced1b3f7f847aebd36c41c655a8a572ab39b904cf5d32879454198",
+   "peripheralCount": 53,
+   "registerAddressCount": 1286
+  }
+ },
+ "esp32s3EnrichmentPacks": {
+  "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+  "license": "Apache-2.0",
+  "rom": {
+   "packId": "espressif.esp32s3.rom",
+   "version": "1.0.0",
+   "contentDigest": "1b3e5577500bf2f6ae117ebe9755ce1b09c353ea6869bdbdfc16c635685edbc4",
+   "symbolCount": 2197
+  },
+  "peripherals": {
+   "packId": "espressif.esp32s3.peripherals",
+   "version": "1.0.0",
+   "contentDigest": "311ef2d3a33fa7f1cd302e42fa00ad7f3af972f6b89d4046a9c35e290c9b25ee",
+   "peripheralCount": 61,
+   "registerAddressCount": 2173
+  },
+  "application": "TRANSACTIONAL_IDEMPOTENT_RECEIPT_REMOVABLE_USER_PRESERVING"
+ },
+ "esp32c3EnrichmentPacks": {
+  "sourceRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+  "license": "Apache-2.0",
+  "rom": {
+   "packId": "espressif.esp32c3.rom",
+   "version": "1.0.0",
+   "contentDigest": "372df6ba5e6177999e9bb806283eac89ef25f326d85704160881105ac97a72a1",
+   "symbolCount": 1902
+  },
+  "peripherals": {
+   "packId": "espressif.esp32c3.peripherals",
+   "version": "1.0.0",
+   "contentDigest": "3a8d9bde919c848cb2c2229df17f99a6ce37095f11bc2bd130cd511daa8e6935",
+   "peripheralCount": 46,
+   "registerAddressCount": 1053
+  },
+  "svd": {
+   "packId": "espressif.esp32c3.svd",
+   "version": "1.0.0",
+   "contentDigest": "0154f2e56311195530c37191880f5c4e8722cb9aec7d129611f9edb4cea69b7e",
+   "peripheralCount": 37,
+   "registerCount": 2606,
+   "fieldCount": 5020,
+   "reconciliationPolicy": "record-conflicts-prefer-svd"
+  }
+ },
+ "remainingEspEnrichmentPacks": {
+  "espIdfRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+  "svdRevision": "be20aa12560889d6125d144cdb48cf615ac17628",
+  "license": "Apache-2.0",
+  "reconciliationPolicy": "record-conflicts-prefer-svd",
+  "deterministicRegenerationVerified": true,
+  "targets": {
+   "esp32p4": {
+    "romSymbols": 732,
+    "headerPeripherals": 122,
+    "headerRegisters": 5259,
+    "svdPeripherals": 89,
+    "svdRegisters": 6029
+   },
+   "esp32c2": {
+    "romSymbols": 2258,
+    "headerPeripherals": 39,
+    "headerRegisters": 905,
+    "svdPeripherals": 27,
+    "svdRegisters": 1013
+   },
+   "esp32c5": {
+    "romSymbols": 1171,
+    "headerPeripherals": 82,
+    "headerRegisters": 2796,
+    "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
+   },
+   "esp32c6": {
+    "romSymbols": 1300,
+    "headerPeripherals": 75,
+    "headerRegisters": 2392,
+    "svdPeripherals": 65,
+    "svdRegisters": 3944
+   },
+   "esp32c61": {
+    "romSymbols": 1133,
+    "headerPeripherals": 57,
+    "headerRegisters": 2232,
+    "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
+   },
+   "esp32h2": {
+    "romSymbols": 623,
+    "headerPeripherals": 66,
+    "headerRegisters": 2111,
+    "svdPeripherals": 55,
+    "svdRegisters": 3481
+   },
+   "esp32h21": {
+    "romSymbols": 624,
+    "headerPeripherals": 58,
+    "headerRegisters": 1645,
+    "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
+   },
+   "esp32h4": {
+    "romSymbols": 588,
+    "headerPeripherals": 78,
+    "headerRegisters": 1803,
+    "svdStatus": "UNAVAILABLE_IN_PINNED_SOURCE"
+   },
+   "esp32s31": {
+    "status": "UNAVAILABLE_IN_PINNED_SOURCES"
+   },
+   "esp32e22": {
+    "status": "UNAVAILABLE_IN_PINNED_SOURCES"
+   }
+  }
+ },
+ "targetProviders": {
+  "esp8266Legacy": {
+   "supportState": "EXPERIMENTAL",
+   "identity": "ESP8266EX_OR_ESP8285_NOT_ENCODED",
+   "languageId": "Xtensa:LE:32:default",
+   "compilerSpecId": "default",
+   "processorTopology": "ONE_LX106_APPLICATION_CPU",
+   "imageVersions": [
+    1,
+    2
+   ],
+   "version2FlashBaseRequired": true,
+   "mappedProgramVerified": true,
+   "esp32ChipIdRegistryMember": false
+  },
+  "esp32": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 0,
+   "languageId": "Xtensa:LE:32:default",
+   "compilerSpecId": "default",
+   "processorTopology": "TWO_SYMMETRIC_LX6_SHARED_IMAGE",
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true,
+   "fullFlashWorkspaceVerified": false
+  },
+  "esp32s2": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 2,
+   "languageId": "Xtensa:LE:32:default",
+   "compilerSpecId": "default",
+   "processorTopology": "ONE_LX7_APPLICATION_CPU",
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true,
+   "fullFlashWorkspaceVerified": false
+  },
+  "esp32c3": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 5,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "instructionAlignmentBytes": 2,
+   "processorTopology": "ONE_RV32IMC_APPLICATION_CPU",
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true,
+   "fullFlashWorkspaceVerified": false
+  },
+  "esp32s31": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 32,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "TWO_APPLICATION_CPUS",
+   "exactVariantCount": 2,
+   "mappedProgramVerified": true,
+   "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
+  },
+  "esp32p4": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 18,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "TWO_APPLICATION_CPUS_AND_ONE_LP_CPU",
+   "exactVariantCount": 4,
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true
+  },
+  "esp32c2": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 12,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "ONE_APPLICATION_CPU",
+   "exactVariantCount": 2,
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true
+  },
+  "esp32c5": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 23,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU",
+   "exactVariantCount": 4,
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true
+  },
+  "esp32c6": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 13,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "ONE_APPLICATION_CPU_AND_ONE_LP_CPU",
+   "exactVariantCount": 3,
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true
+  },
+  "esp32c61": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 20,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "ONE_APPLICATION_CPU",
+   "exactVariantCount": 4,
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true
+  },
+  "esp32e22": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 31,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "TWO_APPLICATION_CPUS",
+   "exactVariantCount": 1,
+   "mappedProgramVerified": true,
+   "enrichmentStatus": "UNAVAILABLE_IN_PINNED_SOURCES"
+  },
+  "esp32h2": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 16,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "ONE_APPLICATION_CPU",
+   "exactVariantCount": 2,
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true
+  },
+  "esp32h21": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 25,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "ONE_APPLICATION_CPU",
+   "exactVariantCount": 1,
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true
+  },
+  "esp32h4": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 28,
+   "languageId": "RISCV:LE:32:default",
+   "compilerSpecId": "gcc",
+   "processorTopology": "TWO_APPLICATION_CPUS",
+   "exactVariantCount": 2,
+   "mappedProgramVerified": true,
+   "enrichmentVerified": true
+  },
+  "esp32s3": {
+   "supportState": "EXPERIMENTAL",
+   "chipId": 9,
+   "languageId": "Xtensa:LE:32:esp32s3",
+   "compilerSpecId": "default",
+   "instructionAlignmentBytes": 1,
+   "memoryEvidence": "ESP-IDF v6.0 soc.h",
+   "chipEvidence": "esptool v5.4.0 targets/esp32s3.py",
+   "mappedProgramVerified": true,
+   "fullFlashWorkspaceVerified": true,
+   "fullFlashFixtureClass": "SYNTHETIC",
+   "partitionPayloadHandling": "EXPLICIT_CONSERVATIVE_HANDLERS",
+   "restrictedFullFlashDigestVerified": true,
+   "restrictedFullFlashRedistributable": false
+  }
+ },
+ "foundationAutomation": {
+  "pureTask": "pureTest",
+  "ghidraIntegrationTask": "ghidraIntegrationTest",
+  "transactionPolicy": "ROLLBACK_UNLESS_EXPLICIT_COMMIT",
+  "fixtureValidator": "scripts/validate-fixture-provenance.sh",
+  "handoffValidator": "scripts/validate-handoff.sh",
+  "hostedCiExecuted": false
+ },
+ "stm32CuratedScope": {
+  "status": "COMPLETE_REVISED_53_PART_ALLOWLIST",
+  "exactParts": [
+   "STM32C031C6T3",
+   "STM32C051C8T6",
+   "STM32C071RBT6",
+   "STM32C092RCT6",
+   "STM32F103C8T6",
+   "STM32F103CBT6",
+   "STM32F103RBT6",
+   "STM32F207ZGT6",
+   "STM32F401RET6",
+   "STM32F756ZGT6",
+   "STM32G0B1RET6",
+   "STM32G431RBT6",
+   "STM32G473QET6",
+   "STM32G474RET6",
+   "STM32G491RET6",
+   "STM32H503RBT6",
+   "STM32H533RET6",
+   "STM32H553ZGT6",
+   "STM32H573IIK3Q",
+   "STM32H5E5ZJT6",
+   "STM32H5F5LJH7Q",
+   "STM32H735IGK6",
+   "STM32H750XBH6",
+   "STM32H7S3L8H6",
+   "STM32H7S7L8H6H",
+   "STM32L412KBU3",
+   "STM32L412RBT6P",
+   "STM32L4P5CGU6",
+   "STM32L4R5ZIT6",
+   "STM32L552ZET6Q",
+   "STM32L562QEI6Q",
+   "STM32N657X0H3Q",
+   "STM32U031R8T6",
+   "STM32U083MCT6",
+   "STM32U083RCT6",
+   "STM32U385RGT6Q",
+   "STM32U3C5ZIT6Q",
+   "STM32U545RET6Q",
+   "STM32U575ZIT6Q",
+   "STM32U585AII6Q",
+   "STM32U5A5ZJT6Q",
+   "STM32U5G9NJH6Q",
+   "STM32U5G9ZJT6Q",
+   "STM32WB05KZV6TR",
+   "STM32WB07CCV6TR",
+   "STM32WB09KEV6TR",
+   "STM32WB15CCU6",
+   "STM32WB55RGV6",
+   "STM32WBA25CEU7",
+   "STM32WBA52CGU6",
+   "STM32WBA65RIV7",
+   "STM32WL33CCV6TR",
+   "STM32WL3RKBV6"
+  ],
+  "identityPolicy": "EXACT_PART_ONLY_NO_FAMILY_OR_WILDCARD_INFERENCE",
+  "sourcePolicy": "REDISTRIBUTABLE_ST_CMSIS_OFFLINE_FACTS",
+  "catalogDoesNotImplyImportSupport": true,
+  "nextTask": "T033_NOT_STARTED",
+  "snapshotPath": "catalogs/stm32/2026-09-29/curated-catalog.json",
+  "sourceReferenceCount": 52,
+  "exactPartCount": 53,
+  "verification": {
+   "unitTests": 201,
+   "realGhidraTests": 60,
+   "stm32PythonTests": 50,
+   "espPythonTests": 4,
+   "provenanceValidator": "PASS",
+   "handoffValidator": "PASS",
+   "twoBuildReproducibility": "PASS",
+   "extensionSha256": "e49ab7a474bd5b7326dcf23cf4078dacb86743e10cd20e1113a0270cd5010687"
+  },
+  "acceptance": "COMPLETE_REVISED_T032",
+  "acceptanceFamilies": [
+   "STM32C0",
+   "STM32F103",
+   "STM32F2",
+   "STM32F4",
+   "STM32F7",
+   "STM32G0",
+   "STM32G4",
+   "STM32H5",
+   "STM32H7",
+   "STM32L4",
+   "STM32L4+",
+   "STM32L5",
+   "STM32N6",
+   "STM32U0",
+   "STM32U3",
+   "STM32U5",
+   "STM32WB",
+   "STM32WB0",
+   "STM32WBA",
+   "STM32WL3"
+  ]
+ },
+ "stm32MarketSurvey": {
+  "status": "REVIEWED_SELECTION_COMPLETE_2026_09_29",
+  "officialNucleoProductCount": 91,
+  "officialDiscoveryProductCount": 61,
+  "boardSourceConfigurations": 277,
+  "explicitExactCpnRows": 148,
+  "distinctExactCpnCandidates": 89,
+  "candidateIndexPath": "catalogs/stm32/sources/board-index.json",
+  "redistribution": "BSD_3_CLAUSE_SOURCE_FACTS_REPOSITORY_ONLY",
+  "marketAvailability": "32_IN_STOCK_18_ACTIVE_OUT_OF_STOCK_5_UNVERIFIED_1_MODULE_EXCLUDED",
+  "discoveryIncludesMpuAndApplicationBoards": true,
+  "currentNucleoBoardNameMatches": 85,
+  "currentDiscoveryBoardNameMatches": 41,
+  "candidateFactsPath": "catalogs/stm32/sources/board-part-candidates.json",
+  "reviewedActiveBoardParts": 50,
+  "selectionPath": "catalogs/stm32/2026-09-29/selection.json",
+  "auditEvidencePath": ".embedra/evidence/tasks/T032-market-audit.json",
+  "currentMatchedDistinctExactCpnCandidates": 56,
+  "moduleCandidatesExcluded": 1
+ },
+ "stm32MemoryReview": {
+  "status": "COMPLETE_ALL_53_VALIDATED_PLANS",
+  "selectedParts": 53,
+  "directDfpPatternParts": 46,
+  "packingSuffixParts": 4,
+  "partsWithPartialRegionFacts": 11,
+  "partialRegionFacts": 54,
+  "validatedRuntimeMaps": 53,
+  "unpairedCatalogFlashSizes": 0,
+  "catalogFlashFieldsUnpaired": 11,
+  "catalogFlashLimitation": "11 curated catalog flashKiB fields remain null (audit unresolvedFlash=11); every exact part has a validated plan flash size, so the memory review has no unpaired plan capacity",
+  "sourceHeaders": 48,
+  "rawHeaderDeclarations": 1905,
+  "reconciliationPath": ".embedra/evidence/tasks/T039-memory-reconciliation.json",
+  "reconciliationSha256": "4bbd84e3f4fa32811ef308f5426505d981c511bda2e4ed00a99801a1ef76393c",
+  "headerEvidencePath": ".embedra/evidence/tasks/T039-memory-header-evidence.json",
+  "headerEvidenceSha256": "491c148f623de7ac3e14f2c1e99ec919b3223afda470d57de3040405ed07a4a5",
+  "documentBytesStatus": "PINNED_DOCUMENTS_VERIFIED_LOCAL_CACHE",
+  "catalogUnchanged": true,
+  "supportState": "PLANNED",
+  "remainingIncompleteParts": 0,
+  "memoryPlansPath": "catalogs/stm32/2026-09-29/memory-plans.json",
+  "memoryPlansSha256": "00def2817ba0660644a4bc6cea3ffb756e11aff4d7236a466f82de838c280c66",
+  "validatedExactParts": "ALL_53",
+  "sourceDocuments": 88,
+  "explicitAvailabilityFields": [
+   "flashAvailability UNAVAILABLE (STM32N657X0H3Q, ROMless)",
+   "systemAvailability UNAVAILABLE (STM32WL3RKBV6, RM0551 table 3)",
+   "optionAvailability NOT_MEMORY_MAPPED (register-only option bytes)",
+   "bitBandAvailability UNAVAILABLE (M0+/M33/M55/M7)",
+   "bootAliasAvailability CONFIGURATION_DEPENDENT (BOOT_ADD/NSBOOTADD/SECBOOTADD/REMAP)"
+  ],
+  "dualCoreProfiles": [
+   "WB_DUAL_CORE (STM32WB55RGV6 and STM32WB15CCU6, Cortex-M4 + Cortex-M0+)"
+  ],
+  "configurationDependentRegions": {
+   "STM32H735IGK6": "ITCM_AXI_SHARED 192 KiB; four TCM_AXI_SHARED allocations resolved to concrete ITCM/AXI ranges"
+  },
+  "documentAuditPath": ".embedra/evidence/tasks/T039-document-source-audit.json",
+  "documentAuditSha256": "9f9a0b7b9d03ab5a98290557f4687194c19770511905d276f9d7682456b47d75",
+  "focusedVerification": {
+   "plannerUnitTests": 17,
+   "rawBinAndMemoryGhidraTests": 7,
+   "stm32PythonTests": 95,
+   "javaBaseline": 21,
+   "ghidraVersion": "12.1.3",
+   "readinessRequireComplete": "PASS_53_OF_53",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+  }
+ },
+ "stm32SvdEnrichment": {
+  "status": "COMPLETE_T040",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "source": {
+   "identity": "ST-authored SVD via modm-io/cmsis-svd-stm32",
+   "url": "https://github.com/modm-io/cmsis-svd-stm32",
+   "revision": "e79021accd49bf19bd0b16065f5471fb073ff3ac",
+   "license": "Apache-2.0",
+   "redistribution": "DERIVED_FACTS_ONLY_RAW_XML_NOT_BUNDLED"
+  },
+  "applicabilityPath": "catalogs/stm32/2026-09-29/svd-applicability.json",
+  "applicabilitySha256": "be795ab0d0d5da1b218428361690753fb39e8f962b3de8c160ae9a43d7970518",
+  "selectionRule": "EXACT_DEVICE_LINE_OR_NAMED_REVIEW_OVERRIDE_NO_FAMILY_OR_WILDCARD",
+  "coveredExactParts": 53,
+  "shippedParts": 8,
+  "shippedDeviceLines": 7,
+  "deferredParts": 37,
+  "unavailableParts": 8,
+  "shippedPacks": [
+   "packs/stm32.stm32c031.svd/1.0.0",
+   "packs/stm32.stm32f103.svd/1.0.0",
+   "packs/stm32.stm32f401.svd/1.0.0",
+   "packs/stm32.stm32h503.svd/1.0.0",
+   "packs/stm32.stm32h735.svd/1.0.0",
+   "packs/stm32.stm32wb55-cm0p.svd/1.0.0",
+   "packs/stm32.stm32wb55-cm4.svd/1.0.0"
+  ],
+  "shippedTotals": {
+   "peripherals": 400,
+   "registers": 7512,
+   "fields": 47440,
+   "enumeratedValues": 22725
+  },
+  "interruptPlan": {
+   "coveredExactParts": 53,
+   "applicableExactParts": 51,
+   "ambiguousExactParts": [
+    "STM32N657X0H3Q (CONDITIONAL_REVIEW)",
+    "STM32WL3RKBV6 (MAPPED_VARIANTS)"
+   ],
+   "vectorLabelsOrFunctionsCreated": false,
+   "note": "T040 applies interrupt definitions as Ghidra enum data types and provenance only; T041 owns vector labels/functions and core exception structures."
+  },
+  "verifiedApplication": "TRANSACTIONAL_IDEMPOTENT_CONFLICT_PRESERVING_USER_PRESERVING_EXACT_PART_AND_SOURCE_PIN_ENFORCED",
+  "focusedVerification": {
+   "modelUnitTests": 3,
+   "packLoaderTests": 5,
+   "applicabilityTests": 3,
+   "interruptPlanTests": 2,
+   "ghidraApplicatorTests": 10,
+   "stm32PythonTests": 105,
+   "javaBaseline": 21,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+  }
+ },
+ "stm32VectorLabels": {
+  "status": "COMPLETE_T041",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "deviceDataPacksUnchanged": true,
+  "coreExceptionTable": [
+   "NonMaskableInt=-14",
+   "HardFault=-13",
+   "MemManage=-12",
+   "BusFault=-11",
+   "UsageFault=-10",
+   "SVCall=-5",
+   "DebugMonitor=-4",
+   "PendSV=-2",
+   "SysTick=-1"
+  ],
+  "reset": "Reset_IRQn=-15 slot 1 architectural",
+  "naming": "EXACT_PART_QUALIFIED_FROM_PINNED_INTERRUPT_NAMES_AND_EXPLICIT_CORE_TABLE",
+  "confirmedTableRequired": true,
+  "conditionalOrVariantInterruptListAppliesNothing": true,
+  "unlistedCoreExceptionPreserved": "pinned_name_with_UNLISTED_CORE_EXCEPTION_diagnostic",
+  "application": "TRANSACTIONAL_IDEMPOTENT_USER_PRESERVING_NON_RESURRECTING",
+  "focusedVerification": {
+   "purePlannerTests": 12,
+   "realGhidraTests": 8,
+   "applicableCuratedPartsSwept": 51,
+   "javaBaseline": 21,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+  },
+  "notClaimed": [
+   "No exact STM32 device support promotion; all 53 records remain PLANNED",
+   "No automatic vector-table base inference or family/wildcard inference",
+   "No ST startup-style _Handler rename; no fabricated handler names or addresses",
+   "No new Ghidra struct data type over the T037 primitive words"
+  ]
+ },
+ "stm32BoardProfiles": {
+  "status": "COMPLETE_T042",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "deviceDataPacksUnchanged": true,
+  "vectorLabelsUnchanged": true,
+  "catalogSha256": "78a3e0e41cc14585ad3c4140aed80fff6d53fcd367d6beec3d2cc787950c75f3",
+  "boardIndexSha256": "2b9c7c2cc5e2838c50190a507cc0d96792d3a3e5eba8a5aee4e21d50cc77b6a7",
+  "sourceAuditPath": ".embedra/evidence/tasks/T042-board-source-audit.json",
+  "sourceAuditSha256": "725d0c69a2323275752f4c66fee1be169d782d6279e847fbf6ea1bfc96564413",
+  "reviewedProfiles": 9,
+  "unavailableProfiles": 3,
+  "reviewedBoards": [
+   "STM32H735G-DK (STM32H735IGK6)",
+   "STM32H750B-DK (STM32H750XBH6)",
+   "STM32H7S78-DK (STM32H7S7L8H6H)",
+   "STM32H573I-DK (STM32H573IIK3Q)",
+   "STM32H5F5J-DK (STM32H5F5LJH7Q)",
+   "STM32L562E-DK (STM32L562QEI6Q)",
+   "B-U585I-IOT02A (STM32U585AII6Q)",
+   "STM32U5G9J-DK1 (STM32U5G9NJH6Q)",
+   "STM32N6570-DK (STM32N657X0H3Q)"
+  ],
+  "unavailableParts": [
+   "STM32G473QET6 (NO_PINNED_BSP_EXTERNAL_MEMORY_FACT)",
+   "STM32U083MCT6 (BOARD_HAS_NO_EXTERNAL_MEMORY_IN_PINNED_BSP)",
+   "STM32L552ZET6Q (BOTH_EXTERNAL_DEVICES_SHARE_OCTOSPI1_MAPPED_WINDOW)"
+  ],
+  "externalAddressSpace": "ext-mem",
+  "composition": "PURE_NON_MUTATING_EXACT_PART_COMPOSED_WITH_T039_MEMORY_PLAN",
+  "ghidraAdapter": "NOT_IMPLEMENTED_PURE_PLAN_ONLY_NO_FABRICATED_PERMISSIONS",
+  "focusedVerification": {
+   "pureModelTests": 9,
+   "boardProfilePythonTests": 7,
+   "javaBaseline": 21,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+  },
+  "notClaimed": [
+   "No exact STM32 device support promotion; all 53 records remain PLANNED",
+   "No board profile mutates or extends an MCU pack",
+   "No invented external size, address, boot offset, or board-to-part link",
+   "No family or wildcard board link; exact-part id only",
+   "No Ghidra external-memory mapping and no fabricated memory permission"
+  ]
+ },
+ "stm32SignaturePacks": {
+  "status": "COMPLETE_T043",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "deviceDataPacksUnchanged": true,
+  "vectorLabelsUnchanged": true,
+  "boardProfilesUnchanged": true,
+  "sourceAuditPath": ".embedra/evidence/tasks/T043-signature-source-audit.json",
+  "sourceAuditSha256": "9bcffd9259e43c9bc256b67bba5f7c7bb8b5dd54d685efb7ec9eee598c05fddf",
+  "sourcePackage": "STM32Cube_FW_F1_V1.8.7",
+  "sourceArchiveSha256": "1b5f99f86982efe5e4931063de4a0f0af80e38a05d4835b0b8f82aefad634b29",
+  "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+  "optimizations": [
+   "-Os",
+   "-O2"
+  ],
+  "packId": "stm32.stm32f1.signatures",
+  "packVersion": "1.0.0",
+  "supportedFamily": "STM32F1",
+  "signatureCount": 1543,
+  "signaturesSha256": "c21f553e30a5d02b30aaafa4bd0584ac3deaf304b23d895d7d692cedbbd8dc70",
+  "packContentDigest": "ebb0e4e72b435d13b23f42945fc5e62056d82b390921e5ad5a007bc2b227a191",
+  "components": {
+   "stm32f1xx-hal": 1111,
+   "freertos-kernel": 225,
+   "stm32f1xx-ll": 179,
+   "freertos-port": 24,
+   "cmsis-device": 4
+  },
+  "lowSpecificityExcluded": 420,
+  "compileSkips": 0,
+  "matching": "EVIDENCE_GATED_FAMILY_COMPILER_OPTIMIZATION_EXPLICIT_NON_MATCH",
+  "ghidraAdapter": "NOT_IMPLEMENTED_PURE_MATCH_AND_SHARED_PACK_SELECTION_ONLY",
+  "focusedVerification": {
+   "pureSignatureTests": 20,
+   "stm32PythonTests": 123,
+   "generatorRegenerationTests": 11,
+   "javaBaseline": 21,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+  },
+  "notClaimed": [
+   "No exact STM32 device support promotion; all 53 records remain PLANNED",
+   "No other STM32 family, HAL version, compiler, optimization, or RTOS/library version is claimed",
+   "A family-level signature match never resolves an exact part number",
+   "No vendor source, object, or toolchain runtime is redistributed",
+   "No Ghidra mutation or functional rename is applied by T043"
+  ]
+ },
+ "stm32TrustZone": {
+  "status": "COMPLETE_T044",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "deviceDataPacksUnchanged": true,
+  "vectorLabelsUnchanged": true,
+  "boardProfilesUnchanged": true,
+  "signaturePacksUnchanged": true,
+  "artifactPath": "catalogs/stm32/2026-09-29/security-domains.json",
+  "artifactSha256": "08da45f506d670df3ed042243513d0a3751d07cce2b256cb2c46cd7db23ee3e9",
+  "generator": "scripts/generate-stm32-security-domains.py",
+  "schema": "urn:embedra:schema:stm32-security-domains:1",
+  "sourcePins": {
+   "curatedCatalogSha256": "afc66a47cd79c2025d115049c8aebd2db671c1112d42531b1db50df8514858f9",
+   "selectionSha256": "1d4b971f0264815492bf644552b8c83abf0393b627216a89640080b8ccf8b3b4",
+   "cmsisHeaderEvidenceSha256": "491c148f623de7ac3e14f2c1e99ec919b3223afda470d57de3040405ed07a4a5",
+   "cmsisInterruptIndexSha256": "2c312786d907f85babde522944141d0672094749e787ce87078c14bc07495f72",
+   "memoryPlansSha256": "00def2817ba0660644a4bc6cea3ffb756e11aff4d7236a466f82de838c280c66"
+  },
+  "aliasViewParts": 19,
+  "unavailableParts": 34,
+  "aliasParts": [
+   "STM32H533RET6",
+   "STM32H553ZGT6",
+   "STM32H573IIK3Q",
+   "STM32H5E5ZJT6",
+   "STM32H5F5LJH7Q",
+   "STM32L552ZET6Q",
+   "STM32L562QEI6Q",
+   "STM32N657X0H3Q",
+   "STM32U385RGT6Q",
+   "STM32U3C5ZIT6Q",
+   "STM32U545RET6Q",
+   "STM32U575ZIT6Q",
+   "STM32U585AII6Q",
+   "STM32U5A5ZJT6Q",
+   "STM32U5G9NJH6Q",
+   "STM32U5G9ZJT6Q",
+   "STM32WBA25CEU7",
+   "STM32WBA52CGU6",
+   "STM32WBA65RIV7"
+  ],
+  "securePartitionState": "UNRESOLVED_CONFIGURATION_DEPENDENT",
+  "nonSecureCallableState": "UNAVAILABLE_CONFIGURATION_DEPENDENT",
+  "veneerTransitionsModeled": 0,
+  "composition": "PURE_NON_MUTATING_EXACT_PART_COMPOSED_WITH_T039_MEMORY_PLAN_EXPLICIT_CONFIGURATION_INPUT_ONLY",
+  "ghidraAdapter": "NOT_IMPLEMENTED_PURE_PLAN_ONLY_NO_FABRICATED_PARTITION_OR_VENEER",
+  "focusedVerification": {
+   "catalogTests": 12,
+   "plannerTests": 9,
+   "veneerPlannerTests": 5,
+   "generatorTests": 8,
+   "stm32PythonTests": 131,
+   "javaBaseline": 21,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+  },
+  "notClaimed": [
+   "No exact STM32 device support promotion; all 53 records remain PLANNED",
+   "No secure/non-secure partition boundary is derived; only fixed alias apertures are represented",
+   "No non-secure-callable address, veneer address, or instruction semantic is fabricated",
+   "No family, core, or sibling-part inference; evidence is per-exact-part only",
+   "No Ghidra program mutation is performed"
+  ]
+ },
+ "hardeningReview": {
+  "status": "COMPLETE_2026-10-02",
+  "evidencePath": ".embedra/evidence/tasks/T039-T041-hardening.md",
+  "fixedFindings": [
+   "T041 program-recorded exact-part binding in Stm32VectorLabelApplicator",
+   "T040 program-recorded exact-part binding in Stm32SvdApplicator",
+   "T040 encoding-safe DTD/entity rejection in generate-stm32-svd-packs.py with UTF-16 regression",
+   "T040 typed PACK_CONTENT_INVALID for out-of-range interrupt values in the pack loader and interrupt plan",
+   "T040 loader/model rejection of overlapping fields and duplicate field/enumerated-value names",
+   "T039 unresolved configuration placeholder sized by physicalKiB instead of an allocation bounding box",
+   "T039 PDSC encoding-safe DTD/entity rejection with UTF-16 regression"
+  ],
+  "residualBacklog": [
+   "T040 additively annotates a user-preserved peripheral block (documented design choice)",
+   "T040 non-enumerated fields wider than 32 bits are not yet materialized",
+   "Register-level modifiedWriteValues, array-name collisions, and createdEnumerations reapply over-count",
+   "Remaining T032 STM32 source generators and the ESP32-S3 SVD generator use raw byte-substring DTD checks",
+   "T039 Java planner does not yet assert topology.physicalCoreCount; malformed IPCC/HSEM bounds surface as NPE"
+  ],
+  "supportState": "PLANNED",
+  "artifactsUnchanged": [
+   "catalogs/stm32/2026-09-29/memory-plans.json",
+   "catalogs/stm32/2026-09-29/svd-applicability.json",
+   "packs/stm32.*.svd/1.0.0"
+  ]
+ },
+ "followupReview": {
+  "status": "COMPLETE_2026-10-02",
+  "evidencePath": ".embedra/evidence/tasks/T038-T041-followup-review.md",
+  "fixedFindings": [
+   "T038 catalog search normalizes family and line labels so lowercase line text matches case-insensitively",
+   "T040 svd package documentation names both Espressif and STM32 CMSIS-SVD models",
+   "T040 bundled SVD pack loading is restricted to reviewed EXACT_SVD_SHIPPED applicability entries",
+   "T039 evidence status cites the final allocation-resolution ZIP digest 68a45831c37b9085f9bfcf46e6350ba1a21850ac5aca9cea8235d636bbed91ba",
+   "PROJECT_STATE T040 result cites the final review gate f04ee66e34f9e942ac5728a50eb1f1bd0d45faeff1c63faf1d82342f5daeb004 with 84 real-Ghidra tests",
+   "State test counts updated and the 11 null catalog flashKiB fields documented as the known catalog limitation"
+  ],
+  "residualNotes": [
+   "Stm32InterruptPlan out-of-int-range interrupt handling is unreachable under the pinned catalog digest and has no dedicated regression",
+   "The documented T040 residual backlog is unchanged"
+  ],
+  "artifactsUnchanged": [
+   "catalogs/stm32/2026-09-29/curated-catalog.json",
+   "catalogs/stm32/2026-09-29/memory-plans.json",
+   "catalogs/stm32/2026-09-29/svd-applicability.json",
+   "packs/stm32.*.svd/1.0.0"
+  ]
+ },
+ "stm32DualCoreWorkspace": {
+  "status": "COMPLETE_T045",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "deviceDataPacksUnchanged": true,
+  "vectorLabelsUnchanged": true,
+  "boardProfilesUnchanged": true,
+  "signaturePacksUnchanged": true,
+  "securityDomainsUnchanged": true,
+  "package": "targets/stm32/workspace",
+  "composedInputs": [
+   "catalogs/stm32/2026-09-29/memory-plans.json (00def2817ba0660644a4bc6cea3ffb756e11aff4d7236a466f82de838c280c66)",
+   "catalogs/stm32/2026-09-29/security-domains.json (08da45f506d670df3ed042243513d0a3751d07cce2b256cb2c46cd7db23ee3e9)"
+  ],
+  "pinnedMultiCoreParts": [
+   "STM32WB55RGV6",
+   "STM32WB15CCU6"
+  ],
+  "multiCorePinnedParts": 2,
+  "unavailableParts": 51,
+  "programSlotsPerPinnedPart": 2,
+  "crossProgramReferenceKinds": [
+   "BOOT_HANDOFF",
+   "SHARED_MAILBOX",
+   "SHARED_SEMAPHORE",
+   "SHARED_MEMORY"
+  ],
+  "ipccRegisterWindow": {
+   "addressSpace": "peripheral",
+   "start": "0x58000C00",
+   "size": 1024
+  },
+  "hsemRegisterWindow": {
+   "addressSpace": "peripheral",
+   "start": "0x58001400",
+   "size": 1024
+  },
+  "bootOrder": "RELEASES_FROM_RESET (CPU1 releases CPU2; C2BOOT in PWR_CR4)",
+  "sharedMemoryAttribution": {
+   "STM32WB55RGV6/CPU1": [
+    "FLASH (image, PRIVATE)",
+    "SRAM1 (SHARED rw with CPU2)"
+   ],
+   "STM32WB55RGV6/CPU2": [
+    "SRAM1 (SHARED)",
+    "SRAM2A (PRIVATE)",
+    "SRAM2B (PRIVATE)"
+   ],
+   "STM32WB15CCU6/CPU2": [
+    "SRAM1 (SHARED)",
+    "SRAM2A (PRIVATE)",
+    "SRAM2B (PRIVATE)"
+   ]
+  },
+  "cpu2ImageState": "UNAVAILABLE_INDEPENDENTLY_SUPPLIED with pinned release mechanism",
+  "unresolvedViews": [
+   "cpu2-fetch-view (C2BOOT/C2OPT/SBRV configuration-dependent)"
+  ],
+  "composition": "PURE_NON_MUTATING_EXACT_PART_COMPOSED_WITH_T039_PLAN_AND_T044_RECORD",
+  "diagnostics": [
+   "WORKSPACE_PART_MISMATCH",
+   "WORKSPACE_CONFIGURATION_UNKNOWN",
+   "WORKSPACE_PLAN_CONFIGURATION_UNRESOLVED",
+   "WORKSPACE_IMAGE_DOMAIN_AMBIGUOUS",
+   "WORKSPACE_IMAGE_DOMAIN_UNDETERMINED",
+   "WORKSPACE_CORES_AMBIGUOUS",
+   "WORKSPACE_IMAGE_UNDETERMINED",
+   "WORKSPACE_MEMORY_UNATTRIBUTED",
+   "WORKSPACE_SLOT_RANGE_OVERLAP",
+   "WORKSPACE_BOOT_ORDER_UNPINNED",
+   "WORKSPACE_BOOT_ORDER_AMBIGUOUS",
+   "WORKSPACE_MAILBOX_UNPINNED",
+   "WORKSPACE_SEMAPHORE_UNPINNED",
+   "WORKSPACE_COMMUNICATION_RANGE_UNPINNED"
+  ],
+  "ghidraAdapter": "NO_ADAPTER_PURE_PLAN_ONLY_NO_INVENTED_CPU2_IMAGE_OR_RANGE",
+  "focusedVerification": {
+   "workspaceTests": 15,
+   "pinnedSweepParts": 53,
+   "unavailableSweepParts": 51,
+   "stm32PythonTests": 131,
+   "javaBaseline": 331,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+  },
+  "notClaimed": [
+   "No exact STM32 device support promotion; all 53 records remain PLANNED",
+   "No CPU2 firmware bytes, image range, radio state, or mailbox content is invented",
+   "No dual-core H7 (H745/H755) or other non-pinned multi-core part is claimed",
+   "No separate Ghidra program is created; only distinct planned program slots exist",
+   "No family, sibling, or wildcard inference anywhere in the composer"
+  ]
+ },
+ "stm32WirelessNetworkCores": {
+  "status": "COMPLETE_T046",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "deviceDataPacksUnchanged": true,
+  "vectorLabelsUnchanged": true,
+  "boardProfilesUnchanged": true,
+  "signaturePacksUnchanged": true,
+  "securityDomainsUnchanged": true,
+  "workspacePlansUnchanged": true,
+  "package": "targets/stm32/wireless",
+  "composedInputs": [
+   "catalogs/stm32/2026-09-29/curated-catalog.json (afc66a47cd79c2025d115049c8aebd2db671c1112d42531b1db50df8514858f9)",
+   "catalogs/stm32/2026-09-29/memory-plans.json (00def2817ba0660644a4bc6cea3ffb756e11aff4d7236a466f82de838c280c66)",
+   "catalogs/stm32/2026-09-29/svd-applicability.json (be795ab0d0d5da1b218428361690753fb39e8f962b3de8c160ae9a43d7970518)",
+   "catalogs/stm32/2026-09-29/security-domains.json (08da45f506d670df3ed042243513d0a3751d07cce2b256cb2c46cd7db23ee3e9)"
+  ],
+  "networkCorePinnedParts": [
+   "STM32WB55RGV6",
+   "STM32WB15CCU6"
+  ],
+  "singleApplicationCoreParts": [
+   "STM32WB05KZV6TR",
+   "STM32WB07CCV6TR",
+   "STM32WB09KEV6TR",
+   "STM32WBA25CEU7",
+   "STM32WBA52CGU6",
+   "STM32WBA65RIV7",
+   "STM32WL33CCV6TR",
+   "STM32WL3RKBV6"
+  ],
+  "outOfScopeNonWirelessParts": 43,
+  "cpu2FirmwareContract": "INDEPENDENTLY_SUPPLIED with UNRESOLVED_CONFIGURATION_DEPENDENT C2BOOT/C2OPT/SBRV binding; no image byte, range, or size is invented",
+  "communicationWindows": {
+   "ipcc": {
+    "addressSpace": "peripheral",
+    "start": "0x58000C00",
+    "size": 1024
+   },
+   "hsem": {
+    "addressSpace": "peripheral",
+    "start": "0x58001400",
+    "size": 1024
+   }
+  },
+  "perCoreRegisterModels": {
+   "STM32WB55RGV6": {
+    "application": "SHIPPED STM32WB55_CM4",
+    "network": "SHIPPED STM32WB55_CM0P"
+   },
+   "STM32WB15CCU6": {
+    "application": "DEFERRED STM32WB15_CM4 (pinned review reason)",
+    "network": "UNAVAILABLE (DUAL_CORE_M4_SVD_AVAILABLE_M0P_DEVICE_LINE_ABSENT)"
+   }
+  },
+  "radioRegisterModelState": "UNAVAILABLE for all ten wireless-scope parts, with reasons derived from the pinned applicability statuses; the shipped WB55 CM4/CM0P packs were verified in-repository to contain no RF/RADIO/BLE peripheral",
+  "bindingEvaluatorStates": [
+   "BINDABLE_UNRESOLVED_FETCH_VIEW",
+   "FLASH_VIEW_CONFIGURATION_DEPENDENT",
+   "BINDING_RANGE_NOT_CPU2_ACCESSIBLE (typed fail closed)"
+  ],
+  "ghidraAdapter": "NO_ADAPTER_PURE_PLAN_ONLY_NO_INVENTED_CPU2_IMAGE_OR_RADIO_WINDOW",
+  "focusedVerification": {
+   "wirelessTests": 10,
+   "pinnedSweepParts": 10,
+   "familyScopeRejectedParts": 43,
+   "stm32PythonTests": 131,
+   "javaBaseline": 341,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+  },
+  "notClaimed": [
+   "No exact STM32 device support promotion; all 53 records remain PLANNED",
+   "No radio register window, wireless protocol state, or CPU2 image byte is invented",
+   "No separate Ghidra program is created; CPU2 programs exist only when the user supplies the image",
+   "No radio-hardware execution unit is modeled as a disassembly target",
+   "No family, sibling, or wildcard inference anywhere in the composer"
+  ]
+ },
+ "stm32ExternalMemory": {
+  "status": "COMPLETE_T047",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "deviceDataPacksUnchanged": true,
+  "vectorLabelsUnchanged": true,
+  "boardProfilesUnchanged": true,
+  "signaturePacksUnchanged": true,
+  "securityDomainsUnchanged": true,
+  "workspacePlansUnchanged": true,
+  "wirelessPlansUnchanged": true,
+  "package": "targets/stm32/extmem",
+  "composedInputs": [
+   "catalogs/stm32/2026-09-29/memory-plans.json (00def2817ba0660644a4bc6cea3ffb756e11aff4d7236a466f82de838c280c66)",
+   "catalogs/stm32/2026-09-29/board-profiles.json (78a3e0e41cc14585ad3c4140aed80fff6d53fcd367d6beec3d2cc787950c75f3)"
+  ],
+  "pinnedMappedParts": 9,
+  "pinnedUnavailableParts": 3,
+  "noProfileParts": 41,
+  "pinnedUnavailableReasons": {
+   "STM32G473QET6": "NO_PINNED_BSP_EXTERNAL_MEMORY_FACT",
+   "STM32U083MCT6": "BOARD_HAS_NO_EXTERNAL_MEMORY_IN_PINNED_BSP",
+   "STM32L552ZET6Q": "BOTH_EXTERNAL_DEVICES_SHARE_OCTOSPI1_MAPPED_WINDOW"
+  },
+  "controllerFamilies": [
+   "OCTOSPI",
+   "XSPI",
+   "QUADSPI",
+   "FMC"
+  ],
+  "windowModel": "pinned ext-mem aperture (numeric CPU base and mapped device extent) kept separate from device-offset space 0..size with checked translation; numeric collisions with MCU regions or sibling windows fail closed",
+  "customProfiles": "CONFIRMED USER_ASSERTION profiles reusing the T042 ExternalRegion contract with a bounded closed-schema JSON loader; no pinned snapshot mutated (STM-016)",
+  "loaderStates": [
+   "device-offset placement against one pinned window",
+   "derived CPU aperture address",
+   "typed fail-closed diagnostics (LOADER_*)"
+  ],
+  "ghidraAdapter": "MAP_WINDOWS and LOAD_BYTES in one rollback-capable transaction bound to the program-recorded exact part; idempotent; MEMORY_PRESERVED/NAME_CONFLICT/CONTENT_DIFFERS/PRESERVED_ABSENT receipts; never removes, splits, overwrites, or resurrects a block",
+  "focusedVerification": {
+   "pureTests": 12,
+   "realGhidraTests": 11,
+   "stm32PythonTests": 131,
+   "javaBaseline": 353,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS"
+  },
+  "notClaimed": [
+   "No exact STM32 device support promotion; all 53 records remain PLANNED",
+   "No external-device fixture corpus, image coverage, or hardware verification",
+   "Load bytes are never merged into a mapped aperture; existing blocks are preserved and never split",
+   "No per-part controller-existence verification; custom controller claims rest on their USER_ASSERTION",
+   "No invented device, controller, window, alias, size, permission, board link, or address"
+  ]
+ },
+ "stm32FirmwareDiffCtf": {
+  "status": "COMPLETE_T048",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "deviceDataPacksUnchanged": true,
+  "vectorLabelsUnchanged": true,
+  "boardProfilesUnchanged": true,
+  "signaturePacksUnchanged": true,
+  "securityDomainsUnchanged": true,
+  "workspacePlansUnchanged": true,
+  "wirelessPlansUnchanged": true,
+  "externalMemoryPlansUnchanged": true,
+  "package": "analyzers/stm32",
+  "sharedAnalyzersReused": [
+   "T023 EspIdfEnrichment contracts (logging/assert evidence gate evaluated for STM32, explicitly unavailable)",
+   "T025 EspArtifactChangeKind diff vocabulary and digest-before-extent ordering (ADR-0017)",
+   "T043 Stm32SignatureMatcher and Stm32SignatureContext evidence gates (shared report carried verbatim)",
+   "T044 Stm32SecurityRecord pinned TrustZone evidence"
+  ],
+  "diffContract": {
+   "changeKinds": [
+    "UNCHANGED",
+    "MOVED",
+    "MODIFIED",
+    "ADDED",
+    "REMOVED"
+   ],
+   "ordering": "content SHA-256 compared before the confirmed image extent (T041 ImageRange)",
+   "binding": "DIFF_EXACT_PART_MISMATCH and DIFF_EXACT_PART_UNCURATED fail closed against the digest-pinned curated selection"
+  },
+  "leadCodes": [
+   "STM32_SIGNATURE_LIBRARY_FUNCTION (LOW; confidence and evidence carried verbatim from the shared matcher)",
+   "STM32_IMAGE_IN_SECURE_ALIAS (MEDIUM, DERIVED; pinned SECURE alias aperture covering a confirmed image extent)"
+  ],
+  "securityEvidenceStates": [
+   "PINNED (19 curated parts restate their pinned secure alias apertures)",
+   "UNAVAILABLE (34 curated parts carry their pinned T044 reason)",
+   "NOT_SUPPLIED (no confirmed security record was supplied)"
+  ],
+  "explicitCapabilityGaps": [
+   "stm32-logging-assert-recovery: the shared logging/assert evidence contract requires a resolved target plus constant tag/format pointers and no STM32 logging/assert target is pinned (the shipped F1 pack carries no assert/printf/log-named signature)",
+   "signature-evidence-missing and signature-index-unavailable are shared non-matches, never findings"
+  ],
+  "ghidraAdapter": "NO_ADAPTER_PURE_PLAN_ONLY",
+  "focusedVerification": {
+   "pureTests": 25,
+   "unitTests": 380,
+   "realGhidraTests": 104,
+   "stm32PythonTests": 131,
+   "espPythonTests": 4,
+   "sweep": "53-part security sweep: 19 pinned, 34 explicitly unavailable",
+   "javaBaseline": 380,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS",
+   "zipSha256": "ba872aeaf067ae07fd25e6e02c0c80edf485caddab1eb10fad056250dc0e8bbf"
+  },
+  "notClaimed": [
+   "No exact STM32 device support promotion; all 53 records remain PLANNED",
+   "No function, string, symbol, or memory-level image diffing; those remain T056-T064",
+   "No invented diff result, CTF lead, confidence, symbol, or memory fact; absent shared evidence stays an explicit non-match",
+   "No logging/assert lead for STM32 because no STM32 logging/assert target is pinned",
+   "No secure/non-secure partition, NSC, or veneer lead because the pinned data fixes none",
+   "No secret material is produced and no support state is promoted"
+  ]
+ },
+ "stm32MpHeterogeneousProviders": {
+  "status": "COMPLETE_T049",
+  "supportState": "PLANNED",
+  "catalogUnchanged": true,
+  "memoryPlansUnchanged": true,
+  "deviceDataPacksUnchanged": true,
+  "vectorLabelsUnchanged": true,
+  "boardProfilesUnchanged": true,
+  "signaturePacksUnchanged": true,
+  "securityDomainsUnchanged": true,
+  "workspacePlansUnchanged": true,
+  "wirelessPlansUnchanged": true,
+  "externalMemoryPlansUnchanged": true,
+  "package": "targets/stm32/mp",
+  "mcuIsolation": "STM-015: STM32MP targets are distinct heterogeneous microprocessors isolated from ordinary MCU workflows; 53 curated MCU parts unchanged and neither broadened nor mutated",
+  "flagshipTargets": [
+   "STM32MP157C (dual Cortex-A7 32-bit @ 800MHz + Cortex-M4 32-bit @ 209MHz)",
+   "STM32MP257F (dual 64-bit Cortex-A35 @ 1.5GHz + Cortex-M33 @ 400MHz + low-power SmartRun Cortex-M0+ @ 200MHz)",
+   "STM32MP135F (single Cortex-A7 32-bit @ 1.0GHz without microcontroller coprocessor)"
+  ],
+  "bootChainStages": [
+   "ROM (BootROM internal masked code)",
+   "FSBL (TF-A BL2 in SYSRAM)",
+   "SECURE_OS (OP-TEE BL32 in secure RAM)",
+   "SSBL (U-Boot BL33 in DDR)",
+   "NON_SECURE_OS (Linux Kernel)",
+   "COPROCESSOR_FIRMWARE (remoteproc MCU firmware)"
+  ],
+  "selectableBootFlavors": [
+   "A35_TRUSTED_DOMAIN",
+   "M33_TRUSTED_DOMAIN"
+  ],
+  "deviceTreeParser": "pure DTS excerpt parser under ParserLimits and CancellationToken",
+  "securityArchitectures": [
+   "ETZPC_TRUSTZONE (STM32MP1)",
+   "RIF_TRUSTZONE (STM32MP2)"
+  ],
+  "ghidraAdapter": "NO_ADAPTER_PURE_PLAN_ONLY",
+  "focusedVerification": {
+   "pureTests": 16,
+   "unitTests": 394,
+   "realGhidraTests": 104,
+   "stm32PythonTests": 131,
+   "espPythonTests": 4,
+   "javaBaseline": 394,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS",
+   "zipSha256": "13f6fde3544aefca18fef29788074d6718fba62ef68d05e08af1a22c882822b2"
+  },
+  "notClaimed": [
+   "No exact STM32 device support promotion; all 53 records and all MP records remain PLANNED",
+   "No Ghidra mutation adapter; pure planning and topology modeling only",
+   "No firmware images, device tree blobs, or secure payloads are bundled",
+   "No weakening of MCU contracts or memory readiness guarantees"
+  ]
+ }
 }

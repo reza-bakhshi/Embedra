@@ -159,6 +159,6 @@ public final class Stm32BoardPlanner {
     /** All external regions for a part, flattened for report consumers. */
     public static List<Stm32BoardProfile.ExternalRegion> externalRegions(BoardPlan plan) {
         Objects.requireNonNull(plan, "plan");
-        return new ArrayList<>(plan.externalRegions());
+        return plan.externalRegions();
     }
 }

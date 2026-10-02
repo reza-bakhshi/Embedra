@@ -165,4 +165,18 @@ class Stm32BoardCatalogTest {
             Stm32BoardProfile.Status.EXTERNAL_MEMORY_REVIEWED, source, bsp, "cmsis-device-h7",
             List.of(left, right), List.of(), null));
     }
+
+    @Test
+    void externalRegionsReturnsUnmodifiableList() throws Exception {
+        Stm32CuratedPartIds selection = Stm32CuratedPartIds.load(SELECTION,
+            ParserLimits.defaults(), CancellationToken.none());
+        Stm32MemoryPlanner memory = Stm32MemoryPlanner.load(PLANS, selection,
+            ParserLimits.defaults(), CancellationToken.none());
+        Stm32MemoryPlanner.Plan mcuPlan = memory.plan("STM32H735IGK6",
+            Stm32MemoryPlanner.BootMode.UNKNOWN);
+        Stm32BoardPlanner.BoardPlan plan = Stm32BoardPlanner.compose(
+            mcuPlan, catalog().requireProfiles("STM32H735IGK6"));
+        List<Stm32BoardProfile.ExternalRegion> regions = Stm32BoardPlanner.externalRegions(plan);
+        assertThrows(UnsupportedOperationException.class, () -> regions.add(null));
+    }
 }

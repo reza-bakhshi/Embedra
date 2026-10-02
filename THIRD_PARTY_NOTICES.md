@@ -116,6 +116,15 @@ Conditional enumerations remain marked for review, and unresolved references
 are not assigned guessed IRQs. The curated F103 snapshot includes only IRQ
 facts from the pinned Apache-2.0 `stm32f103xb.h` header.
 
+The STM32 TrustZone security-domain snapshot derives alias-view bases, their
+size pairs, the `SecureFault` exception, and `FLASH_SECWM*` configuration
+evidence from the same pinned Apache-2.0 ST CMSIS device headers, the pinned
+T039 memory plans, and the pinned CMSIS interrupt index. No header bytes are
+bundled; only derived facts with repository, commit, path, SHA-256, line, and
+quoted declaration provenance ship. Secure partitions, non-secure-callable
+addresses, and veneer semantics are not derived because the pinned sources fix
+them only through runtime configuration.
+
 The provisional STM32 SVD rule index derives device names, IRQ names/numbers,
 core labels, and transformation-feature counts from ST-authored Apache-2.0
 CMSIS-SVD files transported by `modm-io/cmsis-svd-stm32` at revision
