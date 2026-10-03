@@ -1,0 +1,701 @@
+{
+  "$schema": "urn:embedra:schema:rp-catalog:1",
+  "catalogId": "raspberrypi.rp-silicon",
+  "generator": "generate-rp-catalog.py",
+  "recordCount": 5,
+  "records": [
+    {
+      "applicationCoreCount": 2,
+      "architectureSelectionMode": "FIXED_SINGLE_ISA",
+      "atomicAliasBase": 1342177280,
+      "bootArchitectures": [
+        "ARM_CORTEX_M0P"
+      ],
+      "bootRomBase": 0,
+      "bootRomBytes": 16384,
+      "dimensions": "7x7mm",
+      "exactPart": "RP2040",
+      "externalXipLimitBytes": 16777216,
+      "flashXipBase": 268435456,
+      "gpioCount": 30,
+      "hasAtomicAliases": true,
+      "internalFlashBytes": 0,
+      "package": "QFN-56",
+      "peripheralNames": [
+        "ADC",
+        "BUSCTRL",
+        "CLOCKS",
+        "DMA",
+        "I2C0",
+        "I2C1",
+        "IO_BANK0",
+        "IO_QSPI",
+        "PADS_BANK0",
+        "PADS_QSPI",
+        "PIO0",
+        "PIO1",
+        "PLL_SYS",
+        "PLL_USB",
+        "PSM",
+        "PWM",
+        "RESETS",
+        "ROSC",
+        "RTC",
+        "SIO",
+        "SPI0",
+        "SPI1",
+        "SYSCONFIG",
+        "SYSINFO",
+        "TBMAN",
+        "TIMER",
+        "UART0",
+        "UART1",
+        "USB",
+        "VREG_AND_CHIP_RESET",
+        "WATCHDOG",
+        "XIP_AUX",
+        "XIP_CTRL",
+        "XIP_SSI",
+        "XOSC"
+      ],
+      "pioBlocks": 2,
+      "pioStateMachinesPerBlock": 4,
+      "recordId": "rp:silicon:rp2040",
+      "securityCapabilities": [],
+      "series": "RP2040",
+      "sioBase": 3489660928,
+      "sourceProvenance": {
+        "license": "CC-BY-ND-4.0 / Hardware Documentation License",
+        "revision": "release 8 (2024-08)",
+        "title": "RP2040 Datasheet: A microcontroller by Raspberry Pi",
+        "url": "https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf"
+      },
+      "sramBanks": [
+        {
+          "baseAddress": 536870912,
+          "name": "SRAM0",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 536936448,
+          "name": "SRAM1",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537001984,
+          "name": "SRAM2",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537067520,
+          "name": "SRAM3",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537133056,
+          "name": "SRAM4",
+          "sizeBytes": 4096,
+          "striped": false
+        },
+        {
+          "baseAddress": 537137152,
+          "name": "SRAM5",
+          "sizeBytes": 4096,
+          "striped": false
+        }
+      ],
+      "sramBytes": 270336,
+      "supportState": "PLANNED",
+      "vendor": "Raspberry Pi Ltd"
+    },
+    {
+      "applicationCoreCount": 2,
+      "architectureSelectionMode": "IMAGE_DEF_SELECTABLE_AT_BOOT",
+      "atomicAliasBase": 1342177280,
+      "bootArchitectures": [
+        "ARM_CORTEX_M33",
+        "HAZARD3_RISCV"
+      ],
+      "bootRomBase": 0,
+      "bootRomBytes": 32768,
+      "dimensions": "7x7mm",
+      "exactPart": "RP2350A",
+      "externalXipLimitBytes": 16777216,
+      "flashXipBase": 268435456,
+      "gpioCount": 30,
+      "hasAtomicAliases": true,
+      "internalFlashBytes": 0,
+      "package": "QFN-60",
+      "peripheralNames": [
+        "ADC",
+        "BUSCTRL",
+        "CLOCKS",
+        "DMA",
+        "HSTX",
+        "I2C0",
+        "I2C1",
+        "IO_BANK0",
+        "IO_QSPI",
+        "OTP",
+        "PADS_BANK0",
+        "PADS_QSPI",
+        "PIO0",
+        "PIO1",
+        "PIO2",
+        "PLL_SYS",
+        "PLL_USB",
+        "POWMAN",
+        "PWM",
+        "QMI",
+        "RESETS",
+        "ROSC",
+        "RTC",
+        "SHA256",
+        "SIO",
+        "SPI0",
+        "SPI1",
+        "SYSCONFIG",
+        "SYSINFO",
+        "TBMAN",
+        "TICKS",
+        "TIMER0",
+        "TIMER1",
+        "TRNG",
+        "UART0",
+        "UART1",
+        "USB",
+        "VREG_AND_CHIP_RESET",
+        "WATCHDOG",
+        "XIP_AUX",
+        "XIP_CTRL",
+        "XOSC"
+      ],
+      "pioBlocks": 3,
+      "pioStateMachinesPerBlock": 4,
+      "recordId": "rp:silicon:rp2350a",
+      "securityCapabilities": [
+        "ARM_TRUSTZONE",
+        "OTP_8KB",
+        "HARDWARE_SHA256",
+        "TRNG",
+        "SECURE_BOOT"
+      ],
+      "series": "RP2350",
+      "sioBase": 3489660928,
+      "sourceProvenance": {
+        "license": "CC-BY-ND-4.0 / Hardware Documentation License",
+        "revision": "release 1 (2024-08)",
+        "title": "RP2350 Datasheet: A microcontroller by Raspberry Pi",
+        "url": "https://datasheets.raspberrypi.com/rp2350/rp2350-datasheet.pdf"
+      },
+      "sramBanks": [
+        {
+          "baseAddress": 536870912,
+          "name": "SRAM0",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 536936448,
+          "name": "SRAM1",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537001984,
+          "name": "SRAM2",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537067520,
+          "name": "SRAM3",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537133056,
+          "name": "SRAM4",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537198592,
+          "name": "SRAM5",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537264128,
+          "name": "SRAM6",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537329664,
+          "name": "SRAM7",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537395200,
+          "name": "SRAM8",
+          "sizeBytes": 4096,
+          "striped": false
+        },
+        {
+          "baseAddress": 537399296,
+          "name": "SRAM9",
+          "sizeBytes": 4096,
+          "striped": false
+        }
+      ],
+      "sramBytes": 532480,
+      "supportState": "PLANNED",
+      "vendor": "Raspberry Pi Ltd"
+    },
+    {
+      "applicationCoreCount": 2,
+      "architectureSelectionMode": "IMAGE_DEF_SELECTABLE_AT_BOOT",
+      "atomicAliasBase": 1342177280,
+      "bootArchitectures": [
+        "ARM_CORTEX_M33",
+        "HAZARD3_RISCV"
+      ],
+      "bootRomBase": 0,
+      "bootRomBytes": 32768,
+      "dimensions": "10x10mm",
+      "exactPart": "RP2350B",
+      "externalXipLimitBytes": 16777216,
+      "flashXipBase": 268435456,
+      "gpioCount": 48,
+      "hasAtomicAliases": true,
+      "internalFlashBytes": 0,
+      "package": "QFN-80",
+      "peripheralNames": [
+        "ADC",
+        "BUSCTRL",
+        "CLOCKS",
+        "DMA",
+        "HSTX",
+        "I2C0",
+        "I2C1",
+        "IO_BANK0",
+        "IO_QSPI",
+        "OTP",
+        "PADS_BANK0",
+        "PADS_QSPI",
+        "PIO0",
+        "PIO1",
+        "PIO2",
+        "PLL_SYS",
+        "PLL_USB",
+        "POWMAN",
+        "PWM",
+        "QMI",
+        "RESETS",
+        "ROSC",
+        "RTC",
+        "SHA256",
+        "SIO",
+        "SPI0",
+        "SPI1",
+        "SYSCONFIG",
+        "SYSINFO",
+        "TBMAN",
+        "TICKS",
+        "TIMER0",
+        "TIMER1",
+        "TRNG",
+        "UART0",
+        "UART1",
+        "USB",
+        "VREG_AND_CHIP_RESET",
+        "WATCHDOG",
+        "XIP_AUX",
+        "XIP_CTRL",
+        "XOSC"
+      ],
+      "pioBlocks": 3,
+      "pioStateMachinesPerBlock": 4,
+      "recordId": "rp:silicon:rp2350b",
+      "securityCapabilities": [
+        "ARM_TRUSTZONE",
+        "OTP_8KB",
+        "HARDWARE_SHA256",
+        "TRNG",
+        "SECURE_BOOT"
+      ],
+      "series": "RP2350",
+      "sioBase": 3489660928,
+      "sourceProvenance": {
+        "license": "CC-BY-ND-4.0 / Hardware Documentation License",
+        "revision": "release 1 (2024-08)",
+        "title": "RP2350 Datasheet: A microcontroller by Raspberry Pi",
+        "url": "https://datasheets.raspberrypi.com/rp2350/rp2350-datasheet.pdf"
+      },
+      "sramBanks": [
+        {
+          "baseAddress": 536870912,
+          "name": "SRAM0",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 536936448,
+          "name": "SRAM1",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537001984,
+          "name": "SRAM2",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537067520,
+          "name": "SRAM3",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537133056,
+          "name": "SRAM4",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537198592,
+          "name": "SRAM5",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537264128,
+          "name": "SRAM6",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537329664,
+          "name": "SRAM7",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537395200,
+          "name": "SRAM8",
+          "sizeBytes": 4096,
+          "striped": false
+        },
+        {
+          "baseAddress": 537399296,
+          "name": "SRAM9",
+          "sizeBytes": 4096,
+          "striped": false
+        }
+      ],
+      "sramBytes": 532480,
+      "supportState": "PLANNED",
+      "vendor": "Raspberry Pi Ltd"
+    },
+    {
+      "applicationCoreCount": 2,
+      "architectureSelectionMode": "IMAGE_DEF_SELECTABLE_AT_BOOT",
+      "atomicAliasBase": 1342177280,
+      "bootArchitectures": [
+        "ARM_CORTEX_M33",
+        "HAZARD3_RISCV"
+      ],
+      "bootRomBase": 0,
+      "bootRomBytes": 32768,
+      "dimensions": "7x7mm",
+      "exactPart": "RP2354A",
+      "externalXipLimitBytes": 16777216,
+      "flashXipBase": 268435456,
+      "gpioCount": 30,
+      "hasAtomicAliases": true,
+      "internalFlashBytes": 2097152,
+      "package": "QFN-60",
+      "peripheralNames": [
+        "ADC",
+        "BUSCTRL",
+        "CLOCKS",
+        "DMA",
+        "HSTX",
+        "I2C0",
+        "I2C1",
+        "IO_BANK0",
+        "IO_QSPI",
+        "OTP",
+        "PADS_BANK0",
+        "PADS_QSPI",
+        "PIO0",
+        "PIO1",
+        "PIO2",
+        "PLL_SYS",
+        "PLL_USB",
+        "POWMAN",
+        "PWM",
+        "QMI",
+        "RESETS",
+        "ROSC",
+        "RTC",
+        "SHA256",
+        "SIO",
+        "SPI0",
+        "SPI1",
+        "SYSCONFIG",
+        "SYSINFO",
+        "TBMAN",
+        "TICKS",
+        "TIMER0",
+        "TIMER1",
+        "TRNG",
+        "UART0",
+        "UART1",
+        "USB",
+        "VREG_AND_CHIP_RESET",
+        "WATCHDOG",
+        "XIP_AUX",
+        "XIP_CTRL",
+        "XOSC"
+      ],
+      "pioBlocks": 3,
+      "pioStateMachinesPerBlock": 4,
+      "recordId": "rp:silicon:rp2354a",
+      "securityCapabilities": [
+        "ARM_TRUSTZONE",
+        "OTP_8KB",
+        "HARDWARE_SHA256",
+        "TRNG",
+        "SECURE_BOOT"
+      ],
+      "series": "RP2354",
+      "sioBase": 3489660928,
+      "sourceProvenance": {
+        "license": "CC-BY-ND-4.0 / Hardware Documentation License",
+        "revision": "release 1 (2024-08)",
+        "title": "RP2350 Datasheet: A microcontroller by Raspberry Pi (RP2354 2MB stacked flash variant)",
+        "url": "https://datasheets.raspberrypi.com/rp2350/rp2350-datasheet.pdf"
+      },
+      "sramBanks": [
+        {
+          "baseAddress": 536870912,
+          "name": "SRAM0",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 536936448,
+          "name": "SRAM1",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537001984,
+          "name": "SRAM2",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537067520,
+          "name": "SRAM3",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537133056,
+          "name": "SRAM4",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537198592,
+          "name": "SRAM5",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537264128,
+          "name": "SRAM6",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537329664,
+          "name": "SRAM7",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537395200,
+          "name": "SRAM8",
+          "sizeBytes": 4096,
+          "striped": false
+        },
+        {
+          "baseAddress": 537399296,
+          "name": "SRAM9",
+          "sizeBytes": 4096,
+          "striped": false
+        }
+      ],
+      "sramBytes": 532480,
+      "supportState": "PLANNED",
+      "vendor": "Raspberry Pi Ltd"
+    },
+    {
+      "applicationCoreCount": 2,
+      "architectureSelectionMode": "IMAGE_DEF_SELECTABLE_AT_BOOT",
+      "atomicAliasBase": 1342177280,
+      "bootArchitectures": [
+        "ARM_CORTEX_M33",
+        "HAZARD3_RISCV"
+      ],
+      "bootRomBase": 0,
+      "bootRomBytes": 32768,
+      "dimensions": "10x10mm",
+      "exactPart": "RP2354B",
+      "externalXipLimitBytes": 16777216,
+      "flashXipBase": 268435456,
+      "gpioCount": 48,
+      "hasAtomicAliases": true,
+      "internalFlashBytes": 2097152,
+      "package": "QFN-80",
+      "peripheralNames": [
+        "ADC",
+        "BUSCTRL",
+        "CLOCKS",
+        "DMA",
+        "HSTX",
+        "I2C0",
+        "I2C1",
+        "IO_BANK0",
+        "IO_QSPI",
+        "OTP",
+        "PADS_BANK0",
+        "PADS_QSPI",
+        "PIO0",
+        "PIO1",
+        "PIO2",
+        "PLL_SYS",
+        "PLL_USB",
+        "POWMAN",
+        "PWM",
+        "QMI",
+        "RESETS",
+        "ROSC",
+        "RTC",
+        "SHA256",
+        "SIO",
+        "SPI0",
+        "SPI1",
+        "SYSCONFIG",
+        "SYSINFO",
+        "TBMAN",
+        "TICKS",
+        "TIMER0",
+        "TIMER1",
+        "TRNG",
+        "UART0",
+        "UART1",
+        "USB",
+        "VREG_AND_CHIP_RESET",
+        "WATCHDOG",
+        "XIP_AUX",
+        "XIP_CTRL",
+        "XOSC"
+      ],
+      "pioBlocks": 3,
+      "pioStateMachinesPerBlock": 4,
+      "recordId": "rp:silicon:rp2354b",
+      "securityCapabilities": [
+        "ARM_TRUSTZONE",
+        "OTP_8KB",
+        "HARDWARE_SHA256",
+        "TRNG",
+        "SECURE_BOOT"
+      ],
+      "series": "RP2354",
+      "sioBase": 3489660928,
+      "sourceProvenance": {
+        "license": "CC-BY-ND-4.0 / Hardware Documentation License",
+        "revision": "release 1 (2024-08)",
+        "title": "RP2350 Datasheet: A microcontroller by Raspberry Pi (RP2354 2MB stacked flash variant)",
+        "url": "https://datasheets.raspberrypi.com/rp2350/rp2350-datasheet.pdf"
+      },
+      "sramBanks": [
+        {
+          "baseAddress": 536870912,
+          "name": "SRAM0",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 536936448,
+          "name": "SRAM1",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537001984,
+          "name": "SRAM2",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537067520,
+          "name": "SRAM3",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537133056,
+          "name": "SRAM4",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537198592,
+          "name": "SRAM5",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537264128,
+          "name": "SRAM6",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537329664,
+          "name": "SRAM7",
+          "sizeBytes": 65536,
+          "striped": true
+        },
+        {
+          "baseAddress": 537395200,
+          "name": "SRAM8",
+          "sizeBytes": 4096,
+          "striped": false
+        },
+        {
+          "baseAddress": 537399296,
+          "name": "SRAM9",
+          "sizeBytes": 4096,
+          "striped": false
+        }
+      ],
+      "sramBytes": 532480,
+      "supportState": "PLANNED",
+      "vendor": "Raspberry Pi Ltd"
+    }
+  ],
+  "vendor": "Raspberry Pi Ltd"
+}

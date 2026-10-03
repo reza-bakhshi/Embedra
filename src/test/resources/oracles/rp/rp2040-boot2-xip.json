@@ -1,0 +1,11 @@
+{
+  "fixture": "rp2040-boot2-xip.bin",
+  "inputFormat": "raw binary",
+  "oracleDetails": {
+    "sizeBytes": 256,
+    "targetAddress": "0x10000000"
+  },
+  "sha256": "0bf98297f40f3e9adb6e8a269c487bd3dc925ff390cdc969c47e8a5696dd0b12",
+  "sizeBytes": 256,
+  "target": "RP2040"
+}

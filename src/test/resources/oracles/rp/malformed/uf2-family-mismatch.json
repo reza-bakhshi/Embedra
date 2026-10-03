@@ -1,0 +1,10 @@
+{
+  "fixture": "malformed/uf2-family-mismatch.uf2",
+  "inputFormat": "UF2 malformed",
+  "oracleDetails": {
+    "expectedError": "RP_UF2_FAMILY_MISMATCH"
+  },
+  "sha256": "c5e634bd1461cd5f0f07f3fa94aad5fd2ebefb78811862d5e57fee6d63d877b5",
+  "sizeBytes": 512,
+  "target": "RP2040"
+}

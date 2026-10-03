@@ -1,0 +1,30 @@
+{
+  "device": "Raspberry Pi Pico 2 (RP2350 ARM Secure) UF2 image",
+  "expectedSnapshot": "src/test/resources/oracles/rp/rp2350-arm-pico2.json",
+  "fixtureId": "rp.rp2350_arm_pico2.uf2",
+  "generationCommand": "python3 scripts/generate-rp-fixtures.py",
+  "generatorRevision": "sha256:fe48e9729d7f77c13df009032baf518279cce9daf033cb3f3943b4ca3ad5b312",
+  "inputFormat": "UF2",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "python3 -c \"import struct; f=open('<fixture>', 'rb'); print(struct.unpack('<IIIIIIII', f.read(32)))\""
+  ],
+  "origin": "Generated from repository-authored RP2040/RP2350 freestanding assembly and linker sources",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T050",
+    "RP-001",
+    "RP-002"
+  ],
+  "sha256": "4b7bf85f55dbebec2fcd5561a10c4c86bdf544896dbd286fc8ce87ede33e0649",
+  "sourceProvenance": [
+    {
+      "license": "Creative Commons Attribution-ShareAlike 4.0 / Open Documentation",
+      "name": "Raspberry Pi RP2040 and RP2350 Datasheets",
+      "revision": "RP2040-Datasheet-v1.4, RP2350-Datasheet-v1.0",
+      "url": "https://datasheets.raspberrypi.com/"
+    }
+  ],
+  "target": "RP2350A",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; riscv32-esp-elf-gcc (crosstool-NG esp-15.2.0_20251204) 15.2.0"
+}

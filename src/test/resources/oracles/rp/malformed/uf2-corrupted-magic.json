@@ -1,0 +1,10 @@
+{
+  "fixture": "malformed/uf2-corrupted-magic.uf2",
+  "inputFormat": "UF2 malformed",
+  "oracleDetails": {
+    "expectedError": "RP_UF2_MAGIC_MISMATCH"
+  },
+  "sha256": "3d5892df5047b1486ca8231a337289ed25e8eda4efcfa7cfd23b1b494c615015",
+  "sizeBytes": 512,
+  "target": "RP2040"
+}

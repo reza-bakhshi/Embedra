@@ -1,0 +1,21 @@
+{
+  "fixture": "rp2040-freestanding-dualcore.elf",
+  "inputFormat": "ELF32 ARMv6-M",
+  "oracleDetails": {
+    "arch": "ARM Cortex-M0+",
+    "cores": 2,
+    "entry": "0x10000000",
+    "flashBase": "0x10000000",
+    "sramBytes": 270336,
+    "symbols": [
+      "boot2_entry",
+      "Core1_Entry",
+      "tud_init",
+      "tud_task",
+      "rp_pio_init"
+    ]
+  },
+  "sha256": "d9fd2c3bab5c0b7bde011df47df70f99a412dcca6d72e193851264113fa567b0",
+  "sizeBytes": 5464,
+  "target": "RP2040"
+}

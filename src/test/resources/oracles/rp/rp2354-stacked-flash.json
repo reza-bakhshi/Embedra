@@ -1,0 +1,11 @@
+{
+  "fixture": "rp2354-stacked-flash.bin",
+  "inputFormat": "raw binary",
+  "oracleDetails": {
+    "internalFlashBytes": 2097152,
+    "targetBase": "0x10000000"
+  },
+  "sha256": "223960c42b632ca657b557bfa96edc3e69babf2261680dd4bc3092c466223c1a",
+  "sizeBytes": 430,
+  "target": "RP2354B"
+}

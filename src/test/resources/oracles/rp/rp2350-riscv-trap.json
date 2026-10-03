@@ -1,0 +1,17 @@
+{
+  "fixture": "rp2350-riscv-trap.elf",
+  "inputFormat": "ELF32 RISC-V",
+  "oracleDetails": {
+    "arch": "Hazard3 RV32IMAC",
+    "entry": "0x10000100",
+    "flashBase": "0x10000000",
+    "imageDefMagic": "0xffffded3",
+    "symbols": [
+      "_start",
+      "trap_handler"
+    ]
+  },
+  "sha256": "bbed90436436f85386db550e0eb0915cce62a73c5bfd6a5273cdeae1fc3cd243",
+  "sizeBytes": 5072,
+  "target": "RP2350A"
+}

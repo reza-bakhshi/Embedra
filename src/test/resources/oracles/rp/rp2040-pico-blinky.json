@@ -1,0 +1,13 @@
+{
+  "fixture": "rp2040-pico-blinky.uf2",
+  "inputFormat": "UF2",
+  "oracleDetails": {
+    "blockSize": 512,
+    "familyId": "0xe48bff56",
+    "payloadSize": 256,
+    "targetAddress": "0x10000000"
+  },
+  "sha256": "478a17a65746190cd8842acc279cca4edde579ceaa4cef10e6cf9c5cb60e021d",
+  "sizeBytes": 1024,
+  "target": "RP2040"
+}

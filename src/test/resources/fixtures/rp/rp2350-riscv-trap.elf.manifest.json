@@ -1,0 +1,31 @@
+{
+  "device": "RP2350 (Hazard3 RISC-V trap handling mode)",
+  "expectedSnapshot": "src/test/resources/oracles/rp/rp2350-riscv-trap.json",
+  "fixtureId": "rp.rp2350_riscv_trap.elf",
+  "generationCommand": "python3 scripts/generate-rp-fixtures.py",
+  "generatorRevision": "sha256:fe48e9729d7f77c13df009032baf518279cce9daf033cb3f3943b4ca3ad5b312",
+  "inputFormat": "ELF32 RISC-V",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "/home/rez0x61/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-readelf -h <fixture>"
+  ],
+  "origin": "Generated from repository-authored RP2040/RP2350 freestanding assembly and linker sources",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T050",
+    "RP-001",
+    "RP-002",
+    "TOPO-006"
+  ],
+  "sha256": "bbed90436436f85386db550e0eb0915cce62a73c5bfd6a5273cdeae1fc3cd243",
+  "sourceProvenance": [
+    {
+      "license": "Creative Commons Attribution-ShareAlike 4.0 / Open Documentation",
+      "name": "Raspberry Pi RP2040 and RP2350 Datasheets",
+      "revision": "RP2040-Datasheet-v1.4, RP2350-Datasheet-v1.0",
+      "url": "https://datasheets.raspberrypi.com/"
+    }
+  ],
+  "target": "RP2350A",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; riscv32-esp-elf-gcc (crosstool-NG esp-15.2.0_20251204) 15.2.0"
+}

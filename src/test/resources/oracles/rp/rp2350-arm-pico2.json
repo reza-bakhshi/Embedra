@@ -1,0 +1,13 @@
+{
+  "fixture": "rp2350-arm-pico2.uf2",
+  "inputFormat": "UF2",
+  "oracleDetails": {
+    "blockSize": 512,
+    "familyId": "0xe48bff57",
+    "payloadSize": 256,
+    "targetAddress": "0x10000000"
+  },
+  "sha256": "4b7bf85f55dbebec2fcd5561a10c4c86bdf544896dbd286fc8ce87ede33e0649",
+  "sizeBytes": 1024,
+  "target": "RP2350A"
+}

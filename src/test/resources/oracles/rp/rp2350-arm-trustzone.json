@@ -1,0 +1,19 @@
+{
+  "fixture": "rp2350-arm-trustzone.elf",
+  "inputFormat": "ELF32 ARMv8-M",
+  "oracleDetails": {
+    "arch": "ARM Cortex-M33",
+    "flashBase": "0x10000000",
+    "imageDefMagic": "0xffffded3",
+    "securityDomain": "Secure",
+    "sramBytes": 532480,
+    "symbols": [
+      "Reset_Handler_TZ",
+      "nsc_secure_service",
+      "configure_sau"
+    ]
+  },
+  "sha256": "1d2978b3a0ae72f78ad254415bbc79a4b7cad516ab24639caf36baa051837fb1",
+  "sizeBytes": 5368,
+  "target": "RP2350A"
+}

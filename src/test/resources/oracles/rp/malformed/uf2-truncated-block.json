@@ -1,0 +1,10 @@
+{
+  "fixture": "malformed/uf2-truncated-block.uf2",
+  "inputFormat": "UF2 malformed",
+  "oracleDetails": {
+    "expectedError": "RP_UF2_INVALID"
+  },
+  "sha256": "aa1e4682d8fe4ed439e542e3045f8e4518836804a5de33f9086a5012062d5224",
+  "sizeBytes": 500,
+  "target": "RP2040"
+}

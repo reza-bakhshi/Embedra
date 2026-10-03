@@ -78,6 +78,12 @@ Embedra/catalogs/espressif/
 Embedra/catalogs/espressif/2026-09-23/
 Embedra/catalogs/espressif/2026-09-23/catalog.json
 Embedra/catalogs/espressif/2026-09-23/catalog.sha256
+Embedra/catalogs/rp/
+Embedra/catalogs/rp/2026-10-02/
+Embedra/catalogs/rp/2026-10-02/board-profiles.json
+Embedra/catalogs/rp/2026-10-02/board-profiles.sha256
+Embedra/catalogs/rp/2026-10-02/catalog.json
+Embedra/catalogs/rp/2026-10-02/catalog.sha256
 Embedra/catalogs/stm32/
 Embedra/catalogs/stm32/2026-09-29/
 Embedra/catalogs/stm32/2026-09-29/board-profiles.json

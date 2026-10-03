@@ -1,0 +1,32 @@
+{
+  "device": "RP2040 (Raspberry Pi Pico / Pico W dual-core Cortex-M0+)",
+  "expectedSnapshot": "src/test/resources/oracles/rp/rp2040-freestanding-dualcore.json",
+  "fixtureId": "rp.rp2040_freestanding_dualcore.elf",
+  "generationCommand": "python3 scripts/generate-rp-fixtures.py",
+  "generatorRevision": "sha256:fe48e9729d7f77c13df009032baf518279cce9daf033cb3f3943b4ca3ad5b312",
+  "inputFormat": "ELF32 ARMv6-M",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "arm-none-eabi-readelf -h <fixture>",
+    "arm-none-eabi-nm <fixture>"
+  ],
+  "origin": "Generated from repository-authored RP2040/RP2350 freestanding assembly and linker sources",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T050",
+    "RP-001",
+    "RP-002",
+    "TOPO-006"
+  ],
+  "sha256": "d9fd2c3bab5c0b7bde011df47df70f99a412dcca6d72e193851264113fa567b0",
+  "sourceProvenance": [
+    {
+      "license": "Creative Commons Attribution-ShareAlike 4.0 / Open Documentation",
+      "name": "Raspberry Pi RP2040 and RP2350 Datasheets",
+      "revision": "RP2040-Datasheet-v1.4, RP2350-Datasheet-v1.0",
+      "url": "https://datasheets.raspberrypi.com/"
+    }
+  ],
+  "target": "RP2040",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; riscv32-esp-elf-gcc (crosstool-NG esp-15.2.0_20251204) 15.2.0"
+}

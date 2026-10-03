@@ -20,6 +20,10 @@ public record Diagnostic(
         }
     }
 
+    public static Diagnostic error(DiagnosticCode code, String message) {
+        return new Diagnostic(code, DiagnosticSeverity.ERROR, message, Optional.empty());
+    }
+
     public static Diagnostic error(DiagnosticCode code, String message, SourceRange sourceRange) {
         return new Diagnostic(code, DiagnosticSeverity.ERROR, message, Optional.ofNullable(sourceRange));
     }

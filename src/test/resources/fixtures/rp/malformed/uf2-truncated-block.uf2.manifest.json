@@ -1,0 +1,29 @@
+{
+  "device": "Malformed UF2 truncated midway through a 512-byte block",
+  "expectedSnapshot": "src/test/resources/oracles/rp/malformed/uf2-truncated-block.json",
+  "fixtureId": "rp.malformed.uf2_truncated_block.uf2",
+  "generationCommand": "python3 scripts/generate-rp-fixtures.py",
+  "generatorRevision": "sha256:fe48e9729d7f77c13df009032baf518279cce9daf033cb3f3943b4ca3ad5b312",
+  "inputFormat": "UF2 malformed",
+  "license": "Apache-2.0",
+  "oracleCommands": [
+    "wc -c <fixture>"
+  ],
+  "origin": "Generated from repository-authored RP2040/RP2350 freestanding assembly and linker sources",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "requirements": [
+    "T050",
+    "RP-001"
+  ],
+  "sha256": "aa1e4682d8fe4ed439e542e3045f8e4518836804a5de33f9086a5012062d5224",
+  "sourceProvenance": [
+    {
+      "license": "Creative Commons Attribution-ShareAlike 4.0 / Open Documentation",
+      "name": "Raspberry Pi RP2040 and RP2350 Datasheets",
+      "revision": "RP2040-Datasheet-v1.4, RP2350-Datasheet-v1.0",
+      "url": "https://datasheets.raspberrypi.com/"
+    }
+  ],
+  "target": "RP2040",
+  "toolchain": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009; riscv32-esp-elf-gcc (crosstool-NG esp-15.2.0_20251204) 15.2.0"
+}
