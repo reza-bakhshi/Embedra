@@ -1,0 +1,77 @@
+{
+  "$schema": "urn:embedra:schema:rp-board-profiles:1",
+  "catalogId": "raspberrypi.rp-boards",
+  "generator": "generate-rp-catalog.py",
+  "profileCount": 4,
+  "profiles": [
+    {
+      "boardName": "Raspberry Pi Pico",
+      "documentationUrl": "https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf",
+      "externalFlashBytes": 2097152,
+      "externalFlashChip": "Winbond W25Q16JV",
+      "externalFlashInterface": "QSPI",
+      "ledGpio": 25,
+      "profileId": "pico",
+      "siliconPart": "RP2040",
+      "supportState": "PLANNED",
+      "vendor": "Raspberry Pi Ltd",
+      "wirelessChip": null
+    },
+    {
+      "boardName": "Raspberry Pi Pico 2",
+      "documentationUrl": "https://datasheets.raspberrypi.com/pico-2/pico-2-datasheet.pdf",
+      "externalFlashBytes": 4194304,
+      "externalFlashChip": "Winbond W25Q32RV",
+      "externalFlashInterface": "QMI",
+      "ledGpio": 25,
+      "profileId": "pico2",
+      "siliconPart": "RP2350A",
+      "supportState": "PLANNED",
+      "vendor": "Raspberry Pi Ltd",
+      "wirelessChip": null
+    },
+    {
+      "boardName": "Raspberry Pi Pico 2 W",
+      "documentationUrl": "https://datasheets.raspberrypi.com/pico-2-w/pico-2-w-datasheet.pdf",
+      "externalFlashBytes": 4194304,
+      "externalFlashChip": "Winbond W25Q32RV",
+      "externalFlashInterface": "QMI",
+      "ledGpio": null,
+      "profileId": "pico2_w",
+      "siliconPart": "RP2350A",
+      "supportState": "PLANNED",
+      "vendor": "Raspberry Pi Ltd",
+      "wirelessChip": {
+        "bluetooth": "5.2",
+        "interfaces": [
+          "SPI",
+          "PIO"
+        ],
+        "model": "Infineon CYW43439",
+        "wifi": "802.11b/g/n (2.4 GHz)"
+      }
+    },
+    {
+      "boardName": "Raspberry Pi Pico W",
+      "documentationUrl": "https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf",
+      "externalFlashBytes": 2097152,
+      "externalFlashChip": "Winbond W25Q16JV",
+      "externalFlashInterface": "QSPI",
+      "ledGpio": null,
+      "profileId": "pico_w",
+      "siliconPart": "RP2040",
+      "supportState": "PLANNED",
+      "vendor": "Raspberry Pi Ltd",
+      "wirelessChip": {
+        "bluetooth": "5.2",
+        "interfaces": [
+          "SPI",
+          "PIO"
+        ],
+        "model": "Infineon CYW43439",
+        "wifi": "802.11b/g/n (2.4 GHz)"
+      }
+    }
+  ],
+  "vendor": "Raspberry Pi Ltd"
+}
