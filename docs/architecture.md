@@ -590,6 +590,84 @@ slots with explicit cross-program references (`BOOT_HANDOFF`, `SHARED_MAILBOX`,
 (`NO_ADAPTER_PURE_PLAN_ONLY`), preserving the pure planning boundary. All
 STM32MP providers remain `PLANNED`.
 
+## Raspberry Pi RP2040 and RP2350/RP2354 Architecture
+
+The Raspberry Pi platform is modeled as distinct pure target providers (`targets.rp`), container format parsers (`formats.rp.uf2`), variant-aware boot metadata parsers (`targets.rp.boot`), offline integrity-validated catalogs (`catalogs/rp/2026-10-02`), and transactional Ghidra loaders (`ghidra.rp`):
+
+1. **Target providers**:
+   - `Rp2040TargetProvider` (T052) models the dual-core ARM Cortex-M0+ architecture (`ARM:LE:32:Cortex`), boot startup with Core 0 launching Core 1 via the SIO FIFO (`0xD0000050`) and 32 hardware spinlocks, external QSPI flash XIP (`0x10000000`), boot2 second-stage bootloader (first 256 bytes with CRC32), Cortex-M0+ vector table (16 core exception vectors and 32 user IRQs, totaling 48 entries at `0x10000100`), 264 KiB multi-bank SRAM (striped at `0x20000000` plus non-striped at `0x21000000`), 16 KiB internal boot ROM (`0x00000000`), standard peripherals (`0x40000000`), atomic register access aliases (`0x50000000` with NORMAL, XOR, SET, CLEAR functional apertures), and two programmable I/O blocks (`pio0` at `0x50200000`, `pio1` at `0x50300000`, each with 4 state machines, 32-word instruction memory, 4-word FIFO depth, and dedicated IRQs).
+   - `Rp2350TargetProvider` (T053) models the RP2350A, RP2350B, RP2354A, and RP2354B silicon family. It supports dual-core execution with architecture selection between dual ARM Cortex-M33 with TrustZone (`ARM:LE:32:v8-m`) and dual Hazard3 RV32IMAC RISC-V (`RISCV:LE:32:default` with compiler `gcc`), strictly ensuring the inactive architecture is omitted from topology (RP-004). It models package differences (RP2350A/RP2354A with 30 GPIOs in QFN-60 vs RP2350B/RP2354B with 48 GPIOs in QFN-80), embedded memory differences (external flash on RP2350 vs 2 MiB stacked internal flash on RP2354), 520 KiB multi-bank SRAM (`0x20000000`), 32 KiB internal boot ROM (`0x00000000`), 8 KiB One-Time Programmable (OTP) security memory (`0x40130000` containing chip ID, boot flags, Secure Boot public key hashes, and rollback counter limits), QMI/XIP flash (`0x10000000`) and PSRAM aperture (`0x11000000`), hardware SHA-256 and TRNG accelerators, atomic bus aliases (`0x50000000`), multi-stage secure boot chain (`Rp2350BootChain`), both-core startup via SIO FIFO, and three programmable I/O blocks (`pio0` at `0x50200000`, `pio1` at `0x50300000`, and `pio2` at `0x50400000`).
+   Both providers construct validated `ExecutionTopology` instances capturing symmetric CPU cores, shared SRAM, reset release boot relationships, and inter-processor communication links.
+2. **UF2 container parser and address reconstructor**: `RpUf2Parser` operates under strict `ParserLimits` and `CancellationToken`. It validates 512-byte block structures, start/end magic numbers (`0x0A324655`, `0x9E5D5157`, `0x0AB16F30`), target address alignment, block sequence numbers, and family IDs (`0xe48bff56` for RP2040, `0xe48bff57` for RP2350 ARM Secure, `0xe48bff58` for RP2350 RISC-V, and `0xe48bff59` for RP2350 ARM Non-Secure). `RpUf2Reconstructor` reconstructs contiguous or sparse memory segments (`RpUf2Segment`) from valid UF2 blocks sorted by target CPU address, properly handling out-of-order blocks, sparse gaps, and multi-family partitioning without ever loading UF2 file offsets directly as memory addresses (RP-001).
+3. **Variant-aware boot metadata parser**: `RpBootMetadataParser` pure parser extracts and validates boot metadata across RP variants:
+   - RP2040: computes and validates boot2 CRC-32 (polynomial `0x04C11DB7`, initial `0xFFFFFFFF`, final XOR `0`, unreflected) across the first 256 bytes of external flash XIP (`0x10000000`), validating initial stack pointer, reset vector, and entry point.
+   - RP2350/RP2354: detects and parses IMAGE_DEF header (`0xffffded3` magic), architecture tags (ARM vs RISC-V), security domain (Secure vs Non-Secure), block items, vector/trap table offsets, and internal stacked 2 MiB flash.
+4. **Offline catalog**: `RpDeviceCatalogLoader` parses and validates the closed schemas `urn:embedra:schema:rp-catalog:1` and `urn:embedra:schema:rp-board-profiles:1` against pinned SHA-256 digests (`catalog.sha256`, `board-profiles.sha256`). `RpTargetResolver` binds exact orderable part numbers (`RP2040`, `RP2350A`, `RP2350B`, `RP2354A`, `RP2354B`) and board identities (`pico`, `pico_w`, `pico2`, `pico2_w`) to appropriate target providers without guesswork. All device support states remain `PLANNED`.
+5. **Ghidra UF2 and raw RP firmware loader**: `RpFirmwareLoader` and `RpFirmwareMapper` implement transactional Ghidra program import. Detection identifies UF2 containers and raw RP binaries, binding them to installed Ghidra languages (`ARM:LE:32:Cortex` for RP2040, `ARM:LE:32:v8-m` for RP2350 ARM, `RISCV:LE:32:default` with `gcc` compiler for RP2350 RISC-V). `RpFirmwareMapper` creates initialized memory blocks at target CPU addresses, creates entry point symbols and vector table labels, attaches diagnostic bookmarks and program options, and preserves existing program state on error or cancellation using `GhidraProgramTransaction`.
+6. **Official board profiles and Pico SDK/TinyUSB/lwIP/CYW43 enrichments (T054)**:
+   - Pure board profile engine (`RpBoardProfileEngine`): Validates and plans board configurations for official Raspberry Pi boards (`pico`, `pico_w`, `pico2`, `pico2_w`) without conflating board identity with silicon identity (RP-008). Validates external flash boundaries (e.g. 2 MiB QSPI on Pico/Pico W vs 4 MiB QMI on Pico 2/Pico 2 W), wireless subsystems (CYW43439 over SPI/PIO on wireless boards), and board pinout allocations (`RpPinAllocation`). Fails closed on board/silicon mismatch with `DiagnosticCode.RP_BOARD_MISMATCH`.
+   - Pure Pico SDK binary info parser (`RpBinaryInfoParser`): Scans firmware within bounds for SDK binary info markers (`MARKER_START = 0x7188dac3`, `MARKER_END = 0xe71aa39a`). Traverses reverse pointers, zero-terminated lists, and typed entries (program name, version, build date, binary end, URL, description, SDK version, pico board, boot2 name, features, build attributes, pin allocations, block devices) under strict limits and cooperative cancellation.
+   - Pure component analyzers (`RpComponentEnrichmentAnalyzer`): Orchestrates detectors for TinyUSB (`RpTinyUsbDetector`), lwIP (`RpLwIpDetector`), and CYW43439 (`RpCyw43Detector`). TinyUSB detector validates standard USB descriptors (Device, Configuration, Interface, Endpoint) and core API signatures (`tud_init`, `tud_task`, etc.). lwIP detector recovers version strings, protocol state models (TCP, UDP, DHCP, NETIF), and network stack APIs. CYW43 detector identifies wireless driver symbols, SPI/PIO wrappers, and country code tables.
+   - Ghidra enrichment applicator (`RpEnrichmentApplicator`): In a single transaction, applies board metadata (`Embedra RP Board`), Pico SDK metadata (`Embedra Pico SDK`), and component detection results (`Embedra RP Components`) as program options and informative bookmarks at relevant addresses with unique categories, strictly preserving user-defined symbols and bookmarks.
+7. **PIO discovery and disassembly engine (T055, RP-009)**:
+   - Dedicated PIO disassembler (`RpPioDisassembler`): Pure 16-bit PIO instruction decoder supporting all 9 instruction types (`JMP`, `WAIT`, `IN`, `OUT`, `PUSH`, `PULL`, `MOV`, `IRQ`, `SET`) and operand variations. PIO code is strictly never disassembled as ARM Thumb or RISC-V instructions (RP-009). Supports side-set and delay formatting with explicit uncertainty tracking when side-set bit count is unconfigured or ambiguous (`RpPioConfig`).
+   - Program discovery scanner (`RpPioScanner`): Bounded discovery of `pio_program_t` structures (instructions pointer, length 1..32, origin -1..31, wrap target, wrap flags) within flash segments, plus fallback heuristic loop scanning, strictly skipping boot2 and vector table areas.
+   - Ghidra applicator (`RpPioApplicator`): In a single transaction, annotates discovered PIO programs with `Embedra Disassembled PIO Program` bookmarks, comprehensive plate comments (program name, length, origin, wrap bounds, side-set bit count), disassembled instruction EOL comments (`[PIO] <instruction>`), and memory aperture definitions (`pio0`, `pio1` on RP2040; `pio0`, `pio1`, `pio2` on RP2350).
+8. **Workflow equivalence and deterministic malformed-input fuzzing (T055)**:
+   - Headless vs interactive GUI equivalence: `RpWorkflowEquivalenceTest` verifies that headless batch import (`HeadlessLoadedProgram`) and GUI interactive import (`Loaded<Program>`) produce identical results byte-for-byte across memory layout, initialized blocks, entry points, symbols, options, and bookmarks across RP2040, RP2350 ARM, and RP2350 RISC-V targets.
+   - Deterministic malformed-input fuzz campaign: `RpDeterministicMalformedFuzzTest` executes a fixed-seed (300 cases: 100 UF2 mutations, 100 boot2 mutations, 100 IMAGE_DEF mutations) mutation suite covering truncated blocks, corrupted magics, invalid block numbers, out-of-range stack pointers, unknown block items, and corrupted CRCs. Verifies that all malformed inputs fail closed with appropriate `DiagnosticCode` (`CORRUPTED_RECORD`, `TRUNCATED_RECORD`, `INVALID_CHECKSUM`, `RP_BOOT_METADATA_INVALID`, etc.) without uncaught runtime exceptions or memory leaks.
+
+## Shared Multi-Encoding and Stack-String Recovery (T056, AN-001)
+
+String recovery across firmware targets is implemented as pure analysis engines under `analyzers.strings` and `analyzers.strings.stack`, separated from Ghidra Program DB mutation under `ghidra.strings`:
+
+1. **Multi-encoding string scanner (`MultiEncodingStringScanner`)**:
+   - Pure scanner over arbitrary byte buffers, memory blocks, and firmware images under `ParserLimits` and `CancellationToken`.
+   - Supports ASCII, UTF-8 (strict RFC 3629 rejection of overlong sequences, surrogate halves, and invalid code points), UTF-16LE, UTF-16BE (zero-byte high/low ratio heuristic to reject binary noise), and Pascal length-prefixed strings (8-bit and 16-bit).
+   - Printable character ratio and length thresholds filter false positives.
+   - Emits immutable `ExtractedString` records with offset, length, encoding, string content, confidence (`CONFIRMED`, `LIKELY`, `PLAUSIBLE`), provenance (`STATIC_LITERAL`), and zero-secret redaction helper (`redactedContent()`) adhering to AN-008.
+
+2. **Stack-string recovery engine (`StackStringRecoveryAnalyzer`)**:
+   - Pure analyzer inspecting disassembled function instruction streams across ARM Thumb / Thumb-2 (Cortex-M0+, Cortex-M3, Cortex-M4, Cortex-M33), RISC-V 32-bit (Hazard3, ESP32-C3), and Xtensa LX6/LX7 (ESP32, ESP32-S3).
+   - Emulates register immediate loads (`mov/movs/movw/movt/mvn/ldr` in ARM; `li/lui/addi/mv` in RISC-V; `movi/mov/addi/l32r` in Xtensa) and stack pointer aliasing (`r7/r11` in ARM; `s0/fp` in RISC-V; `a7/a15` in Xtensa).
+   - Tracks immediate store idioms (`strb/strh/str` in ARM; `sb/sh/sw` in RISC-V; `s8i/s16i/s32i` in Xtensa) to reconstruct contiguous stack frame byte buffers.
+   - Decodes assembled stack bytes into strings and attributes each string to its containing function, stack offset, decoded content, encoding, confidence, and instruction address span (`RecoveredStackString`).
+
+3. **Ghidra string applicator and analyzer (`GhidraStringApplicator`, `EmbedraStringAnalyzer`)**:
+   - `EmbedraStringAnalyzer` extends `AbstractAnalyzer` to scan initialized memory blocks and supported function disassembly within requested address sets.
+   - `GhidraStringApplicator` runs in a single `GhidraProgramTransaction` (rolling back on failure or cancellation).
+   - Places bookmarks under `Embedra Strings` (static literals) and `Embedra Stack Strings` (recovered stack strings).
+   - Appends informative EOL comments without destroying or modifying existing user labels, symbols, or comments.
+   - Populates program options under `Embedra String Analysis` with string counts categorized by encoding and origin.
+   - Emits log summaries containing aggregate counts only, preventing sensitive string exposure in Ghidra log files (AN-008).
+
+## Shared CTF Entity and Artifact Discovery (T057, AN-002, AN-006, AN-008)
+
+Firmware lead and CTF artifact discovery is implemented as pure analysis models under `analyzers.ctf`, decoupled from Ghidra Program DB mutation under `ghidra.ctf`:
+
+1. **Pure entity scanner (`CtfEntityScanner`)**:
+   - High-performance pattern and structure scanner operating across extracted static strings (`ExtractedString`), recovered stack strings (`RecoveredStackString`), and raw memory bytes under `ParserLimits` and `CancellationToken`.
+   - Discovers entities categorized into `ENDPOINT`, `CREDENTIAL`, `CERTIFICATE_KEY`, `UUID`, `ENCODED_BLOB`, and `FLAG`:
+     - **Endpoints**: URLs (`http://`, `https://`, `ws://`, `wss://`, `coap://`, `mqtt://`, `ftp://`), valid IPv4 and IPv6 addresses, domain names with authoritative/internal TLDs, and structured MQTT topics (`tele/`, `stat/`, `cmnd/`, wildcard `+`/`#`).
+     - **Credentials & tokens**: Wi-Fi configuration strings (`ssid=...`, `password=...`, `psk=...`), AWS Access Key IDs (`AKIA[0-9A-Z]{16}`), GitHub personal access tokens (`ghp_...`, `github_pat_...`), Slack tokens (`xox[baprs]-...`), JSON Web Tokens (`ey...`), and OpenSSH authorized keys.
+     - **Certificates & keys**: PEM blocks (`BEGIN CERTIFICATE`, `BEGIN RSA PRIVATE KEY`, `BEGIN PUBLIC KEY`) and binary ASN.1 DER X.509 certificates (`0x30` sequence with explicit version tag `0xA0 0x03 0x02 0x01` and algorithm identifiers).
+     - **UUIDs & identifiers**: 128-bit UUIDs (RFC 4122 BLE service/characteristic format), 16-bit BLE assigned numbers (`0x180D`), and Ethernet/Wi-Fi/Bluetooth MAC addresses.
+     - **Encoded blobs**: Base64 encoded blobs (length >= 24, character class entropy checks, filtered to avoid pure hex false positives) and continuous hexadecimal strings (length >= 32).
+     - **Flags**: CTF flags matching default patterns (`flag\{...\}`, `CTF\{...\}`, `embedra\{...\}`) and configurable user-specified regex patterns via `CtfScanOptions`.
+   - Distinguishes severity (`HIGH`, `MEDIUM`, `LOW`, `INFO`), confidence (`CONFIRMED`, `LIKELY`, `PLAUSIBLE`), and secret attribution.
+
+2. **Zero secret leaking and reporting (`CtfFindingsReport`, AN-008)**:
+   - Secret entities provide a `maskedValue()` representation (e.g. `AKIA****************`, `flag{***REDACTED***}`) ensuring unredacted secret tokens are never printed in plain text in logs or console output.
+   - `CtfFindingsReport` serializes discovered findings into JSON, Markdown tables, and SARIF 2.1.0 static analysis output with secret redaction enabled by default.
+
+3. **Ghidra CTF applicator and analyzer (`GhidraCtfApplicator`, `EmbedraCtfAnalyzer`)**:
+   - `EmbedraCtfAnalyzer` extends `AbstractAnalyzer` to orchestrate string extraction, stack-string reconstruction, and raw byte scanning across memory blocks.
+   - `GhidraCtfApplicator` executes in a single `GhidraProgramTransaction` (rolling back on failure or cancellation).
+   - Creates bookmarks under `Embedra Findings: <CATEGORY>` and non-destructive EOL comments (`[Finding: <Type> (<Severity>)] <MaskedValue> - <Explanation>`).
+   - Populates program options under `Embedra CTF Findings` with aggregate and per-category/severity counts without altering pre-existing user symbols or bookmarks.
+
+
+
 ## Offline packs
 
 Pack manifests are strict, closed, versioned JSON contracts parsed with the shared limits and cooperative cancellation. They expose pack identity/version, exact supported-device IDs, source URI and revision, license, transformation, redistribution status, per-file size/SHA-256, and an aggregate descriptor digest. File paths are normalized relative forward-slash paths; absolute, parent-traversal, Windows-drive, backslash, duplicate, manifest-shadowing, symlink, non-regular, missing, and unexpected entries are rejected.

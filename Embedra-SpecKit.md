@@ -743,17 +743,17 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 
 ### RP2040 and RP2350/RP2354 family
 
-- [ ] T050 Build the authoritative Raspberry Pi silicon/board catalog and fixtures for RP2040, RP2350A/B, RP2354A/B, UF2, raw BIN, ELF, external/internal flash, both CPU cores, ARM/RISC-V, TrustZone, TinyUSB, Pico/Pico W/Pico 2/Pico 2 W, and PIO.
-- [ ] T051 Implement UF2 validation/reconstruction by target address plus variant-aware raw XIP/internal-flash import and boot metadata parsing.
-- [ ] T052 Implement RP2040 ARMv6-M language, dual-core startup, XIP, boot2, vector-table, SRAM, ROM, peripheral, atomic-alias, and two-PIO-block provider data.
-- [ ] T053 Implement RP2350A/B and RP2354A/B providers for dual Cortex-M33 or dual Hazard3 RISC-V architecture selection, TrustZone/security domains, boot chain, OTP/security evidence, QMI/XIP/PSRAM, package/memory differences, both-core startup, peripherals, and three PIO blocks.
-- [ ] T054 Implement official board profiles and Pico SDK/TinyUSB/lwIP/CYW43 metadata/signature enrichments without conflating board and silicon identity.
-- [ ] T055 Implement separate PIO discovery/disassembly and prove GUI/headless equality plus malformed-input fuzzing for every verified RP2040/RP2350-family variant and architecture.
+- [x] T050 Build the authoritative Raspberry Pi silicon/board catalog and fixtures for RP2040, RP2350A/B, RP2354A/B, UF2, raw BIN, ELF, external/internal flash, both CPU cores, ARM/RISC-V, TrustZone, TinyUSB, Pico/Pico W/Pico 2/Pico 2 W, and PIO.
+- [x] T051 Implement UF2 validation/reconstruction by target address plus variant-aware raw XIP/internal-flash import and boot metadata parsing.
+- [x] T052 Implement RP2040 ARMv6-M language, dual-core startup, XIP, boot2, vector-table, SRAM, ROM, peripheral, atomic-alias, and two-PIO-block provider data.
+- [x] T053 Implement RP2350A/B and RP2354A/B providers for dual Cortex-M33 or dual Hazard3 RISC-V architecture selection, TrustZone/security domains, boot chain, OTP/security evidence, QMI/XIP/PSRAM, package/memory differences, both-core startup, peripherals, and three PIO blocks.
+- [x] T054 Implement official board profiles and Pico SDK/TinyUSB/lwIP/CYW43 metadata/signature enrichments without conflating board and silicon identity.
+- [x] T055 Implement separate PIO discovery/disassembly and prove GUI/headless equality plus malformed-input fuzzing for every verified RP2040/RP2350-family variant and architecture.
 
 ### Shared CTF analysis and diffing
 
-- [ ] T056 Implement bounded multi-encoding and stack-string recovery.
-- [ ] T057 Implement endpoint, credential, certificate/key, token, UUID, and customizable flag scanners.
+- [x] T056 Implement bounded multi-encoding and stack-string recovery.
+- [x] T057 Implement endpoint, credential, certificate/key, token, UUID, and customizable flag scanners.
 - [ ] T058 Implement the layered crypto-analysis pipeline for constants, tables, algorithms, likely key material, certificates, checksums/CRCs, entropy, evidence fusion, and strict differentiation of crypto from encoding/compression/non-crypto data.
 - [ ] T059 Implement logging/assert/panic recovery and format-to-call-site linkage.
 - [ ] T060 Implement ranked comparison/debug-command/OTA/authentication leads with clear heuristic confidence.

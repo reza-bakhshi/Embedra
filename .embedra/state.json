@@ -2,13 +2,13 @@
  "schemaVersion": 1,
  "specification": {
   "path": "Embedra-SpecKit.md",
-  "sha256": "17eb116703cf89c5ff7df08adf41d5dd585c8df808bb58ceee8fa4c1848d9ae0"
+  "sha256": "21a0d162c74c93c435a90e381ab02b12cf5899eb9e2477662243f3429482f4b5"
  },
  "projectClassification": "NEW",
  "currentTask": {
-  "id": "T049",
+  "id": "T057",
   "status": "COMPLETE",
-  "reasonCode": "STM32MP_HETEROGENEOUS_PROVIDERS_IMPLEMENTED"
+  "reasonCode": "ENDPOINT_CREDENTIAL_CERT_UUID_FLAG_SCANNERS_BUILT"
  },
  "completedTasks": [
   "T001",
@@ -60,7 +60,15 @@
   "T046",
   "T047",
   "T048",
-  "T049"
+  "T049",
+  "T050",
+  "T051",
+  "T052",
+  "T053",
+  "T054",
+  "T055",
+  "T056",
+  "T057"
  ],
  "blockedTasks": [],
  "acceptanceGates": {
@@ -231,6 +239,17 @@
    "unpairedFlashAlternatives": 14,
    "familyAliasReview": 3,
    "acceptance": "CANDIDATE_ONLY_NOT_SHIPPED"
+  },
+  {
+   "catalogId": "raspberrypi.rp-family",
+   "snapshotDate": "2026-10-02",
+   "path": "catalogs/rp/2026-10-02/catalog.json",
+   "sha256": "e640c605824e0878337f027bc7146914fbdbc7f8ed5c495983784b52f64d6a7a",
+   "boardProfilesPath": "catalogs/rp/2026-10-02/board-profiles.json",
+   "boardProfilesSha256": "2861a5223fdb87fb051d8bb04c1f0f8ab9118d07940d7b68ca0d439f009d95b0",
+   "siliconRecords": 5,
+   "boardProfiles": 4,
+   "supportState": "PLANNED"
   }
  ],
  "stm32CoverageDiagnostic": {
@@ -429,7 +448,7 @@
   }
  ],
  "evidence": {
-  "task": ".embedra/evidence/tasks/T049.md",
+  "task": ".embedra/evidence/tasks/T057.md",
   "preT033Audit": ".embedra/evidence/audits/pre-t033-t001-t032.md",
   "remediation": ".embedra/evidence/tasks/T025-remediation.md",
   "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
@@ -444,7 +463,7 @@
   "taskT030": ".embedra/evidence/tasks/T030.md",
   "taskT031": ".embedra/evidence/tasks/T031.md",
   "adrT031": "docs/adr/0025-esp8266-separate-legacy-provider.md",
-  "nextTaskPrompt": ".embedra/prompts/T050-raspberry-pi-catalog-and-fixtures.md",
+  "nextTaskPrompt": ".embedra/prompts/T055-pio-disassembly-and-fuzzing.md",
   "taskT027": ".embedra/evidence/tasks/T027.md",
   "adrT027": "docs/adr/0022-shared-esp-target-services.md",
   "taskT026A": ".embedra/evidence/tasks/T026A.md",
@@ -477,11 +496,19 @@
   "taskT046": ".embedra/evidence/tasks/T046.md",
   "taskT047": ".embedra/evidence/tasks/T047.md",
   "taskT048": ".embedra/evidence/tasks/T048.md",
-  "taskT049": ".embedra/evidence/tasks/T049.md"
+  "taskT049": ".embedra/evidence/tasks/T049.md",
+  "taskT050": ".embedra/evidence/tasks/T050.md",
+  "taskT051": ".embedra/evidence/tasks/T051.md",
+  "taskT052": ".embedra/evidence/tasks/T052.md",
+  "taskT053": ".embedra/evidence/tasks/T053.md",
+  "taskT054": ".embedra/evidence/tasks/T054.md",
+  "taskT055": ".embedra/evidence/tasks/T055.md",
+  "taskT056": ".embedra/evidence/tasks/T056.md",
+  "taskT057": ".embedra/evidence/tasks/T057.md"
  },
  "knownFailures": [],
- "nextTask": "T050",
- "nextAction": "Begin T050: build the authoritative Raspberry Pi silicon/board catalog and fixtures for RP2040, RP2350A/B, RP2354A/B, UF2, raw BIN, ELF, external/internal flash, both CPU cores, ARM/RISC-V, TrustZone, TinyUSB, Pico/Pico W/Pico 2/Pico 2 W, and PIO without mutating existing evidence.",
+ "nextTask": "T058",
+ "nextAction": "Begin T058: implement the layered crypto-analysis pipeline for constants, tables, algorithms, likely key material, certificates, checksums/CRCs, entropy, evidence fusion, and strict differentiation of crypto from encoding/compression/non-crypto data.",
  "artifacts": [
   {
    "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -722,6 +749,48 @@
    "sha256": "13f6fde3544aefca18fef29788074d6718fba62ef68d05e08af1a22c882822b2",
    "sizeBytes": 4512940,
    "status": "T049_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261002_Embedra.zip",
+   "sha256": "acee51444ae4ea479929c5758d0e411dcbe4750e4b356c8df5b0cc676b945441",
+   "sizeBytes": 4575353,
+   "status": "T050_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261003_Embedra.zip",
+   "sha256": "ea3ce609ca0cabe6770bf2dffb579fdd936d2461017e594197077c3816d4b505",
+   "sizeBytes": 4626388,
+   "status": "T051_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261003_Embedra.zip",
+   "sha256": "8ee894539b054c5527fd478e461fd1f45f6172066558e1cbd92de0d17a0e0219",
+   "sizeBytes": 4651305,
+   "status": "T053_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261003_Embedra.zip",
+   "sha256": "4163443b715effbfcd1974f327272616bba05ed859e36276254e14b30ea52701",
+   "sizeBytes": 4723928,
+   "status": "T054_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261003_Embedra.zip",
+   "sha256": "dadc51a24aca610b9c0cd58cd5065c79a90b939bd19ca974a79a71c29d348b89",
+   "sizeBytes": 4769905,
+   "status": "T055_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261004_Embedra.zip",
+   "sha256": "08a67ec4df5abf67c0a8acb3f7471163be7cf4318fc5b9a865ca66a86a32857d",
+   "sizeBytes": 4826863,
+   "status": "T056_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261004_Embedra.zip",
+   "sha256": "1398116c6b952a10b75ecbee10cd5b219a9b88e2229760a1ad2abe16202ac74b",
+   "sizeBytes": 4874017,
+   "status": "T057_REPRODUCIBLE_ARTIFACT"
   }
  ],
  "resolvedFailures": [
@@ -2048,6 +2117,150 @@
    "No Ghidra mutation adapter; pure planning and topology modeling only",
    "No firmware images, device tree blobs, or secure payloads are bundled",
    "No weakening of MCU contracts or memory readiness guarantees"
+  ]
+ },
+ "rpSiliconBoardCatalogAndFixtures": {
+  "status": "COMPLETE_T050",
+  "supportState": "PLANNED",
+  "catalogPath": "catalogs/rp/2026-10-02/catalog.json",
+  "catalogSha256": "e640c605824e0878337f027bc7146914fbdbc7f8ed5c495983784b52f64d6a7a",
+  "boardProfilesPath": "catalogs/rp/2026-10-02/board-profiles.json",
+  "boardProfilesSha256": "2861a5223fdb87fb051d8bb04c1f0f8ab9118d07940d7b68ca0d439f009d95b0",
+  "exactParts": [
+   "RP2040",
+   "RP2350A",
+   "RP2350B",
+   "RP2354A",
+   "RP2354B"
+  ],
+  "boardProfiles": [
+   "pico",
+   "pico_w",
+   "pico2",
+   "pico2_w"
+  ],
+  "uf2Parser": "bounded 512-byte block parser in io.github.rezabakhshi.embedra.formats.rp.uf2",
+  "uf2FamilyIds": {
+   "RP2040": "0xe48bff56",
+   "RP2350_ARM_SECURE": "0xe48bff57",
+   "RP2350_RISCV": "0xe48bff58",
+   "RP2350_ARM_NON_SECURE": "0xe48bff59"
+  },
+  "goldenFixtures": [
+   "rp2040-freestanding-dualcore.elf",
+   "rp2040-boot2-xip.bin",
+   "rp2040-pico-blinky.uf2",
+   "rp2350-arm-trustzone.elf",
+   "rp2350-arm-pico2.uf2",
+   "rp2350-riscv-trap.elf",
+   "rp2350-riscv-pico2.uf2",
+   "rp2354-stacked-flash.bin",
+   "malformed/uf2-corrupted-magic.uf2",
+   "malformed/uf2-truncated-block.uf2",
+   "malformed/uf2-family-mismatch.uf2"
+  ],
+  "focusedVerification": {
+   "unitTests": 416,
+   "realGhidraTests": 104,
+   "stm32PythonTests": 131,
+   "espPythonTests": 4,
+   "rpPythonTests": 8,
+   "javaBaseline": 416,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS",
+   "zipSha256": "acee51444ae4ea479929c5758d0e411dcbe4750e4b356c8df5b0cc676b945441",
+   "zipSizeBytes": 4575353
+  },
+  "notClaimed": [
+   "No device support state promotion; all 5 silicon parts and 4 board profiles remain PLANNED per RP-002",
+   "No Ghidra mutation loader/adapter is claimed in T050; pure planning and format parsing only",
+   "No reverse-engineering of closed boot ROM blobs; specifications and public documentation are authoritative"
+  ]
+ },
+ "rpBoardProfilesAndSdkEnrichments": {
+  "status": "COMPLETE_T054",
+  "supportState": "PLANNED",
+  "boardProfiles": [
+   "pico",
+   "pico_w",
+   "pico2",
+   "pico2_w"
+  ],
+  "boardProfileEngine": "io.github.rezabakhshi.embedra.targets.rp.board.RpBoardProfileEngine",
+  "picoSdkBinaryInfoParser": "io.github.rezabakhshi.embedra.targets.rp.binaryinfo.RpBinaryInfoParser",
+  "componentDetectors": [
+   "io.github.rezabakhshi.embedra.analyzers.rp.RpTinyUsbDetector",
+   "io.github.rezabakhshi.embedra.analyzers.rp.RpLwIpDetector",
+   "io.github.rezabakhshi.embedra.analyzers.rp.RpCyw43Detector"
+  ],
+  "ghidraApplicator": "io.github.rezabakhshi.embedra.ghidra.rp.RpEnrichmentApplicator",
+  "focusedVerification": {
+   "unitTests": 462,
+   "realGhidraTests": 114,
+   "stm32PythonTests": 131,
+   "espPythonTests": 4,
+   "rpPythonTests": 8,
+   "javaBaseline": 462,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS",
+   "zipSha256": "4163443b715effbfcd1974f327272616bba05ed859e36276254e14b30ea52701",
+   "zipSizeBytes": 4723928
+  },
+  "notClaimed": [
+   "No device support state promotion; all 5 silicon parts and 4 board profiles remain PLANNED per RP-002",
+   "No PIO discovery or disassembly is claimed in T054 (deferred to T055)",
+   "No mutation of silicon identity from board names (RP-008 enforced)"
+  ]
+ },
+ "rpPioDisassemblyAndFuzzing": {
+  "status": "COMPLETE_T055",
+  "supportState": "PLANNED",
+  "pioDisassembler": "io.github.rezabakhshi.embedra.targets.rp.pio.RpPioDisassembler",
+  "pioScanner": "io.github.rezabakhshi.embedra.targets.rp.pio.RpPioScanner",
+  "pioApplicator": "io.github.rezabakhshi.embedra.ghidra.rp.pio.RpPioApplicator",
+  "equivalenceTest": "io.github.rezabakhshi.embedra.ghidra.rp.RpWorkflowEquivalenceTest",
+  "fuzzCampaignTest": "io.github.rezabakhshi.embedra.targets.rp.fuzz.RpDeterministicMalformedFuzzTest",
+  "focusedVerification": {
+   "unitTests": 478,
+   "realGhidraTests": 120,
+   "stm32PythonTests": 131,
+   "espPythonTests": 4,
+   "rpPythonTests": 8,
+   "javaBaseline": 478,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS",
+   "zipSha256": "dadc51a24aca610b9c0cd58cd5065c79a90b939bd19ca974a79a71c29d348b89",
+   "zipSizeBytes": 4769905
+  },
+  "notClaimed": [
+   "No device support state promotion; all 5 silicon parts and 4 board profiles remain PLANNED per RP-002",
+   "No instruction disassembly of PIO instructions as CPU ISA (RP-009 enforced)",
+   "No exhaustive coverage-guided fuzzing; deterministic 300-case campaign with fixed seed"
+  ]
+ },
+ "ctfEntityDiscovery": {
+  "status": "COMPLETE_T057",
+  "supportState": "VERIFIED",
+  "entityScanner": "io.github.rezabakhshi.embedra.analyzers.ctf.CtfEntityScanner",
+  "findingsReport": "io.github.rezabakhshi.embedra.analyzers.ctf.CtfFindingsReport",
+  "ctfApplicator": "io.github.rezabakhshi.embedra.ghidra.ctf.GhidraCtfApplicator",
+  "ctfAnalyzer": "io.github.rezabakhshi.embedra.ghidra.ctf.EmbedraCtfAnalyzer",
+  "focusedVerification": {
+   "unitTests": 506,
+   "realGhidraTests": 123,
+   "stm32PythonTests": 131,
+   "espPythonTests": 4,
+   "rpPythonTests": 8,
+   "javaBaseline": 506,
+   "ghidraVersion": "12.1.3",
+   "fullCompletionGate": "PASS_TWO_CLEAN_22_ACTION_BUILDS",
+   "zipSha256": "1398116c6b952a10b75ecbee10cd5b219a9b88e2229760a1ad2abe16202ac74b",
+   "zipSizeBytes": 4874017
+  },
+  "notClaimed": [
+   "Deep cryptographic algorithm or key identification is deferred to T058",
+   "Deep protocol semantic decoding or AST flow analysis remains planned",
+   "No secret leaking in plain text in logs or reports (AN-008 enforced)"
   ]
  }
 }

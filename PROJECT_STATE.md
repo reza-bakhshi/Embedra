@@ -3,9 +3,9 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T049 — STM32MP/heterogeneous parts as distinct providers (`COMPLETE`)**.
-- Last completed task: **T048 — STM32 firmware diff and CTF enrichment using the shared analyzers**.
-- Next task: **T050 — Build the authoritative Raspberry Pi silicon/board catalog and fixtures for RP2040, RP2350A/B, RP2354A/B, UF2, raw BIN, ELF, external/internal flash, both CPU cores, ARM/RISC-V, TrustZone, TinyUSB, Pico/Pico W/Pico 2/Pico 2 W, and PIO** (not started).
+- Current task: **T057 — Implement endpoint, credential, certificate/key, token, UUID, and customizable flag scanners (`COMPLETE`)**.
+- Last completed task: **T056 — Implement bounded multi-encoding and stack-string recovery (`COMPLETE`)**.
+- Next task: **T058 — Implement the layered crypto-analysis pipeline for constants, tables, algorithms, likely key material, certificates, checksums/CRCs, entropy, evidence fusion, and strict differentiation of crypto from encoding/compression/non-crypto data** (not started).
 - Future scope: the SpecKit plans ESP32-branded full-flash expansion as
   T080-T087, and STM8 8-bit MCU family support as T088-T095, with independent
   per-series/variant evidence and separate gates. These specification changes
@@ -26,6 +26,8 @@
   and T039 checkpoint are committed at `2805114`. T039-T043 STM32 device support
   and review fixes are committed at `f356879` with T044 prompt refresh at `07f9b61`.
   The completed T044-T049 STM32 milestone is committed at `dc6be57`.
+  T050 is committed at `afb7cb4`, T051 at `fc02ee6`, T052 at `5c17d27`, T053 at `ebe5c0b`,
+  T054 at `f707f21`, T055 at `ae63f19`, T056 at `d6e657d`, and T057 at `83c2d1f`.
 - Specification: `Embedra-SpecKit.md`; digest is recorded in `.embedra/state.json`.
 
 ## Verified Environment
@@ -738,4 +740,184 @@ suite reports 394 unit, 104 real-Ghidra, 131 STM32 Python (4 documented
 optional-source skips), and 4 ESP Python tests. The reproducible completion gate
 passes with two clean, uncached 22-action builds and a byte-identical ZIP SHA-256
 `13f6fde3544aefca18fef29788074d6718fba62ef68d05e08af1a22c882822b2` (4,512,940 bytes).
+
+## T050 completion (2026-10-02)
+
+T050 built the authoritative Raspberry Pi silicon and board catalog along with
+reproducible, license-audited binary fixtures covering RP2040, RP2350A, RP2350B,
+RP2354A, and RP2354B. Silicon records model dual Cortex-M0+ (RP2040) and dual
+Cortex-M33 / Hazard3 RV32IMAC co-processor cores (RP2350/RP2354), internal/external
+flash geometry, SRAM banks (striped and non-striped), TrustZone security attributes,
+TinyUSB ROM footprints, and PIO block boundaries. Board profiles are established for
+Raspberry Pi Pico, Pico W (Infineon CYW43439), Pico 2, and Pico 2 W (Infineon CYW43439).
+A bounded UF2 format model and parser (`RpUf2Parser`) was implemented with strict
+512-byte block validation, start/end magic checks, family matching, and continuous
+payload extraction.
+
+Deterministic assembly and linker sources (`rp2040_dualcore.S`, `rp2350_arm_tz.S`,
+`rp2350_riscv_trap.S`, etc.) compiled with `arm-none-eabi-gcc` and `riscv32-esp-elf-gcc`
+produce 11 redistributable fixtures (ELF, UF2, raw BIN, and malformed boundary cases)
+with full provenance manifests and expectation oracles.
+
+All 5 silicon records and 4 board profiles start in `PLANNED` state per RP-002 and STM-019.
+The verification baseline reports 416 unit tests, 104 real-Ghidra tests, 131 STM32 Python tests
+(4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean,
+uncached 22-action builds generate byte-identical 4,575,353-byte ZIP artifacts with SHA-256
+`acee51444ae4ea479929c5758d0e411dcbe4750e4b356c8df5b0cc676b945441`.
+
+## T051 completion (2026-10-03)
+
+T051 implemented UF2 target-address validation and reconstruction, variant-aware raw
+XIP / internal-flash boot metadata parsing, and transactional Ghidra loader support.
+Target-address reconstruction engine (`RpUf2Reconstructor`) orders blocks strictly by target
+CPU address, coalescing contiguous blocks into memory segments (`RpUf2Segment`) while
+properly handling out-of-order blocks, sparse gaps, and multi-family payloads without
+ever mapping UF2 file offsets as memory addresses (RP-001).
+
+Variant-aware boot metadata parsing (`RpBootMetadataParser`) validates boot2 CRC-32
+(polynomial 0x04C11DB7, initial 0xFFFFFFFF, final XOR 0, unreflected) and initial vector
+table entries for RP2040, and parses IMAGE_DEF (`0xffffded3`), architecture flags (ARM Cortex-M33
+vs Hazard3 RISC-V), security domains (Secure vs Non-Secure), block items, vector/trap table
+offsets, and stacked flash geometry for RP2350/RP2354.
+
+Ghidra integration (`RpFirmwareLoader`, `RpFirmwareImportService`, `RpFirmwareMapper`) detects
+both UF2 containers and raw RP binaries, binding them to exact installed Ghidra languages
+(`ARM:LE:32:Cortex`, `ARM:LE:32:v8-m`, `RISCV:LE:32:default` with compiler `gcc`). Memory
+blocks are mapped at target CPU addresses, entry points are committed, vector table symbols
+are labeled, and program options/bookmarks are attached under a rollback-by-default transaction.
+
+All 5 silicon records and 4 board profiles retain `PLANNED` state per RP-002 and STM-019.
+The verification baseline reports 428 unit tests, 110 real-Ghidra tests, 131 STM32 Python tests
+(4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean,
+## T052 completion (2026-10-03)
+
+T052 implemented comprehensive RP2040 target provider data and architecture modeling under `targets.rp`:
+ARMv6-M language (`ARM:LE:32:Cortex`), boot startup with Core 0 launching Core 1 via SIO FIFO
+(`0xD0000050`) and 32 hardware spinlocks, external flash XIP (`0x10000000`), boot2 CRC32 validation,
+Cortex-M0+ 48-entry vector table at `0x10000100` (16 core exception vectors and 32 user IRQs), 264 KiB
+multi-bank SRAM (striped at `0x20000000` plus non-striped alias at `0x21000000`), 16 KiB internal boot
+ROM (`0x00000000`), standard peripherals (`0x40000000`), atomic register access aliases (`0x50000000`
+with NORMAL, XOR, SET, CLEAR apertures), and two programmable I/O blocks (`pio0` at `0x50200000`, `pio1`
+at `0x50300000`, each with 4 state machines, 32-word instruction memory, 4-word FIFO depth, and dedicated
+IRQs). SIO inter-core communication links and PIO interrupt links are wired into the 5-processor
+`ExecutionTopology`.
+
+## T053 completion (2026-10-03)
+
+T053 implemented comprehensive RP2350A, RP2350B, RP2354A, and RP2354B target provider data and
+architecture modeling under `targets.rp`:
+Dual-core execution with architecture selection between dual ARM Cortex-M33 with TrustZone
+(`ARM:LE:32:v8-m`) and dual Hazard3 RV32IMAC RISC-V (`RISCV:LE:32:default` with compiler `gcc`), strictly
+ensuring the inactive architecture is omitted from topology (RP-004). Package differences (RP2350A/RP2354A
+with 30 GPIOs in QFN-60 vs RP2350B/RP2354B with 48 GPIOs in QFN-80), embedded memory differences
+(external flash on RP2350 vs 2 MiB stacked internal flash on RP2354), 520 KiB multi-bank SRAM
+(`0x20000000`), 32 KiB internal boot ROM (`0x00000000`), 8 KiB One-Time Programmable (OTP) security
+memory (`0x40130000` with chip ID, boot flags, Secure Boot public key hashes, and rollback counter limits),
+QMI/XIP flash (`0x10000000`) and PSRAM aperture (`0x11000000`), hardware SHA-256 and TRNG accelerators,
+atomic bus aliases (`0x50000000`), multi-stage secure boot chain (`Rp2350BootChain`), both-core startup via
+SIO FIFO, and three programmable I/O blocks (`pio0` at `0x50200000`, `pio1` at `0x50300000`, and `pio2`
+at `0x50400000`).
+
+All 5 silicon records and 4 board profiles retain `PLANNED` state per RP-002 and STM-019.
+The verification baseline reports 443 unit tests (15 new unit tests across `Rp2040ComprehensiveTest` and
+`Rp2350ComprehensiveTest`), 110 real-Ghidra tests, 131 STM32 Python tests (4 documented optional-source
+skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate
+byte-identical 4,651,305-byte ZIP artifacts with SHA-256
+`8ee894539b054c5527fd478e461fd1f45f6172066558e1cbd92de0d17a0e0219`.
+
+## T054 completion (2026-10-03)
+
+T054 implements official board profiles (Pico, Pico W, Pico 2, Pico 2 W), external flash boundaries
+(2 MiB QSPI vs 4 MiB QMI), wireless subsystem pinouts/bus interfaces (CYW43439), fail-closed board/silicon
+validation (`DiagnosticCode.RP_BOARD_MISMATCH`), and strictly preserves underlying silicon identity
+(`RP2040` / `RP2350A`) per RP-008. It implements pure Pico SDK binary info parsing (`RpBinaryInfoParser`)
+extracting program metadata, SDK version, board ID, pin configurations, and block devices under strict limits
+and cooperative cancellation. It implements pure component detectors for TinyUSB (`RpTinyUsbDetector`),
+lwIP (`RpLwIpDetector`), and CYW43439 (`RpCyw43Detector`), and transactional Ghidra application
+(`RpEnrichmentApplicator`) creating options and bookmarks with unique categories.
+All 5 silicon records and 4 board profiles retain `PLANNED` state.
+The updated verification baseline reports 462 unit tests (+19 new), 114 real-Ghidra tests (+4 new),
+131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests.
+Two clean, uncached 22-action builds generate byte-identical 4,723,928-byte ZIP artifacts with SHA-256
+`4163443b715effbfcd1974f327272616bba05ed859e36276254e14b30ea52701` (`T054_REPRODUCIBLE_ARTIFACT`).
+
+## T055 completion (2026-10-03)
+
+T055 implements dedicated PIO discovery and disassembly, workflow equivalence between headless batch import
+and interactive GUI import, and deterministic malformed-input fuzzing across the RP2040 and RP2350/RP2354 families:
+- Dedicated PIO Disassembler (`targets.rp.pio`): Pure Java 16-bit instruction decoder without Ghidra dependencies
+  (`RpPioDisassembler`, `RpPioInstruction`). Supports all 9 PIO instructions: `JMP`, `WAIT`, `IN`, `OUT`,
+  `PUSH`, `PULL`, `MOV`, `IRQ`, `SET` and all operand/condition variations. PIO instructions are strictly
+  never disassembled as ARM Thumb or RISC-V instructions (RP-009). Preserves wrap bounds and side-set bit count
+  uncertainty when not explicitly configured (`RpPioConfig`).
+- PIO Program Scanner (`RpPioScanner`): Pure scanner for `pio_program_t` structures (instructions pointer,
+  length 1..32, origin -1..31, wrap config) within flash segments, plus fallback heuristic loop scanning,
+  strictly skipping boot2 (first 256 bytes) and vector table apertures.
+- Ghidra PIO Applicator (`ghidra.rp.pio.RpPioApplicator`): In a single transaction, annotates discovered PIO
+  programs with `Embedra Disassembled PIO Program` bookmarks, comprehensive Plate comments (program name,
+  length, origin, wrap bounds, side-set bit count), disassembled instruction EOL comments (`[PIO] <instruction>`),
+  16-bit WORD data units (clearing accidental CPU code units), and memory aperture definitions (`pio0`, `pio1`
+  on RP2040; `pio0`, `pio1`, `pio2` on RP2350).
+- GUI / Headless Workflow Equivalence (`RpWorkflowEquivalenceTest`): Verified byte-for-byte, symbol-for-symbol,
+  option-for-option, and bookmark-for-bookmark equivalence between headless batch import (`HeadlessLoadedProgram`)
+  and interactive GUI import (`Loaded<Program>`) across RP2040, RP2350 ARM, and RP2350 RISC-V targets.
+- Deterministic Malformed-Input Fuzz Campaign (`RpDeterministicMalformedFuzzTest`): Fixed-seed 300-case mutation
+  test campaign (100 UF2 block mutations, 100 RP2040 boot2 mutations, 100 RP2350 IMAGE_DEF block mutations)
+  verifying clean diagnostic rejection (`CORRUPTED_RECORD`, `TRUNCATED_RECORD`, `INVALID_CHECKSUM`,
+  `RP_BOOT_METADATA_INVALID`, etc.) without uncaught runtime exceptions or memory leaks.
+- All 5 silicon records and 4 board profiles retain `PLANNED` state per RP-002 and STM-019.
+- Updated verification baseline: 478 unit tests (+16 new), 119 real-Ghidra tests (+5 new), 131 STM32 Python tests
+  (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action
+  builds generate byte-identical 4,768,609-byte ZIP artifacts with SHA-256
+  `8631d5a3eba039a1af030c2a8798a8398dddc7676284c6e72aba505cdd1a9468` (`T055_REPRODUCIBLE_ARTIFACT`).
+
+## T056 completion (2026-10-04)
+
+T056 implements bounded multi-encoding string discovery and stack-constructed string recovery across ARM, RISC-V, and Xtensa architectures (AN-001):
+- Multi-Encoding String Scanner (`analyzers.strings`):
+  - Pure scanner (`MultiEncodingStringScanner`, `ExtractedString`, `StringScanOptions`) over byte slices and memory blocks under `ParserLimits` and `CancellationToken`.
+  - Supports ASCII, UTF-8 (strict RFC 3629 validation rejecting overlong sequences, surrogate halves, and invalid code points), UTF-16LE, UTF-16BE (zero-byte high/low ratio heuristic to reject binary noise), and Pascal length-prefixed strings (8-bit and 16-bit).
+  - Filters false positives via configurable minimum length thresholds and printable ratio heuristics.
+  - Distinguishes static literal string provenance (`STATIC_LITERAL`) with confidence scoring (`CONFIRMED`, `LIKELY`, `PLAUSIBLE`).
+  - Implements sensitive content masking helper (`redactedContent()`) guaranteeing zero secret leaking in logs (AN-008).
+- Stack-String Recovery Engine (`analyzers.strings.stack`):
+  - Pure analyzer (`StackStringRecoveryAnalyzer`, `StackInstruction`, `RecoveredStackString`) inspecting function disassembly streams.
+  - Emulates register immediate loads (`mov/movs/movw/movt/mvn/ldr` in ARM; `li/lui/addi/mv` in RISC-V; `movi/mov/addi/l32r` in Xtensa) and stack pointer aliasing (`r7/r11` in ARM; `s0/fp` in RISC-V; `a7/a15` in Xtensa).
+  - Emulates immediate store idioms (`strb/strh/str` in ARM Thumb/Thumb-2; `sb/sh/sw` in RISC-V 32-bit; `s8i/s16i/s32i` in Xtensa LX6/LX7) to reconstruct contiguous stack frame byte buffers.
+  - Decodes contiguous stack buffers into strings and attributes each string to its containing function, stack offset, decoded content, encoding, confidence, and instruction address span.
+  - Distinguishes stack-constructed provenance (`STACK_CONSTRUCTED`).
+- Ghidra String Annotation Applicator and Analyzer (`ghidra.strings`):
+  - Transactional applicator (`GhidraStringApplicator`) executing in a single `GhidraProgramTransaction` (rolling back on error or cancellation).
+  - Annotates discovered static strings with `Embedra Strings` bookmarks and EOL comments.
+  - Annotates recovered stack strings with `Embedra Stack Strings` bookmarks and EOL comments on the first instruction in the construction span.
+  - Populates program options under `Embedra String Analysis` (counts by encoding: ASCII, UTF-8, UTF-16LE, UTF-16BE, Pascal, and stack string counts).
+  - Strictly preserves existing user labels, symbols, and bookmarks.
+  - `EmbedraStringAnalyzer` extends Ghidra's `AbstractAnalyzer` for automated static and stack-string recovery across ARM, RISC-V, and Xtensa architectures.
+  - Logs only aggregate counts to prevent sensitive string exposure in log files (AN-008).
+- Updated verification baseline: 493 unit tests (+15 new), 121 real-Ghidra tests (+2 new), 131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate byte-identical 4,826,863-byte ZIP artifacts with SHA-256 `08a67ec4df5abf67c0a8acb3f7471163be7cf4318fc5b9a865ca66a86a32857d` (`T056_REPRODUCIBLE_ARTIFACT`).
+
+## T057 completion (2026-10-04)
+
+T057 implements bounded endpoint, credential, certificate/key, token, UUID, encoded blob, and customizable CTF flag recovery across memory blocks and extracted strings (AN-002, AN-006, AN-008):
+- Pure CTF Entity Scanner (`analyzers.ctf`):
+  - Pure scanner (`CtfEntityScanner`, `CtfEntity`, `CtfEntityCategory`, `CtfEntityType`, `CtfSeverity`, `CtfScanOptions`, `CtfFindingsReport`) operating over extracted static strings, recovered stack strings, and raw memory blocks under `ParserLimits` and `CancellationToken`.
+  - Classifies findings across 6 core categories:
+    - `ENDPOINT`: URLs (`http://`, `https://`, `ws://`, `wss://`, `coap://`, `mqtt://`, `ftp://`), IPv4/IPv6 addresses, domain names with public/internal TLDs, and structured MQTT topics (`tele/`, `stat/`, `cmnd/`, `sensor/`, `factory/`, `device/`).
+    - `CREDENTIAL`: Wi-Fi credentials (`ssid=...`, `password=...`, `psk=...`), AWS Access Key IDs (`AKIA...`), GitHub personal access tokens (`ghp_...`, `github_pat_...`), Slack tokens (`xox[baprs]-...`), JSON Web Tokens (`ey...`), and OpenSSH authorized keys.
+    - `CERTIFICATE_KEY`: PEM certificates, RSA/general private keys, public keys, and binary ASN.1 DER X.509 certificates (bounded sequence header with version and algorithm identifier parsing).
+    - `UUID`: 128-bit BLE/UUID (RFC 4122), 16-bit BLE assigned numbers, and Ethernet/Wi-Fi/Bluetooth MAC addresses.
+    - `ENCODED_BLOB`: Base64 encoded blobs (with character class entropy validation, disambiguated from pure hex) and continuous hexadecimal blobs.
+    - `FLAG`: Default CTF flag patterns (`flag{...}`, `CTF{...}`, `embedra{...}`) and user-configured custom flag patterns via `CtfScanOptions`.
+  - Secret redaction and reporting:
+    - Implements value masking (`maskedValue()`) guaranteeing zero plain-text secret leaking in logs or console output (AN-008).
+    - Structured findings export to JSON, Markdown tables, and SARIF 2.1.0 with secret redaction enabled by default.
+- Ghidra Findings Annotation Applicator and Analyzer (`ghidra.ctf`):
+  - Transactional applicator (`GhidraCtfApplicator`) executing in a single `GhidraProgramTransaction` (rolling back on error or cancellation).
+  - Annotates discovered entities with `Embedra Findings: <CATEGORY>` bookmarks (e.g. `Embedra Findings: ENDPOINT`, `Embedra Findings: CREDENTIAL`, `Embedra Findings: FLAG`, `Embedra Findings: UUID`).
+  - Annotates non-destructive EOL comments (`[Finding: <Type> (<Severity>)] <MaskedValue> - <Explanation>`).
+  - Populates program options under `Embedra CTF Findings` (total findings count, counts by category, counts by severity).
+  - Strictly preserves existing user labels, symbols, and bookmarks.
+  - `EmbedraCtfAnalyzer` extends Ghidra's `AbstractAnalyzer` for automated memory block and stack-string CTF entity discovery.
+  - Logs only aggregate counts to prevent sensitive credential exposure in log files (AN-008).
+- Updated verification baseline: 506 unit tests (+13 new), 123 real-Ghidra tests (+2 new), 131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate byte-identical 4,874,017-byte ZIP artifacts with SHA-256 `1398116c6b952a10b75ecbee10cd5b219a9b88e2229760a1ad2abe16202ac74b` (`T057_REPRODUCIBLE_ARTIFACT`).
 
