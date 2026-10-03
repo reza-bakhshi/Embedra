@@ -149,4 +149,70 @@ public class RpBootMetadataParserTest {
                 RpBootMetadataParser.parseRp2350(truncatedItem, 0x10000000L, false));
         assertEquals(DiagnosticCode.RP_BOOT_METADATA_INVALID, ex2.diagnostic().code());
     }
+
+    @Test
+    void testRp2350TagLastWithLinkAndEndMarker() throws Exception {
+        byte[] data = new byte[512];
+        ByteBuffer buf = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+        buf.putInt((int) RpBootMetadataParser.IMAGE_DEF_START_MAGIC);
+        buf.putInt(0x00000142); // Item 1: ARM Secure
+        buf.putInt(0x00000043); // Item 2: Vector Table Tag
+        buf.putInt(0x10000100); // Pointer
+        buf.putInt(0x000100ff); // Item 3: TAG_LAST (PICOBIN_BLOCK_ITEM_2BS_LAST)
+        buf.putInt(0x00000000); // Link to next block (0 = loop)
+        buf.putInt((int) RpBootMetadataParser.IMAGE_DEF_END_MAGIC);
+
+        writeU32Le(data, 256, 0x20082000L);
+        writeU32Le(data, 260, 0x10000141L);
+
+        Rp2350BootMetadata meta = RpBootMetadataParser.parseRp2350(data, 0x10000000L, false);
+        assertTrue(meta.hasImageDef());
+        assertEquals(Rp2350Architecture.ARM, meta.architecture());
+        assertEquals(0x10000141L, meta.entryPoint());
+    }
+
+    @Test
+    void testRp2350TagLastWithoutEndMarker() throws Exception {
+        byte[] data = new byte[512];
+        ByteBuffer buf = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+        buf.putInt((int) RpBootMetadataParser.IMAGE_DEF_START_MAGIC);
+        buf.putInt(0x00000142); // Item 1: ARM Secure
+        buf.putInt(0x00000043); // Item 2: Vector Table Tag
+        buf.putInt(0x10000100); // Pointer
+        buf.putInt(0x000100ff); // Item 3: TAG_LAST
+        buf.putInt(0x00000000); // Link word
+        // No IMAGE_DEF_END_MAGIC, followed by zeros
+
+        writeU32Le(data, 256, 0x20082000L);
+        writeU32Le(data, 260, 0x10000141L);
+
+        Rp2350BootMetadata meta = RpBootMetadataParser.parseRp2350(data, 0x10000000L, false);
+        assertTrue(meta.hasImageDef());
+        assertEquals(Rp2350Architecture.ARM, meta.architecture());
+        assertEquals(0x10000141L, meta.entryPoint());
+    }
+
+    @Test
+    void testRp2350MinimumViableImageDefAfterVectorTable() throws Exception {
+        byte[] data = new byte[512];
+        // Vector table at offset 0: Initial SP + Reset Handler
+        writeU32Le(data, 0, 0x20082000L);
+        writeU32Le(data, 4, 0x10000201L);
+
+        // Minimum viable image def at offset 256: Start magic, Image type, Tag last
+        ByteBuffer buf = ByteBuffer.wrap(data, 256, 256).order(ByteOrder.LITTLE_ENDIAN);
+        buf.putInt((int) RpBootMetadataParser.IMAGE_DEF_START_MAGIC);
+        buf.putInt(0x00000142); // ARM Secure
+        buf.putInt(0x000100ff); // TAG_LAST
+        buf.putInt(0x00000000); // link
+
+        Rp2350BootMetadata meta = RpBootMetadataParser.parseRp2350(data, 0x10000000L, false);
+        assertTrue(meta.hasImageDef());
+        assertEquals(Rp2350Architecture.ARM, meta.architecture());
+        assertTrue(meta.vectorTableAddress().isPresent());
+        assertEquals(0x10000000L, meta.vectorTableAddress().getAsLong());
+        assertEquals(0x10000201L, meta.entryPoint());
+        assertTrue(meta.initialSp().isPresent());
+        assertEquals(0x20082000L, meta.initialSp().getAsLong());
+    }
 }

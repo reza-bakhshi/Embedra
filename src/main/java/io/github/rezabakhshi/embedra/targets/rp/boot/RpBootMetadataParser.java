@@ -234,14 +234,37 @@ public final class RpBootMetadataParser {
                     entryPoint = pointer;
                 }
             } else if (tag == Rp2350BlockItem.TAG_LAST) {
-                items.add(new Rp2350BlockItem(tag, word, new long[0]));
+                endMarkerFound = true;
+                int sizeWords = (int) ((word >> 8) & 0xFF);
+                long[] payload = new long[0];
+                if (sizeWords > 0 && pos + (sizeWords * 4) <= data.length) {
+                    payload = new long[sizeWords];
+                    for (int s = 0; s < sizeWords; s++) {
+                        payload[s] = readU32Le(data, pos);
+                        pos += 4;
+                    }
+                }
+                items.add(new Rp2350BlockItem(tag, word, payload));
+                // In Picobin, TAG_LAST (0xFF) may optionally be followed by IMAGE_DEF_END_MAGIC (0xab123579)
+                if (pos + 4 <= data.length && readU32Le(data, pos) == IMAGE_DEF_END_MAGIC) {
+                    pos += 4;
+                }
                 break;
             } else if (word == 0) {
                 // Zero padding
                 break;
             } else if (tag == Rp2350BlockItem.TAG_BLOCK_SIZE
                     || tag == 0x45 || tag == 0x46 || tag == 0x47) {
-                items.add(new Rp2350BlockItem(tag, word, new long[0]));
+                int sizeWords = (int) ((word >> 8) & 0xFF);
+                long[] payload = new long[0];
+                if (sizeWords > 0 && pos + (sizeWords * 4) <= data.length) {
+                    payload = new long[sizeWords];
+                    for (int s = 0; s < sizeWords; s++) {
+                        payload[s] = readU32Le(data, pos);
+                        pos += 4;
+                    }
+                }
+                items.add(new Rp2350BlockItem(tag, word, payload));
             } else {
                 throw failure(DiagnosticCode.RP_BOOT_METADATA_INVALID,
                         "Unknown RP2350 IMAGE_DEF item tag: 0x" + Integer.toHexString(tag));
@@ -251,6 +274,20 @@ public final class RpBootMetadataParser {
         if (!endMarkerFound) {
             throw failure(DiagnosticCode.RP_BOOT_METADATA_INVALID,
                     "RP2350 IMAGE_DEF block incomplete or missing end marker");
+        }
+
+        if (architecture == Rp2350Architecture.ARM && vectorTableAddress.isEmpty()) {
+            // Minimum viable image metadata typically places vector table at baseAddress (offset 0)
+            if (data.length >= 8) {
+                long sp = readU32Le(data, 0);
+                long reset = readU32Le(data, 4);
+                if (sp >= 0x20000000L && sp <= 0x20082000L && (reset & 1) == 1
+                        && reset >= FLASH_BASE && reset < 0x14000000L) {
+                    vectorTableAddress = OptionalLong.of(baseAddress);
+                    initialSp = OptionalLong.of(sp);
+                    entryPoint = reset;
+                }
+            }
         }
 
         return new Rp2350BootMetadata(
