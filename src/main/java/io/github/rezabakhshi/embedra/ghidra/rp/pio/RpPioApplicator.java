@@ -79,6 +79,15 @@ public final class RpPioApplicator {
             Address start = program.getAddressFactory().getDefaultAddressSpace().getAddress(prog.address());
             Address end = program.getAddressFactory().getDefaultAddressSpace().getAddress(prog.endAddress() - 1);
 
+            // Safety guard: if there is an existing CPU function or instruction at start,
+            // and this PIO program was discovered without a struct anchor, do NOT overwrite CPU code.
+            if (prog.structureAddress().isEmpty()) {
+                if (program.getListing().getInstructionAt(start) != null
+                        || program.getListing().getFunctionAt(start) != null) {
+                    return;
+                }
+            }
+
             // Clear any erroneous CPU code units (ARM Thumb / RISC-V) across PIO program range
             program.getListing().clearCodeUnits(start, end, false);
 

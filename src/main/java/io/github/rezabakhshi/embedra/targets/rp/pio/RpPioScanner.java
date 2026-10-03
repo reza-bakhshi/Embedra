@@ -76,14 +76,44 @@ public final class RpPioScanner {
                             "Discovered PIO programs exceed limit: " + limits.maxObjects()));
                 }
 
+                long structAddr = segBase + offset;
                 long instrPtr = Integer.toUnsignedLong(buf.getInt(offset));
+
+                // Instructions pointer must be 2-byte aligned and distinct from struct
+                if ((instrPtr & 1) != 0 || instrPtr == structAddr) {
+                    continue;
+                }
+
                 int length = Byte.toUnsignedInt(data[offset + 4]);
                 int origin = data[offset + 5];
+                int pioVersion = Byte.toUnsignedInt(data[offset + 6]);
+                int usedGpio = Byte.toUnsignedInt(data[offset + 7]);
 
                 if (length < 1 || length > 32) {
                     continue;
                 }
                 if (origin != -1 && (origin < 0 || origin > 31 || origin + length > 32)) {
+                    continue;
+                }
+                // In Pico SDK: pio_version is 0 (RP2040) or 1 (RP2350). used_gpio_ranges bitmap <= 7.
+                if (pioVersion > 1 || usedGpio > 7) {
+                    continue;
+                }
+
+                // In Pico SDK / pioasm, instructions and struct are generated together in rodata:
+                // ptr == struct_addr + 8 or struct_addr == ptr + roundUp4(length * 2).
+                // If not adjacent, must be in close proximity (< 256 bytes) and relocatable (origin == -1).
+                long dist = instrPtr - structAddr;
+                boolean adjForward = (dist == 8);
+                boolean adjBackward = (structAddr == instrPtr + ((length * 2 + 3) & ~3));
+                if (!adjForward && !adjBackward) {
+                    if (origin != -1 || Math.abs(dist) > 256) {
+                        continue;
+                    }
+                }
+
+                // If origin != -1 (fixed origin), length must be at least 2 to prevent matching int fields
+                if (origin != -1 && length < 2) {
                     continue;
                 }
 
@@ -98,11 +128,15 @@ public final class RpPioScanner {
                     continue;
                 }
 
+                // Reject if the target array is a 32-bit pointer table
+                if (isPointerTable(targetSeg.data(), targetOffset, length)) {
+                    continue;
+                }
+
                 // Validate and decode instruction array
                 List<RpPioInstruction> instrs = tryDecodeInstructions(
                         targetSeg.data(), targetOffset, length, RpPioConfig.withDefaults(length));
                 if (instrs != null && !isAllTrivial(instrs)) {
-                    long structAddr = segBase + offset;
                     RpPioConfig config = RpPioConfig.withDefaults(length);
                     String name = String.format("pio_program_0x%x", instrPtr);
                     RpPioProgram program = new RpPioProgram(
@@ -120,73 +154,77 @@ public final class RpPioScanner {
         }
 
         // Pass 2: Heuristic scan for standalone PIO instruction arrays (e.g. rp_pio_instructions)
-        for (RpUf2Segment segment : segments) {
-            token.throwIfCancellationRequested();
-            byte[] data = segment.data();
-            long segBase = segment.targetAddress();
+        // ONLY execute if no structured pio_program_t instances were discovered,
+        // preventing massive false-positives against CPU ISA code in standard Pico SDK firmware.
+        if (discovered.isEmpty()) {
+            for (RpUf2Segment segment : segments) {
+                token.throwIfCancellationRequested();
+                byte[] data = segment.data();
+                long segBase = segment.targetAddress();
 
-            if (data.length < 4) {
-                continue;
-            }
-
-            ByteBuffer buf = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
-            int maxOffset = data.length - 4;
-
-            for (int offset = 0; offset <= maxOffset; offset += 2) {
-                long addr = segBase + offset;
-                // Exclude flash boot2 and vector table headers (first 0x140 bytes of flash base)
-                if (segBase == 0x10000000L && offset < 0x140) {
-                    continue;
-                }
-                if (coveredAddresses.contains(addr)) {
+                if (data.length < 4) {
                     continue;
                 }
 
-                // Try to find a sequence of valid instructions ending with jmp or loop
-                int runLen = 0;
-                int maxRun = Math.min(32, (data.length - offset) / 2);
-                boolean hasDistinctivePio = false;
-                boolean endsWithJmpOrWait = false;
+                ByteBuffer buf = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+                int maxOffset = data.length - 4;
 
-                for (int i = 0; i < maxRun; i++) {
-                    long wordAddr = segBase + offset + (i * 2L);
-                    if (coveredAddresses.contains(wordAddr)) {
-                        break;
+                for (int offset = 0; offset <= maxOffset; offset += 2) {
+                    long addr = segBase + offset;
+                    // Exclude flash boot2 and vector table headers (first 0x140 bytes of flash base)
+                    if (segBase == 0x10000000L && offset < 0x140) {
+                        continue;
                     }
-                    int w = Short.toUnsignedInt(buf.getShort(offset + (i * 2)));
-                    if (!RpPioDisassembler.isValidInstruction(w)) {
-                        break;
+                    if (coveredAddresses.contains(addr)) {
+                        continue;
                     }
-                    int op = (w >> 13) & 0x7;
-                    if (op == 2 || op == 3 || op == 4 || op == 5 || op == 6 || op == 7) {
-                        hasDistinctivePio = true;
-                    }
-                    runLen++;
-                    if (op == 0) { // JMP
-                        int target = w & 0x1F;
-                        if (target <= i) {
-                            endsWithJmpOrWait = true;
+
+                    // Try to find a sequence of valid instructions ending with backward jmp loop
+                    int runLen = 0;
+                    int maxRun = Math.min(32, (data.length - offset) / 2);
+                    boolean hasDistinctivePio = false;
+                    boolean endsWithLoop = false;
+
+                    for (int i = 0; i < maxRun; i++) {
+                        long wordAddr = segBase + offset + (i * 2L);
+                        if (coveredAddresses.contains(wordAddr)) {
                             break;
                         }
-                    } else if (op == 1 && (w & 0x7) == 0) { // WAIT
-                        endsWithJmpOrWait = true;
-                    }
-                }
-
-                if (runLen >= 2 && hasDistinctivePio && (endsWithJmpOrWait || runLen >= 4)) {
-                    List<RpPioInstruction> instrs = tryDecodeInstructions(
-                            data, offset, runLen, RpPioConfig.withDefaults(runLen));
-                    if (instrs != null && !isAllTrivial(instrs)) {
-                        String name = String.format("pio_instr_0x%x", addr);
-                        RpPioConfig config = RpPioConfig.withDefaults(runLen);
-                        RpPioProgram program = new RpPioProgram(
-                                addr, OptionalLong.empty(), runLen, -1, instrs, config, name);
-                        discovered.add(program);
-
-                        for (int i = 0; i < runLen; i++) {
-                            coveredAddresses.add(addr + (i * 2L));
+                        int w = Short.toUnsignedInt(buf.getShort(offset + (i * 2)));
+                        if (!RpPioDisassembler.isValidInstruction(w)) {
+                            break;
                         }
-                        offset += (runLen * 2) - 2;
+                        int op = (w >> 13) & 0x7;
+                        if (isDistinctiveInstruction(op, w)) {
+                            hasDistinctivePio = true;
+                        }
+                        runLen++;
+                        if (op == 0) { // JMP
+                            int cond = (w >> 5) & 0x7;
+                            int target = w & 0x1F;
+                            // Backward loop condition
+                            if (cond == 0 && target <= i) {
+                                endsWithLoop = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (runLen >= 2 && hasDistinctivePio && endsWithLoop) {
+                        List<RpPioInstruction> instrs = tryDecodeInstructions(
+                                data, offset, runLen, RpPioConfig.withDefaults(runLen));
+                        if (instrs != null && !isAllTrivial(instrs)) {
+                            String name = String.format("pio_instr_0x%x", addr);
+                            RpPioConfig config = RpPioConfig.withDefaults(runLen);
+                            RpPioProgram program = new RpPioProgram(
+                                    addr, OptionalLong.empty(), runLen, -1, instrs, config, name);
+                            discovered.add(program);
+
+                            for (int i = 0; i < runLen; i++) {
+                                coveredAddresses.add(addr + (i * 2L));
+                            }
+                            offset += (runLen * 2) - 2;
+                        }
                     }
                 }
             }
@@ -194,6 +232,49 @@ public final class RpPioScanner {
 
         discovered.sort(Comparator.comparingLong(RpPioProgram::address));
         return List.copyOf(discovered);
+    }
+
+    private static boolean isDistinctiveInstruction(int op, int word) {
+        switch (op) {
+            case 1 -> { // WAIT
+                int src = (word >> 5) & 0x3;
+                return src == 0 || src == 1; // GPIO or PIN
+            }
+            case 2 -> { // IN
+                int src = (word >> 5) & 0x7;
+                return src == 0; // PINS
+            }
+            case 3 -> { // OUT
+                int dst = (word >> 5) & 0x7;
+                return dst == 0 || dst == 4; // PINS or PINDIRS
+            }
+            case 4 -> { // PUSH / PULL
+                return (word & 0x1F) == 0;
+            }
+            case 7 -> { // SET
+                int dst = (word >> 5) & 0x7;
+                return dst == 0 || dst == 4; // PINS or PINDIRS
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    private static boolean isPointerTable(byte[] data, int offset, int length) {
+        if (length < 2) {
+            return false;
+        }
+        ByteBuffer buf = ByteBuffer.wrap(data, offset, length * 2).order(ByteOrder.LITTLE_ENDIAN);
+        int highWordsCount = length / 2;
+        int matchCount = 0;
+        for (int i = 0; i < length; i++) {
+            int w = Short.toUnsignedInt(buf.getShort());
+            if (i % 2 == 1 && (w >= 0x1000 && w <= 0x1020)) {
+                matchCount++;
+            }
+        }
+        return matchCount > 0 && matchCount == highWordsCount;
     }
 
     private static RpUf2Segment findSegment(List<RpUf2Segment> segments, long address, int byteLength) {
