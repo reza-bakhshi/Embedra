@@ -18,6 +18,7 @@ import io.github.rezabakhshi.embedra.formats.rp.uf2.RpUf2Family;
 import io.github.rezabakhshi.embedra.formats.rp.uf2.RpUf2Image;
 import io.github.rezabakhshi.embedra.formats.rp.uf2.RpUf2Parser;
 import io.github.rezabakhshi.embedra.formats.rp.uf2.RpUf2Segment;
+import io.github.rezabakhshi.embedra.ghidra.function.EmbedraFunctionNormalizer;
 import io.github.rezabakhshi.embedra.ghidra.rp.pio.RpPioApplicator;
 import io.github.rezabakhshi.embedra.targets.rp.RpTargetProvider;
 import io.github.rezabakhshi.embedra.targets.rp.RpTargetResolver;
@@ -254,6 +255,13 @@ public final class RpFirmwareImportService {
             RpPioApplicator.apply(program, pioPrograms, provider, monitor);
         } catch (DiagnosticException ignored) {
             // Non-fatal PIO scanning failure
+        }
+
+        // 6. Normalize function calling conventions to target ABI
+        try {
+            EmbedraFunctionNormalizer.normalize(program, null, monitor);
+        } catch (CancelledException ignored) {
+            // Non-fatal
         }
 
         return report;
