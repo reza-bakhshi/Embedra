@@ -343,4 +343,50 @@ class CtfEntityScannerTest {
         assertFalse(sarifRedacted.contains("AKIAIOSFODNN7EXAMPLE"));
         assertTrue(sarifRedacted.contains(masked));
     }
+
+    @Test
+    void ignoresWifiFormatSpecifierAndPlaceholderFalsePositives() throws Exception {
+        CtfEntityScanner scanner = new CtfEntityScanner();
+        List<ExtractedString> strings = List.of(
+                new ExtractedString(0x1000L, 26, StringEncoding.ASCII, "  2.4GHz WiFi       : %s\n",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL),
+                new ExtractedString(0x1020L, 16, StringEncoding.ASCII, "5GHz WiFi: %s\n",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL),
+                new ExtractedString(0x1040L, 10, StringEncoding.ASCII, "WiFi: %s\n",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL),
+                new ExtractedString(0x1060L, 10, StringEncoding.ASCII, "WiFi: %d\n",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL),
+                new ExtractedString(0x1080L, 16, StringEncoding.ASCII, "WiFi: connected",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL),
+                new ExtractedString(0x10A0L, 14, StringEncoding.ASCII, "WiFi: enabled",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL),
+                new ExtractedString(0x10C0L, 17, StringEncoding.ASCII, "WiFi: <password>",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL),
+                new ExtractedString(0x10E0L, 13, StringEncoding.ASCII, "WiFi: (null)",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL),
+                new ExtractedString(0x1100L, 10, StringEncoding.ASCII, "ssid: %s\n",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL)
+        );
+
+        List<CtfEntity> entities = scanner.scanStrings(strings, CtfScanOptions.defaults(), CancellationToken.none());
+
+        assertTrue(entities.isEmpty(),
+                "Expected no Wi-Fi credentials from format strings or placeholders, got: " + entities);
+    }
+
+    @Test
+    void detectsValidWifiCredentials() throws Exception {
+        CtfEntityScanner scanner = new CtfEntityScanner();
+        List<ExtractedString> strings = List.of(
+                new ExtractedString(0x2000L, 30, StringEncoding.ASCII, "wifi_password = MySuperSecret123",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL),
+                new ExtractedString(0x2040L, 25, StringEncoding.ASCII, "ssid=CorpOffice;psk=SecretKey99",
+                        StringConfidence.CONFIRMED, StringProvenance.STATIC_LITERAL)
+        );
+
+        List<CtfEntity> entities = scanner.scanStrings(strings, CtfScanOptions.defaults(), CancellationToken.none());
+
+        assertEquals(3, entities.size());
+        assertTrue(entities.stream().allMatch(e -> e.type() == CtfEntityType.WIFI_CREDENTIAL));
+    }
 }

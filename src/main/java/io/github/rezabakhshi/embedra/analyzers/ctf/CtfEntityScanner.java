@@ -12,6 +12,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,7 +45,20 @@ public final class CtfEntityScanner {
             "(?i)\\b(?:[0-9a-f]{2}[:-]){5}[0-9a-f]{2}\\b");
 
     private static final Pattern WIFI_PATTERN = Pattern.compile(
-            "(?i)\\b(?:ssid|wifi|wpa2?|psk|passphrase|password)\\s*[:=]\\s*([^\\s,;]+)");
+            "(?i)\\b(?:wifi[-_]?(?:ssid|password|passphrase|psk|key)?|"
+                    + "ssid|wpa2?|psk|passphrase|password)\\s*[:=]\\s*([^\\s,;]+)");
+
+    private static final Pattern FORMAT_SPECIFIER_PATTERN = Pattern.compile(
+            "^%[-+0-9.*#lhjztL]*[a-zA-Z%]");
+
+    private static final Set<String> PLACEHOLDER_OR_STATUS_VALUES = Set.of(
+            "null", "none", "unknown", "true", "false", "yes", "no",
+            "on", "off", "enabled", "disabled", "connected", "disconnected",
+            "connecting", "disconnecting", "ready", "init", "ok", "fail", "failed",
+            "error", "started", "stopped", "running", "idle", "active", "inactive",
+            "up", "down", "open", "closed", "pass", "todo", "changeme", "placeholder",
+            "default", "(null)"
+    );
 
     private static final Pattern AWS_KEY_PATTERN = Pattern.compile(
             "\\b(AKIA[0-9A-Z]{16})\\b");
@@ -275,6 +289,10 @@ public final class CtfEntityScanner {
             while (wifiMatcher.find()) {
                 token.throwIfCancellationRequested();
                 checkLimits(results, options);
+                String val = wifiMatcher.group(1);
+                if (!isValidWifiCredential(text, wifiMatcher.start(), val)) {
+                    continue;
+                }
                 results.add(new CtfEntity(
                         "cred-wifi-" + idCounter++,
                         CtfEntityCategory.CREDENTIAL,
@@ -657,6 +675,38 @@ public final class CtfEntityScanner {
             return ((bytes[offset + 1] & 0xFF) << 8) | (bytes[offset + 2] & 0xFF);
         }
         return -1;
+    }
+
+    static boolean isValidWifiCredential(String fullText, int matchStart, String value) {
+        if (value == null) {
+            return false;
+        }
+        String cleanValue = value.trim().replaceAll("[\"';,\r\n]", "");
+        if (cleanValue.length() <= 2) {
+            return false;
+        }
+        // Reject format specifiers like %s, %d, %u, %02x, etc.
+        if (cleanValue.contains("%") || FORMAT_SPECIFIER_PATTERN.matcher(cleanValue).find()) {
+            return false;
+        }
+        // Reject status or placeholder values
+        if (PLACEHOLDER_OR_STATUS_VALUES.contains(cleanValue.toLowerCase())) {
+            return false;
+        }
+        // Reject placeholders enclosed in brackets or angle brackets
+        if ((cleanValue.startsWith("<") && cleanValue.endsWith(">"))
+                || (cleanValue.startsWith("[") && cleanValue.endsWith("]"))
+                || (cleanValue.startsWith("{") && cleanValue.endsWith("}"))) {
+            return false;
+        }
+        // Reject frequency band descriptions like "2.4GHz WiFi" or "5GHz WiFi"
+        if (fullText != null && matchStart > 0) {
+            String prefix = fullText.substring(0, matchStart).toLowerCase().trim();
+            if (prefix.endsWith("ghz") || prefix.endsWith("2.4ghz") || prefix.endsWith("5ghz")) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static void checkLimits(List<CtfEntity> results, CtfScanOptions options) throws DiagnosticException {
