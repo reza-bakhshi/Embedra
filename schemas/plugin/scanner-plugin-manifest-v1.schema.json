@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:embedra:schema:scanner-plugin-manifest:1",
+  "title": "Embedra Scanner Plugin Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaId",
+    "pluginId",
+    "name",
+    "version",
+    "author",
+    "description",
+    "pluginType",
+    "capabilities",
+    "resourceLimits"
+  ],
+  "properties": {
+    "schemaId": {"const": "urn:embedra:schema:scanner-plugin-manifest:1"},
+    "pluginId": {"type": "string", "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$"},
+    "name": {"type": "string", "minLength": 1},
+    "version": {
+      "type": "string",
+      "pattern": "^(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)$"
+    },
+    "author": {"type": "string", "minLength": 1},
+    "description": {"type": "string", "minLength": 1},
+    "pluginType": {
+      "type": "string",
+      "enum": ["DECLARATIVE_RULE", "JAVA_CLASS"]
+    },
+    "targetPlatform": {
+      "type": "string"
+    },
+    "entryPoint": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["BYTE_SCAN", "STRING_SCAN", "METADATA_SCAN"]
+      }
+    },
+    "resourceLimits": {"$ref": "#/$defs/resourceLimits"},
+    "declarativeRules": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/declarativeRule"}
+    }
+  },
+  "$defs": {
+    "resourceLimits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxWallTimeMs", "maxMemoryBytes", "maxFindings"],
+      "properties": {
+        "maxWallTimeMs": {"type": "integer", "minimum": 10, "maximum": 60000},
+        "maxMemoryBytes": {"type": "integer", "minimum": 1024},
+        "maxFindings": {"type": "integer", "minimum": 1, "maximum": 50000}
+      }
+    },
+    "declarativeRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ruleId",
+        "description",
+        "matcherType",
+        "pattern",
+        "severity",
+        "confidence",
+        "confidenceScore",
+        "secret"
+      ],
+      "properties": {
+        "ruleId": {"type": "string", "minLength": 1},
+        "description": {"type": "string", "minLength": 1},
+        "matcherType": {
+          "type": "string",
+          "enum": ["REGEX", "HEX_BYTES", "EXACT_STRING", "ENTROPY"]
+        },
+        "pattern": {"type": "string"},
+        "severity": {
+          "type": "string",
+          "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"]
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["CONFIRMED", "LIKELY", "PLAUSIBLE", "LEAD"]
+        },
+        "confidenceScore": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "secret": {"type": "boolean"},
+        "category": {
+          "type": "string",
+          "enum": ["CTF_ENTITY", "CRYPTOGRAPHY", "LOGGING_DIAGNOSTIC", "SECURITY_LEAD", "CUSTOM_PLUGIN"]
+        },
+        "subcategory": {"type": "string"},
+        "minEntropy": {"type": "number", "minimum": 0.0, "maximum": 8.0},
+        "maxEntropy": {"type": "number", "minimum": 0.0, "maximum": 8.0}
+      }
+    }
+  }
+}

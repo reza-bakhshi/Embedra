@@ -668,6 +668,140 @@ Firmware lead and CTF artifact discovery is implemented as pure analysis models 
 
 
 
+## Layered Cryptographic Analysis Pipeline (T058, AN-003, AN-008, AN-010, AN-012)
+
+The layered cryptographic analysis pipeline is implemented as pure analysis engines under `analyzers.crypto`, `analyzers.crypto.tables`, `analyzers.crypto.entropy`, and `analyzers.crypto.fusion`, strictly separated from Ghidra Program DB mutation under `ghidra.crypto`:
+
+1. **Pure cryptographic models (`analyzers.crypto`)**:
+   - `CryptoCategory`: `CIPHER_SYMMETRIC`, `CIPHER_ASYMMETRIC`, `HASH_MAC`, `CHECKSUM_CRC`, `KEY_MATERIAL`, `CERTIFICATE`, `ENTROPY_ANOMALY`, and `ENCODING_OR_COMPRESSION`.
+   - In accordance with AN-003, `isEncryption()` returns `true` only for `CIPHER_SYMMETRIC` and `CIPHER_ASYMMETRIC`. CRCs, encodings, compression, and entropy anomalies alone MUST NOT be categorized or labeled as encryption.
+   - `CryptoAlgorithm`: Covers symmetric ciphers (AES-128/192/256, DES, 3DES, ChaCha20, RC4), asymmetric ciphers & curves (RSA, NIST P-256, secp256k1, Curve25519, Ed25519), hashes & MACs (MD5, SHA-1, SHA-256, SHA-512, SHA-3, BLAKE2b/s, HMAC, CMAC), checksums/CRCs (CRC-32, CRC-16, CRC-8, Adler-32, Fletcher-16), and non-crypto formats (Base64, Deflate/zlib, LZ4).
+   - `CryptoEvidenceLayer`: Tracks contributing layers (`CONSTANT_TABLE`, `SYMBOL_STRING`, `HARDWARE_PERIPHERAL`, `INSTRUCTION_IDIOM`, `ENTROPY_METRIC`, `DATA_FLOW`) for provenance (AN-010).
+   - `CryptoConfidence`: Distinguishes confidence assessment (`CONFIRMED`, `LIKELY`, `PLAUSIBLE`, `LEAD`).
+   - `CryptoFinding`: Immutable record with address, length, category, algorithm, confidence, evidence layers, explanation, raw hex representation, secret indicator, and `maskedValue()` (AN-008).
+
+2. **Cryptographic constants and tables database (`analyzers.crypto.tables`)**:
+   - `CryptoTableDatabase`: Immutable signature catalog and high-performance indexed byte scanner:
+     - AES Forward S-box, Inverse S-box, and Rcon round constants.
+     - DES Initial Permutation (IP), Expansion table (E), and substitution boxes.
+     - ChaCha20 / Salsa20 constants `"expand 32-byte k"` and `"expand 16-byte k"`.
+     - SHA-256 initial state $H$ and fractional cube-root round constants $K$ (both LE and BE).
+     - SHA-512 initial state and round constants (both LE and BE).
+     - SHA-1 initial state and round constants (both LE and BE).
+     - MD5 initial state and sine round table $T$ (both LE and BE).
+     - Standard IEEE 802.3 CRC-32 table (both LE and BE), CRC-16 CCITT and Modbus lookup tables.
+     - NIST P-256 field prime and generator point $G_x$, secp256k1 field prime and base point, Curve25519 field primes (BE and LE).
+   - Strict differentiation (AN-003): Standard Base64 alphabets, Deflate/zlib headers, and LZ4 frame magic `0x184D2204` are indexed under `ENCODING_OR_COMPRESSION` and explicitly prevented from being classified as encryption.
+
+3. **Entropy & candidate key analysis engine (`analyzers.crypto.entropy`)**:
+   - `EntropyScanner`: Sliding-window Shannon entropy calculator with chi-squared goodness-of-fit against uniform distributions. Identifies high-entropy regions ($\ge 7.2$ bits/byte) and differentiates structured ciphertext/keys from compressed streams via header validation and distribution variance.
+   - `LikelyKeyScanner`: Identifies bounded candidate key material (16-byte 128-bit, 24-byte 192-bit, 32-byte 256-bit) on word boundaries, applying strict false-positive controls (rejecting zero-runs, repetitive patterns, low distinct byte counts, ARM/Thumb/RISC-V code idioms, and ASCII text strings).
+
+4. **Multi-layer evidence fusion and reporting (`analyzers.crypto.fusion`)**:
+   - `CryptoAnalysisPipeline`: Fuses table matches, candidate keys, sliding-window entropy, symbol/string leads, and hardware peripheral access. Promotes confidence from `LIKELY` to `CONFIRMED` when table matches coincide with algorithm-specific debug strings or function names, and promotes candidate keys when cipher tables coexist (AN-010).
+   - `CryptoAnalysisReport`: Generates structured reports with secret redaction enabled by default (`maskedValue()`) exportable to JSON, Markdown tables, and SARIF 2.1.0 static analysis output (AN-008).
+
+5. **Ghidra crypto applicator and analyzer (`ghidra.crypto`)**:
+   - `EmbedraCryptoAnalyzer`: Extends `AbstractAnalyzer` for automated memory block crypto discovery, extracting symbol and function leads to drive the fusion pipeline.
+   - `GhidraCryptoApplicator`: Executes inside a single `GhidraProgramTransaction` (rolling back on failure or cancellation). Applies bookmarks under `Embedra Crypto: <CATEGORY>`, appends non-destructive EOL comments (`[Crypto: <Algorithm> (<Confidence>)] <MaskedValue> - <Explanation>`), and registers program options under `Embedra Crypto Analysis`.
+   - Emits aggregate summary counts only in logs to prevent secret key exposure (AN-008).
+
+## Logging, Assert, Panic Recovery, and Format-to-Call-Site Linkage (T059, AN-004, AN-006, AN-008, AN-010)
+
+The logging, assert, panic recovery, and call-site linkage engine is implemented as pure analysis models and engines under `analyzers.logging`, `analyzers.logging.scanner`, and `analyzers.logging.linkage`, with transactional Ghidra integration under `ghidra.logging`:
+
+1. **Pure diagnostic logging models (`analyzers.logging`)**:
+   - `DiagnosticLogLevel`: Distinguishes severity levels: `PANIC`, `ASSERT`, `ERROR`, `WARNING`, `INFO`, `DEBUG`.
+   - `FormatStringDescriptor`: Encapsulates parsed format string raw text, expected argument counts, and typed `FormatSpecifier` records with inferred argument types (`FormatArgumentType`: `STRING`, `INTEGER`, `HEX_INTEGER`, `POINTER`, `FLOAT`, `CHARACTER`).
+   - `LoggingCallSite`: Immutable record capturing call instruction address, target function address/symbol, log level, format string descriptor, resolved argument map (e.g. `file`, `line`, `expression`, `message`, `tag`), confidence, and human-readable explanation.
+   - `LoggingAnalysisReport`: Generates structured findings reports with secret redaction enabled by default (`maskedValue()`), serializable to JSON, Markdown tables, and SARIF 2.1.0 format (AN-008).
+
+2. **Format string and assert scanner engines (`analyzers.logging.scanner`)**:
+   - `FormatStringParser`: Pure printf-style format string parser supporting standard POSIX and C99 conversion specifiers (`%s`, `%d`, `%i`, `%u`, `%x`, `%X`, `%p`, `%f`, `%c`), length modifiers (`hh`, `h`, `l`, `ll`, `z`), width and precision specifiers, variable argument asterisks (`*`), escaped literal percent (`%%`), and positional indexing (`%1$s`).
+   - `AssertPanicPatternMatcher`: Identifies assert and panic idioms across embedded codebases:
+     - Recognized symbols: `assert`, `__assert`, `__assert_func`, `__assert_fail`, `configASSERT`, `panic`, `hard_assert`, `abort`, `esp_system_abort`, `assert_param`.
+     - Argument heuristics: source file names (`.c`, `.cpp`, `.h`, `.hpp`), valid source line numbers (1..500000), and condition expressions (`!=`, `==`, `NULL`, `0`).
+     - Trailing termination instructions: ARM `bkpt`, `udf`, `b .`; RISC-V `ebreak`, `unimp`, `j .`; Xtensa `break.n`, `ill`, `j .`.
+
+3. **Call-site linkage engine (`analyzers.logging.linkage`)**:
+   - `CallSiteArgumentResolver`: Inspects function disassembly backwards from diagnostic call sites within a bounded window (default 32 instructions).
+   - Multi-architecture calling convention tracking:
+     - ARM AAPCS: tracks `r0-r3` registers (immediate loads via `mov/movs/movw/movt`, PC-relative literal loads via `ldr/adr`).
+     - RISC-V 32: tracks `a0-a7` registers (immediate loads via `li`, `lui + addi`, `la/lla`).
+     - Xtensa: tracks call0 `a2-a7` registers and windowed `call4/call8/call12` caller argument registers.
+   - Resolves pointer constants against the program's static string dictionary and links format strings and arguments to call sites.
+
+4. **Ghidra logging applicator and analyzer (`ghidra.logging`)**:
+   - `EmbedraLoggingAnalyzer`: Extends `AbstractAnalyzer` for automated function disassembly logging and assert recovery across ARM, RISC-V, and Xtensa programs.
+   - `GhidraLoggingApplicator`: Executes inside a single `GhidraProgramTransaction` (rolling back cleanly on error or cancellation). Adds bookmarks under `Embedra Logging: <LEVEL>`, non-destructive EOL comments (`[Log: <LEVEL>] <FormatString> (<File>:<Line>)`), and populates program options under `Embedra Logging Analysis`.
+   - Logs only aggregate counts to prevent sensitive credential or parameter exposure (AN-008).
+
+## Ranked Security Leads: Password Comparisons, Debug Commands, Shells, OTA, and Authorization Branches (T060, AN-005, AN-006, AN-008)
+
+The ranked security leads engine detects candidate password/token comparisons, hidden commands, interactive debug shells, OTA update endpoints, and authorization branches as ranked leads, not facts (AN-005):
+
+1. **Pure security leads domain models (`analyzers.leads`)**:
+   - `LeadCategory`: Classifies leads into `PASSWORD_TOKEN_COMPARISON`, `DEBUG_COMMAND`, `DEBUG_SHELL`, `OTA_ENDPOINT`, and `AUTHORIZATION_BRANCH`.
+   - `LeadConfidence`: Heuristic confidence tiers (`HIGH`, `MEDIUM`, `LOW`) derived from normalized scoring (0.0 to 1.0) and corroborated heuristic indicators.
+   - `LeadSeverity`: Triage severity ranking (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`).
+   - `HeuristicFactor`: Captures individual contributing rule indicators, descriptions, and heuristic weights.
+   - `SecurityLead`: Immutable record tracking lead ID, category, confidence tier, confidence score, severity, memory address, associated symbol, target operand/command/endpoint, human-readable description, contributing heuristic factors, structured metadata attributes, and secret redaction flag.
+   - `SecurityLeadsReport`: Aggregates and ranks leads by confidence score descending, severity descending, and address ascending. Provides structured export to JSON, Markdown tables, and SARIF 2.1.0 with secret masking (`[REDACTED_SECRET]`) enabled by default (AN-008).
+
+2. **Heuristic scanner engines (`analyzers.leads.scanner`)**:
+   - `ComparisonLeadScanner`: Disassembles function bodies across ARM Cortex-M Thumb, RISC-V 32, and Xtensa architectures. Resolves operands to known string comparisons (`strcmp`, `strncmp`, `strcasecmp`, `strncasecmp`), memory comparisons (`memcmp`, `bcmp`), constant-time cryptographic comparisons (`CRYPTO_memcmp`, `timingsafe_bcmp`, `mbedtls_ct_memcmp`), and custom authentication symbols. Evaluates whether static operands contain sensitive keywords (`password`, `admin`, `secret`, `token`, `pin`, `key`, `auth`, `flag`). Lookahead detection inspects following instructions for immediate conditional branches (`cbz`, `cbnz`, `beq`, `bne`, `beqz`, `bnez`), producing linked `AUTHORIZATION_BRANCH` leads that identify gating decision paths.
+   - `DebugCommandLeadScanner`: Scans memory and pointer tables for embedded CLI command table structures (`{ name, handler, help }` or `{ name, func }`) matching administrative and debug command keywords (`root`, `admin`, `debug`, `shell`, `su`, `factory`, `diag`, `backdoor`, `dump`, `reboot`, `erase`, `flash`, `unlock`, `poke`, `peek`). Detects interactive debug shell prompts (`# `, `shell> `, `cli> `, `debug> `, `admin> `, `esp> `) and corroborates them against console initialization symbols (`esp_console_init`, `microrl_init`, `embedded_cli_init`, `FreeRTOS_CLIInit`).
+   - `OtaLeadScanner`: Scans strings and symbols for over-the-air firmware update endpoints: URL patterns with firmware extensions or update paths (`/ota`, `/update`, `/firmware`, `.bin`, `.hex`, `.pkg`, `.uf2`), MQTT update topics (`*/ota`, `*/firmware/update`), and references to OTA APIs (`esp_ota_begin`, `esp_https_ota`, `bootloader_common_ota_select`, `HAL_FLASH_Program`, STM32 DFU/IAP).
+   - `SecurityLeadScanner`: Master scanner orchestrating comparison, command, shell, and OTA scanners under `ParserLimits` and `CancellationToken`.
+
+3. **Ghidra security leads applicator and analyzer (`ghidra.leads`)**:
+   - `EmbedraSecurityLeadAnalyzer`: Extends `AbstractAnalyzer` for automated program-wide discovery of security leads.
+   - `GhidraSecurityLeadApplicator`: Transactionally creates bookmarks under `Embedra Lead: <CATEGORY>`, adds non-destructive EOL comments (`[Lead: <CATEGORY> (<CONFIDENCE>)] <Description>`), and populates program options under `Embedra Security Leads`. Preserves existing user-defined symbols and bookmarks intact. Zero unmasked secrets are logged (AN-008).
+
+## Unified Findings Management, Suppression, UI, and Secret Redaction (T061, AN-006, AN-008)
+
+The unified findings subsystem normalizes, deduplicates, ranks, and manages findings across all analysis engines (CTF entities, cryptographic findings, logging/diagnostics, and security leads), providing an interactive Ghidra GUI, suppression engine, and multi-format export:
+
+1. **Pure canonical findings models and converter (`analyzers.findings`)**:
+   - `FindingCategory`: Classifies findings into `CTF_ENTITY`, `CRYPTOGRAPHY`, `LOGGING_DIAGNOSTIC`, and `SECURITY_LEAD`.
+   - `FindingSeverity`: Standardized ranking (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`).
+   - `FindingConfidence`: Calibrated confidence levels (`CONFIRMED`, `LIKELY`, `PLAUSIBLE`, `LEAD`).
+   - `UnifiedFinding`: Immutable canonical record capturing finding ID, category, subcategory, severity, confidence, normalized confidence score (0.0 to 1.0), target hardware/architecture platform, memory address, byte length, target representation, human-readable explanation, secret flag, suppression state, suppression justification, and structured attribute map. Supports `maskedTarget(boolean redactSecrets)` ensuring zero unmasked secrets by default (AN-008).
+   - `FindingConverter`: Pure translator converting `CtfEntity`, `CryptoFinding`, `LoggingCallSite`, and `SecurityLead` instances into normalized `UnifiedFinding` records without data loss.
+   - `SuppressionRule`: Immutable rule matching findings by `FINDING_ID`, `EXACT_ADDRESS`, `CATEGORY`, `TARGET_PATTERN`, or `EXPLANATION_PATTERN`.
+   - `SuppressionEngine`: Thread-safe rule management and evaluation engine; applies suppression rules and serializes/deserializes rules to/from JSON.
+   - `UnifiedFindingsReport`: Aggregates, ranks, and filters findings (sorting by severity descending, confidence descending, confidence score descending, and address ascending). Exports to JSON, Markdown tables, and SARIF 2.1.0 with secret masking (`[REDACTED_SECRET]`) and suppression controls.
+
+2. **Ghidra Swing UI, bookmark synchronization, and plugin (`ghidra.findings`)**:
+   - `FindingsTableModel`: Sortable, filterable Swing table model providing real-time filtering by category, severity, free text search, secret redaction toggle, and suppression visibility toggle.
+   - `GhidraFindingBookmarkSynchronizer`: Bi-directional synchronization extracting findings from program bookmarks (`Embedra Findings: *`, `Embedra Crypto: *`, `Embedra Logging: *`, `Embedra Lead: *`) and persisting suppression states (`[SUPPRESSED: Reason]`) in bookmark comments within a single `GhidraProgramTransaction`.
+   - `EmbedraFindingsProvider`: Ghidra `ComponentProviderAdapter` hosting the search bar, filter dropdowns, sortable table, double-click address navigation via `GoToService`, suppress/unsuppress actions, and multi-format export triggers.
+   - `EmbedraFindingsPlugin`: Integrates the findings provider into the Ghidra CodeBrowser tool lifecycle.
+
+## Firmware and Workspace Differential Analysis (T062, AN-006, AN-008)
+
+The differential comparison subsystem provides comprehensive, multi-view inspection between two firmware workspaces, binary images, or Ghidra programs, detecting additions, removals, modifications, and relocations:
+
+1. **Pure differential snapshot models and comparison engine (`analyzers.diff`)**:
+   - `DiffChangeKind`: Change classification (`ADDED`, `REMOVED`, `MODIFIED`, `MOVED`, `UNCHANGED`) with `isDifference()` filter helper.
+   - Snapshots: Immutable descriptors representing firmware state across 6 distinct views:
+     - `FunctionSnapshot`: Function entry point address, byte length, body hash (SHA-256), and prototype signature.
+     - `SymbolSnapshot`: Symbol name, address, symbol type, and namespace.
+     - `StringSnapshot`: String content, memory address, encoding, and credential/secret classification flag.
+     - `MetadataSnapshot`: Property key, property value, and sensitive property flag.
+     - `MemoryBlockSnapshot`: Block name, start address, size, permissions (e.g. `RWX`), and content hash.
+     - `PartitionSnapshot`: Partition name, type (`app`, `data`), subtype (`factory`, `nvs`, `ota`), offset, size, and flags.
+     - `WorkspaceSnapshot`: Aggregated container encapsulating workspace name and lists of all 6 snapshot categories.
+   - Diff Entries: Strongly typed comparison records (`FunctionDiffEntry`, `SymbolDiffEntry`, `StringDiffEntry`, `MetadataDiffEntry`, `MemoryDiffEntry`, `PartitionDiffEntry`) detailing source and target values, addresses, sizes, and human-readable difference descriptions.
+   - `FirmwareWorkspaceDiff`: Top-level differential report containing all difference entries across all 6 views, difference counters, and serializers for JSON, Markdown tables, and SARIF 2.1.0 with secret redaction (`[REDACTED_SECRET]`) enforced by default (AN-008).
+   - `FirmwareWorkspaceDiffEngine`: Bounded comparison engine executing under `ParserLimits` (maximum objects and nesting depth) and `CancellationToken`. Matches functions by name and body hash/address to detect relocations and alterations; matches symbols by qualified namespace; matches strings by value and detects address changes; matches memory blocks and partitions by name to identify resized or shifted regions.
+
+2. **Ghidra UI, program extraction, and diff plugin (`ghidra.diff`)**:
+   - `GhidraWorkspaceDiffExtractor`: Extracts normalized `WorkspaceSnapshot` instances directly from open Ghidra `Program` databases (functions via `FunctionManager`, symbols via `SymbolTable`, strings via listing defined data, metadata from program options/language/compiler, memory blocks via `Memory`, and partitions via partition bookmarks/layout conventions).
+   - `DiffTableModels`: Dedicated Swing table models for all 6 views (`FunctionTableModel`, `SymbolTableModel`, `StringTableModel`, `MetadataTableModel`, `MemoryTableModel`, `PartitionTableModel`) with change kind filtering, free text search, and secret masking.
+   - `EmbedraDiffProvider`: Multi-tabbed CodeBrowser component provider (`Functions`, `Symbols`, `Strings`, `Metadata`, `Memory`, `Partitions`) featuring source/target program selectors, "Compare" action, filter controls, secret redaction toggle, double-click address navigation via `GoToService`, and JSON/Markdown/SARIF export actions.
+   - `EmbedraDiffPlugin`: Program plugin integrating the diff provider and menu action (`Tools -> Embedra -> Compare Firmware Workspaces...`).
+
 ## Offline packs
 
 Pack manifests are strict, closed, versioned JSON contracts parsed with the shared limits and cooperative cancellation. They expose pack identity/version, exact supported-device IDs, source URI and revision, license, transformation, redistribution status, per-file size/SHA-256, and an aggregate descriptor digest. File paths are normalized relative forward-slash paths; absolute, parent-traversal, Windows-drive, backslash, duplicate, manifest-shadowing, symlink, non-regular, missing, and unexpected entries are rejected.

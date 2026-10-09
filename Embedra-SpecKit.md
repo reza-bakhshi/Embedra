@@ -754,17 +754,17 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 
 - [x] T056 Implement bounded multi-encoding and stack-string recovery.
 - [x] T057 Implement endpoint, credential, certificate/key, token, UUID, and customizable flag scanners.
-- [ ] T058 Implement the layered crypto-analysis pipeline for constants, tables, algorithms, likely key material, certificates, checksums/CRCs, entropy, evidence fusion, and strict differentiation of crypto from encoding/compression/non-crypto data.
-- [ ] T059 Implement logging/assert/panic recovery and format-to-call-site linkage.
-- [ ] T060 Implement ranked comparison/debug-command/OTA/authentication leads with clear heuristic confidence.
-- [ ] T061 Implement findings UI, bookmarks, suppression, JSON/Markdown export, and secret redaction.
-- [ ] T062 Implement validated firmware/workspace diff with function, symbol, string, metadata, memory, and partition views.
-- [ ] T063 Implement a bounded local scanner-plugin API and adversarial plugin tests.
+- [x] T058 Implement the layered crypto-analysis pipeline for constants, tables, algorithms, likely key material, certificates, checksums/CRCs, entropy, evidence fusion, and strict differentiation of crypto from encoding/compression/non-crypto data.
+- [x] T059 Implement logging/assert/panic recovery and format-to-call-site linkage.
+- [x] T060 Implement ranked comparison/debug-command/OTA/authentication leads with clear heuristic confidence.
+- [x] T061 Implement findings UI, bookmarks, suppression, JSON/Markdown export, and secret redaction.
+- [x] T062 Implement validated firmware/workspace diff with function, symbol, string, metadata, memory, and partition views.
+- [x] T063 Implement a bounded local scanner-plugin API and adversarial plugin tests.
 
 ### Cryptographic completeness
 
-- [ ] T064 Build provenance-checked, compiler/optimization/ISA-aware signatures for the specified embedded crypto libraries, algorithms, wrappers, and common inlined variants where legally possible.
-- [ ] T065 Implement vendor ROM API, hardware crypto peripheral, secure-element, secure-boot/flash-encryption, RNG, call-graph, and data-flow detection with per-device evidence and cross-program support.
+- [x] T064 Build provenance-checked, compiler/optimization/ISA-aware signatures for the specified embedded crypto libraries, algorithms, wrappers, and common inlined variants where legally possible.
+- [x] T065 Implement vendor ROM API, hardware crypto peripheral, secure-element, secure-boot/flash-encryption, RNG, call-graph, and data-flow detection with per-device evidence and cross-program support.
 - [ ] T066 Build positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350-family ISAs/toolchains; measure and publish per-detector precision, recall, false-positive rate, confidence thresholds, and unsupported cases.
 
 ### Release gates

@@ -25,7 +25,11 @@ class SchemaResourcesTest {
                 "urn:embedra:schema:device-catalog-diff:1",
             "schemas/catalog/esp-device-catalog-v1.schema.json",
                 "urn:embedra:schema:esp-device-catalog:1",
-            "schemas/pack/pack-manifest-v1.schema.json", PackManifest.SCHEMA_ID);
+            "schemas/pack/pack-manifest-v1.schema.json", PackManifest.SCHEMA_ID,
+            "schemas/plugin/scanner-plugin-manifest-v1.schema.json",
+                "urn:embedra:schema:scanner-plugin-manifest:1",
+            "schemas/crypto/crypto-signature-pack-v1.schema.json",
+                "urn:embedra:schema:crypto-signature-pack:1");
 
         for (Map.Entry<String, String> schema : schemas.entrySet()) {
             String text = Files.readString(PROJECT.resolve(schema.getKey()), StandardCharsets.UTF_8);

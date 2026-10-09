@@ -3,9 +3,9 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T057 — Implement endpoint, credential, certificate/key, token, UUID, and customizable flag scanners (`COMPLETE`)**.
-- Last completed task: **T056 — Implement bounded multi-encoding and stack-string recovery (`COMPLETE`)**.
-- Next task: **T058 — Implement the layered crypto-analysis pipeline for constants, tables, algorithms, likely key material, certificates, checksums/CRCs, entropy, evidence fusion, and strict differentiation of crypto from encoding/compression/non-crypto data** (not started).
+- Current task: **T065 — Implement vendor ROM API, hardware crypto peripheral, secure-element, secure-boot/flash-encryption, RNG, call-graph, and data-flow detection with per-device evidence and cross-program support (`COMPLETE`)**.
+- Last completed task: **T064 — Build provenance-checked, compiler/optimization/ISA-aware signatures for the specified embedded crypto libraries, algorithms, wrappers, and common inlined variants where legally possible (`COMPLETE`)**.
+- Next task: **T066 — Build positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350-family ISAs/toolchains; measure and publish per-detector precision, recall, false-positive rate, confidence thresholds, and unsupported cases** (not started).
 - Future scope: the SpecKit plans ESP32-branded full-flash expansion as
   T080-T087, and STM8 8-bit MCU family support as T088-T095, with independent
   per-series/variant evidence and separate gates. These specification changes
@@ -920,4 +920,135 @@ T057 implements bounded endpoint, credential, certificate/key, token, UUID, enco
   - `EmbedraCtfAnalyzer` extends Ghidra's `AbstractAnalyzer` for automated memory block and stack-string CTF entity discovery.
   - Logs only aggregate counts to prevent sensitive credential exposure in log files (AN-008).
 - Updated verification baseline: 506 unit tests (+13 new), 123 real-Ghidra tests (+2 new), 131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate byte-identical 4,874,017-byte ZIP artifacts with SHA-256 `1398116c6b952a10b75ecbee10cd5b219a9b88e2229760a1ad2abe16202ac74b` (`T057_REPRODUCIBLE_ARTIFACT`).
+
+## T058 completion (2026-10-04)
+
+T058 implements the layered crypto-analysis pipeline for constants, tables, algorithms, likely key material, certificates, checksums/CRCs, entropy, evidence fusion, and strict differentiation of crypto from encoding/compression/non-crypto data (AN-003, AN-006, AN-008, AN-010, AN-011, AN-012, AN-013):
+- Pure Crypto Analysis Pipeline (`analyzers.crypto`):
+  - Domain models:
+    - `CryptoCategory`: `CIPHER_SYMMETRIC`, `CIPHER_ASYMMETRIC`, `HASH_MAC`, `CHECKSUM_CRC`, `KEY_MATERIAL`, `CERTIFICATE`, `ENTROPY_ANOMALY`, `ENCODING_OR_COMPRESSION`.
+    - `CryptoAlgorithm`: Comprehensive algorithm coverage including AES-128/192/256, DES, 3DES, ChaCha20, RC4, RSA, ECC (NIST P-256, secp256k1, Curve25519, Ed25519), MD5, SHA-1, SHA-256, SHA-512, SHA-3, BLAKE2b, BLAKE2s, HMAC, CMAC, CRC-32 (IEEE 802.3, MPEG-2), CRC-16 (CCITT, Modbus), CRC-8, Adler-32, Fletcher-16, and non-crypto algorithms (Base64, Deflate/zlib, LZ4).
+    - `CryptoEvidenceLayer`: `CONSTANT_TABLE`, `SYMBOL_STRING`, `HARDWARE_PERIPHERAL`, `INSTRUCTION_IDIOM`, `ENTROPY_METRIC`, `DATA_FLOW`.
+    - `CryptoConfidence`: `CONFIRMED`, `LIKELY`, `PLAUSIBLE`, `LEAD`.
+    - `CryptoFinding`: Immutable record tracking address/offset, category, algorithm, confidence, evidence layers, explanation, sensitive flag, and `maskedValue()`. Strict differentiation helper `isEncryption()` returns true only for symmetric and asymmetric ciphers.
+    - `CryptoScanOptions`: Configurable thresholds for entropy windows, step sizes, and algorithm exclusions under `ParserLimits` and `CancellationToken`.
+- Cryptographic Constants and Tables Index (`analyzers.crypto.tables`):
+  - `CryptoTableDatabase`: Immutable database of pre-calculated signatures for standard byte and word tables:
+    - AES Forward S-box (`0x63, 0x7c, 0x77, 0x7b...`), Inverse S-box (`0x52, 0x09, 0x6a, 0xd5...`), and Rcon.
+    - DES initial permutation (IP), expansion table (E), P-box, and S-boxes (S1-S8).
+    - ChaCha20 constant `"expand 32-byte k"` (`0x61707865`, `0x3320646e`, `0x79622d32`, `0x6b206574`).
+    - SHA-256 fractional cube-root round constants $K$ (64 32-bit words) and initial hash values $H$.
+    - SHA-512 round constants $K$ (80 64-bit words) and initial hash values $H$.
+    - SHA-1 initialization constants ($0x67452301$, etc.).
+    - MD5 initialization constants and sine table ($T[1..64]$).
+    - CRC-32 IEEE 802.3 lookup table (256 32-bit words, both little and big endian) and generator polynomials.
+    - CRC-16 CCITT (`0x1021`) and Modbus (`0x8005`) tables.
+    - NIST P-256, secp256k1, and Curve25519 field primes and generator base point coordinates.
+  - Strict Differentiation (AN-003):
+    - Deflate/zlib fixed Huffman tables and headers, LZ4 frame magic `0x184D2204`, and Base64 alphabet tables are classified as `ENCODING_OR_COMPRESSION`.
+    - Explicitly prevented from being labeled as encryption (`isEncryption() == false`).
+- Entropy Scanner & Candidate Key Analysis Engine (`analyzers.crypto.entropy`):
+  - `EntropyScanner`: Bounded sliding-window Shannon entropy calculator with chi-squared and byte distribution metrics. Identifies dense high-entropy ranges ($\ge 7.2$ bits/byte), merging contiguous windows and distinguishing structured ciphertext/keys from compressed streams via header validation.
+  - `LikelyKeyScanner`: Identifies bounded candidate symmetric keys (128-bit, 192-bit, 256-bit) aligned on 4-byte boundaries, filtering out code-like byte distributions, repeated patterns, zero runs, and printable ASCII strings.
+- Layered Evidence Fusion Engine (`analyzers.crypto.fusion`):
+  - `CryptoAnalysisPipeline`: Coordinates table matching, candidate key scanning, sliding-window entropy analysis, and cross-references string/symbol leads.
+  - Promotes confidence when table matches correlate with algorithm-identifying symbols/strings or hardware peripheral accesses.
+  - `CryptoAnalysisReport`: Generates structured reports exportable to JSON, Markdown, and SARIF 2.1.0 with secret masking enabled by default.
+- Ghidra Findings Annotation Applicator and Analyzer (`ghidra.crypto`):
+  - `GhidraCryptoApplicator`: Executes in a single `GhidraProgramTransaction` (rolling back cleanly on error or cancellation).
+  - Annotates discovered cryptographic elements with `Embedra Crypto: <CATEGORY>` bookmarks (e.g. `Embedra Crypto: CIPHER_SYMMETRIC`, `Embedra Crypto: HASH_MAC`, `Embedra Crypto: CHECKSUM_CRC`, `Embedra Crypto: KEY_MATERIAL`, `Embedra Crypto: ENTROPY_ANOMALY`).
+  - Emits non-destructive EOL comments (`[Crypto: <Algorithm> (<Confidence>)] <MaskedValue> - <Explanation>`).
+  - Populates program options under `Embedra Crypto Analysis` (total findings count, counts by category, counts by algorithm).
+  - Strictly preserves existing user labels, symbols, and bookmarks.
+  - `EmbedraCryptoAnalyzer`: Extends Ghidra's `AbstractAnalyzer` for automated memory block crypto discovery.
+  - Logs only aggregate counts to prevent sensitive key leakage in log files (AN-008).
+- Updated verification baseline: 531 unit tests (+25 new), 128 real-Ghidra tests (+5 new), 131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate byte-identical 4,967,693-byte ZIP artifacts with SHA-256 `a30809964475df58f4c569dc679fd5e7b2b9c669aad609451f8661ac61584c36` (`T058_REPRODUCIBLE_ARTIFACT`).
+
+## T059 completion (2026-10-05)
+
+T059 implements logging, assert, panic recovery, and format-to-call-site linkage across ARM, RISC-V, and Xtensa architectures (AN-004, AN-006, AN-008, AN-010):
+- Pure Logging Models (`analyzers.logging`):
+  - Domain models:
+    - `DiagnosticLogLevel`: `PANIC`, `ASSERT`, `ERROR`, `WARNING`, `INFO`, `DEBUG`.
+    - `FormatArgumentType`: `STRING`, `INTEGER`, `HEX_INTEGER`, `POINTER`, `FLOAT`, `CHARACTER`, `CUSTOM`, `UNKNOWN`.
+    - `FormatSpecifier`: index, raw text, width, precision, positional flag and index.
+    - `FormatStringDescriptor`: raw text, specifiers list, total expected argument count, and ordered expected argument types.
+    - `LoggingCallSite`: immutable record tracking call instruction address, target function address/symbol, log level, format string descriptor, argument references (`file`, `line`, `expression`, `message`, `tag`), confidence (`CONFIRMED`, `LIKELY`, `PLAUSIBLE`), and explanation.
+    - `LoggingAnalysisReport`: aggregated report with log level grouping, and structured export to JSON, Markdown, and SARIF 2.1.0 with secret masking enabled by default (`toJson(true)`, `toMarkdown(true)`, `toSarif(true)`).
+- Format String & Assert Scanner Engine (`analyzers.logging.scanner`):
+  - `FormatStringParser`: parses standard printf-style format strings (`%s`, `%d`, `%i`, `%u`, `%x`, `%X`, `%p`, `%f`, `%c`), length modifiers, variable width/precision asterisks (`*`), literal percent (`%%`), and positional indexing (`%1$s`) under `ParserLimits`.
+  - `AssertPanicPatternMatcher`: identifies assert and panic signatures (`assert`, `__assert_func`, `panic`, `hard_assert`, `abort`, `esp_system_abort`), source filename heuristics (`.c`, `.cpp`, `.h`), line number bounds (1..500000), condition expressions (`!=`, `==`, `NULL`, `0`), and trailing termination traps (`bkpt`, `udf`, `b .` in ARM; `ebreak`, `unimp`, `j .` in RISC-V; `break.n`, `ill`, `j .` in Xtensa).
+- Call-Site Linkage Engine (`analyzers.logging.linkage`):
+  - `CallSiteArgumentResolver`: backward register tracking within bounded window (default 32 instructions) leading to calls (`bl`/`blx` in ARM; `call`/`jal`/`jalr` in RISC-V; `call0`/`call4`/`call8`/`call12` in Xtensa).
+  - Tracks AAPCS `r0-r3` in ARM, `a0-a7` in RISC-V, and `a2-a7`/windowed call arguments in Xtensa.
+  - Resolves pointer constants against the static string dictionary and maps line numbers and format strings to call sites.
+- Ghidra Findings Annotation Applicator and Analyzer (`ghidra.logging`):
+  - `GhidraLoggingApplicator`: executes in a single `GhidraProgramTransaction` (rolling back on failure or cancellation).
+  - Annotates discovered diagnostic call sites with `Embedra Logging: <LEVEL>` bookmarks.
+  - Emits non-destructive EOL comments (`[Log: <LEVEL>] <FormatString> (<File>:<Line>)`).
+  - Populates program options under `Embedra Logging Analysis` (`Total Logging Call Sites`, `Panic Count`, `Assert Count`, `Error Count`, `Warning Count`, `Info Count`, `Debug Count`).
+  - Strictly preserves existing user labels, symbols, and bookmarks.
+  - `EmbedraLoggingAnalyzer`: extends Ghidra's `AbstractAnalyzer` for automated function disassembly logging and assert recovery.
+  - Logs only aggregate counts to prevent sensitive credential exposure (AN-008).
+- Updated verification baseline: 559 unit tests (+17 new), 131 real-Ghidra tests (+2 new), 131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate byte-identical 5,096,314-byte ZIP artifacts with SHA-256 `3da1a7b45a178d74b52583755550bb52701e43ceb52ad941d10fbc26fdee9794` (`T059_REPRODUCIBLE_ARTIFACT`).
+ 
+## T060 completion (2026-10-05)
+
+T060 implements ranked comparison, debug-command, shell, OTA, and authorization leads with clear heuristic confidence across ARM, RISC-V, and Xtensa architectures (AN-005, AN-006, AN-008):
+- Pure Security Leads Domain Models (`analyzers.leads`):
+  - `LeadCategory`: `PASSWORD_TOKEN_COMPARISON`, `DEBUG_COMMAND`, `DEBUG_SHELL`, `OTA_ENDPOINT`, and `AUTHORIZATION_BRANCH`.
+  - `LeadConfidence`: `HIGH` ($\ge 0.75$), `MEDIUM` ($0.45 \le \text{score} < 0.75$), and `LOW` ($< 0.45$).
+  - `LeadSeverity`: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`.
+  - `HeuristicFactor`: record capturing rule identifier, description, and heuristic weight.
+  - `SecurityLead`: immutable record tracking lead ID, category, confidence tier, confidence score, severity, memory address, associated symbol, target operand/command/endpoint, human-readable description, contributing heuristic factors, structured metadata attributes, and secret redaction flag.
+  - `SecurityLeadsReport`: aggregates and ranks leads (sorted descending by confidence score, severity, address), category/confidence/severity counters, and structured export to JSON, Markdown tables, and SARIF 2.1.0 with secret masking (`[REDACTED_SECRET]`) enabled by default (AN-008).
+- Heuristic Scanner Engines (`analyzers.leads.scanner`):
+  - `ComparisonLeadScanner`: disassembles function bodies across ARM Cortex-M Thumb, RISC-V 32, and Xtensa architectures. Resolves operands to known string comparisons (`strcmp`, `strncmp`, `strcasecmp`, `strncasecmp`), memory comparisons (`memcmp`, `bcmp`), constant-time cryptographic comparisons (`CRYPTO_memcmp`, `timingsafe_bcmp`, `mbedtls_ct_memcmp`), and custom authentication symbols. Evaluates sensitive keywords (`password`, `admin`, `secret`, `token`, `pin`, `key`, `auth`, `flag`). Lookahead detection inspects following instructions for immediate conditional branches (`cbz`, `cbnz`, `beq`, `bne`, `beqz`, `bnez`), producing linked `AUTHORIZATION_BRANCH` leads that identify gating decision paths.
+  - `DebugCommandLeadScanner`: scans memory and pointer tables for embedded CLI command table structures (`{ name, handler, help }` or `{ name, func }`) matching administrative and debug command keywords (`root`, `admin`, `debug`, `shell`, `su`, `factory`, `diag`, `backdoor`, `dump`, `reboot`, `erase`, `flash`, `unlock`, `poke`, `peek`). Detects interactive debug shell prompts (`# `, `shell> `, `cli> `, `debug> `, `admin> `, `esp> `) and corroborates them against console initialization symbols (`esp_console_init`, `microrl_init`, `embedded_cli_init`, `FreeRTOS_CLIInit`).
+  - `OtaLeadScanner`: scans strings and symbols for over-the-air firmware update endpoints: URL patterns with firmware extensions or update paths (`/ota`, `/update`, `/firmware`, `.bin`, `.hex`, `.pkg`, `.uf2`), MQTT update topics (`*/ota`, `*/firmware/update`), and references to OTA APIs (`esp_ota_begin`, `esp_https_ota`, `bootloader_common_ota_select`, `HAL_FLASH_Program`, STM32 DFU/IAP).
+  - `SecurityLeadScanner`: master scanner orchestrating comparison, command, shell, and OTA scanners under `ParserLimits` and `CancellationToken`.
+- Ghidra Findings Annotation Applicator and Analyzer (`ghidra.leads`):
+  - `EmbedraSecurityLeadAnalyzer`: extends `AbstractAnalyzer` for automated program-wide discovery of security leads.
+  - `GhidraSecurityLeadApplicator`: transactionally creates bookmarks under `Embedra Lead: <CATEGORY>`, adds non-destructive EOL comments (`[Lead: <CATEGORY> (<CONFIDENCE>)] <Description>`), and populates program options under `Embedra Security Leads`. Preserves existing user-defined symbols and bookmarks intact. Zero unmasked secrets are logged (AN-008).
+  - `GhidraSecurityLeadApplicationReport`: summary report of applicator actions.
+- Updated verification baseline: 571 unit tests (+12 new), 133 real-Ghidra tests (+2 new), 131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate byte-identical 5,172,053-byte ZIP artifacts with SHA-256 `68731e5aca66c7d6b56fe3ada848950f7cb908b8f2f3b2fad3f5d13fd1fbf994` (`T060_REPRODUCIBLE_ARTIFACT`).
+
+## T061 completion (2026-10-05)
+
+T061 implements findings management, UI, suppression, multi-format export, and secret redaction (AN-006, AN-008):
+- Pure Findings Models (`analyzers.findings`):
+  - `FindingCategory`: `CTF_ENTITY`, `CRYPTOGRAPHY`, `LOGGING_DIAGNOSTIC`, and `SECURITY_LEAD`.
+  - `FindingSeverity`: `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`, `INFO`.
+  - `FindingConfidence`: `CONFIRMED`, `LIKELY`, `PLAUSIBLE`, `LEAD`.
+  - `UnifiedFinding`: immutable canonical finding record with `maskedTarget(boolean redactSecrets)` ensuring zero unmasked secrets by default (AN-008).
+  - `FindingConverter`: pure domain converter translating `CtfEntity`, `CryptoFinding`, `LoggingCallSite`, and `SecurityLead` into canonical `UnifiedFinding` records.
+  - `SuppressionRule`: immutable rule matching by `FINDING_ID`, `EXACT_ADDRESS`, `CATEGORY`, `TARGET_PATTERN`, or `EXPLANATION_PATTERN`.
+  - `SuppressionEngine`: thread-safe suppression manager, evaluator, and JSON serializer/deserializer.
+  - `UnifiedFindingsReport`: aggregates, ranks (severity descending, confidence descending, score descending, address ascending), and exports findings to JSON, Markdown tables, and SARIF 2.1.0 with secret redaction and suppression controls.
+- Ghidra Swing UI, Bookmark Synchronization, and Plugin (`ghidra.findings`):
+  - `FindingsTableModel`: sortable, filterable Swing table model supporting real-time filtering by category, severity, text search, secret redaction toggle, and suppression visibility toggle.
+  - `GhidraFindingBookmarkSynchronizer`: bi-directional synchronization extracting findings from bookmarks (`Embedra Findings: *`, `Embedra Crypto: *`, `Embedra Logging: *`, `Embedra Lead: *`) and persisting suppression states (`[SUPPRESSED: Reason]`) in bookmark comments within a single `GhidraProgramTransaction`.
+  - `EmbedraFindingsProvider`: Ghidra `ComponentProviderAdapter` hosting the search bar, filter dropdowns, sortable table, double-click address navigation via `GoToService`, suppress/unsuppress actions, and multi-format export triggers.
+  - `EmbedraFindingsPlugin`: integrates the findings provider into the Ghidra CodeBrowser tool lifecycle.
+- Verification: 591 unit tests (+20 new), 134 real-Ghidra tests (+1 new), 131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate byte-identical reproducible ZIP artifacts.
+
+## T062 completion (2026-10-05)
+
+T062 implements validated firmware and workspace diffing across 6 comprehensive views (Functions, Symbols, Strings, Metadata, Memory, Partitions) with pure diff snapshot models, bounded deterministic diffing, interactive Ghidra Swing UI, CodeBrowser integration, and multi-format export with secret redaction (AN-006, AN-008):
+- Pure Firmware/Workspace Diff Domain Models and Engine (`analyzers.diff`):
+  - `DiffChangeKind`: Standardized change classification (`ADDED`, `REMOVED`, `MODIFIED`, `MOVED`, `UNCHANGED`) with helper `isDifference()`.
+  - Snapshots: `FunctionSnapshot` (address, entry, name, size, signature, caller/callee counts, entropy/hash), `SymbolSnapshot` (address, name, symbol type, dynamic/user status), `StringSnapshot` (address, content, length, encoding, secret candidate flag), `MetadataSnapshot` (property name, property value), `MemoryBlockSnapshot` (name, range, size, permissions, overlay), `PartitionSnapshot` (name, offset, size, type, subtype, flags, encrypted), and `WorkspaceSnapshot` (aggregating program metadata and all 6 domain collections).
+  - Diff Entries: `FunctionDiffEntry`, `SymbolDiffEntry`, `StringDiffEntry`, `MetadataDiffEntry`, `MemoryDiffEntry`, `PartitionDiffEntry`.
+  - `FirmwareWorkspaceDiff`: Comprehensive container aggregating all 6 diff entry collections, aggregate difference counters, added/removed/modified/moved metrics, and structured export to JSON, Markdown tables, and SARIF 2.1.0 with secret masking (`[REDACTED_SECRET]`) enabled by default (AN-008).
+  - `FirmwareWorkspaceDiffEngine`: Deterministic diff calculation engine comparing two `WorkspaceSnapshot`s across all 6 views under strict `ParserLimits` (`LIMIT_EXCEEDED`) and cooperative `CancellationToken`.
+- Ghidra Workspace Diff Extractor, Table Models, Component Provider, and Plugin (`ghidra.diff`):
+  - `GhidraWorkspaceDiffExtractor`: Extracts high-fidelity `WorkspaceSnapshot` from live Ghidra `Program` instances (functions, symbols, defined string data, program metadata options via safe object extraction, memory blocks, and partition tables/bookmarks).
+  - `DiffTableModels`: Six distinct Swing `AbstractTableModel` implementations (`FunctionTableModel`, `SymbolTableModel`, `StringTableModel`, `MetadataTableModel`, `MemoryTableModel`, `PartitionTableModel`) supporting real-time change kind filtering (`ALL`, `ONLY_DIFFS`, `ADDED`, `REMOVED`, `MODIFIED`, `MOVED`), free text filtering, and secret redaction toggling.
+  - `EmbedraDiffProvider`: Multi-tabbed CodeBrowser component provider hosting 6 sub-tabs (Functions, Symbols, Strings, Metadata, Memory, Partitions), program selection combos (baseline vs comparison), "Compare" trigger, summary banner with change counts, filters, double-click address navigation via `GoToService`, and export actions (JSON, Markdown, SARIF).
+  - `EmbedraDiffPlugin`: Plugin integrating the workspace diff provider into Ghidra's CodeBrowser tool under `Tools -> Embedra -> Compare Firmware Workspaces...`.
+- Verification: 602 unit tests (+11 new), 137 real-Ghidra tests (+3 new), 131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate byte-identical reproducible ZIP artifacts with SHA-256 `2cb96b647e4f9caf26202347d7c04d111a8cab920538a4b3a097643b5eef464f` (5,327,473 bytes, `T062_REPRODUCIBLE_ARTIFACT`).
+
+
+
+
 

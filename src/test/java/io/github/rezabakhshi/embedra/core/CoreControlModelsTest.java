@@ -67,6 +67,15 @@ class CoreControlModelsTest {
 
         assertEquals(Optional.of(location), diagnostic.sourceRange());
         assertEquals("CORE_INVALID_MODEL", diagnostic.code().id());
+        assertEquals("PLUGIN_MANIFEST_INVALID", DiagnosticCode.PLUGIN_MANIFEST_INVALID.id());
+        assertEquals("PLUGIN_SCHEMA_UNSUPPORTED", DiagnosticCode.PLUGIN_SCHEMA_UNSUPPORTED.id());
+        assertEquals("PLUGIN_EXECUTION_FAILED", DiagnosticCode.PLUGIN_EXECUTION_FAILED.id());
+        assertEquals("PLUGIN_TIMEOUT", DiagnosticCode.PLUGIN_TIMEOUT.id());
+        assertEquals("PLUGIN_LIMIT_EXCEEDED", DiagnosticCode.PLUGIN_LIMIT_EXCEEDED.id());
+        assertEquals("PLUGIN_PATH_UNSAFE", DiagnosticCode.PLUGIN_PATH_UNSAFE.id());
+        assertEquals("CRYPTO_PERIPHERAL_INVALID", DiagnosticCode.CRYPTO_PERIPHERAL_INVALID.id());
+        assertEquals("CRYPTO_CALLGRAPH_EXCEEDED", DiagnosticCode.CRYPTO_CALLGRAPH_EXCEEDED.id());
+        assertEquals("CRYPTO_DATAFLOW_ERROR", DiagnosticCode.CRYPTO_DATAFLOW_ERROR.id());
         assertThrows(IllegalArgumentException.class, () -> new Diagnostic(
             DiagnosticCode.INVALID_MODEL, DiagnosticSeverity.ERROR, " ", Optional.empty()));
     }

@@ -2,13 +2,13 @@
  "schemaVersion": 1,
  "specification": {
   "path": "Embedra-SpecKit.md",
-  "sha256": "21a0d162c74c93c435a90e381ab02b12cf5899eb9e2477662243f3429482f4b5"
+  "sha256": "5b6b62ac31b7b34d642857064734e9a716eb372924a4c7cdd24bec5c6cb1ffd2"
  },
  "projectClassification": "NEW",
  "currentTask": {
-  "id": "T057",
+  "id": "T065",
   "status": "COMPLETE",
-  "reasonCode": "ENDPOINT_CREDENTIAL_CERT_UUID_FLAG_SCANNERS_BUILT"
+  "reasonCode": "HARDWARE_CRYPTO_AND_CROSS_PROGRAM_DETECTION_IMPLEMENTED"
  },
  "completedTasks": [
   "T001",
@@ -68,7 +68,15 @@
   "T054",
   "T055",
   "T056",
-  "T057"
+  "T057",
+  "T058",
+  "T059",
+  "T060",
+  "T061",
+  "T062",
+  "T063",
+  "T064",
+  "T065"
  ],
  "blockedTasks": [],
  "acceptanceGates": {
@@ -448,7 +456,7 @@
   }
  ],
  "evidence": {
-  "task": ".embedra/evidence/tasks/T057.md",
+  "task": ".embedra/evidence/tasks/T065.md",
   "preT033Audit": ".embedra/evidence/audits/pre-t033-t001-t032.md",
   "remediation": ".embedra/evidence/tasks/T025-remediation.md",
   "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
@@ -504,11 +512,19 @@
   "taskT054": ".embedra/evidence/tasks/T054.md",
   "taskT055": ".embedra/evidence/tasks/T055.md",
   "taskT056": ".embedra/evidence/tasks/T056.md",
-  "taskT057": ".embedra/evidence/tasks/T057.md"
+  "taskT057": ".embedra/evidence/tasks/T057.md",
+  "taskT058": ".embedra/evidence/tasks/T058.md",
+  "taskT059": ".embedra/evidence/tasks/T059.md",
+  "taskT060": ".embedra/evidence/tasks/T060.md",
+  "taskT061": ".embedra/evidence/tasks/T061.md",
+  "taskT062": ".embedra/evidence/tasks/T062.md",
+  "taskT063": ".embedra/evidence/tasks/T063.md",
+  "taskT064": ".embedra/evidence/tasks/T064.md",
+  "taskT065": ".embedra/evidence/tasks/T065.md"
  },
  "knownFailures": [],
- "nextTask": "T058",
- "nextAction": "Begin T058: implement the layered crypto-analysis pipeline for constants, tables, algorithms, likely key material, certificates, checksums/CRCs, entropy, evidence fusion, and strict differentiation of crypto from encoding/compression/non-crypto data.",
+ "nextTask": "T066",
+ "nextAction": "Begin T066: build positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350-family ISAs/toolchains; measure and publish per-detector precision, recall, false-positive rate, confidence thresholds, and unsupported cases.",
  "artifacts": [
   {
    "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -791,6 +807,42 @@
    "sha256": "1398116c6b952a10b75ecbee10cd5b219a9b88e2229760a1ad2abe16202ac74b",
    "sizeBytes": 4874017,
    "status": "T057_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261004_Embedra.zip",
+   "sha256": "a30809964475df58f4c569dc679fd5e7b2b9c669aad609451f8661ac61584c36",
+   "sizeBytes": 4967693,
+   "status": "T058_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261005_Embedra.zip",
+   "sha256": "3da1a7b45a178d74b52583755550bb52701e43ceb52ad941d10fbc26fdee9794",
+   "sizeBytes": 5096314,
+   "status": "T059_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261005_Embedra.zip",
+   "sha256": "68731e5aca66c7d6b56fe3ada848950f7cb908b8f2f3b2fad3f5d13fd1fbf994",
+   "sizeBytes": 5172053,
+   "status": "T060_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261005_Embedra.zip",
+   "sha256": "2cb96b647e4f9caf26202347d7c04d111a8cab920538a4b3a097643b5eef464f",
+   "sizeBytes": 5327473,
+   "status": "T062_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261010_Embedra.zip",
+   "sha256": "aeba55c8b996f2e84efcdc0e5c861c1f99f58a460cab7d5f2b3eb916a25aa3e8",
+   "sizeBytes": 5389657,
+   "status": "T064_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261010_Embedra.zip",
+   "sha256": "c901e165c6b411059a4c1899c491a6f2a8d363f63c60f8238b0c9cbad8338894",
+   "sizeBytes": 5502792,
+   "status": "T065_REPRODUCIBLE_ARTIFACT"
   }
  ],
  "resolvedFailures": [
