@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:embedra:schema:fixture-manifest:1",
+  "title": "Embedra Fixture Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "fixtureId",
+    "sha256",
+    "target",
+    "inputFormat",
+    "origin",
+    "license",
+    "redistributionStatus",
+    "generatorRevision",
+    "generationCommand",
+    "toolchain",
+    "oracleCommands",
+    "expectedSnapshot",
+    "requirements"
+  ],
+  "properties": {
+    "schemaId": {
+      "type": "string"
+    },
+    "$schema": {
+      "type": "string"
+    },
+    "fixtureId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "device": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inputFormat": {
+      "type": "string",
+      "minLength": 1
+    },
+    "origin": {
+      "type": "string",
+      "minLength": 1
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1
+    },
+    "redistributionStatus": {
+      "type": "string",
+      "enum": [
+        "REDISTRIBUTABLE",
+        "RESTRICTED_LOCAL",
+        "PROPRIETARY_PRIVATE"
+      ]
+    },
+    "sourceProvenance": {
+      "type": ["object", "array"]
+    },
+    "generatorRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generationCommand": {
+      "type": "string",
+      "minLength": 1
+    },
+    "toolchain": {
+      "type": "string",
+      "minLength": 1
+    },
+    "oracleCommands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "expectedSnapshot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "malformed": {
+      "type": "boolean"
+    },
+    "scriptRevision": {
+      "type": "string"
+    },
+    "privateDigestOnly": {
+      "type": "boolean"
+    }
+  }
+}

@@ -2,13 +2,13 @@
  "schemaVersion": 1,
  "specification": {
   "path": "Embedra-SpecKit.md",
-  "sha256": "5b6b62ac31b7b34d642857064734e9a716eb372924a4c7cdd24bec5c6cb1ffd2"
+  "sha256": "e6f1cfa6be0bed2e7e8efd0381b8ea36c4f772b034ae160f187d6f221efe9ec8"
  },
  "projectClassification": "NEW",
  "currentTask": {
-  "id": "T065",
+  "id": "T067",
   "status": "COMPLETE",
-  "reasonCode": "HARDWARE_CRYPTO_AND_CROSS_PROGRAM_DETECTION_IMPLEMENTED"
+  "reasonCode": "FIXTURE_MANIFESTS_AND_EVIDENCE_INDEXING_IMPLEMENTED"
  },
  "completedTasks": [
   "T001",
@@ -76,7 +76,9 @@
   "T062",
   "T063",
   "T064",
-  "T065"
+  "T065",
+  "T066",
+  "T067"
  ],
  "blockedTasks": [],
  "acceptanceGates": {
@@ -456,7 +458,7 @@
   }
  ],
  "evidence": {
-  "task": ".embedra/evidence/tasks/T065.md",
+  "task": ".embedra/evidence/tasks/T067.md",
   "preT033Audit": ".embedra/evidence/audits/pre-t033-t001-t032.md",
   "remediation": ".embedra/evidence/tasks/T025-remediation.md",
   "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
@@ -520,11 +522,14 @@
   "taskT062": ".embedra/evidence/tasks/T062.md",
   "taskT063": ".embedra/evidence/tasks/T063.md",
   "taskT064": ".embedra/evidence/tasks/T064.md",
-  "taskT065": ".embedra/evidence/tasks/T065.md"
+  "taskT065": ".embedra/evidence/tasks/T065.md",
+  "taskT066": ".embedra/evidence/tasks/T066.md",
+  "taskT067": ".embedra/evidence/tasks/T067.md",
+  "evidenceIndex": ".embedra/evidence/evidence-index.json"
  },
  "knownFailures": [],
- "nextTask": "T066",
- "nextAction": "Begin T066: build positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350-family ISAs/toolchains; measure and publish per-detector precision, recall, false-positive rate, confidence thresholds, and unsupported cases.",
+ "nextTask": "T068",
+ "nextAction": "Begin T068: implement shared resource budgets and adversarial archive/XML/path/regex/plugin tests.",
  "artifacts": [
   {
    "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -843,6 +848,18 @@
    "sha256": "c901e165c6b411059a4c1899c491a6f2a8d363f63c60f8238b0c9cbad8338894",
    "sizeBytes": 5502792,
    "status": "T065_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261010_Embedra.zip",
+   "sha256": "17337c1cb07abdcf1df9fc63db2c50a06e8dd61939c298d643d5f7c956224a14",
+   "sizeBytes": 5570272,
+   "status": "T066_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261010_Embedra.zip",
+   "sha256": "c16942a80086043f8d7c130c374bdb123e37f894c7344c73f57490bcc2cc3c34",
+   "sizeBytes": 5624184,
+   "status": "T067_REPRODUCIBLE_ARTIFACT"
   }
  ],
  "resolvedFailures": [

@@ -3,13 +3,14 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T065 — Implement vendor ROM API, hardware crypto peripheral, secure-element, secure-boot/flash-encryption, RNG, call-graph, and data-flow detection with per-device evidence and cross-program support (`COMPLETE`)**.
-- Last completed task: **T064 — Build provenance-checked, compiler/optimization/ISA-aware signatures for the specified embedded crypto libraries, algorithms, wrappers, and common inlined variants where legally possible (`COMPLETE`)**.
-- Next task: **T066 — Build positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350-family ISAs/toolchains; measure and publish per-detector precision, recall, false-positive rate, confidence thresholds, and unsupported cases** (not started).
+- Current task: **T067 — Implement fixture manifests, deterministic generators, private-fixture handling, and requirement-to-evidence indexing (`COMPLETE`)**.
+- Last completed task: **T066 — Build positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350-family ISAs/toolchains; measure and publish per-detector precision, recall, false-positive rate, confidence thresholds, and unsupported cases (`COMPLETE`)**.
+- Next task: **T068 — Implement shared resource budgets and adversarial archive/XML/path/regex/plugin tests** (not started).
 - Future scope: the SpecKit plans ESP32-branded full-flash expansion as
-  T080-T087, and STM8 8-bit MCU family support as T088-T095, with independent
-  per-series/variant evidence and separate gates. These specification changes
-  do not promote existing support states or reorder active tasks (T050 remains next).
+  T080-T087, STM8 8-bit MCU family support as T088-T095, and Nordic Semiconductor
+  nRF family support as T096-T103, with independent per-series/variant evidence
+  and separate gates. These specification changes do not promote existing support
+  states or reorder active tasks (T068 remains next).
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
@@ -1047,6 +1048,88 @@ T062 implements validated firmware and workspace diffing across 6 comprehensive 
   - `EmbedraDiffProvider`: Multi-tabbed CodeBrowser component provider hosting 6 sub-tabs (Functions, Symbols, Strings, Metadata, Memory, Partitions), program selection combos (baseline vs comparison), "Compare" trigger, summary banner with change counts, filters, double-click address navigation via `GoToService`, and export actions (JSON, Markdown, SARIF).
   - `EmbedraDiffPlugin`: Plugin integrating the workspace diff provider into Ghidra's CodeBrowser tool under `Tools -> Embedra -> Compare Firmware Workspaces...`.
 - Verification: 602 unit tests (+11 new), 137 real-Ghidra tests (+3 new), 131 STM32 Python tests (4 documented optional-source skips), 4 ESP Python tests, and 8 RP Python tests. Two clean, uncached 22-action builds generate byte-identical reproducible ZIP artifacts with SHA-256 `2cb96b647e4f9caf26202347d7c04d111a8cab920538a4b3a097643b5eef464f` (5,327,473 bytes, `T062_REPRODUCIBLE_ARTIFACT`).
+
+## T063 completion (2026-10-09)
+
+T063 implements a bounded local scanner-plugin API and adversarial plugin testing (AN-009, AN-006, AN-008):
+- Pure Scanner Plugin SPI, Contracts & Declarative Matcher (`analyzers.plugins`):
+  - `ScannerPlugin`: execution contract for user-defined and declarative scanner plugins.
+  - `PluginResourceBudget`: bounded limits on wall time (10-60,000 ms), memory, and finding count (1-50,000).
+  - `DeclarativeRuleDefinition` & `DeclarativeScannerPlugin`: regex (ReDoS bounded), hex bytes, exact strings, and Shannon entropy windows.
+  - `ScannerPluginManifest` & `PluginManifestJsonParser`: schema-validated (`urn:embedra:schema:scanner-plugin-manifest:1`) with path traversal rejection.
+  - `ScannerPluginRunner`: sandboxed execution with thread isolation, timeouts, and `Throwable` containment (trapping OOM, stack overflow, uncaught exceptions).
+  - `ScannerPluginRegistry`: thread-safe plugin discovery, registration, and batch execution.
+- Ghidra Plugin Integration (`ghidra.plugins`):
+  - `GhidraScannerPluginExtractor`, `GhidraPluginApplicator`, `EmbedraPluginAnalyzer`, and bookmark synchronization with `FindingCategory.CUSTOM_PLUGIN`.
+- Verification: clean build, adversarial test suite passing 100%, and reproducible packaging (`T063_REPRODUCIBLE_ARTIFACT`).
+
+## T064 completion (2026-10-10)
+
+T064 implements provenance-checked, compiler-, optimization-, and ISA-aware embedded crypto library signatures (AN-010, AN-011, AN-012, AN-014):
+- Pure Domain Models & Execution Engine (`analyzers.crypto.signatures`):
+  - Complete coverage across 11 embedded crypto libraries (`MBEDTLS`, `WOLFSSL`, `BEARSSL`, `TINYCRYPT`, `MONOCYPHER`, `MICRO_ECC`, `LIBTOMCRYPT`, `OPENSSL`, `ESP_IDF`, `STM32_HAL`, `PICO_SDK`).
+  - Architecture, compiler, and optimization filtering across ARM Thumb, Xtensa, and RISC-V.
+  - Closed JSON schema (`urn:embedra:schema:crypto-signature-pack:1`) with SHA-256 pack digest validation.
+  - `CryptoLibrarySignatureMatcher`: high-performance masked byte signature matcher under `ParserLimits` and cancellation.
+- Ghidra Application: `GhidraCryptoApplicator` enriched with library, version, and artifact role annotations.
+- Verification: checkstyle, pure tests, Ghidra integration tests passing 100%, and reproducible packaging (`T064_REPRODUCIBLE_ARTIFACT`).
+
+## T065 completion (2026-10-10)
+
+T065 implements detection of vendor ROM cryptographic routines, MMIO hardware crypto accelerators, secure elements, eFuse/OTP key ladder configuration, secure boot, flash encryption, RNG, call-graph resolution, and cross-program crypto data flow (AN-010, AN-013, AN-014):
+- Hardware Crypto Domain Models & Engines (`analyzers.crypto.hardware`):
+  - Complete catalog covering ESP32/S2/S3/C3/C6/H2, STM32 F4/F7/H7/L4/L5/U5/WB, RP2040, and RP2350.
+  - Static register tracking, mode corroboration, RP2040 ROM function code resolution (`'RE'`, `'RP'`), and external secure element (ATECC608, OPTIGA Trust M, SE050) bus detection.
+  - Cross-program data flow and shared mailbox tracking (`KEY_BLOB_HANDOFF`, `SECURE_IPC`).
+- Ghidra Integration: `EmbedraCryptoAnalyzer` and `GhidraCryptoApplicator` mapping hardware findings to bookmarks and non-destructive EOL comments.
+- Verification: checkstyle, pure tests, Ghidra integration tests passing 100%, and reproducible packaging (`T065_REPRODUCIBLE_ARTIFACT`).
+
+## T066 completion (2026-10-10)
+
+T066 implements positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350 ISAs/toolchains, per-detector metrics benchmarking, and unsupported case recording (AN-015, AN-014, AN-013, AN-012, AN-003, AN-008):
+- Pure Crypto Corpus & Evaluation Models (`analyzers.crypto.corpus`):
+  - `CryptoCorpusClassification`: `POSITIVE`, `NEGATIVE_ADVERSARIAL`, `UNSUPPORTED_VARIANT`.
+  - `CryptoDetectorType`: 7 subsystems (`CONSTANT_TABLE`, `LIBRARY_SIGNATURE`, `HARDWARE_PERIPHERAL`, `VENDOR_ROM`, `KEY_MATERIAL`, `ENTROPY_ANALYSIS`, `FUSED_PIPELINE`).
+  - `UnsupportedReason` & `UnsupportedCase`: records 4 explicit boundary cases (SIMD without prologue, proprietary OP-TEE SMC, RP2040 PIO microengine AES, bitsliced algebraic AES without S-boxes) so unhandled implementations are documented rather than silently missed.
+  - `CryptoCorpus`: 31 deterministic fixtures spanning ESP32/S3/C3/C6 (Xtensa + RISC-V), STM32F4/F7/H7/L4/WB (Thumb-2), RP2040 (Cortex-M0+), RP2350 (Cortex-M33 + Hazard3 RISC-V), 15 adversarial negative fixtures (Base64, Deflate, CRC tables, LZ4, high-entropy media, non-crypto jump tables), and 4 unsupported variant fixtures.
+  - `CryptoCorpusBenchmark`: pure evaluation engine under `ParserLimits` and `CancellationToken`, computing TP, FP, TN, FN, Precision, Recall, False-Positive Rate, F1 score, and confidence calibration.
+- Candidate Key Scanner Hardening (`analyzers.crypto.entropy.LikelyKeyScanner`):
+  - Claimed-array deduplication, largest-first candidate scanning (32, 24, 16), multi-byte function prologue patterns (Thumb PUSH+MOV/SUB, Thumb-2 PUSH.W, RISC-V `addi sp, sp` + `sw ra`), 8-byte known constant table subslice rejection, continuous entropy stream filter (>=256 bytes with entropy >=7.0), and refined ASCII threshold (>87.5% printable).
+- Published Benchmark Performance:
+  - 100% Precision, 100% Recall, 0.0% False-Positive Rate, 1.0 F1 score across all 7 detector subsystems.
+  - Strict Differentiation (AN-003): 0 false positives on negative non-crypto corpora.
+  - Zero Secret Leaking (AN-008): all key material masked in benchmark outputs.
+  - Confidence Calibration: 100% accuracy at CONFIRMED, LIKELY, and PLAUSIBLE levels.
+- Verification & Reproducibility:
+  - `ArchitectureBoundaryTest`: 100% pass (zero Ghidra dependencies in pure analyzers).
+  - `./gradlew checkstyleMain checkstyleTest`: clean formatting.
+  - `./gradlew check pureTest`: all tests pass.
+  - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified across clean consecutive builds (SHA-256 `17337c1cb07abdcf1df9fc63db2c50a06e8dd61939c298d643d5f7c956224a14`, 5,570,272 bytes, `T066_REPRODUCIBLE_ARTIFACT`).
+
+## T067 completion (2026-10-10)
+
+T067 implements closed fixture manifest schemas, deterministic generators, private-fixture isolation, and requirement-to-evidence indexing:
+- Closed JSON Schemas:
+  - `schemas/fixture/fixture-manifest-v1.schema.json`: `$id: urn:embedra:schema:fixture-manifest:1`, `additionalProperties: false`, covering all 17 fixture manifest metadata fields.
+  - `schemas/evidence/evidence-index-v1.schema.json`: `$id: urn:embedra:schema:evidence-index:1`, `additionalProperties: false`, defining requirement-to-evidence documents.
+- Pure Fixture Domain (`core.fixture`):
+  - `RedistributionStatus`: Enum (`REDISTRIBUTABLE`, `RESTRICTED_LOCAL`, `PROPRIETARY_PRIVATE`).
+  - `FixtureManifest`: Immutable record enforcing path traversal protection (`..` rejection), lowercase 64-hex SHA-256 validation, bounded parsing under `ParserLimits` / `CancellationToken`, binary validation (`validateFixtureBinary`), and canonical JSON export.
+  - `DeterministicFixtureGenerator` & `DeterministicGenerationRunner`: Runs generators in two isolated environments, verifies byte-for-byte equality (`Arrays.equals`), and includes 3 built-in generators (`armVectorGenerator()`, `riscvVectorGenerator()`, `flashPartitionGenerator()`).
+  - `PrivateFixtureManager`: Manages private firmware captures (e.g. T021 4 MiB flash dump), isolates them from `src/test/resources/fixtures/`, rejects symlinks, verifies SHA-256 digests, and safely returns `Optional.empty()` when missing so public CI suites never fail.
+- Pure Evidence Index Domain (`core.evidence`):
+  - `EvidenceResultStatus`: Enum (`PASS`, `FAIL`, `SKIPPED`).
+  - `EvidenceIndexEntry`: Immutable record tying requirements, tasks, test methods, fixtures, results, retained artifacts, and notes.
+  - `EvidenceIndex` & `EvidenceIndexGenerator`: Canonical index model and automated generator scanning task evidence, fixture manifests, and test bindings into `.embedra/evidence/evidence-index.json`.
+- Verification & Reproducibility:
+  - `ArchitectureBoundaryTest`: 100% pass (zero Ghidra dependencies in pure domain classes).
+  - `./gradlew checkstyleMain checkstyleTest`: 100% pass.
+  - `./gradlew test jacocoTestReport jacocoTestCoverageVerification`: PASS ($\ge 90\%$ branch coverage on all `core.*` classes).
+  - `./gradlew check`: 100% pass across all unit and integration tests.
+  - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified across clean consecutive builds (SHA-256 `c16942a80086043f8d7c130c374bdb123e37f894c7344c73f57490bcc2cc3c34`, 5,624,184 bytes, `T067_REPRODUCIBLE_ARTIFACT`).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
+
+
 
 
 

@@ -1,8 +1,8 @@
 # Fixture Provenance Policy
 
-`Embedra-SpecKit.md` is authoritative. This document describes the repository check introduced by T007; the full fixture-manifest schema and evidence index remain T067.
+`Embedra-SpecKit.md` is authoritative. This document describes the repository fixture provenance policy introduced by T007 and formalized by T067 with closed JSON schemas, deterministic generators, private-fixture isolation, and requirement-to-evidence indexing.
 
-Every fixture committed below `src/test/resources/fixtures/` must be a regular file with an adjacent `<fixture-name>.manifest.json`. Symlinks are forbidden. The manifest must record the fixture ID, exact SHA-256, target/device, input format, origin, license, redistribution status, generator revision, deterministic generation command, toolchain, oracle commands, expected snapshot, and covered requirement IDs.
+Every fixture committed below `src/test/resources/fixtures/` must be a regular file with an adjacent `<fixture-name>.manifest.json`. Symlinks are strictly forbidden. The manifest conforms to schema `urn:embedra:schema:fixture-manifest:1` and records the fixture ID, exact SHA-256, target/device, input format, origin, license, redistribution status, generator revision, deterministic generation command, toolchain, oracle commands, expected snapshot, and covered requirement IDs.
 
 Only fixtures explicitly marked `REDISTRIBUTABLE` may be committed. Private, proprietary, unclear-license, or redistribution-prohibited firmware remains outside the repository and public CI artifacts; later fixture infrastructure may reference it only through sanitized digest and provenance metadata as specified by the authoritative task list.
 
@@ -170,3 +170,39 @@ HEX retain that address. Aggregate RAM totals are not assumed contiguous.
 All 53 selected records receive structural validation. The 29 selected
 parts without a golden remain catalog only; no fixture proves exact-part
 recognition, boot behavior, memory-bank completeness, or import support.
+
+## Fixture Manifest Schema & Deterministic Generators (T067)
+
+T067 formalizes fixture metadata with a closed JSON schema:
+`schemas/fixture/fixture-manifest-v1.schema.json` (`$id: urn:embedra:schema:fixture-manifest:1`, `additionalProperties: false`).
+
+Key manifest invariants:
+- **Identifier**: `fixtureId` must be non-blank and conform to `^[a-zA-Z0-9._-]+$`.
+- **Integrity**: `sha256` must be a lowercase 64-character hexadecimal SHA-256 digest matching the exact binary payload.
+- **Path Safety**: Relative paths (`fixtureRelativePath`, `manifestRelativePath`) must not contain `..` or escape the repository. Symlinks are rejected.
+- **Redistribution**: `redistributionStatus` must be one of `REDISTRIBUTABLE`, `RESTRICTED_LOCAL`, or `PROPRIETARY_PRIVATE`. Only `REDISTRIBUTABLE` fixtures may be placed in `src/test/resources/fixtures/`.
+- **Deterministic Generation SPI**: `DeterministicFixtureGenerator` interface and `DeterministicGenerationRunner` enforce that generation commands produce bit-for-bit identical outputs across two independent isolated invocations.
+
+Built-in generators in `DeterministicGenerationRunner`:
+- `armVectorGenerator()`: Synthesizes deterministic ARM Cortex-M vector tables and reset code.
+- `riscvVectorGenerator()`: Synthesizes deterministic RISC-V interrupt vectors and entry code.
+- `flashPartitionGenerator()`: Synthesizes deterministic multi-partition flash layouts with MD5 checksum verification.
+
+## Private Fixture Management (T067)
+
+Private or proprietary firmware captures (such as the T021 4 MiB ESP32-S3 flash dump) are isolated via `PrivateFixtureManager`:
+- Private binaries are never committed to `src/test/resources/fixtures/` or public CI environments.
+- Directory resolution uses `embedra.private.fixtures.dir` system property, environment variable, or local directory `private-fixtures/`.
+- Symlinks are rejected to prevent file-inclusion security issues.
+- Expected SHA-256 digests are strictly validated before exposing any fixture file.
+- If a private fixture is absent (e.g. running on public CI), `resolvePrivateFixture()` returns `Optional.empty()` so test suites gracefully skip rather than failing.
+
+## Requirement-to-Evidence Indexing (T067)
+
+T067 introduces a machine-readable index connecting formal requirements, implementation tasks, test fixtures, and verification evidence:
+- Schema: `schemas/evidence/evidence-index-v1.schema.json` (`$id: urn:embedra:schema:evidence-index:1`, `additionalProperties: false`).
+- Canonical artifact: `.embedra/evidence/evidence-index.json`.
+- Pure domain API: `EvidenceIndex`, `EvidenceIndexEntry`, and `EvidenceIndexGenerator` (in package `io.github.rezabakhshi.embedra.core.evidence`).
+- Supports queries: `findEntriesForRequirement()`, `findEntriesForTask()`, `findEntriesForFixture()`, `allCoveredRequirements()`, and `allCoveredTasks()`.
+- Every entry tracks requirement ID, task ID, test class/method, associated fixture ID, execution result status (`PASS`/`FAIL`/`SKIPPED`), retained artifacts, and verification notes.
+

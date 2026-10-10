@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:embedra:schema:evidence-index:1",
+  "title": "Embedra Requirement to Evidence Index v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaId",
+    "generatedAt",
+    "toolVersion",
+    "ghidraVersion",
+    "entries"
+  ],
+  "properties": {
+    "schemaId": {
+      "const": "urn:embedra:schema:evidence-index:1"
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "toolVersion": {
+      "type": "string"
+    },
+    "ghidraVersion": {
+      "type": "string"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entry"
+      }
+    }
+  },
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirementId",
+        "taskId",
+        "testName",
+        "resultStatus",
+        "retainedArtifacts"
+      ],
+      "properties": {
+        "requirementId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "taskId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "testName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fixtureId": {
+          "type": "string"
+        },
+        "resultStatus": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "SKIPPED"]
+        },
+        "retainedArtifacts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

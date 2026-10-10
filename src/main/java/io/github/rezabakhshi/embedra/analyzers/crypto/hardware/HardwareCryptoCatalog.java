@@ -30,8 +30,28 @@ public final class HardwareCryptoCatalog {
         List<SecureElementDefinition> ses = new ArrayList<>();
 
         // ==========================================
-        // 1. ESP32-S3 Hardware Peripherals
+        // 0. ESP32 Classic Hardware Peripherals
         // ==========================================
+        regs.add(new HardwarePeripheralRegister(
+                "esp32-aes-mode", "AES", HardwareCryptoPlatform.ESP32,
+                0x3ff0_1004L, 4, CryptoAlgorithm.AES_128, HardwareCryptoFeature.SYMMETRIC_ACCELERATOR,
+                false, Map.of(0L, "AES-128", 1L, "AES-192", 2L, "AES-256"), "ESP32 AES mode selection register"));
+        regs.add(new HardwarePeripheralRegister(
+                "esp32-aes-start", "AES", HardwareCryptoPlatform.ESP32,
+                0x3ff0_1000L, 4, CryptoAlgorithm.AES_128, HardwareCryptoFeature.SYMMETRIC_ACCELERATOR,
+                true, Map.of(1L, "TRIGGER_CALCULATION"), "ESP32 AES calculation trigger register"));
+
+        // ==========================================
+        // 1. ESP32-S3 and C3/C6 Hardware Peripherals
+        // ==========================================
+        regs.add(new HardwarePeripheralRegister(
+                "esp32c3-sha-start", "SHA", HardwareCryptoPlatform.ESP32_C3,
+                0x6003_b004L, 4, CryptoAlgorithm.SHA256, HardwareCryptoFeature.HASH_ACCELERATOR,
+                true, Map.of(1L, "START_HASH"), "ESP32-C3 SHA calculation start trigger"));
+        regs.add(new HardwarePeripheralRegister(
+                "esp32c6-ecc-start", "ECC", HardwareCryptoPlatform.ESP32_C6,
+                0x6003_c004L, 4, CryptoAlgorithm.ECDSA, HardwareCryptoFeature.ASYMMETRIC_ACCELERATOR,
+                true, Map.of(1L, "START_ECC"), "ESP32-C6 ECC calculation start trigger"));
         // AES Accelerator (base 0x6003A000)
         Map<Long, String> espAesModes = Map.of(
                 0L, "AES-128-ECB",

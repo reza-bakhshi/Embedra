@@ -29,7 +29,11 @@ class SchemaResourcesTest {
             "schemas/plugin/scanner-plugin-manifest-v1.schema.json",
                 "urn:embedra:schema:scanner-plugin-manifest:1",
             "schemas/crypto/crypto-signature-pack-v1.schema.json",
-                "urn:embedra:schema:crypto-signature-pack:1");
+                "urn:embedra:schema:crypto-signature-pack:1",
+            "schemas/fixture/fixture-manifest-v1.schema.json",
+                io.github.rezabakhshi.embedra.core.fixture.FixtureManifest.SCHEMA_ID,
+            "schemas/evidence/evidence-index-v1.schema.json",
+                io.github.rezabakhshi.embedra.core.evidence.EvidenceIndex.SCHEMA_ID);
 
         for (Map.Entry<String, String> schema : schemas.entrySet()) {
             String text = Files.readString(PROJECT.resolve(schema.getKey()), StandardCharsets.UTF_8);

@@ -3,7 +3,7 @@
 **Status**: Authoritative project specification  
 **Created**: 2026-09-21  
 **Document model**: Single source of truth; no feature-version documents  
-**Primary implementation order**: ESP32-S3 → complete ESP32 family → curated STM32 catalog → RP2040 → complete RP2350/RP2354 family (future extensions: ESP32 full flash, STM8 8-bit MCU family)
+**Primary implementation order**: ESP32-S3 → complete ESP32 family → curated STM32 catalog → RP2040 → complete RP2350/RP2354 family (future extensions: ESP32 full flash, STM8 8-bit MCU family, Nordic Semiconductor nRF family)
 **Initial build baseline**: Ghidra 12.1.3, 64-bit JDK 21, Gradle Wrapper; later compatibility requires explicit matrix evidence
 
 This document intentionally combines the project constitution, product specification, technical plan, architecture, data model, contracts, test strategy, acceptance criteria, and implementation tasks. It replaces a version-by-version or feature-folder specification model.
@@ -26,6 +26,7 @@ Embedra MUST prefer an explicit target selection over a confident-looking guess.
 | 6 | RP2040 | RP2040 silicon plus board profiles for official Pico/Pico H/Pico W/Pico WH and a data-driven path for third-party boards; UF2, raw XIP, boot2, vector table, peripherals, SDK metadata, both cores, and PIO programs |
 | 7 | RP2350/RP2354 | RP2350A, RP2350B, RP2354A, and RP2354B; ARM Cortex-M33 and Hazard3 RISC-V boot architectures, TrustZone/security metadata, internal/external flash differences, both CPU cores, three PIO blocks, Pico 2 family profiles, and future official variants through catalog updates |
 | 8 | STM8 8-bit MCU family | Curated catalog covering mainstream STM8S, low-power STM8L, automotive STM8A/AF/AL, and touch-sensing STM8T; memory maps (Flash, RAM, EEPROM, peripherals at 0x5000, option bytes), 32-vector table at 0x8000, Intel HEX / S-Record / raw BIN / ELF formats, peripheral register definitions, and 8-bit CISC execution topology distinct from 32-bit STM32 |
+| 9 | Nordic Semiconductor nRF family | Curated catalog covering nRF51 (Cortex-M0), nRF52 (Cortex-M4F), nRF53 (dual Cortex-M33 app/net), nRF54 (Cortex-M33 / RISC-V coprocessors), and nRF91 (Cortex-M33 + LTE-M/NB-IoT); memory maps (Flash, RAM, UICR at 0x10001000, FICR at 0x10000000, peripheral MMIO at 0x40000000/0x50000000, CryptoCell CC310/CC312 engines), SoftDevice / MBR / Bootloader offset discovery and vector relocation, Intel HEX / raw BIN / ELF formats, SVD / MDK register packs, EasyDMA definitions, and multi-image / dual-core execution topology |
 
 “Complete catalog” means that a reproducible generator ingests authoritative vendor sources into exact device records and CI detects additions, removals, renamed parts, and changed properties. A newly discovered model begins as `PLANNED`; it becomes `VERIFIED` only after its provider, architecture, memory map, processor topology, fixtures, and acceptance evidence pass. Modules and development boards are board profiles layered over the exact SoC/MCU and MUST NOT be confused with new processor models.
 
@@ -161,6 +162,12 @@ As a reverse engineer, I can import STM8 ELF, Intel HEX, Motorola S-Record, and 
 
 **Independent acceptance**: Address-bearing formats preserve load addresses; raw BIN inputs require explicit part/base selection or user-confirmed vector-table inference; interrupt slots and memory boundaries match ST reference manuals (RM0016, RM0031, RM0013) and exact datasheets; Ghidra language binding fails closed if the 8-bit STM8 language is unavailable.
 
+### US6B — Import and analyze Nordic Semiconductor nRF-family firmware (future)
+
+As a reverse engineer, I can import Nordic Semiconductor nRF ELF, Intel HEX, and raw BIN inputs, search the curated nRF catalog across nRF51, nRF52, nRF53, nRF54, and nRF91 series, select the exact orderable part, construct the memory map (Internal Flash, RAM, UICR at 0x10001000, FICR at 0x10000000, MMIO peripherals, and CryptoCell hardware accelerators), identify SoftDevice (e.g. S110, S130, S132, S140), MBR, application, and DFU bootloader image layouts, relocate vector tables accurately, and analyze dual-core application and network core firmware relationships (for nRF5340) and TrustZone security domains (for nRF9160, nRF5340, nRF54) without conflating single-core Cortex-M with dual-core wireless coprocessor topologies.
+
+**Independent acceptance**: Intel HEX files with split records (MBR + SoftDevice + Application + Bootloader + UICR) preserve exact physical addresses without overlapping memory clashes; raw BIN inputs require explicit part and base selection; SoftDevice SVC call numbers and API tables resolve to exact versioned symbols; FICR/UICR configuration registers are validated against pinned vendor specifications; dual-core nRF5340 imports construct paired Ghidra programs with shared IPC / RAM memory boundaries.
+
 ### US7 — Analyze RP2040 and RP2350-family firmware (P7)
 
 As a reverse engineer, I can import UF2, ELF, or raw firmware for RP2040, RP2350A/B, and RP2354A/B; select the correct silicon/board; identify ARM or RISC-V architecture where applicable; map internal or external XIP flash; recover both CPU-core startup paths, security domains, boot metadata, peripherals, and PIO programs separately from CPU code.
@@ -269,6 +276,19 @@ As a maintainer, I can run parsing, import, enrichment, diffing, and report gene
 - **STM8-008**: Transform redistributable ST peripheral register definitions into Ghidra registers, types, and comments with 8-bit byte-wide semantics and 1-byte register alignments, preserving peripheral base addresses and bitfield masks.
 - **STM8-009**: Apply STM8 Standard Peripheral Library (SPL) and common open-source runtime (SDCC) signatures only when compiler and memory-model evidence is recorded; keep heuristics distinct from verified symbols.
 - **STM8-010**: All exact STM8 part records MUST initialize in the `PLANNED` state. Promoting any STM8 part to `EXPERIMENTAL` or `VERIFIED` requires passing all acceptance gates, reproducible fixtures, real-Ghidra import verification, rollback, and headless parity.
+
+### 4.3B Nordic Semiconductor nRF family (future)
+
+- **NRF-001**: Model Nordic Semiconductor as a dedicated target provider family supporting nRF51 (ARM Cortex-M0), nRF52 (ARM Cortex-M4 with FPU), nRF53 (dual ARM Cortex-M33 application and network cores), nRF54 (ARM Cortex-M33 with RISC-V coprocessors), and nRF91 (ARM Cortex-M33 cellular IoT with TrustZone).
+- **NRF-002**: Accept Intel HEX (including merged multi-section distributions combining MBR, SoftDevice, Application, Bootloader, and UICR), ELF, and raw BIN/dump inputs. Address-bearing formats MUST preserve their encoded load addresses; raw BIN inputs require explicit part selection and base address confirmation.
+- **NRF-003**: Model the exact physical memory regions per part family: Flash (base 0x00000000), SRAM (base 0x20000000), Factory Information Configuration Registers (FICR at 0x10000000), User Information Configuration Registers (UICR at 0x10001000), and peripheral MMIO blocks (0x40000000–0x50000000). Fail closed if configured ranges exceed part physical limits or overlap.
+- **NRF-004**: Discover and decode multi-stage Nordic firmware layouts: Master Boot Record (MBR, typically 0x00000000 to 0x00001000), SoftDevice binary (typically 0x00001000 upwards, varying by SoftDevice version), Application image (anchored at SoftDevice end address, e.g. 0x00026000), DFU Bootloader (near top of flash), and Bootloader Settings page.
+- **NRF-005**: Detect and fingerprint SoftDevice variants and versions (e.g. S110, S112, S122, S130, S132, S140) via magic numbers, SVC handler tables, and firmware IDs located at offset 0x2000 in the SoftDevice image; resolve SoftDevice SVC calls (SuperVisor Call) to official Nordic API names and parameter types.
+- **NRF-006**: Model ARM TrustZone security partitioning on nRF9160, nRF5340, and nRF54 series, cleanly distinguishing Secure and Non-Secure Flash/SRAM domains, SPU (System Protection Unit) configurations, and Non-Secure Callable (NSC) veneer blocks.
+- **NRF-007**: Model the dual-core asymmetric topology of nRF5340: an Application Core (128 MHz Cortex-M33 with 1 MB Flash, 512 KB RAM, SPU, TrustZone, and QSPI) and a Network Core (64 MHz Cortex-M33 with 256 KB Flash, 64 KB RAM, and 2.4 GHz radio), with inter-core IPC (Inter-Processor Communication) peripheral registers and shared RAM messaging blocks.
+- **NRF-008**: Curate exact-part records across the nRF51, nRF52, nRF53, nRF54, and nRF91 product lines from official Nordic Semiconductor Product Specifications and CMSIS-Packs. Retain exact part numbers, packages, flash sizes, RAM sizes, cache/crypto capabilities, and lifecycle status; forbid wildcard fabrication.
+- **NRF-009**: Transform redistributable Nordic SVD / MDK device definitions into Ghidra registers, types, and comments, including EasyDMA list pointer and buffer-size registers, PPI/DPPI (Programmable Peripheral Interconnect) event/task channels, and Arm CryptoCell (CC310 / CC312) accelerator interfaces.
+- **NRF-010**: All exact Nordic part records MUST initialize in the `PLANNED` state. Promoting any Nordic part to `EXPERIMENTAL` or `VERIFIED` requires passing all acceptance gates, reproducible fixtures, real-Ghidra import verification, rollback, and headless parity.
 
 ### 4.4 Raspberry Pi RP2040 and RP2350/RP2354
 
@@ -586,6 +606,16 @@ UF2 blocks are reconstructed by target address. RP2040 external XIP flash, boot2
 
 RP2040 uses two Cortex-M0+ cores. RP2350-family parts boot either two Cortex-M33 cores or two Hazard3 RISC-V cores; architecture selection is evidence-based and the inactive architecture is not treated as a simultaneously running processor. ARM TrustZone and secure boot metadata are explicit. Both-core startup and shared-memory communication are modeled. PIO instruction words use a separate decoder and are never sent to an ARM or RISC-V disassembler. Side-set, wrap, and pin-configuration uncertainty appears explicitly in PIO output.
 
+### 8.3A Nordic Semiconductor (nRF51, nRF52, nRF53, nRF54, nRF91)
+
+Nordic Semiconductor nRF devices are single- or dual-core wireless SoCs based on ARM Cortex-M and RISC-V architectures. Firmware releases frequently use combined Intel HEX distributions containing a Master Boot Record (MBR), a precompiled Bluetooth Low Energy protocol stack (SoftDevice), an application binary, and a secure bootloader (DFU), alongside non-volatile configuration pages.
+
+Internal Flash starts at 0x00000000. SRAM starts at 0x20000000. Device information and configuration registers occupy dedicated address ranges: Factory Information Configuration Registers (FICR) at 0x10000000 (read-only silicon calibration, device address, variant codes) and User Information Configuration Registers (UICR) at 0x10001000 (customer configuration, bootloader start address, read-back protection settings). Peripherals reside in the 0x40000000–0x50000000 region utilizing EasyDMA list structures, event/task systems, and Programmable Peripheral Interconnect (PPI on nRF51/nRF52, DPPI on nRF53/nRF91).
+
+SoftDevice binaries (e.g. S110, S132, S140) enforce specific memory offsets. When a SoftDevice is present, the MBR sits at 0x00000000–0x00001000, the SoftDevice occupies 0x00001000 through its version-dependent end address, and the Application vector table is relocated to the subsequent boundary. Embedra fingerprints SoftDevice versions via header metadata at offset 0x2000 and resolves SuperVisor Calls (`SVC`) to versioned API symbols.
+
+For dual-core nRF5340 devices, Embedra models the 128 MHz Cortex-M33 Application Core (with 1 MB Flash, 512 KB RAM, and QSPI) and the 64 MHz Cortex-M33 Network Core (with 256 KB Flash, 64 KB RAM, and 2.4 GHz radio) as separate, coordinated Ghidra programs connected via shared RAM and IPC peripheral registers. On nRF9160 and nRF5340, ARM TrustZone security partitioning (SPU) is modeled with explicit Secure and Non-Secure program separation. Hardware crypto accelerators, including Arm CryptoCell CC310/CC312 engines, are mapped to exact peripheral MMIO boundaries.
+
 ### 8.4 Cryptographic recovery strategy
 
 Crypto analysis runs from strongest to weakest evidence: exact symbols/debug metadata, versioned signatures, vendor ROM and hardware APIs, constants/tables, instruction patterns, call-graph/data-flow semantics, protocol/key/certificate structures, then bounded heuristics. It emits separate findings for implementations, wrappers, use-sites, hardware engines, algorithms/modes, candidate material, and verified encoded objects.
@@ -765,11 +795,11 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 
 - [x] T064 Build provenance-checked, compiler/optimization/ISA-aware signatures for the specified embedded crypto libraries, algorithms, wrappers, and common inlined variants where legally possible.
 - [x] T065 Implement vendor ROM API, hardware crypto peripheral, secure-element, secure-boot/flash-encryption, RNG, call-graph, and data-flow detection with per-device evidence and cross-program support.
-- [ ] T066 Build positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350-family ISAs/toolchains; measure and publish per-detector precision, recall, false-positive rate, confidence thresholds, and unsupported cases.
+- [x] T066 Build positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350-family ISAs/toolchains; measure and publish per-detector precision, recall, false-positive rate, confidence thresholds, and unsupported cases.
 
 ### Release gates
 
-- [ ] T067 Implement fixture manifests, deterministic generators, private-fixture handling, and requirement-to-evidence indexing.
+- [x] T067 Implement fixture manifests, deterministic generators, private-fixture handling, and requirement-to-evidence indexing.
 - [ ] T068 Implement shared resource budgets and adversarial archive/XML/path/regex/plugin tests.
 - [ ] T069 Prove idempotency and preservation of user-created Ghidra state across import and enrichment reruns.
 - [ ] T070 Reach and review the core coverage target.
@@ -805,6 +835,17 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 - [ ] T094 Implement STM8 Standard Peripheral Library (SPL) and open-source compiler runtime (SDCC, Cosmic) signatures and CTF/string/lead enrichment using the shared analyzers.
 - [ ] T095 Complete STM8 verification, test coverage, support matrix documentation, and acceptance gate review across all cataloged STM8 parts, promoting only verified parts and leaving all other combinations `PLANNED` or `UNSUPPORTED`.
 
+### Future Nordic Semiconductor nRF-family support
+
+- [ ] T096 Audit and catalog specification for Nordic Semiconductor across nRF51 (Cortex-M0), nRF52 (Cortex-M4F), nRF53 (dual Cortex-M33), nRF54 (Cortex-M33/RISC-V), and nRF91 (Cortex-M33 LTE-M/NB-IoT) families against pinned Nordic product specifications, nRF5 SDK / nRF Connect SDK headers, MDK device headers, and license terms. Record an exact-part allowlist with flash/RAM/cache sizes, TrustZone, radio/crypto peripherals, UICR/FICR regions, and capability matrix.
+- [ ] T097 [P] Build independently generated, redistributable Nordic fixtures and official-tool oracles (Intel HEX, ELF, raw BIN) for representative nRF51822, nRF52832, nRF52840, nRF5340 (app and net cores), and nRF9160 parts, covering SoftDevice (S132/S140) offset boundaries, MBR, bootloaders, and UICR/FICR configurations. Add malformed, truncated, wrong-checksum, overlapping, and invalid-vector fixtures.
+- [ ] T098 Implement pure Nordic target providers, exact-part catalog registry, and memory planners (Flash, RAM, UICR at 0x10001000, FICR at 0x10000000, peripheral MMIO at 0x40000000/0x50000000, CryptoCell CC310/CC312 engines, and dual-core application/network layouts) under shared `ParserLimits` and `CancellationToken`.
+- [ ] T099 Implement Nordic SoftDevice / MBR / bootloader partition discovery, vector relocation, SoftDevice API table resolution (SVC handler dispatch and SoftDevice version fingerprinting), and dual-core firmware layout analysis.
+- [ ] T100 Implement Nordic SVD / MDK peripheral register data packs, EasyDMA definitions, bitfield schemas, and CryptoCell hardware peripheral definitions for nRF51, nRF52, nRF53, nRF54, and nRF91 families.
+- [ ] T101 Wire Nordic target plans into real-Ghidra GUI and headless multi-program import for raw BIN, Intel HEX, and ELF, supporting multi-image SoftDevice + App + Bootloader alignment, dual-core cross-program binding, TrustZone non-secure/secure mapping, transactional rollback, user artifact preservation, and headless parity.
+- [ ] T102 Implement nRF5 SDK and nRF Connect SDK (Zephyr-based) crypto/networking signatures, BLE stack identifiers, and CTF/string/lead enrichment using shared analyzers.
+- [ ] T103 Complete Nordic verification, test coverage, support matrix documentation, and acceptance gate review across all cataloged nRF parts, promoting only verified parts and leaving all other combinations `PLANNED` or `UNSUPPORTED`.
+
 ## 12. Acceptance Gates by Workstream
 
 | Workstream | Gate before moving on |
@@ -817,6 +858,7 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 | STM32 core | Every selected catalog part has explicit metadata/state; representative selected parts import with exact selected-device maps; raw BIN requires confirmation |
 | STM32 advanced | TrustZone, dual-core, wireless/network-core, STM32MP, and external memory do not contaminate simple-device behavior and cross-program relationships are verified |
 | STM8 8-bit MCU family (T088-T095) | Curated STM8S/L/A/T catalog snapshot is complete with pinned provenance; 8-bit CISC memory maps, 0x8000 vector tables, and peripheral registers are verified against vendor datasheets and independent oracles without 32-bit Cortex-M contamination; imports pass in real Ghidra with rollback, user preservation, and headless equality |
+| Nordic Semiconductor nRF family (T096-T103) | Curated nRF51/52/53/54/91 catalog snapshot is complete with pinned provenance; Cortex-M0/M4/M33 memory maps, FICR/UICR regions, SoftDevice/MBR boundaries, and CryptoCell peripherals verified against vendor specifications; dual-core nRF5340 and TrustZone nRF9160 verified in real Ghidra with rollback, user preservation, and headless equality |
 | RP2040/RP2350 family | RP2040 and RP2350A/B/RP2354A/B UF2/ELF/raw, flash, ARM/RISC-V, dual-core, TrustZone, vector/trap, and PIO results match official tools and builds |
 | Crypto analysis | Positive/negative multi-ISA corpus reports measured precision/recall and hardware/software/inlined coverage without promoting weak candidates to verified secrets/functions |
 | Shared analyzers | Known-positive/negative corpus and false-positive measurements documented |
@@ -950,6 +992,9 @@ The baseline is Ghidra 12.1.3 and JDK 21. Any change to the build baseline or ad
 - [Microsoft UF2 specification](https://github.com/microsoft/uf2)
 - [Raspberry Pi official RP2040/RP2350 silicon documentation](https://www.raspberrypi.com/documentation/microcontrollers/microcontroller-chips.html)
 - [Raspberry Pi picotool](https://github.com/raspberrypi/picotool)
+- [Nordic Semiconductor Infocenter and product specifications](https://infocenter.nordicsemi.com/)
+- [Nordic Semiconductor nRF Connect SDK documentation](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/index.html)
+- [Nordic Semiconductor nrfx and CMSIS device packs](https://github.com/NordicSemiconductor/nrfx)
 
 ## 15. Governance
 
