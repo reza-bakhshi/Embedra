@@ -6,7 +6,7 @@
 
 **Embedra** is a high-assurance, multi-architecture Ghidra extension engineered for deep embedded firmware reverse engineering, hardware CTF challenges, cryptographic artifact recovery, and silicon security analysis.
 
-Embedra bridges the gap between raw binary captures and high-level architectural understanding across **Espressif (ESP32/ESP8266)**, **STMicroelectronics (STM32 Cortex-M & STM32MP MPU)**, and **Raspberry Pi (RP2040 / RP2350)** platforms.
+Embedra bridges the gap between raw binary captures and high-level architectural understanding across **Espressif (ESP32/ESP8266)**, **STMicroelectronics (STM32 Cortex-M, STM32MP & STM8)**, **Raspberry Pi (RP2040 / RP2350)**, and **Nordic Semiconductor (nRF51 / nRF52 / nRF53 / nRF54 / nRF91)** platforms.
 
 ---
 
@@ -15,6 +15,7 @@ Embedra bridges the gap between raw binary captures and high-level architectural
 - [Core Capabilities](#core-capabilities)
 - [Supported Platforms & Architectures](#supported-platforms--architectures)
 - [Cryptographic Analysis Engine](#cryptographic-analysis-engine)
+- [YARA Pattern Matching & Threat Hunting](#yara-pattern-matching--threat-hunting)
 - [Security Leads & CTF Recovery](#security-leads--ctf-recovery)
 - [Unified Findings, UI & Secret Redaction](#unified-findings-ui--secret-redaction)
 - [Firmware & Workspace Diffing](#firmware--workspace-diffing)
@@ -78,6 +79,9 @@ Embedra bridges the gap between raw binary captures and high-level architectural
   - TrustZone security planning: Secure/Non-Secure memory attribution and Non-Secure Callable (NSC) veneers.
   - Inter-core boot handoff and cross-program shared memory references (SRAM1/SRAM2, IPCC mailbox, HSEM hardware semaphores).
   - Hardware crypto detection: STM32 CRYP (AES, DES, 3DES), HASH (MD5, SHA-1, SHA-224, SHA-256), PKA (ECDSA/RSA), and RNG.
+- **STM8 8-bit MCU Family**:
+  - STM8S (mainstream), STM8L (ultra-low-power), STM8A/AF/AL (automotive), and STM8T (touch-sensing).
+  - Unified 24-bit linear memory layout, dedicated peripheral blocks at `0x5000`, and 32-entry vector table at reset address `0x8000`.
 
 ### 3. Raspberry Pi (RP2040 & RP2350)
 - **Supported Targets**: RP2040, RP2350A, RP2350B, RP2354A, RP2354B.
@@ -88,6 +92,14 @@ Embedra bridges the gap between raw binary captures and high-level architectural
   - Programmable I/O (PIO) disassembler and state machine analyzer.
   - Boot ROM exported function table resolution via 2-character lookup codes (`RE`, `RP`, `FC`, etc.).
   - RP2350 hardware SHA-256 engine, TRNG sample register, and OTP security memory.
+
+### 4. Nordic Semiconductor (nRF51, nRF52, nRF53, nRF54, nRF91)
+- **Supported Targets**: nRF51 (Cortex-M0), nRF52 (Cortex-M4F), nRF53 (dual Cortex-M33 Application & Network cores), nRF54 (Cortex-M33 / RISC-V), nRF91 (Cortex-M33 LTE-M/NB-IoT).
+- **Features**:
+  - Multi-stage firmware layout discovery: Master Boot Record (MBR), BLE protocol stack (SoftDevice S110/S130/S132/S140), Application, and DFU bootloader.
+  - SoftDevice version fingerprinting and automated SuperVisor Call (`SVC`) API resolution.
+  - Hardware Security: Arm CryptoCell CC310/CC312 engines, FICR/UICR non-volatile configuration pages, and ARM TrustZone SPU partitioning.
+  - Asymmetric dual-core execution topology: models coordinated Application Core and Network Core programs over shared RAM and IPC mailboxes on nRF5340.
 
 ---
 
@@ -126,6 +138,28 @@ Embedra contains an embedded, schema-validated (`urn:embedra:schema:crypto-signa
 `mbed TLS / PSA Crypto`, `wolfSSL`, `BearSSL`, `TinyCrypt`, `Monocypher`, `micro-ecc`, `LibTomCrypt`, `OpenSSL`, `ESP-IDF Crypto`, `STM32 HAL CRYP`, and `Pico SDK`.
 
 Each signature records target architecture (`ARM_THUMB`, `XTENSA`, `RISCV32`), compiler (`GCC`, `CLANG`), optimization level (`O0`-`O3`, `Os`, `Oz`), concrete artifact role (`ALGORITHM_IMPLEMENTATION`, `WRAPPER`, `INLINED_IDIOM`), license provenance, and SHA-256 integrity digests.
+
+---
+
+## YARA Pattern Matching & Threat Hunting
+
+Embedra embeds a standalone, pure Java YARA-compatible compiler and scanning engine designed specifically for embedded firmware threat hunting and pattern identification:
+
+- **Elevated Execution Priority (`DATA_ANALYSIS`)**:
+  - The YARA engine runs **first** during automated analysis, tagging memory blocks, container boundaries, threat indicators, and cryptographic lookup tables before lower-priority heuristic analyzers begin.
+- **Built-in Threat & Malware Rules (`rules/threats/`)**:
+  - **Embedded Botnets & Malware**: Targets command dispatch strings and infection signatures for Mirai (`Mirai_Botnet_Commands`), Gafgyt/Bashlite (`Gafgyt_Bashlite_Botnet`), and Mozi P2P IoT malware (`Mozi_P2P_Botnet`).
+  - **Exploits & Shellcode**: Identifies architecture-specific shellcode patterns, such as the ARM Thumb `/bin/sh` execve syscall idiom (`ARM_Thumb_Shellcode_Execve`).
+  - **Backdoors & Credential Abuse**: Detects hardcoded factory telnet credentials (`Hardcoded_Telnet_Backdoor`), interactive reverse shells (`Reverse_Shell_Payload`), and hidden UART/bootloader debug shell activation strings (`Hidden_Debug_Console`).
+- **Built-in File Format & Crypto Suites**:
+  - **Containers & Filesystems (`rules/formats/`)**: SquashFS (`hsqs`), CramFS, JFFS2, UBIFS, YAFFS2, ZIP, TAR, GZIP.
+  - **Encodings (`rules/formats/`)**: Base64, Base32, Hex translation matrices.
+  - **Ciphers & Hashes (`rules/crypto/`)**: AES S-boxes, Inv S-boxes, Rcon tables, DES permutations, Blowfish, ChaCha20 constants, MD5/SHA-1/SHA-256/SHA-512 initial vectors and round constants, Keccak round constants, CRC tables.
+- **User-Defined Custom Rules Directory**:
+  - In Ghidra's Analysis Options (`Edit -> Tool Options -> Analyzers -> Embedra YARA Analysis`), set **`Custom Rules Directory`** to scan proprietary or project-specific `.yar` and `.yara` files.
+- **Prioritized Finding Integration**:
+  - YARA matches for `MALWARE` and `BACKDOOR` categories generate high-visibility `BookmarkType.WARNING` bookmarks and explicit EOL annotations.
+  - YARA cryptographic patterns are seamlessly integrated into `CryptoTableDatabase.withYara()` and `CryptoAnalysisPipeline.withYara()`, giving YARA matches precedence over generic heuristics.
 
 ---
 
