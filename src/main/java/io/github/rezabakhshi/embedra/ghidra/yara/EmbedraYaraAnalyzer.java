@@ -35,9 +35,11 @@ public final class EmbedraYaraAnalyzer extends AbstractAnalyzer {
 
     private static final String OPT_ENABLE_FORMATS = "Enable Built-in Format Rules";
 
+    private static final String OPT_ENABLE_THREATS = "Enable Built-in Threat & Malware Rules";
+
     public EmbedraYaraAnalyzer() {
         super(NAME, DESCRIPTION, AnalyzerType.BYTE_ANALYZER);
-        setPriority(AnalysisPriority.DATA_ANALYSIS.after().after());
+        setPriority(AnalysisPriority.DATA_ANALYSIS);
         setDefaultEnablement(true);
         setSupportsOneTimeAnalysis();
     }
@@ -55,6 +57,8 @@ public final class EmbedraYaraAnalyzer extends AbstractAnalyzer {
                 "Enable built-in cryptographic signatures (AES, SHA, CRC, etc.).");
         options.registerOption(OPT_ENABLE_FORMATS, true, null,
                 "Enable built-in file format and container signatures (SquashFS, ELF, ZIP, etc.).");
+        options.registerOption(OPT_ENABLE_THREATS, true, null,
+                "Enable built-in threat, malware, and backdoor signatures (Mirai, Gafgyt, shellcode, etc.).");
     }
 
     @Override
@@ -68,6 +72,7 @@ public final class EmbedraYaraAnalyzer extends AbstractAnalyzer {
         Options options = program.getOptions(GhidraYaraApplicator.PROGRAM_OPTIONS_CATEGORY);
         boolean enableCrypto = options.getBoolean(OPT_ENABLE_CRYPTO, true);
         boolean enableFormats = options.getBoolean(OPT_ENABLE_FORMATS, true);
+        boolean enableThreats = options.getBoolean(OPT_ENABLE_THREATS, true);
         String customDir = options.getString(OPT_CUSTOM_RULES_DIR, "");
 
         CompiledYaraRuleset.Builder builder = CompiledYaraRuleset.builder();
@@ -85,6 +90,14 @@ public final class EmbedraYaraAnalyzer extends AbstractAnalyzer {
                 builder.addResource("/rules/formats/encodings.yar");
             } catch (Exception e) {
                 log.appendMsg(NAME, "Failed to load built-in format YARA rules: " + e.getMessage());
+            }
+        }
+        if (enableThreats) {
+            try {
+                builder.addResource("/rules/threats/malware.yar");
+                builder.addResource("/rules/threats/backdoors.yar");
+            } catch (Exception e) {
+                log.appendMsg(NAME, "Failed to load built-in threat YARA rules: " + e.getMessage());
             }
         }
         if (customDir != null && !customDir.isBlank()) {

@@ -60,6 +60,17 @@ public final class CryptoAnalysisPipeline {
     }
 
     /**
+     * Creates a pipeline where YARA cryptographic rules are compiled and prioritized
+     * over standard table heuristics.
+     */
+    public static CryptoAnalysisPipeline withYara(
+            io.github.rezabakhshi.embedra.analyzers.yara.CompiledYaraRuleset ruleset) {
+        CryptoTableDatabase db = CryptoTableDatabase.withYara(ruleset);
+        return new CryptoAnalysisPipeline(db, new EntropyScanner(), new LikelyKeyScanner(),
+                new CryptoLibrarySignatureMatcher());
+    }
+
+    /**
      * Executes the layered cryptographic analysis pipeline over raw byte data.
      */
     public CryptoAnalysisReport analyze(

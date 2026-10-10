@@ -45,6 +45,10 @@ public final class CompiledYaraRuleset {
     }
 
     public static CompiledYaraRuleset loadBuiltinRules(boolean crypto, boolean formats) {
+        return loadBuiltinRules(crypto, formats, false);
+    }
+
+    public static CompiledYaraRuleset loadBuiltinRules(boolean crypto, boolean formats, boolean threats) {
         Builder builder = builder();
         try {
             if (crypto) {
@@ -54,6 +58,10 @@ public final class CompiledYaraRuleset {
             if (formats) {
                 builder.addResource("/rules/formats/containers.yar");
                 builder.addResource("/rules/formats/encodings.yar");
+            }
+            if (threats) {
+                builder.addResource("/rules/threats/malware.yar");
+                builder.addResource("/rules/threats/backdoors.yar");
             }
         } catch (Exception e) {
             throw new IllegalStateException("Failed to load built-in YARA rules", e);

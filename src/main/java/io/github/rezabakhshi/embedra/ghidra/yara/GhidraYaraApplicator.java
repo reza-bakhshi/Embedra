@@ -55,8 +55,13 @@ public final class GhidraYaraApplicator {
                         String bookmarkCategory = BOOKMARK_CATEGORY_PREFIX + m.ruleName();
                         String bookmarkText = String.format("[%s] %s", m.ruleName(), m.description());
 
+                        String bType = BookmarkType.INFO;
+                        if ("MALWARE".equalsIgnoreCase(m.category()) || "BACKDOOR".equalsIgnoreCase(m.category())) {
+                            bType = BookmarkType.WARNING;
+                        }
+
                         program.getBookmarkManager().setBookmark(
-                                addr, BookmarkType.INFO, bookmarkCategory, bookmarkText);
+                                addr, bType, bookmarkCategory, bookmarkText);
                         bookmarksCreated++;
 
                         String commentText = String.format("[YARA: %s] %s", m.ruleName(), m.description());

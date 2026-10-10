@@ -555,4 +555,16 @@ public final class CryptoTableDatabase {
         }
         return Collections.unmodifiableList(result);
     }
+
+    /**
+     * Creates a CryptoTableDatabase prioritized by YARA rules, followed by standard tables.
+     */
+    public static CryptoTableDatabase withYara(
+            io.github.rezabakhshi.embedra.analyzers.yara.CompiledYaraRuleset ruleset) {
+        Objects.requireNonNull(ruleset, "ruleset must not be null");
+        List<CryptoTableSignature> yaraSigs = fromYara(ruleset);
+        List<CryptoTableSignature> all = new ArrayList<>(yaraSigs);
+        all.addAll(buildDefaultSignatures());
+        return new CryptoTableDatabase(all);
+    }
 }
