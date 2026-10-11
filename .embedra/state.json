@@ -2,13 +2,13 @@
  "schemaVersion": 1,
  "specification": {
   "path": "Embedra-SpecKit.md",
-  "sha256": "e6f1cfa6be0bed2e7e8efd0381b8ea36c4f772b034ae160f187d6f221efe9ec8"
+  "sha256": "00f688d99ee766bf600dc6cf0e85bb9c9abf2b2360ff05388b8010fd74c609b2"
  },
  "projectClassification": "NEW",
  "currentTask": {
-  "id": "T067",
+  "id": "T073",
   "status": "COMPLETE",
-  "reasonCode": "FIXTURE_MANIFESTS_AND_EVIDENCE_INDEXING_IMPLEMENTED"
+  "reasonCode": "CANONICAL_GUI_HEADLESS_EQUALITY_VERIFIED_FOR_ALL_GOLDEN_FIXTURES"
  },
  "completedTasks": [
   "T001",
@@ -78,7 +78,13 @@
   "T064",
   "T065",
   "T066",
-  "T067"
+  "T067",
+  "T068",
+  "T069",
+  "T070",
+  "T071",
+  "T072",
+  "T073"
  ],
  "blockedTasks": [],
  "acceptanceGates": {
@@ -458,7 +464,8 @@
   }
  ],
  "evidence": {
-  "task": ".embedra/evidence/tasks/T067.md",
+  "task": ".embedra/evidence/tasks/T073.md",
+  "taskT068": ".embedra/evidence/tasks/T068.md",
   "preT033Audit": ".embedra/evidence/audits/pre-t033-t001-t032.md",
   "remediation": ".embedra/evidence/tasks/T025-remediation.md",
   "gate": ".embedra/evidence/gates/esp32s3-full-flash-r2.md",
@@ -525,11 +532,16 @@
   "taskT065": ".embedra/evidence/tasks/T065.md",
   "taskT066": ".embedra/evidence/tasks/T066.md",
   "taskT067": ".embedra/evidence/tasks/T067.md",
-  "evidenceIndex": ".embedra/evidence/evidence-index.json"
+  "evidenceIndex": ".embedra/evidence/evidence-index.json",
+  "taskT069": ".embedra/evidence/tasks/T069.md",
+  "taskT070": ".embedra/evidence/tasks/T070.md",
+  "taskT071": ".embedra/evidence/tasks/T071.md",
+  "taskT072": ".embedra/evidence/tasks/T072.md",
+  "taskT073": ".embedra/evidence/tasks/T073.md"
  },
  "knownFailures": [],
- "nextTask": "T068",
- "nextAction": "Begin T068: implement shared resource budgets and adversarial archive/XML/path/regex/plugin tests.",
+ "nextTask": "T074",
+ "nextAction": "Begin T074: verify ESP and Raspberry Pi discovery completeness/drift, and verify exact support state and execution topology for every selected STM32 catalog part.",
  "artifacts": [
   {
    "path": "dist/ghidra_12.1.3_PUBLIC_20260923_Embedra.zip",
@@ -860,6 +872,42 @@
    "sha256": "c16942a80086043f8d7c130c374bdb123e37f894c7344c73f57490bcc2cc3c34",
    "sizeBytes": 5624184,
    "status": "T067_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261010_Embedra.zip",
+   "sha256": "bdd230d8f84522d34fd217d20127cc68b7364b78443c542d5ac24aa0286cfec6",
+   "sizeBytes": 5649195,
+   "status": "T068_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261010_Embedra.zip",
+   "sha256": "bdd230d8f84522d34fd217d20127cc68b7364b78443c542d5ac24aa0286cfec6",
+   "sizeBytes": 5649195,
+   "status": "T069_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261011_Embedra.zip",
+   "sha256": "bdd230d8f84522d34fd217d20127cc68b7364b78443c542d5ac24aa0286cfec6",
+   "sizeBytes": 5649195,
+   "status": "T070_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261011_Embedra.zip",
+   "sha256": "bdd230d8f84522d34fd217d20127cc68b7364b78443c542d5ac24aa0286cfec6",
+   "sizeBytes": 5649195,
+   "status": "T071_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261011_Embedra.zip",
+   "sha256": "b8ecc1c05bb32cd661950fae28c64d5b6c61225832f724b666c4fc6953614083",
+   "sizeBytes": 5649169,
+   "status": "T072_REPRODUCIBLE_ARTIFACT"
+  },
+  {
+   "path": "dist/ghidra_12.1.3_PUBLIC_20261011_Embedra.zip",
+   "sha256": "b8ecc1c05bb32cd661950fae28c64d5b6c61225832f724b666c4fc6953614083",
+   "sizeBytes": 5649169,
+   "status": "T073_REPRODUCIBLE_ARTIFACT"
   }
  ],
  "resolvedFailures": [

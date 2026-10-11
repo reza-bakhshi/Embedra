@@ -121,6 +121,26 @@ class DeterministicFixtureGeneratorTest {
     }
 
     @Test
+    void rejectsNullOutputOnSecondRunFromGenerator() {
+        AtomicInteger counter = new AtomicInteger(0);
+        DeterministicFixtureGenerator secondNullGen = new DeterministicFixtureGenerator() {
+            @Override
+            public String generatorId() {
+                return "test.secondnull";
+            }
+
+            @Override
+            public byte[] generate(Map<String, Object> parameters) {
+                return counter.getAndIncrement() == 0 ? new byte[4] : null;
+            }
+        };
+
+        DiagnosticException ex = assertThrows(DiagnosticException.class, () ->
+                DeterministicGenerationRunner.generateAndVerify(secondNullGen, Map.of()));
+        assertEquals(DiagnosticCode.FIXTURE_MANIFEST_INVALID, ex.diagnostic().code());
+    }
+
+    @Test
     void rejectsDifferentLengthRunsFromGenerator() {
         AtomicInteger counter = new AtomicInteger(0);
         DeterministicFixtureGenerator diffLenGen = new DeterministicFixtureGenerator() {

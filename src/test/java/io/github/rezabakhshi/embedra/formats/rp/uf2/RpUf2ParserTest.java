@@ -102,4 +102,19 @@ public class RpUf2ParserTest {
         assertThrows(DiagnosticException.class, () ->
                 RpUf2Parser.parse(path, ParserLimits.defaults(), token));
     }
+
+    @Test
+    void testNonExistentFileAndInvalidLengthAndObjectLimit() {
+        assertThrows(DiagnosticException.class, () ->
+                RpUf2Parser.parse(Path.of("nonexistent-file.uf2"), ParserLimits.defaults(), CancellationToken.none()));
+
+        assertThrows(DiagnosticException.class, () ->
+                RpUf2Parser.parse(new byte[100], ParserLimits.defaults(), CancellationToken.none()));
+
+        byte[] twoBlocks = new byte[1024];
+        ParserLimits oneObjLimit = new ParserLimits(100_000, 100_000, 100_000, 1, 10, Duration.ofSeconds(5));
+        DiagnosticException ex = assertThrows(DiagnosticException.class, () ->
+                RpUf2Parser.parse(twoBlocks, oneObjLimit, CancellationToken.none()));
+        assertEquals(DiagnosticCode.LIMIT_EXCEEDED, ex.diagnostic().code());
+    }
 }

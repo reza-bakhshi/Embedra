@@ -42,6 +42,34 @@ class PrivateFixtureManagerTest {
     }
 
     @Test
+    void handlesBlankOrNonExistentSystemPropertyAndNullRoot() throws IOException, DiagnosticException {
+        PrivateFixtureManager manager = new PrivateFixtureManager();
+        String originalProp = System.getProperty("embedra.private.fixtures.dir");
+        try {
+            System.setProperty("embedra.private.fixtures.dir", "   ");
+            Optional<Path> resolvedBlank = manager.resolvePrivateFixture(
+                    PrivateFixtureManager.T021_DUMP_FIXTURE_ID, null);
+            assertTrue(resolvedBlank.isEmpty());
+
+            System.setProperty("embedra.private.fixtures.dir", "/path/that/does/not/exist");
+            Optional<Path> resolvedNonExistent = manager.resolvePrivateFixture(
+                    PrivateFixtureManager.T021_DUMP_FIXTURE_ID, null);
+            assertTrue(resolvedNonExistent.isEmpty());
+
+            System.clearProperty("embedra.private.fixtures.dir");
+            Optional<Path> resolvedNullRoot = manager.resolvePrivateFixture(
+                    PrivateFixtureManager.T021_DUMP_FIXTURE_ID, null);
+            assertTrue(resolvedNullRoot.isEmpty());
+        } finally {
+            if (originalProp != null) {
+                System.setProperty("embedra.private.fixtures.dir", originalProp);
+            } else {
+                System.clearProperty("embedra.private.fixtures.dir");
+            }
+        }
+    }
+
+    @Test
     void resolvesExistingPrivateFixtureAndVerifiesDigest(@TempDir Path tempDir)
             throws IOException, DiagnosticException {
         PrivateFixtureManager manager = new PrivateFixtureManager();

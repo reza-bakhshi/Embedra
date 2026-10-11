@@ -3,9 +3,9 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T067 — Implement fixture manifests, deterministic generators, private-fixture handling, and requirement-to-evidence indexing (`COMPLETE`)**.
-- Last completed task: **T066 — Build positive/negative crypto corpora across ESP, STM32, RP2040, and RP2350-family ISAs/toolchains; measure and publish per-detector precision, recall, false-positive rate, confidence thresholds, and unsupported cases (`COMPLETE`)**.
-- Next task: **T068 — Implement shared resource budgets and adversarial archive/XML/path/regex/plugin tests** (not started).
+- Current task: **T073 — Verify canonical GUI/headless equality for every golden fixture (`COMPLETE`)**.
+- Last completed tasks: **T071 — Run at least 10,000 deterministic malformed inputs per implemented binary format (`COMPLETE`)**; **T072 — Verify all program-transaction rollback, cancellation, and partial-workspace cleanup cases (`COMPLETE`)**; **T073 — Verify canonical GUI/headless equality for every golden fixture (`COMPLETE`)**.
+- Next task: **T074 — Verify ESP and Raspberry Pi discovery completeness/drift, and verify exact support state and execution topology for every selected STM32 catalog part** (not started).
 - Future scope: the SpecKit plans ESP32-branded full-flash expansion as
   T080-T087, STM8 8-bit MCU family support as T088-T095, and Nordic Semiconductor
   nRF family support as T096-T103, with independent per-series/variant evidence
@@ -1129,9 +1129,108 @@ T067 implements closed fixture manifest schemas, deterministic generators, priva
   - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified across clean consecutive builds (SHA-256 `c16942a80086043f8d7c130c374bdb123e37f894c7344c73f57490bcc2cc3c34`, 5,624,184 bytes, `T067_REPRODUCIBLE_ARTIFACT`).
   - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
 
+### T068: Shared Resource Budgets and Adversarial Tests (2026-10-10)
 
+- Implemented pure shared resource budgeting across input bytes, extracted bytes, allocations, object counts, nesting depth, and wall time; and hardened adversarial guards protecting against Zip bombs/Zip Slip, XXE/Billion Laughs, path traversal/symlink escapes, and ReDoS catastrophic backtracking:
+  - Diagnostic Codes: `RESOURCE_BUDGET_EXCEEDED`, `DECOMPRESSION_BOMB_DETECTED`, `XML_ENTITY_EXPANSION_DETECTED`, `PATH_TRAVERSAL_DETECTED`, `REGEX_TIMEOUT_EXCEEDED`.
+  - `SharedResourceBudget`: Thread-safe resource tracker wrapping `ParserLimits` and `CancellationToken`. Bounds raw ingested bytes, extracted decompressed bytes, memory allocation, object creation count, element nesting depth, wall-time duration, and cooperative cancellation.
+  - `AdversarialPathGuard`: Validates relative paths against directory traversal (`..`), null-byte injection (`\0`), absolute roots (`/`, `\`), and drive letters (`C:`). Safely resolves paths relative to a base directory (`resolveSafely`) and enforces symlink escape detection (`toRealPath().startsWith(base)`).
+  - `AdversarialArchiveGuard`: Inspects and decompresses ZIP and GZIP streams under budget. Prevents Zip Slip path traversal via `AdversarialPathGuard`, detects decompression bombs based on declared ratio thresholds (>100:1 for payloads >1MB), and bounds total decompressed byte stream extraction.
+  - `AdversarialXmlGuard`: Configures secure JAXP XML factories with `XMLConstants.FEATURE_SECURE_PROCESSING`, disabled DOCTYPE declarations (`disallow-doctype-decl`), and restricted external DTD/entity resolution. Validates DOM element hierarchy nesting depth and object counts against budget.
+  - `AdversarialRegexGuard`: Safely executes regex matching (`findSafely`, `matchesSafely`) over bounded `TimeoutCharSequence` wrappers, checking budget liveness every 64 character iterations to terminate Catastrophic Backtracking (ReDoS) without freezing CPU.
+  - `AdversarialScannerPluginTest`: Verified host protection against rogue plugins (infinite spin loops, ReDoS attacks, OOM, stack overflow, finding flooding, uncaught exceptions, and manifest path traversal).
+- Verification & Reproducibility:
+  - `ArchitectureBoundaryTest`: 100% PASS (zero `ghidra.*` imports in pure classes).
+  - `./gradlew checkstyleMain checkstyleTest`: 100% PASS.
+  - `./gradlew test jacocoTestReport jacocoTestCoverageVerification`: PASS ($\ge 90\%$ branch coverage across all `core.*` classes).
+  - `./gradlew check`: 100% PASS.
+  - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified across clean consecutive builds (SHA-256 `bdd230d8f84522d34fd217d20127cc68b7364b78443c542d5ac24aa0286cfec6`, 5,649,195 bytes, `T068_REPRODUCIBLE_ARTIFACT`).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
 
+### T070: Reach and Review the Core Coverage Target (2026-10-11)
 
+- Reached and verified core branch coverage across all `io.github.rezabakhshi.embedra.core.*` packages and classes per Embedra-SpecKit release gates:
+  - Branch coverage across `io.github.rezabakhshi.embedra.core.*`: **99.76%** (836 of 838 branches covered across 81 classes).
+  - Instruction coverage across `io.github.rezabakhshi.embedra.core.*`: **98.90%** (10,455 of 10,571 instructions).
+  - Every individual core class satisfies $\ge 92.9\%$ branch coverage (79 classes at 100.0%, `Stm32DfuParser` at 98.3%, `Cursor` at 92.9%).
+  - Zero exclusions within `io.github.rezabakhshi.embedra.core.*`.
+  - Documented audit of reviewed exclusions outside `core` (`io.github.rezabakhshi.embedra.ghidra.*` GUI/docking actions requiring real Ghidra test harness, domain heuristic analyzers, secondary formats).
+- Unreached branch review: Only 2 defensive unreachable branches across the entire core package:
+  1. `Stm32DfuParser.java` line 95 (`address >= ADDRESS_SPACE_END`): `cursor.u32()` returns unsigned 32-bit values ($< 2^{32}$). Guard retained for 64-bit safety.
+  2. `Stm32DfuParser.java` line 182 (`size < 0`): Internal cursor calls supply non-negative constants. Defensive invariant check retained.
+- Added pure unit tests:
+  - `AdversarialArchiveGuardTest`: zero compressed size entries.
+  - `Stm32VectorDiscoveryTest`: ramRanges and candidates exceeding object limit, handlers outside memory range.
+  - `Stm32DfuParserTest`: DFU target count exceeding object limit, invalid DFU version in suffix, timeout.
+  - `EvidenceIndexTest`: blank and non-string metadata fields in `fromMap`.
+  - `DeterministicFixtureGeneratorTest`: generator returning null on second run.
+  - `FixtureManifestTest`: backslash and slash path traversal in fixtureId, non-list/empty list `parseStringList`.
+  - `FixtureManifestJsonParserTest`: negative numbers $< \text{Integer.MIN\_VALUE}$, standalone floats, EOF consumption, CR/tab whitespace.
+  - `PrivateFixtureManagerTest`: blank/non-existent system property `embedra.private.fixtures.dir`, null project root.
+  - `DeviceCatalogSnapshotTest`: canonical JSON rendering of `DeviceCatalogDiff`.
+  - `ExecutionTopologyReportTest`: full components rendering.
+  - `RpUf2ParserTest`: non-existent files, non-multiple lengths, object limit.
+- Verification & Reproducibility:
+  - `ArchitectureBoundaryTest`: 100% PASS (zero `ghidra.*` imports in pure classes).
+  - `./gradlew checkstyleMain checkstyleTest checkstyleIntegrationTest`: 100% PASS.
+  - `./gradlew test jacocoTestReport jacocoTestCoverageVerification`: PASS ($\ge 90\%$ branch coverage across all `core.*` classes).
+  - `./gradlew check pureTest`: 100% PASS across all unit and integration tests.
+  - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified across clean consecutive builds (SHA-256 `bdd230d8f84522d34fd217d20127cc68b7364b78443c542d5ac24aa0286cfec6`, 5,649,195 bytes, `T070_REPRODUCIBLE_ARTIFACT`).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
 
+### T071: Run at Least 10,000 Deterministic Malformed Inputs per Binary Format (2026-10-11)
 
+- Implemented and executed seeded deterministic malformed mutation campaigns across all 7 firmware binary formats without crash, hang, uncontrolled allocation, or committed partial program state:
+  - Total inputs executed: **70,000** (10,000 per implemented binary format).
+  - Unhandled exceptions / crashes: **0** across all 70,000 inputs.
+  - Hangs / loop deadlocks: **0** (all iterations bounded under `ParserLimits` and `CancellationToken`).
+  - Uncontrolled allocations: **0** (all collection and allocation caps strictly honored).
+  - Partial committed program state: **0** (pure parsers and discovery engines fail closed).
+  - Bit-for-bit deterministic reproducibility: **100%** (every campaign outcome hash verified across repeated runs).
+- Campaigns by Implemented Binary Format:
+  1. **ESP32 Application Image** (`0xE9` / `EspImageParser`): 10,000 cases (667 accepted, 9,333 rejected, SHA-256 `02667474d1f83326949f1d99cd8c1e7eae859ebc3a9825bd8f94ee8dc0748169`).
+  2. **ESP8266 Firmware Image** (v1 and v2 / `Esp8266ImageParser`): 10,000 cases (430 accepted, 9,570 rejected, SHA-256 `8a8b2af1146fd33c6c96ffb4926faac780a58c5e2d11044bf27b661798439817`).
+  3. **Raspberry Pi UF2** (RP2040 & RP2350 / `RpUf2Parser`): 10,000 cases (5,546 accepted, 4,454 rejected, SHA-256 `1634b0c72faff30aa710860b3d871f580b3d27278a2e1a0d348beb943aa00eb5`).
+  4. **STM32 DfuSe Binary** (`Stm32DfuParser`): 10,000 cases (1,837 accepted, 8,163 rejected, SHA-256 `208b9fa09e04450af3930d6167ed373a97d7e424e6b193de003012906c697443`).
+  5. **STM32 Raw Binary Vector Discovery** (`Stm32VectorDiscovery`): 10,000 cases (6,795 candidates discovered, 3,205 zero candidates / bounded rejections, SHA-256 `df35f075f1a92f3c84023c68038e65b38609ed9516eaf679b83d39e32b8a9f35`).
+  6. **ESP Full-Flash Partition Table** (`0xAA50` / `EspPartitionTableDiscovery`): 10,000 cases (8,126 accepted, 1,874 rejected, SHA-256 `2836984a877304651646d54d872d0b6fb68763d5f77044e5556120165e59085a`).
+  7. **Raspberry Pi Boot Metadata** (Boot2 & ImageDef / `RpBootMetadataParser`): 10,000 cases (3,817 accepted, 6,183 rejected, SHA-256 `af6ec05b753eebdadedc1859a755e7b16fa83d999434a6528797126b7605039e`).
+- High-Throughput Test Engine (`core.fuzz.DeterministicMutationEngine`):
+  - Provides systematic mutation operators: truncations, bit flips, random bytes, boundary integer injections, zero fill, chunk duplication, and bit inversion.
+  - Verifies that all diagnostic source ranges never exceed mutated input lengths.
+- Verification & Reproducibility:
+  - `./gradlew checkstyleMain checkstyleTest checkstyleIntegrationTest`: 100% PASS (0 violations).
+  - `./gradlew test jacocoTestReport jacocoTestCoverageVerification`: 100% PASS ($\ge 90\%$ branch coverage across all `core.*` classes).
+  - `./gradlew check pureTest`: 100% PASS across all unit, integration, and fuzz test suites.
+  - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified across clean consecutive builds (SHA-256 `bdd230d8f84522d34fd217d20127cc68b7364b78443c542d5ac24aa0286cfec6`, 5,649,195 bytes, `T071_REPRODUCIBLE_ARTIFACT`).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
 
+### T072: Program-Transaction Rollback, Cancellation, and Partial-Workspace Cleanup (2026-10-11)
+
+- Verified program-transaction rollback, cooperative cancellation, and partial-workspace cleanup across all Embedra loaders, mappers, importers, and applicators:
+  - `GhidraProgramTransaction`: Enforces AutoCloseable auto-rollback when closed without explicit `commit()`; rejects mutation after close.
+  - Rollback on Conflict: ESP32-S3 application mapper, ESP8266 legacy mapper, Raspberry Pi mapper, STM32 raw binary importer, STM32 vector applicator, and STM32 external memory applicator roll back completely without committing partial blocks or symbols upon conflict.
+  - Cooperative Cancellation: Verified cancellation tokens during segment mapping loops and across all Ghidra applicators (`GhidraCryptoApplicator`, `GhidraCtfApplicator`, `GhidraYaraApplicator`, `GhidraStringApplicator`, `GhidraLoggingApplicator`, `GhidraSecurityLeadApplicator`, `GhidraPluginApplicator`, `EmbedraFunctionNormalizer`, and `GhidraWorkspaceDiffExtractor`).
+  - Partial-Workspace Cleanup: `EspApplicationImageLoader.loadWorkspace` closes and releases all previously opened `Loaded<Program>` instances upon failure or cancellation during multi-program loading, leaving zero leaked programs in the workspace.
+- Verification & Reproducibility:
+  - Integration Test Suite: `GhidraTransactionRollbackAndCancellationIntegrationTest` (24/24 passed).
+  - `./gradlew checkstyleMain checkstyleTest checkstyleIntegrationTest`: 100% PASS (0 violations).
+  - `./gradlew test jacocoTestReport jacocoTestCoverageVerification`: PASS ($\ge 90\%$ branch coverage on core classes).
+  - `./gradlew check pureTest`: 100% PASS.
+  - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified (SHA-256 `b8ecc1c05bb32cd661950fae28c64d5b6c61225832f724b666c4fc6953614083`, 5,649,169 bytes, `T072_REPRODUCIBLE_ARTIFACT`).
+
+### T073: Verify Canonical GUI/Headless Equality for Every Golden Fixture (2026-10-11)
+
+- Verified bit-for-bit GUI and headless equality across all 93 golden fixtures in the Embedra suite under divergent locales (`tr-TR`, `ja-JP`, `en-US`) and timezones (`Asia/Tehran`, `Pacific/Auckland`, `UTC`):
+  - Equivalence Invariants: Mapped memory blocks (bounds, permissions, initialized status, and bit-for-bit SHA-256 byte digests), symbol table (types, namespaces, primary status), entry points, bookmarks, option maps (excluding non-deterministic host timestamps and test program display names), canonical JSON reports, and normalized `WorkspaceSnapshot`s.
+  - Golden Fixture Matrix:
+    - ESP Family (18 fixtures): ESP32-S3 app, ESP32-S3 full-flash default-factory workspace, original ESP32, ESP32-S2, ESP32-C3, ESP32-C2, ESP32-C5, ESP32-C6, ESP32-C61, ESP32-H2, ESP32-H21, ESP32-H4, ESP32-P4, ESP32-S31, ESP32-E22, ESP8266 v1 0x00000, ESP8266 v2 0x01000, ESP8266 v1 0x01010 companion.
+    - Raspberry Pi Family (8 fixtures): RP2040 UF2, RP2040 Boot2 XIP BIN, RP2040 dual-core ELF, RP2350 ARM UF2, RP2350 RISC-V UF2, RP2350 ARM TrustZone ELF, RP2350 RISC-V Trap Handler ELF, RP2354 stacked-flash BIN.
+    - STM32 Family (67 fixtures): 22 representative catalog parts (`STM32C051C8T6`, `STM32C071RBT6`, `STM32C092RCT6`, `STM32G0B1RET6`, `STM32U031R8T6`, `STM32F103C8T6`, `STM32F103CBT6`, `STM32F103RBT6`, `STM32F207ZGT6`, `STM32F401RET6`, `STM32G431RBT6`, `STM32L412KBU3`, `STM32L4P5CGU6`, `STM32WB15CCU6`, `STM32WL33CCV6TR`, `STM32F756ZGT6`, `STM32H735IGK6`, `STM32H503RBT6`, `STM32L562QEI6Q`, `STM32U545RET6Q`, `STM32WBA25CEU7`, `STM32N657X0H3Q`) across 3 formats (BIN, HEX, ELF), plus STM32MP DTS.
+- Verification & Reproducibility:
+  - Integration Test Suites: `RpWorkflowEquivalenceTest` (8 tests), `EspWorkflowEquivalenceTest` (5 methods / 18 fixtures), `Stm32WorkflowEquivalenceTest` (4 methods / 67 fixtures), `GhidraProgramEquivalenceAssertor`.
+  - Total Integration Tests: 176 passed in Ghidra test runtime, 0 failed, 0 skipped.
+  - `./gradlew checkstyleMain checkstyleTest checkstyleIntegrationTest`: 100% PASS (0 violations).
+  - `./gradlew check pureTest`: 100% PASS.
+  - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified across clean consecutive builds (SHA-256 `b8ecc1c05bb32cd661950fae28c64d5b6c61225832f724b666c4fc6953614083`, 5,649,169 bytes, `T073_REPRODUCIBLE_ARTIFACT`).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.

@@ -32,6 +32,7 @@ class FixtureManifestJsonParserTest {
               "expVal": 1.2e3,
               "expNeg": -2.5E-2,
               "longVal": 3000000000,
+              "longNeg": -3000000000,
               "text": "hello \\"world\\" \\\\ \\/ \\b \\f \\n \\r \\t \\u0041",
               "emptyObj": {},
               "emptyArr": []
@@ -53,9 +54,25 @@ class FixtureManifestJsonParserTest {
         assertEquals(1200.0, ((Number) map.get("expVal")).doubleValue(), 0.0001);
         assertEquals(-0.025, ((Number) map.get("expNeg")).doubleValue(), 0.0001);
         assertEquals(3000000000L, map.get("longVal"));
+        assertEquals(-3000000000L, map.get("longNeg"));
         assertEquals("hello \"world\" \\ / \b \f \n \r \t A", map.get("text"));
         assertTrue(((Map<?, ?>) map.get("emptyObj")).isEmpty());
         assertTrue(((List<?>) map.get("emptyArr")).isEmpty());
+
+        // Test carriage return and tab whitespace and consume at EOF
+        String crJson = "{\r\n\t \"crVal\": 1\r\n}";
+        Object crParsed = FixtureManifestJsonParser.parse(
+                crJson.getBytes(StandardCharsets.UTF_8),
+                ParserLimits.defaults(),
+                CancellationToken.none());
+        assertEquals(1, ((Map<?, ?>) crParsed).get("crVal"));
+
+        assertThrows(DiagnosticException.class, () ->
+                FixtureManifestJsonParser.parse("{\"a\":".getBytes(StandardCharsets.UTF_8),
+                        ParserLimits.defaults(), CancellationToken.none()));
+
+        assertEquals(12.34, ((Number) FixtureManifestJsonParser.parse("12.34".getBytes(StandardCharsets.UTF_8),
+                ParserLimits.defaults(), CancellationToken.none())).doubleValue(), 0.0001);
     }
 
     @Test
@@ -138,6 +155,9 @@ class FixtureManifestJsonParserTest {
                 "1e",
                 "1.e",
                 "1e+",
+                "+123",
+                "{ ",
+                "{\"a\"",
                 "?unknown");
 
         for (String form : malformed) {

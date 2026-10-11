@@ -67,6 +67,7 @@ class Stm32DfuParserTest {
         reject(good, 10, 2, DiagnosticCode.STM_DFU_INVALID);
         reject(good, good.length - 8, 0, DiagnosticCode.STM_DFU_INVALID);
         reject(good, good.length - 7, 'X', DiagnosticCode.STM_DFU_INVALID);
+        reject(good, good.length - 10, 0, DiagnosticCode.STM_DFU_INVALID);
         reject(good, good.length - 5, 15, DiagnosticCode.STM_DFU_INVALID);
         byte[] badCrc = good.clone();
         badCrc[293] ^= 1;
@@ -75,6 +76,22 @@ class Stm32DfuParserTest {
         assertEquals(DiagnosticCode.STM_DFU_INVALID,
             assertThrows(DiagnosticException.class,
                 () -> parse(Arrays.copyOf(good, 20))).diagnostic().code());
+
+        byte[] twoTargets = good.clone();
+        twoTargets[10] = 2;
+        refreshCrc(twoTargets);
+        ParserLimits oneObj = new ParserLimits(100_000, 100_000, 100_000, 1, 10, Duration.ofSeconds(5));
+        assertEquals(DiagnosticCode.STM_DFU_INVALID, assertThrows(DiagnosticException.class, () ->
+            Stm32DfuParser.parse(twoTargets, oneObj, CancellationToken.none())).diagnostic().code());
+
+        ParserLimits fastTimeout = new ParserLimits(100_000, 100_000, 100_000, 100, 10, Duration.ofNanos(1));
+        try {
+            Thread.sleep(2);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        assertEquals(DiagnosticCode.LIMIT_EXCEEDED, assertThrows(DiagnosticException.class, () ->
+            Stm32DfuParser.parse(good, fastTimeout, CancellationToken.none())).diagnostic().code());
     }
 
     @Test

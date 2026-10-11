@@ -2,6 +2,7 @@ package io.github.rezabakhshi.embedra.core.catalog;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,11 @@ class DeviceCatalogSnapshotTest {
         assertEquals(List.of("part-removed"), diff.removed().stream().map(DeviceCatalogEntry::deviceId).toList());
         assertEquals(List.of("part-a"), diff.changed().stream().map(DeviceCatalogChange::deviceId).toList());
         assertEquals(DeviceCatalogDiff.SCHEMA_ID, diff.schemaId());
+
+        String json = diff.toCanonicalJson();
+        assertTrue(json.contains("\"schemaId\":\""
+            + DeviceCatalogDiff.SCHEMA_ID + "\""));
+        assertTrue(json.contains("\"deviceId\":\"part-added\""));
     }
 
     @Test

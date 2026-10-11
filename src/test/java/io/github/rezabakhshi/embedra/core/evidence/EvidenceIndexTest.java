@@ -265,4 +265,63 @@ class EvidenceIndexTest {
         assertEquals("T067", index.entries().get(0).taskId());
         assertEquals(1, index.entries().get(0).retainedArtifacts().size());
     }
+
+    @Test
+    void validatesFromMapEdgeCases() throws DiagnosticException {
+        java.util.Map<String, Object> baseEntry = new java.util.HashMap<>(java.util.Map.of(
+                "requirementId", "REQ-1",
+                "taskId", "T001",
+                "testName", "Test#test",
+                "resultStatus", "PASS"));
+
+        java.util.Map<String, Object> blankReq = new java.util.HashMap<>(baseEntry);
+        blankReq.put("requirementId", "   ");
+        assertThrows(IllegalArgumentException.class, () -> EvidenceIndexEntry.fromMap(blankReq));
+
+        java.util.Map<String, Object> blankTask = new java.util.HashMap<>(baseEntry);
+        blankTask.put("taskId", "   ");
+        assertThrows(IllegalArgumentException.class, () -> EvidenceIndexEntry.fromMap(blankTask));
+
+        java.util.Map<String, Object> blankTest = new java.util.HashMap<>(baseEntry);
+        blankTest.put("testName", "   ");
+        assertThrows(IllegalArgumentException.class, () -> EvidenceIndexEntry.fromMap(blankTest));
+
+        java.util.Map<String, Object> blankStatus = new java.util.HashMap<>(baseEntry);
+        blankStatus.put("resultStatus", "   ");
+        assertThrows(IllegalArgumentException.class, () -> EvidenceIndexEntry.fromMap(blankStatus));
+
+        java.util.Map<String, Object> nonListArtifacts = new java.util.HashMap<>(baseEntry);
+        nonListArtifacts.put("retainedArtifacts", "not-a-list");
+        assertEquals(0, EvidenceIndexEntry.fromMap(nonListArtifacts).retainedArtifacts().size());
+
+        java.util.Map<String, Object> listWithBlank = new java.util.HashMap<>(baseEntry);
+        listWithBlank.put("retainedArtifacts", List.of("  ", "valid-artifact"));
+        assertEquals(List.of("valid-artifact"), EvidenceIndexEntry.fromMap(listWithBlank).retainedArtifacts());
+
+        java.util.Map<String, Object> baseIndex = new java.util.HashMap<>(java.util.Map.of(
+                "generatedAt", "2026-10-10T00:00:00Z",
+                "toolVersion", "1.0",
+                "ghidraVersion", "12.1.3",
+                "entries", List.of(baseEntry)));
+
+        java.util.Map<String, Object> blankGenAt = new java.util.HashMap<>(baseIndex);
+        blankGenAt.put("generatedAt", "   ");
+        assertThrows(DiagnosticException.class, () -> EvidenceIndex.fromMap(blankGenAt));
+
+        java.util.Map<String, Object> nonStrGenAt = new java.util.HashMap<>(baseIndex);
+        nonStrGenAt.put("generatedAt", 12345);
+        assertThrows(DiagnosticException.class, () -> EvidenceIndex.fromMap(nonStrGenAt));
+
+        java.util.Map<String, Object> blankTool = new java.util.HashMap<>(baseIndex);
+        blankTool.put("toolVersion", "   ");
+        assertThrows(DiagnosticException.class, () -> EvidenceIndex.fromMap(blankTool));
+
+        java.util.Map<String, Object> blankGhidra = new java.util.HashMap<>(baseIndex);
+        blankGhidra.put("ghidraVersion", "   ");
+        assertThrows(DiagnosticException.class, () -> EvidenceIndex.fromMap(blankGhidra));
+
+        java.util.Map<String, Object> nonListEntries = new java.util.HashMap<>(baseIndex);
+        nonListEntries.put("entries", "not-a-list");
+        assertEquals(0, EvidenceIndex.fromMap(nonListEntries).entries().size());
+    }
 }

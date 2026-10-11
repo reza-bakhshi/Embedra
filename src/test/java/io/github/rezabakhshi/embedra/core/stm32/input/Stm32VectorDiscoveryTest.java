@@ -113,6 +113,34 @@ class Stm32VectorDiscoveryTest {
         invalid[16] = 4;
         assertTrue(Stm32VectorDiscovery.discover(invalid, BASE, List.of(ram),
             ParserLimits.defaults(), CancellationToken.none()).isEmpty());
+
+        byte[] outOfRangeHandlers = fixture();
+        outOfRangeHandlers[8] = 0x05;
+        outOfRangeHandlers[9] = 0x00;
+        outOfRangeHandlers[10] = 0x00;
+        outOfRangeHandlers[11] = 0x00;
+        outOfRangeHandlers[12] = 0x01;
+        outOfRangeHandlers[13] = 0x00;
+        outOfRangeHandlers[14] = 0x00;
+        outOfRangeHandlers[15] = 0x09;
+        outOfRangeHandlers[16] = 0x05;
+        outOfRangeHandlers[17] = 0x00;
+        outOfRangeHandlers[18] = 0x00;
+        outOfRangeHandlers[19] = 0x00;
+        assertTrue(Stm32VectorDiscovery.discover(outOfRangeHandlers, BASE, List.of(ram),
+            ParserLimits.defaults(), CancellationToken.none()).isEmpty());
+
+        ParserLimits oneObj = new ParserLimits(100_000, 100_000, 100_000, 1, 10, Duration.ofSeconds(5));
+        assertThrows(IllegalArgumentException.class, () -> Stm32VectorDiscovery.discover(
+            fixture(), BASE, List.of(ram, ram), oneObj, CancellationToken.none()));
+
+        byte[] golden = fixture();
+        byte[] doubleTable = new byte[golden.length * 2];
+        System.arraycopy(golden, 0, doubleTable, 0, golden.length);
+        System.arraycopy(golden, 0, doubleTable, golden.length, golden.length);
+        assertThrows(IllegalArgumentException.class, () -> Stm32VectorDiscovery.discover(
+            doubleTable, BASE, List.of(ram), oneObj, CancellationToken.none()));
+
         assertEquals(1, Stm32VectorDiscovery.discover(fixture(), BASE + 4,
             List.of(ram), ParserLimits.defaults(), CancellationToken.none()).size());
     }

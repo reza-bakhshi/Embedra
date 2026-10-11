@@ -71,9 +71,7 @@ public final class GhidraSecurityLeadApplicator {
             var addrFactory = program.getAddressFactory();
 
             for (SecurityLead lead : leads) {
-                if (monitor.isCancelled()) {
-                    break;
-                }
+                monitor.checkCancelled();
 
                 Address addr = addrFactory.getDefaultAddressSpace().getAddress(lead.address());
                 if (addr == null || !program.getMemory().contains(addr)) {

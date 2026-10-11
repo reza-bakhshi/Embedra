@@ -46,8 +46,8 @@ public final class GhidraPluginApplicator {
             var space = program.getAddressFactory().getDefaultAddressSpace();
 
             for (ScannerPluginFinding f : findings) {
-                if (monitor != null && monitor.isCancelled()) {
-                    break;
+                if (monitor != null) {
+                    monitor.checkCancelled();
                 }
 
                 Address addr = space.getAddress(f.address());

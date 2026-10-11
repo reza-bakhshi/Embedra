@@ -800,12 +800,12 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 ### Release gates
 
 - [x] T067 Implement fixture manifests, deterministic generators, private-fixture handling, and requirement-to-evidence indexing.
-- [ ] T068 Implement shared resource budgets and adversarial archive/XML/path/regex/plugin tests.
-- [ ] T069 Prove idempotency and preservation of user-created Ghidra state across import and enrichment reruns.
-- [ ] T070 Reach and review the core coverage target.
-- [ ] T071 Run at least 10,000 deterministic malformed inputs per implemented binary format.
-- [ ] T072 Verify all program-transaction rollback, cancellation, and partial-workspace cleanup cases.
-- [ ] T073 Verify canonical GUI/headless equality for every golden fixture.
+- [x] T068 Implement shared resource budgets and adversarial archive/XML/path/regex/plugin tests.
+- [x] T069 Prove idempotency and preservation of user-created Ghidra state across import and enrichment reruns.
+- [x] T070 Reach and review the core coverage target.
+- [x] T071 Run at least 10,000 deterministic malformed inputs per implemented binary format.
+- [x] T072 Verify all program-transaction rollback, cancellation, and partial-workspace cleanup cases.
+- [x] T073 Verify canonical GUI/headless equality for every golden fixture.
 - [ ] T074 Verify ESP and Raspberry Pi discovery completeness/drift, and verify exact support state and execution topology for every selected STM32 catalog part; STM32 additions require explicit review rather than silent expansion.
 - [ ] T075 Complete compatibility matrices by Ghidra release, OS, exact device, processor topology, input format, pack, crypto detector, and feature state.
 - [ ] T076 Complete dependency, code, pack, fixture, derived-data, trademark, and redistribution license review.

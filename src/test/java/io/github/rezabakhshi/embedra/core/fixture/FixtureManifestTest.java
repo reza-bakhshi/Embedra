@@ -107,6 +107,46 @@ class FixtureManifestTest {
                 null,
                 null,
                 null));
+        assertThrows(IllegalArgumentException.class, () -> new FixtureManifest(
+                FixtureManifest.SCHEMA_ID,
+                "escape\\id",
+                validDigest,
+                "STM32F4",
+                null,
+                "ELF",
+                "test",
+                "Apache-2.0",
+                RedistributionStatus.REDISTRIBUTABLE,
+                null,
+                "rev1",
+                "make",
+                "gcc",
+                List.of("readelf"),
+                "snapshots/test.json",
+                List.of("T033"),
+                null,
+                null,
+                null));
+        assertThrows(IllegalArgumentException.class, () -> new FixtureManifest(
+                FixtureManifest.SCHEMA_ID,
+                "escape/id",
+                validDigest,
+                "STM32F4",
+                null,
+                "ELF",
+                "test",
+                "Apache-2.0",
+                RedistributionStatus.REDISTRIBUTABLE,
+                null,
+                "rev1",
+                "make",
+                "gcc",
+                List.of("readelf"),
+                "snapshots/test.json",
+                List.of("T033"),
+                null,
+                null,
+                null));
     }
 
     @Test
@@ -363,6 +403,14 @@ class FixtureManifestTest {
         badListMap.put("expectedSnapshot", "S");
         badListMap.put("requirements", List.of("REQ"));
         assertThrows(DiagnosticException.class, () -> FixtureManifest.fromMap(badListMap));
+
+        Map<String, Object> notAListMap = new java.util.LinkedHashMap<>(badListMap);
+        notAListMap.put("oracleCommands", "not-a-list");
+        assertThrows(DiagnosticException.class, () -> FixtureManifest.fromMap(notAListMap));
+
+        Map<String, Object> emptyListMap = new java.util.LinkedHashMap<>(badListMap);
+        emptyListMap.put("oracleCommands", List.of());
+        assertThrows(DiagnosticException.class, () -> FixtureManifest.fromMap(emptyListMap));
 
         // parseStringList with a blank string inside the list
         Map<String, Object> blankItemMap = new java.util.LinkedHashMap<>(badListMap);
