@@ -1,0 +1,73 @@
+# NOTICE for Embedra
+
+Copyright 2026 the Embedra project authors.
+
+This product includes software and derived data developed by the Embedra
+project (`io.github.rezabakhshi.embedra`), released under the terms of the
+Apache License, Version 2.0 (see `LICENSE`). The canonical, per-component
+license inventory is maintained in `THIRD_PARTY_NOTICES.md` and
+`docs/license-audit.md` (which cites the SHA-256 digest ledger
+`licenses/license-audit.sha256` for every third-party-derived artifact).
+
+## Bundled distributions in this extension
+
+- Embedra extension code, documentation, pack manifests, catalog snapshots,
+  and fixture-derived reference data: Apache-2.0.
+- Ghidra-derived Xtensa language definition sources
+  (`data/languages/xtensa.cspec`, `xtensa.pspec`, `xtensaArch.sinc`,
+  `xtensaInstructions.sinc`, `xtensaMain.sinc`, `cust.sinc`, `flix.sinc`):
+  byte-identical copies of files from the pinned Ghidra 12.1.3 PUBLIC
+  distribution, which is Apache-2.0 licensed. Ghidra's own copyright and
+  license notice apply to those files. The Embedra SALT/SALTU additions
+  (`embedra_esp32s3.*`) are original work under Apache-2.0.
+- Espressif-derived packs and snapshots (ROM symbol tables, peripheral
+  register windows, SVD descriptions, product facts, Function ID pilot):
+  deterministic, non-expressive derivations of Apache-2.0 ESP-IDF and
+  Apache-2.0 Espressif SVD sources at pinned revisions, with the source
+  identity, license, revision, transformation, and content digest recorded in
+  every pack manifest and catalog snapshot. No Espressif page images, prose,
+  or descriptive content is redistributed.
+- Raspberry Pi-derived catalog facts: non-expressive factual derivations
+  (identifiers, memory sizes, pin counts, board settings) documented against
+  the official Raspberry Pi datasheets. The datasheets themselves are
+  licensed under the Raspberry Pi documentation terms and are not
+  redistributed.
+- STMicroelectronics-derived data: normalized facts derived from the
+  BSD-3-Clause `STM32_open_pin_data` repository, from ST CMSIS device
+  repositories (Apache-2.0), from pinned BSD-3-Clause ST board/BSP
+  repositories, and from the ST `stm32c5xx-dfp` repository (BSD-3-Clause with
+  Apache-2.0 SVD files). The conditions and disclaimer of the BSD-3-Clause
+  sources are preserved in `licenses/STMicroelectronics-STM32-open-pin-data-BSD-3-Clause.txt`.
+  ST archives carrying SLA0044 or SLA0048 terms were inspected only as
+  review oracles and are never bundled or redistributed.
+- STM32F1 library signatures: derived function names and masked byte
+  patterns from an audited build of statically and permissively licensed
+  STM32Cube F1 components only (BSD-3-Clause, Apache-2.0, MIT); no vendor
+  source, header, object, or toolchain runtime is bundled.
+
+## Trademarks and names
+
+- `Ghidra` is used to describe compatibility with the Apache-2.0 open-source
+  software-reverse-engineering framework of that name distributed by the
+  U.S. National Security Agency. Embedra is an independent extension for
+  Ghidra; it is not produced by, reviewed by, approved by, or affiliated
+  with the NSA or the Ghidra project.
+- `Espressif`, `ESP32`, `ESP8266`, `ESP-IDF`, and `esptool` are trademarks or
+  project names of Espressif Systems. Their use identifies the hardware and
+  software formats that this extension parses and documents.
+- `Raspberry Pi`, `RP2040`, `RP2350`, `Pico`, and product names derived from
+  them are trademarks of Raspberry Pi Ltd. Their use identifies the hardware
+  platforms that this extension supports.
+- `STM32`, `STM8`, `STM32Cube`, `Nucleo`, and `Discovery` are trademarks of
+  STMicroelectronics. Their use identifies the devices documented by the
+  curated catalogs.
+- `Arm`, `Cortex`, and `CMSIS` are trademarks or project names of Arm
+  Limited (or its subsidiaries). Their use identifies processor
+  architectures and the vendor-applied header conventions parsed by this
+  extension.
+
+Third-party product names are used in a nominative, referential sense only.
+There is no affiliation with, sponsorship by, or endorsement from any of the
+trademark owners, and no endorsement is implied by the compatibility
+statements in this distribution. Third parties retain all rights in their
+names, marks, and logos.

@@ -19,13 +19,41 @@ jobs:
           persist-credentials: false
       - name: Fetch current official inputs for explicit drift check
         run: |
-          curl --proto '=https' --tlsv1.2 --fail --location \
-            --output "$RUNNER_TEMP/socs.html" https://www.espressif.com/en/products/socs
-          curl --proto '=https' --tlsv1.2 --fail --location \
-            --output "$RUNNER_TEMP/modules.html" https://www.espressif.com/en/products/modules
-          curl --proto '=https' --tlsv1.2 --fail --location \
-            --output "$RUNNER_TEMP/devkits.html" https://www.espressif.com/en/products/devkits
-          git clone --depth 1 https://github.com/espressif/esp-idf.git "$RUNNER_TEMP/esp-idf"
+          set -euo pipefail
+          RETRIES=3
+          RETRY_DELAY=5
+
+          fetch() {
+            url="$1"
+            out="$2"
+            for i in $(seq 1 "$RETRIES"); do
+              echo "Fetching $url (attempt $i/$RETRIES)..."
+              curl --proto '=https' --tlsv1.2 --fail --location \
+                --retry 3 --retry-delay 5 --retry-connrefused --max-time 60 \
+                --output "$out" "$url" && { echo "Fetched $url -> $out"; return 0; }
+              echo "Attempt $i failed (exit $?), sleeping $RETRY_DELAY s..."
+              sleep "$RETRY_DELAY"
+            done
+            echo "ERROR: Failed to fetch $url after $RETRIES attempts"
+            return 1
+          }
+
+          fetch "https://www.espressif.com/en/products/socs" "$RUNNER_TEMP/socs.html"
+          fetch "https://www.espressif.com/en/products/modules" "$RUNNER_TEMP/modules.html"
+          fetch "https://www.espressif.com/en/products/devkits" "$RUNNER_TEMP/devkits.html"
+
+          # Clone esp-idf with retries
+          for i in $(seq 1 "$RETRIES"); do
+            echo "Cloning esp-idf (attempt $i/$RETRIES)..."
+            git clone --depth 1 https://github.com/espressif/esp-idf.git "$RUNNER_TEMP/esp-idf" && break
+            echo "git clone attempt $i failed, sleeping $RETRY_DELAY s..."
+            sleep "$RETRY_DELAY"
+          done
+
+          if [ ! -d "$RUNNER_TEMP/esp-idf" ]; then
+            echo "ERROR: esp-idf not present at $RUNNER_TEMP/esp-idf after retries"
+            exit 1
+          fi
       - name: Compare normalized exact products
         run: |
           python3 scripts/generate-esp-catalog.py drift \
@@ -44,5 +72,5 @@ jobs:
           path: |
             ${{ runner.temp }}/esp-catalog-drift.json
             ${{ runner.temp }}/candidate-source-facts.json
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 14

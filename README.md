@@ -4,16 +4,29 @@
 [![Ghidra](https://img.shields.io/badge/Ghidra-12.1.3_PUBLIC-red.svg)](https://ghidra-sre.org/)
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://openjdk.org/projects/jdk/21/)
 
-**Embedra** is a high-assurance, multi-architecture Ghidra extension engineered for deep embedded firmware reverse engineering, hardware CTF challenges, cryptographic artifact recovery, and silicon security analysis.
+**Embedra** is a high-assurance Ghidra extension for embedded-firmware reverse
+engineering, hardware CTF analysis, cryptographic artifact recovery, and
+silicon security analysis. It turns validated firmware bytes into Ghidra
+programs with plan-checked memory maps, device-identity enrichment, and
+security-findings reporting — never guesses, never silently promotes a
+planned capability to a working one.
 
-Embedra bridges the gap between raw binary captures and high-level architectural understanding across **Espressif (ESP32/ESP8266)**, **STMicroelectronics (STM32 Cortex-M, STM32MP & STM8)**, **Raspberry Pi (RP2040 / RP2350)**, and **Nordic Semiconductor (nRF51 / nRF52 / nRF53 / nRF54 / nRF91)** platforms.
+Embedra currently implements support components for **Espressif (ESP32/ESP8266
+families)**, **Raspberry Pi (RP2040 / RP2350 / RP2354)**, and
+**STMicroelectronics (STM32 MCU, curated catalog; STM32MP planning)** per the
+capability states in the support matrix. Support states are exact:
+part/format/feature combinations are `PLANNED`, `EXPERIMENTAL`, `VERIFIED`,
+or `UNSUPPORTED`, and are only documented when backed by tests in this
+repository.
 
 ---
 
 ## Table of Contents
 
+- [Documentation](#documentation)
 - [Core Capabilities](#core-capabilities)
-- [Supported Platforms & Architectures](#supported-platforms--architectures)
+- [Architecture Summary](#architecture-summary)
+- [Capability States (What Is Actually Supported)](#capability-states-what-is-actually-supported)
 - [Cryptographic Analysis Engine](#cryptographic-analysis-engine)
 - [YARA Pattern Matching & Threat Hunting](#yara-pattern-matching--threat-hunting)
 - [Security Leads & CTF Recovery](#security-leads--ctf-recovery)
@@ -21,91 +34,131 @@ Embedra bridges the gap between raw binary captures and high-level architectural
 - [Firmware & Workspace Diffing](#firmware--workspace-diffing)
 - [Local Scanner Plugin API](#local-scanner-plugin-api)
 - [Installation](#installation)
+- [Quickstart](#quickstart)
 - [User Guide & Workflows](#user-guide--workflows)
+- [Troubleshooting & Diagnostics](#troubleshooting--diagnostics)
 - [Building from Source](#building-from-source)
+- [Known Limitations](#known-limitations)
 - [Governance & Non-Negotiable Invariants](#governance--non-negotiable-invariants)
+- [Security & Support](#security--support)
+
+---
+
+## Documentation
+
+The complete documentation suite lives in this repository:
+
+| Document | Purpose |
+|---|---|
+| [`docs/architecture.md`](docs/architecture.md) | Enforced package boundaries and the implemented import pipeline |
+| [`docs/headless.md`](docs/headless.md) | `analyzeHeadless` operation: flags, loaders, analyzers, JSON export |
+| [`docs/troubleshooting.md`](docs/troubleshooting.md) | Stable diagnostic codes and symptom→fix guidance |
+| [`docs/support-matrix.md`](docs/support-matrix.md) | Every earned capability state, with evidence links |
+| [`docs/compatibility-matrix.md`](docs/compatibility-matrix.md) | Compatibility by Ghidra release, OS, device, format, pack, detector |
+| [`docs/device-catalog.md`](docs/device-catalog.md) | Querying catalogs and adding devices without silent drift |
+| [`docs/crypto-coverage.md`](docs/crypto-coverage.md) | Crypto detector suite, algorithms, measured FP rates, confidence model |
+| [`docs/pack-format.md`](docs/pack-format.md) | Offline pack manifests, installation, and selection semantics |
+| [`docs/fixture-policy.md`](docs/fixture-policy.md) | Fixture provenance, deterministic generators, private fixtures |
+| [`docs/agent-handoff.md`](docs/agent-handoff.md) | AI-agent continuity protocol for working on this repository |
+| [`LICENSE`](LICENSE) · [`NOTICE`](NOTICE) · [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) | Licensing and redistribution information |
+| [`SECURITY.md`](SECURITY.md) | Vulnerability disclosure policy |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to contribute and which quality gates apply |
+| [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | Community standards |
+| [`CHANGELOG.md`](CHANGELOG.md) | Milestone summary redrawing from evidence |
+
+Architectural decision records live under [`docs/adr/`](docs/adr/).
 
 ---
 
 ## Core Capabilities
 
 - **Zero-Guess Firmware Ingestion**:
-  - Automatically identifies firmware formats from structural byte validation (not filenames or extensions).
-  - Merged full-flash captures (ESP32 partition tables, NVS, OTA slots, SPIFFS/LittleFS/FAT).
-  - Statically validated container formats: UF2 multi-block payloads, Intel HEX, Motorola S-Record, and raw memory binaries.
-  - Multi-image and multi-core container dissection (e.g. bootloader, application slots, coprocessor firmware).
+  - Firmware formats are identified from structural byte validation, never
+    from filenames — every rejection is a typed, stable diagnostic code.
+  - ESP32-S3 full-flash captures are dissected into multi-program workspaces:
+    bootloader, populated application slots, and explicit artifact
+    classification for erased slots and data partitions (NVS/PHY/filesystem
+    regions are detected and classified, not decoded).
+  - Statically validated container formats: UF2 multi-block payloads, Intel
+    HEX, Motorola S-Record, raw memory binaries, DfuSe v1, and ESP8266 legacy
+    v1/v2 images.
 - **Execution Topology & Hardware Mapping**:
-  - Models complex multi-core architectures (symmetric SMP, heterogeneous dual-core, radio coprocessors, TrustZone secure/non-secure worlds).
-  - Memory-mapped peripheral (MMIO) and volatile register enrichment via verified CMSIS-SVD packs.
-  - Offline masked ROM symbol attribution and vector table reconstruction.
+  - Multi-core architectures modeled as validated graphs: symmetric SMP,
+    heterogeneous dual-core, radio coprocessors, TrustZone secure/non-secure
+    worlds, application/network core splits.
+  - Memory-mapped peripheral (MMIO) enrichment via verified, provenance-pinned
+    CMSIS-SVD packs; ROM symbol attribution; vector-table reconstruction.
+  - Function ABI normalization for unknown conventions (feature row in
+    `docs/support-matrix.md`).
 - **Layered Cryptographic Artifact Recovery**:
-  - Provenance-checked, compiler-, optimization-, and ISA-aware library signature packs across 11 embedded crypto implementations.
-  - Constant table matching, sliding-window Shannon entropy analysis, and candidate key identification.
-  - Hardware crypto peripheral (AES, SHA, PKA, TRNG) and vendor ROM API call-graph and data-flow detection.
-  - Strict differentiation preventing non-crypto tables (CRCs, Base64, Deflate/zlib, LZ4) from being misclassified as encryption ciphers (AN-003).
+  - Seven independent detector subsystems (constants tables, library
+    signatures, hardware peripherals, vendor ROM APIs, key material,
+    entropy, fused pipeline) with corpus-measured precision/recall and
+    explicit unsupported-case tracking.
+  - Strict differentiation prevents non-crypto tables (CRCs, Base64,
+    Deflate/zlib, LZ4) from ever being misclassified as encryption (AN-003).
+  - Cross-program key handoff and call-site corroboration engines.
 - **Security Leads, Logging & Panic Recovery**:
-  - Recovers assertion strings, panic sites, format strings, and call-site arguments across Thumb, RISC-V, and Xtensa.
-  - Ranks security leads: authorization branch decisions, hardcoded credential comparisons, debug shells, and OTA update endpoints.
-- **Unified Findings Management & Redaction**:
-  - Interactive Swing findings table with multi-criteria filtering, search, and bookmark bi-directional synchronization.
-  - Built-in suppression engine with customizable rules.
-  - Zero-leak secret masking (`[REDACTED_SECRET]`) enforced by default across JSON, Markdown, and SARIF exports (AN-008).
-- **Firmware Workspace Diffing**:
-  - Multi-view visual and structural diffing comparing two firmware images across functions, symbols, strings, metadata, memory sections, and partition layouts.
-- **Sandboxed Local Plugin Scanner API**:
-  - Local plugin SPI with declarative JSON manifests, regex/hex/string matchers, wall-time and allocation boundaries, and ReDoS/infinite loop containment.
+  - Assertion strings, panic sites, format strings, and call-site arguments
+    recovered across Thumb, RISC-V, and Xtensa.
+  - Ranked leads: authorization branch decisions, hardcoded credential
+    comparisons, debug shells, and OTA update endpoints.
+- **Unified Findings Management**: interactive Swing table with filtering,
+  suppression rules, bookmark synchronization, and JSON/Markdown/SARIF
+  export — with zero-leak secret masking (`[REDACTED_SECRET]`) enforced by
+  default (AN-008).
+- **Firmware Workspace Diffing**: multi-view comparison across functions,
+  symbols, strings, metadata, memory blocks, and partition layouts.
+- **Sandboxed Local Plugin API**: declarative JSON manifests, bounded
+  matchers, wall-time/allocation budgets, and ReDoS/infinite-loop containment
+  (T063, T068).
 
 ---
 
-## Supported Platforms & Architectures
+## Architecture Summary
 
-### 1. Espressif Systems (ESP32 & ESP8266)
-- **Supported Targets**: ESP32, ESP32-S2, ESP32-S3, ESP32-C2, ESP32-C3, ESP32-C5, ESP32-C6, ESP32-C61, ESP32-H2, ESP32-H21, ESP32-H4, ESP32-P4, and legacy ESP8266.
-- **ISA / Languages**: Xtensa LX6/LX7 (`Xtensa:LE:32:default`), custom Embedra `Xtensa:LE:32:esp32s3` language (supporting SALT/SALTU instruction decoding and p-code), and RISC-V 32 (`RISCV:LE:32:default`).
-- **Features**:
-  - Full-flash parser detecting partition tables, encrypted partitions (treated as opaque), NVS namespaces and keys, and OTA boot states.
-  - Provenance-checked ESP-IDF SVD and ROM symbol packs.
-  - ESP32-S3 Function ID pilot database (`fid/esp32s3/`) for symbolized reference matching.
-  - Hardware crypto detection: AES-128/192/256 ECB/CBC/OFB/CTR/GCM, SHA-1/224/256/384/512, RSA modular exponentiation, Digital Signature (DS), HMAC, TRNG, and eFuse key status.
+Embedra separates pure analysis engines (no Ghidra dependencies) from a thin
+Ghidra adapter layer — a boundary enforced on every build by
+`ArchitectureBoundaryTest` and described in detail in
+[`docs/architecture.md`](docs/architecture.md):
 
-### 2. STMicroelectronics (STM32 MCU & STM32MP MPU)
-- **Supported Targets**:
-  - Cortex-M0/M0+/M3/M4/M7/M33/M55 MCU families (STM32F0, F1, F2, F3, F4, F7, G0, G4, H5, H7, L0, L1, L4, L4+, L5, U0, U5, C0, N6).
-  - Wireless MCUs: STM32WB, STM32WB0, STM32WBA, STM32WL, STM32WL3.
-  - Heterogeneous MPUs: STM32MP13, STM32MP15, STM32MP21, STM32MP23, STM32MP25 (Cortex-A35/A7 + Cortex-M33/M4).
-- **Features**:
-  - Verified catalog with 53 exact silicon records, pinouts, memory banks, and SVD profiles.
-  - Vector table reconstruction and core exception labeling.
-  - TrustZone security planning: Secure/Non-Secure memory attribution and Non-Secure Callable (NSC) veneers.
-  - Inter-core boot handoff and cross-program shared memory references (SRAM1/SRAM2, IPCC mailbox, HSEM hardware semaphores).
-  - Hardware crypto detection: STM32 CRYP (AES, DES, 3DES), HASH (MD5, SHA-1, SHA-224, SHA-256), PKA (ECDSA/RSA), and RNG.
-- **STM8 8-bit MCU Family**:
-  - STM8S (mainstream), STM8L (ultra-low-power), STM8A/AF/AL (automotive), and STM8T (touch-sensing).
-  - Unified 24-bit linear memory layout, dedicated peripheral blocks at `0x5000`, and 32-entry vector table at reset address `0x8000`.
+```mermaid
+flowchart LR
+    A["Firmware bytes<br/>(never trusted)"] --> B["format detection<br/>formats.*"]
+    B --> C["bounded parsing<br/>ParserLimits + cancellation"]
+    C --> D["device resolution<br/>targets.*"]
+    D --> E["workspace composition<br/>pure planners"]
+    E --> F["Ghidra mapping<br/>ghidra.* loader/mapper"]
+    F --> G["transactional enrichment<br/>analyzer adapter"]
+    G --> H["canonical reports<br/>bookmarks · options · exports"]
+```
 
-### 3. Raspberry Pi (RP2040 & RP2350)
-- **Supported Targets**: RP2040, RP2350A, RP2350B, RP2354A, RP2354B.
-- **ISA / Languages**: ARM Cortex-M0+ (`ARM:LE:32:Cortex`), ARM Cortex-M33 (`ARM:LE:32:Cortex-M33`), Hazard3 RISC-V 32 (`RISCV:LE:32:default`).
-- **Features**:
-  - Validated UF2 boot block ingestion and family ID verification (`RP2040`, `RP2350_ARM_S`, `RP2350_RISCV`, `RP2350_ARM_NS`).
-  - Binary Info (`picotool`) header parsing (program name, version, build date, flash/RAM boundaries, GPIO pins).
-  - Programmable I/O (PIO) disassembler and state machine analyzer.
-  - Boot ROM exported function table resolution via 2-character lookup codes (`RE`, `RP`, `FC`, etc.).
-  - RP2350 hardware SHA-256 engine, TRNG sample register, and OTP security memory.
+Pure packages: `core`, `formats`, `targets`, `analyzers`, `pack`, `svd`.
+The Ghidra adapter (`ghidra.*`) performs loaders, mappers, services, UI,
+and one transaction per logical program — rollback on failure, user state
+preserved (T072/T069).
 
-### 4. Nordic Semiconductor (nRF51, nRF52, nRF53, nRF54, nRF91)
-- **Supported Targets**: nRF51 (Cortex-M0), nRF52 (Cortex-M4F), nRF53 (dual Cortex-M33 Application & Network cores), nRF54 (Cortex-M33 / RISC-V), nRF91 (Cortex-M33 LTE-M/NB-IoT).
-- **Features**:
-  - Multi-stage firmware layout discovery: Master Boot Record (MBR), BLE protocol stack (SoftDevice S110/S130/S132/S140), Application, and DFU bootloader.
-  - SoftDevice version fingerprinting and automated SuperVisor Call (`SVC`) API resolution.
-  - Hardware Security: Arm CryptoCell CC310/CC312 engines, FICR/UICR non-volatile configuration pages, and ARM TrustZone SPU partitioning.
-  - Asymmetric dual-core execution topology: models coordinated Application Core and Network Core programs over shared RAM and IPC mailboxes on nRF5340.
+---
+
+## Capability States (What Is Actually Supported)
+
+| Family | Implemented behavior | State | Evidence |
+|---|---|---|---|
+| ESP32 family (14 series in the catalog) | Application-image import, memory/entry planning, topologies, opt-in ROM/peripheral/SVD packs with per-device availability | `EXPERIMENTAL` (per chip-ID provider) | `docs/support-matrix.md` |
+| ESP32-S3 (image chip ID 9) | Parsing, mapping, `esp_app_desc_t` metadata, full-flash partition workspace, FID pilot, SVD enrichment | `VERIFIED` subset rows + `EXPERIMENTAL` rows (e.g., language ISA breadth) | `docs/support-matrix.md` |
+| ESP8266 legacy (EX/8285) | v1/v2 image parsing and import in a separate provider | `EXPERIMENTAL` | `docs/support-matrix.md` |
+| Raspberry Pi RP2040/RP2350/RP2354 | UF2 parse `VERIFIED` + reconstruction `EXPERIMENTAL`; loader/imports; board profiles; PIO analyzer | `EXPERIMENTAL` (planning-pure subset rows marked) | `docs/support-matrix.md` |
+| STM32 (53 curated exact parts, 20 families) | Catalog identity (VERIFIED catalog lookup), import components per format (ELF/HEX/DfuSe/BIN), vector confirmation, SVD subset (8 parts), TrustZone planning, dual-core/wireless/external-memory planning | `EXPERIMENTAL` components; every device-support state stays `PLANNED` | `docs/support-matrix.md` |
+| STM32MP1/MP2 | DTS-based topology planning, boot chain, heterogeneous cores | `EXPERIMENTAL` pure planning | T049 |
+| **Planned (no code):** STM8, Nordic Semiconductor nRF51/52/53/54/91, Atmel/Microchip | Visible in the task list (T088–T111) only; **not implemented and not advertised** | `PLANNED` | `Embedra-SpecKit.md` |
+
+A capability is listed here only because tests in this repository prove it;
+see the matrices for the exact per-row evidence (requirement-to-evidence
+indexing: `.embedra/evidence/evidence-index.json`).
 
 ---
 
 ## Cryptographic Analysis Engine
-
-Embedra implements a multi-layered cryptographic analysis pipeline (**AN-010**, **AN-011**, **AN-012**, **AN-013**, **AN-014**):
 
 ```mermaid
 flowchart TD
@@ -120,197 +173,364 @@ flowchart TD
     E --> G
     F --> G
     G --> H{"Strict Differentiation (AN-003)"}
-    H -->|"Non-Crypto (CRC, Base64, Deflate, LZ4)"| I["ENCODING / COMPRESSION / CHECKSUM (Never labeled Encryption)"]
+    H -->|"Non-Crypto (CRC, Base64, Deflate, LZ4)"| I["ENCODING / COMPRESSION / CHECKSUM — never labeled encryption"]
     H -->|"Corroborated Ciphers"| J["CONFIRMED / LIKELY Crypto Findings"]
     J --> K["Ghidra Bookmarks, Comments & Unified Findings Panel"]
 ```
 
-### Supported Cryptographic Primitives & Detection Layers
-- **Symmetric Ciphers**: AES-128, AES-192, AES-256 (ECB, CBC, OFB, CTR, GCM), DES, 3DES, ChaCha20, ChaCha20-Poly1305, RC4.
-- **Asymmetric Ciphers & Curves**: RSA (modular exponentiation, key structures), Diffie-Hellman, NIST P-256, secp256k1, Curve25519, Ed25519, X25519, ECDSA, ECDH.
-- **Cryptographic Hashes & MACs**: MD5, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-3 / Keccak, BLAKE2b, BLAKE2s, Poly1305, HMAC, CMAC, HKDF, PBKDF2.
-- **Random Generators & Hardware Security**: DRBG / PRNG, Hardware TRNG, Secure Boot Engines, Flash Encryption Controllers, eFuse / OTP Key Ladders, and External Secure Elements (Microchip ATECC608A/B, Infineon OPTIGA Trust M, NXP EdgeLock SE050).
-- **Checksums & CRCs (Strictly Non-Encryption)**: CRC-32, CRC-16, CRC-8, Adler-32, Fletcher-16.
-- **Encodings & Compression (Strictly Non-Encryption)**: Base64 alphabets, Deflate/zlib headers, LZ4 frame magic.
+### Supported primitives and detection layers
 
-### Provenance-Checked Signature Database
-Embedra contains an embedded, schema-validated (`urn:embedra:schema:crypto-signature-pack:1`) signature database covering **11 embedded crypto libraries**:
-`mbed TLS / PSA Crypto`, `wolfSSL`, `BearSSL`, `TinyCrypt`, `Monocypher`, `micro-ecc`, `LibTomCrypt`, `OpenSSL`, `ESP-IDF Crypto`, `STM32 HAL CRYP`, and `Pico SDK`.
+- **Symmetric ciphers targeted by table/signature layers**: AES (128/192/256,
+  S-boxes/Rcon), DES/3DES permutations, ChaCha20 constants.
+- **Asymmetric/curve constants**: RSA key structures, NIST P-256, secp256k1,
+  Curve25519/Ed25519 search terms.
+- **Hashes & MACs**: MD5, SHA-1/224/256/384/512 tables, SHA-3/Keccak constants
+  (rule sets), BLAKE2 rule coverage, HMAC analysis, CMAC/HKDF/PBKDF2 rule
+  and search-term coverage.
+- **Hardware security detection**: AES/SHA/RSA/DS/HMAC/RNG/eFuse MMIO
+  accesses, secure-element I2C identification, flash-encryption and
+  secure-boot engine indicators — all evidence-gated leads (AN-013).
+- **Strictly non-encryption categories**: CRC-32/16/8, Adler-32, Fletcher-16
+  checksums; Base64/Deflate/zlib/LZ4 encoding/compression tables.
 
-Each signature records target architecture (`ARM_THUMB`, `XTENSA`, `RISCV32`), compiler (`GCC`, `CLANG`), optimization level (`O0`-`O3`, `Os`, `Oz`), concrete artifact role (`ALGORITHM_IMPLEMENTATION`, `WRAPPER`, `INLINED_IDIOM`), license provenance, and SHA-256 integrity digests.
+Measured per-detector precision/recall/false-positive behavior on the
+deterministic T066 corpus (100%/100%/0% corpus, gated ≥90%/≥90%/≤5%) and the
+confidence ladder (`CONFIRMED`, `LIKELY`, `PLAUSIBLE`, `LEAD`) are documented
+in [`docs/crypto-coverage.md`](docs/crypto-coverage.md). These are corpus
+measurements, not guarantees about arbitrary firmware (AN-014).
+
+### Provenance-checked signature taxonomy
+
+The signature subsystem recognizes an 11-library embedded-crypto taxonomy
+(`mbed TLS / PSA Crypto`, `wolfSSL`, `BearSSL`, `TinyCrypt`, `Monocypher`,
+`micro-ecc`, `LibTomCrypt`, `OpenSSL`, `ESP-IDF`, `STM32 HAL`, `Pico SDK`)
+and applies signatures only when target architecture, compiler, optimization
+level, and artifact role evidence is recorded (T064). The shipped signature
+pack today is the STM32 F1 slice; other libraries apply only with
+caller-supplied provenance-checked packs.
 
 ---
 
 ## YARA Pattern Matching & Threat Hunting
 
-Embedra embeds a standalone, pure Java YARA-compatible compiler and scanning engine designed specifically for embedded firmware threat hunting and pattern identification:
+Embedra embeds a pure-Java YARA-compatible compiler and scanning engine for
+embedded-firmware pattern identification:
 
-- **Elevated Execution Priority (`DATA_ANALYSIS`)**:
-  - The YARA engine runs **first** during automated analysis, tagging memory blocks, container boundaries, threat indicators, and cryptographic lookup tables before lower-priority heuristic analyzers begin.
-- **Built-in Threat & Malware Rules (`rules/threats/`)**:
-  - **Embedded Botnets & Malware**: Targets command dispatch strings and infection signatures for Mirai (`Mirai_Botnet_Commands`), Gafgyt/Bashlite (`Gafgyt_Bashlite_Botnet`), and Mozi P2P IoT malware (`Mozi_P2P_Botnet`).
-  - **Exploits & Shellcode**: Identifies architecture-specific shellcode patterns, such as the ARM Thumb `/bin/sh` execve syscall idiom (`ARM_Thumb_Shellcode_Execve`).
-  - **Backdoors & Credential Abuse**: Detects hardcoded factory telnet credentials (`Hardcoded_Telnet_Backdoor`), interactive reverse shells (`Reverse_Shell_Payload`), and hidden UART/bootloader debug shell activation strings (`Hidden_Debug_Console`).
-- **Built-in File Format & Crypto Suites**:
-  - **Containers & Filesystems (`rules/formats/`)**: SquashFS (`hsqs`), CramFS, JFFS2, UBIFS, YAFFS2, ZIP, TAR, GZIP.
-  - **Encodings (`rules/formats/`)**: Base64, Base32, Hex translation matrices.
-  - **Ciphers & Hashes (`rules/crypto/`)**: AES S-boxes, Inv S-boxes, Rcon tables, DES permutations, Blowfish, ChaCha20 constants, MD5/SHA-1/SHA-256/SHA-512 initial vectors and round constants, Keccak round constants, CRC tables.
-- **User-Defined Custom Rules Directory**:
-  - In Ghidra's Analysis Options (`Edit -> Tool Options -> Analyzers -> Embedra YARA Analysis`), set **`Custom Rules Directory`** to scan proprietary or project-specific `.yar` and `.yara` files.
-- **Prioritized Finding Integration**:
-  - YARA matches for `MALWARE` and `BACKDOOR` categories generate high-visibility `BookmarkType.WARNING` bookmarks and explicit EOL annotations.
-  - YARA cryptographic patterns are seamlessly integrated into `CryptoTableDatabase.withYara()` and `CryptoAnalysisPipeline.withYara()`, giving YARA matches precedence over generic heuristics.
+- **Analysis priority**: the YARA analyzer runs at
+  `AnalysisPriority.DATA_ANALYSIS`, tagging threat indicators and container
+  boundaries before lower-priority heuristic analyzers run.
+- **Bundled rule sets** (`rules/threats/`, `rules/formats/`, `rules/crypto/`):
+  - Threats & malware families (Mirai command dispatch, Gafgyt/Bashlite,
+    Mozi P2P), ARM Thumb `execve("/bin/sh")` shellcode idiom, hardcoded
+    telnet backdoor, reverse shells, hidden UART debug consoles.
+  - Container/filesystem recognition: SquashFS, CramFS, JFFS2, UBIFS, YAFFS2,
+    ZIP, TAR, GZIP; encodings (Base64/Base32/Hex).
+  - Crypto table detection: AES S-boxes and Rcon, DES permutations, Blowfish,
+    ChaCha20 constants, MD5/SHA-1/SHA-256/SHA-512 constants, Keccak round
+    constants, CRC tables.
+- **Custom rules directory**: point
+  `Edit → Tool Options → Analyzers → Embedra YARA Analysis → Custom Rules
+  Directory` at your own `.yar`/`.yara` files.
+- **Integration**: YARA findings merge into `CryptoTableDatabase.withYara()`
+  and `CryptoAnalysisPipeline.withYara()`, and `MALWARE`/`BACKDOOR` matches
+  raise `WARNING` bookmarks and EOL annotations.
 
 ---
 
 ## Security Leads & CTF Recovery
 
-Embedra analyzes disassembled instructions and control flow to extract actionable security leads without making speculative assertions (**AN-004**, **AN-005**):
+Embedra extracts actionable security leads from disassembled instructions and
+control flow without speculative claims (AN-004, AN-005):
 
-- **Comparison Leads**: Tracks call sites to string and memory comparisons (`strcmp`, `strncmp`, `memcmp`, constant-time `mbedtls_ct_memcmp`) where operands reference sensitive tokens (`password`, `admin`, `secret`, `token`, `pin`, `key`, `flag`).
-- **Authorization Branches**: Inspects conditional branches (`cbz`, `cbnz`, `beq`, `bne`) immediately following comparisons to identify access control gating decisions.
-- **Debug & Admin Commands**: Scans memory tables for command dispatch structures (`{ name, handler, help }`) matching administrative keywords (`root`, `admin`, `debug`, `shell`, `backdoor`, `unlock`, `factory`).
-- **Interactive Shells**: Identifies interactive console prompts (`# `, `shell> `, `cli> `, `esp> `) correlated with CLI initialization routines.
-- **OTA Endpoints**: Discovers firmware download URLs, MQTT update topics, and update partition references.
-- **Panic & Assertion Sites**: Reconstructs assertion failures, panic messages, source file paths, line numbers, and function call arguments.
+- **Comparison leads**: tracks call sites to `strcmp`/`strncmp`/`memcmp`/
+  constant-time comparators where operands reference sensitive tokens
+  (`password`, `admin`, `secret`, `token`, `pin`, `key`, `flag`); constant-time
+  comparisons are identified as such.
+- **Authorization branches**: inspects conditional branches following
+  comparisons (`cbz`, `cbnz`, `beq`, `bne`, `beqz`, `bnez`) to surface
+  access-control gating decisions.
+- **Debug & admin commands**: discovers CLI dispatch tables
+  (`{ name, handler, help }`) with administrative keywords, interactive
+  shell prompts, and console-init symbol corroboration.
+- **OTA endpoints**: firmware download URLs, MQTT update topics, update
+  partition references.
+- **Panic & assertion recovery**: assert/panic signatures, source paths, line
+  numbers, termination traps, and backward call-site argument resolution
+  (ARM Thumb `r0-r3`, RISC-V `a0-a7`, Xtensa `a2-a7`/windowed calls).
+- Leads are ranked (`HIGH`/`MEDIUM`/`LOW` confidence). Leads never prove
+  exploitability.
 
 ---
 
 ## Unified Findings, UI & Secret Redaction
 
-All discovered entities (cryptographic findings, CTF flags, logging call sites, and security leads) feed into a unified architecture (**AN-006**, **AN-008**):
+All discovered entities feed a unified reporting architecture (AN-006,
+AN-008):
 
-- **Findings Window**: Access via **Window → Embedra → Unified Findings**.
-  - Interactive table supporting column sorting, category filtering, severity filtering, free-text search, and double-click address navigation.
-  - Real-time suppression and unsuppression of false positives.
-  - Toggle between masked view and revealed view.
-- **Secret Redaction (AN-008)**:
-  - By default, unmasked secrets are **never** emitted in plain text in logs, bookmarks, or exports.
-  - Keys, tokens, and flags are masked (e.g. `4a2f****************************`).
-- **Multi-Format Export**:
-  - Export findings directly to **JSON**, **Markdown Tables**, or **SARIF 2.1.0** for ingestion into CI/CD security pipelines.
+- **Findings Window** (`Window → Embedra → Unified Findings`):
+  column sorting, category/severity filtering, free-text search,
+  double-click navigation, suppression/unsuppression with
+  `[SUPPRESSED: reason]` annotations, and bidirectional bookmark
+  synchronization.
+- **Secret redaction (AN-008)**: keys, tokens, and flags are masked by
+  default (`4a2f****************************` / `[REDACTED_SECRET]`)
+  across logs, bookmarks, and exports; unmasked output exists only as an
+  explicit request, and masked views are toggle-independent.
+- **Exports**: JSON, Markdown tables, and SARIF 2.1.0 for CI/CD pipelines.
 
 ---
 
 ## Firmware & Workspace Diffing
 
-Access via **Window → Embedra → Firmware Workspace Diff** (**AN-007**):
+`Window → Embedra → Firmware Workspace Diff` (AN-007):
 
-- Compare two loaded Ghidra programs or firmware images side-by-side.
-- **Multi-View Inspection**:
-  - **Function Diff**: Identifies identical, modified, and unique functions based on entrypoint and instruction hashing.
-  - **Symbol Diff**: Compares global symbols, labels, and imported routines.
-  - **String Diff**: Highlights added, removed, and shared strings and format specifiers.
-  - **Memory & Segment Diff**: Visualizes layout and permission changes across memory blocks.
-  - **Metadata & Partition Diff**: Compares build descriptions, SDK versions, and partition tables.
-- Filter by change status: `ADDED`, `REMOVED`, `MODIFIED`, or `IDENTICAL`.
+- Compare two loaded Ghidra programs side-by-side with a multi-view panel:
+  function diffs (identical/modified/unique by entry and instruction
+  hashing), symbol diffs, string diffs, memory/permission diffs, and
+  metadata/partition diffs.
+- Filter by change status `ADDED`, `REMOVED`, `MODIFIED` (and `MOVED`/
+  `UNCHANGED` views from the engine), with secret-masking toggles and
+  export actions (`EmbedraDiffPlugin`).
 
 ---
 
 ## Local Scanner Plugin API
 
-Users can define custom inspection scanners via a safe local plugin contract (**AN-009**):
+Custom inspection scanners run in a safe local plugin contract (AN-009):
 
-- **Declarative Manifests**: Schema-validated (`urn:embedra:schema:scanner-plugin-manifest:1`) JSON files.
-- **Supported Matchers**:
-  - `REGEX`: Regular expressions with ReDoS input-length limits.
-  - `HEX_BYTES`: Byte patterns with wildcards.
-  - `EXACT_STRING`: Case-sensitive or insensitive string matching.
-  - `ENTROPY`: Windowed Shannon entropy scanning.
-- **Sandboxed Execution**:
-  - Strict resource budgets (`PluginResourceBudget`): configurable wall-time timeouts (10 ms – 60,000 ms), maximum memory limits, and maximum finding caps.
-  - Traps `OutOfMemoryError`, `StackOverflowError`, and hostile infinite loops without crashing Ghidra.
+- **Declarative manifests**: schema-validated
+  (`urn:embedra:schema:scanner-plugin-manifest:1`) JSON files.
+- **Matchers**: `REGEX` (ReDoS-bounded), `HEX_BYTES` with wildcards,
+  `EXACT_STRING`, `ENTROPY` windowed scanning.
+- **Sandboxed execution**: configurable wall-time timeouts, allocation
+  limits, finding caps; hostile loops, `OutOfMemoryError`, and
+  `StackOverflowError` are trapped without destabilizing Ghidra (T063,
+  per-plugin budgets per T068).
 
 ---
 
 ## Installation
 
 ### Prerequisites
-- **Ghidra**: Version **12.1.3 PUBLIC** (pinned baseline).
-- **Java**: **JDK 21** (64-bit).
 
-### Extension Installation Steps
-1. Download or build the extension ZIP file: `dist/ghidra_12.1.3_PUBLIC_YYYYMMDD_Embedra.zip`.
+- **Ghidra** **12.1.3 PUBLIC** (pinned baseline; Byte-level loader and
+  analyzer compatibility is earned per release — see
+  [`docs/compatibility-matrix.md`](docs/compatibility-matrix.md)).
+- **Java**: a 64-bit **JDK 21** runtime for Ghidra itself.
+
+### Steps
+
+1. Obtain or build an extension ZIP:
+   `dist/ghidra_12.1.3_PUBLIC_YYYYMMDD_Embedra.zip` (the filename encodes
+   the compatible Ghidra line; the release bundle carries a SHA-256
+   checksum to verify before installing).
 2. Launch Ghidra.
-3. In the Ghidra Project Window, select **File → Install Extensions...**.
-4. Click the green **`+`** (Add extension) button in the top right corner.
-5. Select the `Embedra.zip` archive.
-6. Check the checkbox next to **Embedra** to enable it.
-7. Restart Ghidra when prompted.
+3. `File → Install Extensions...`.
+4. Click the green `+` (Add extension), select the ZIP.
+5. Check **Embedra** and restart Ghidra when prompted.
+
+For headless installation and `analyzeHeadless` recipes, see
+[`docs/headless.md`](docs/headless.md).
+
+---
+
+## Quickstart
+
+**GUI, first ESP32-S3 import:**
+
+1. `File → Import File...` and select a full-flash capture or application
+   image. The Embedra loader validates the format from bytes — not name.
+2. Review the import options: extraction of sub-programs (bootloader/app
+   slots), and — only when your silicon target is exactly the pinned pack
+   revision — enable `Apply verified target ROM, peripheral, and SVD packs`.
+3. Run automatic analysis (`Analysis → Auto Analyze`). Embedra analyzers run
+   by default; open `Window → Embedra → Unified Findings` and the
+   CodeBrowser bookmarks/EOL comments for results.
+
+**Headless, first RP2040 import:**
+
+```bash
+$GHIDRA_INSTALL_DIR/support/analyzeHeadless \
+    /tmp/embedra-project projA \
+    -import path/to/firmware.uf2 \
+    -log run.log -scriptlog script.log
+```
+
+See `docs/headless.md` for loader names, `-loader-` options, export scripts,
+and CI recipes.
 
 ---
 
 ## User Guide & Workflows
 
-### 1. Importing Firmware Images
-- **Full Flash Binary (ESP32)**:
-  1. Go to **File → Import File...** and select your flash capture.
-  2. Ghidra detects the format as `ESP32 Full Flash Image`.
-  3. In the Import Options screen, configure whether to extract sub-programs for each bootloader and application slot.
-  4. Optionally select `Apply verified target ROM, peripheral, and SVD packs` if the exact chip revision is verified.
-- **UF2 Firmware (RP2040 / RP2350)**:
-  1. Select your `.uf2` file.
-  2. Embedra validates all block checksums and family IDs, creating the appropriate memory blocks and setting up the binary info markers.
-- **Raw Binaries (STM32 / Cortex-M)**:
-  1. Select your `.bin`, `.hex`, or `.elf` file.
-  2. Embedra inspects the initial stack pointer and reset vector, suggesting the correct ARM Cortex-M language and memory base.
+### Importing firmware images
 
-### 2. Running Automated Analyzers
-In the Ghidra CodeBrowser window, navigate to **Analysis → Auto Analyze '<Program>'...**:
-- **Embedra Layered Crypto Analysis**: Scans for crypto tables, candidate keys, entropy, signatures, and hardware peripherals.
-- **Embedra Logging & Panic Recovery**: Reconstructs assertions, panic call sites, and format strings.
-- **Embedra Security Leads**: Extracts comparison leads, administrative commands, shells, and OTA endpoints.
-- **Embedra YARA Scanning**: Executes bundled and custom YARA rules over initialized memory.
+- **Full flash binary (ESP32-S3)**: import a raw dump; Embedra discovers the
+  partition table (with MD5 validation), classifies bootloader/app/artifact
+  partitions, and composes the workspace; erased slots become explicit
+  artifacts rather than being silently skipped.
+- **UF2 firmware (RP2040/RP2350/RP2354)**: all block checksums and family IDs
+  are validated; binary-info markers, board profiles, boot metadata, and —
+  where fingerprints warrant — components (TinyUSB, lwIP, CYW43439) are
+  annotated.
+- **STM32 ELF/HEX/BIN**: import through Ghidra's native loaders, then apply
+  Embedra STM32 components by selecting the exact catalog part and
+  supplying the base; confirmation and enrichment are explicit
+  user-supplied identities and addresses.
+- **ESP8266 legacy images** import only through the dedicated legacy loader;
+  a version 2 image requires the confirmed flash base option.
 
-### 3. Reviewing Findings & Exporting
-1. Open the findings panel: **Window → Embedra → Unified Findings**.
-2. Filter findings by category (e.g. `CRYPTOGRAPHY`, `SECURITY_LEAD`) or search for specific terms.
-3. Double-click any row to jump immediately to the disassembly address.
-4. Click **Export** to save results as JSON, Markdown, or SARIF for reporting.
+### Analyzer configuration
+
+`Analysis → Auto Analyze '<Program>'...` exposes our analyzers:
+
+- `Embedra Layered Crypto Analysis` — constants, signatures, hardware, ROM,
+  keys, entropy, fusion.
+- `Embedra Logging & Diagnostics Recovery` — format strings, assert/panic
+  reconstruction.
+- `Embedra Security Leads Discovery` — comparisons, branches, shells, OTA.
+- `Embedra CTF & Entity Discovery` — endpoints, credentials, certificates,
+  UUIDs, blobs, flags.
+- `Embedra String & Stack-String Recovery` — multi-encoding strings and
+  stack-constructed strings.
+- `Embedra YARA Pattern Analysis` — bundled + custom rules at
+  `DATA_ANALYSIS` priority.
+- `Embedra Function ABI & Signature Normalizer` — ABI normalization.
+- `Embedra Local Scanner Plugins` — sandboxed local plugin scanning.
+- ESP32-S3 programs add `Embedra ESP32-S3 Crypto Evidence` and the opt-in
+  `Embedra ESP32-S3 Function ID` pilot.
+- STM32 programs add vector/SVD/external-memory applicators after explicit
+  exact-part selection.
+
+### Reviewing findings & exporting
+
+1. `Window → Embedra → Unified Findings`; filter, search, or double-click to
+   navigate.
+2. Suppress false positives with a reason; re-enable any time.
+3. `Export` results as JSON, Markdown, or SARIF 2.1.0 (redaction enabled).
+4. Use `Window → Embedra → Firmware Workspace Diff` for two-image
+   comparisons, including multi-program workspace topology facts.
+
+---
+
+## Troubleshooting & Diagnostics
+
+Failure messages carry stable machine-readable codes. The symptom → cause →
+fix catalog (malformed inputs, memory-map conflicts, missing SVD packs,
+TrustZone apertures, headless errors, resource budgets) lives in
+[`docs/troubleshooting.md`](docs/troubleshooting.md). The enforced
+pure/adapter architecture and pipeline internals are in
+[`docs/architecture.md`](docs/architecture.md).
 
 ---
 
 ## Building from Source
 
-Embedra uses Gradle with reproducible packaging guarantees.
+Embedra uses the checked-in Gradle wrapper (9.6.1) with fully offline,
+reproducible packaging (`gradle.lockfile` pins resolved dependencies).
 
-### Environment Setup
+### Environment
+
 ```bash
-export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+export JAVA_HOME=/path/to/openjdk-21        # exact JDK 21 baseline
 export GHIDRA_INSTALL_DIR=/path/to/ghidra_12.1.3_PUBLIC
 ```
 
-### Build Commands
+### Build commands
 
 ```bash
-# Run pure unit and analyzer test suite (Ghidra independent)
+# Ghidra-independent pure unit and analyzer suite
 ./gradlew pureTest
 
-# Run full quality check (Checkstyle, Unit Tests, Integration Tests, JaCoCo Coverage)
+# Full quality gate (Checkstyle, unit tests, real-Ghidra integration
+# tests, JaCoCo coverage, catalog generator suites, license audit,
+# documentation link audit)
 ./gradlew check
 
-# Build the Ghidra extension ZIP package
+# Build the Ghidra extension ZIP (byte-reproducible)
 ./gradlew buildExtension
 
-# Run full bit-for-bit reproducible packaging and release gate audit
+# Two-run reproducible packaging and release-gate audit
 bash scripts/verify-build-quality.sh
+
+# Release-bundle side artifacts (T078): extract dist/embedra-src.zip,
+# generate the deterministic CycloneDX 1.5 SBOM (dist/embedra-sbom.json),
+# and write the sha256sum-compatible checksum manifest (dist/SHA256SUMS)
+bash scripts/build-release-artifacts.sh dist/ghidra_12.1.3_PUBLIC_YYYYMMDD_Embedra.zip
 ```
+
+`scripts/verify-build-quality.sh` rebuilds the ZIP twice (fully offline,
+`--offline`), requires byte-identical SHA-256 artifacts (the deterministic
+ZIP-entry oracle pins exact contents), runs the license audit against the
+archive, and then builds and fail-closed-audits the release supply-chain
+bundle. A downloaded release verifies with `sha256sum -c dist/SHA256SUMS`;
+the SBOM covers the shipped jar, the Ghidra host platform, every offline
+data bundle, and every Gradle-locked build-time component (recorded
+`excluded`, never bundled). Dependency resolution is additionally pinned by
+`gradle/verification-metadata.xml` (SHA-256 for every resolved artifact) on
+top of `gradle.lockfile`.
+
+---
+
+## Known Limitations
+
+- Only Linux x86-64 is a verified clean-build/host platform; Windows and
+  macOS remain planned pending their own install/headless evidence
+  (`docs/compatibility-matrix.md`).
+- STM32 device-support states are all `PLANNED`; STM32 import components are
+  `EXPERIMENTAL` with reviewed subsets (8-part SVD subset, reviewed board
+  profiles, F1 signature slice).
+- Planned families — STM8, Nordic nRF, Atmel/Microchip — have **no
+  implementation or code** in this repository yet; they exist only as
+  specification tasks (T088–T111). This README deliberately does not
+  advertise them as supported.
+- Whole-program decompiler-driven call graphs, symbolic data flow, and taint
+  analysis are planned, not implemented; crypto call-site engines are bounded.
+- Crypto metrics are corpus measurements (deterministic synthetic corpora),
+  explicitly not guarantees on arbitrary production firmware (AN-014), with
+  four tracked unsupported-case classes in `docs/crypto-coverage.md`.
+- No screenshots are committed in this repository yet; user-facing imagery
+  will appear only from working release-gate builds (T079 convergence).
 
 ---
 
 ## Governance & Non-Negotiable Invariants
 
-All development in Embedra follows strict engineering principles:
+1. **Specification authority**: `Embedra-SpecKit.md` is the sole source of
+   truth; task states and digests are tracked deterministically in
+   `.embedra/state.json` (see `docs/agent-handoff.md`).
+2. **Pure/adapter separation**: pure analyzers never import `ghidra.*`;
+   enforced by `ArchitectureBoundaryTest` on every build.
+3. **Bounded execution**: shared `ParserLimits` and resource budgets with
+   cooperative cancellation across parsers, scanners, and applicators.
+4. **Non-destructive modification**: applicators preserve user-defined
+   symbols, primary names, and comments; rollback on any failure.
+5. **Zero secret leaking**: secrets are masked by default in reports, logs,
+   bookmarks, and exports (AN-008).
+6. **Bit-for-bit reproducibility**: builds produce deterministic,
+   byte-identical extension archives with pinned entry inventories.
+7. **Evidence-based claims**: capability states are exact; documents may
+   only advertise what tests prove (`docs/support-matrix.md`).
 
-1. **Specification Authority**: `Embedra-SpecKit.md` is the sole source of truth. Task states, acceptance gates, and specification hashes are tracked deterministically in `.embedra/state.json`.
-2. **Pure / Adapter Architectural Separation**: Pure analyzers (`core`, `formats`, `targets`, `analyzers`, `svd`, `pack`) must **never** import `ghidra.*` APIs. This separation is strictly verified by `ArchitectureBoundaryTest`.
-3. **Bounded Execution**: All parsers and scanners enforce `ParserLimits` (max bytes, max allocations, max object counts, max nesting depth) and cooperative cancellation tokens.
-4. **Non-Destructive Modifications**: Applicators must never overwrite or destroy user-defined symbols, primary names, or comments.
-5. **Zero Secret Leaking**: Plain-text secret key candidates, tokens, or credentials are masked by default across all reports and UI views (**AN-008**).
-6. **Bit-for-Bit Reproducibility**: Builds produce deterministic, byte-identical extension archives across clean consecutive runs.
+---
+
+## Security & Support
+
+- Vulnerability disclosure: [`SECURITY.md`](SECURITY.md) (private reporting;
+  no public issues for suspected vulnerabilities).
+- Contribution guide and quality gates: [`CONTRIBUTING.md`](CONTRIBUTING.md).
+- Community standards: [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+- Operating questions: [`docs/headless.md`](docs/headless.md),
+  [`docs/troubleshooting.md`](docs/troubleshooting.md), and
+  [`docs/support-matrix.md`](docs/support-matrix.md) define what support
+  requests can reasonably claim.
 
 ---
 
 ## License
 
-Embedra is licensed under the **Apache License, Version 2.0**. See [LICENSE](LICENSE) for details.
+Embedra is licensed under the **Apache License, Version 2.0**. See
+[LICENSE](LICENSE) for details; third-party attribution and redistribution
+boundaries are recorded in [NOTICE](NOTICE) and
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) (audited ledger in
+[`docs/license-audit.md`](docs/license-audit.md)).

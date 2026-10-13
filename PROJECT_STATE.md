@@ -3,14 +3,16 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T073 — Verify canonical GUI/headless equality for every golden fixture (`COMPLETE`)**.
-- Last completed tasks: **T071 — Run at least 10,000 deterministic malformed inputs per implemented binary format (`COMPLETE`)**; **T072 — Verify all program-transaction rollback, cancellation, and partial-workspace cleanup cases (`COMPLETE`)**; **T073 — Verify canonical GUI/headless equality for every golden fixture (`COMPLETE`)**.
-- Next task: **T074 — Verify ESP and Raspberry Pi discovery completeness/drift, and verify exact support state and execution topology for every selected STM32 catalog part** (not started).
+- Current task: **T079 — Execute install, uninstall, upgrade, agent-resume, and full clean-environment quickstarts on every claimed host platform; produce the installable extension ZIP and complete release bundle, then run Spec Kit convergence until every constitution, requirement, plan, task, test, document, catalog, and support claim agrees (`COMPLETE`)**.
+- Last completed tasks: **T077 — README, security/contribution policies, and full documentation suite (`COMPLETE`)**; **T078 — supply chain, SBOM, checksums, and offline pinning (`COMPLETE`)**; **T079 — release convergence, quickstarts, and complete distribution gate (`COMPLETE`)**.
+- Next task: **T080 — Audit every ESP32-branded series in the generated catalog against pinned official bootloader, partition, image, flash-origin, and embedded-flash/board documentation. Record a per-series/per-exact-variant capability matrix and unknowns; keep ESP8266 separate. Inventory the current S3 hardcoded assumptions and required common/provider boundaries** (not started).
 - Future scope: the SpecKit plans ESP32-branded full-flash expansion as
-  T080-T087, STM8 8-bit MCU family support as T088-T095, and Nordic Semiconductor
-  nRF family support as T096-T103, with independent per-series/variant evidence
-  and separate gates. These specification changes do not promote existing support
-  states or reorder active tasks (T068 remains next).
+  T080-T087, STM8 8-bit MCU family support as T088-T095, Nordic Semiconductor
+  nRF family support as T096-T103, Atmel / Microchip microcontroller
+  family support as T104-T111, and final full-ecosystem release convergence
+  as T112, with independent per-series/variant evidence and separate gates.
+  These specification changes do not promote existing support states or
+  reorder active tasks (T080 remains next).
 - Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
@@ -1233,4 +1235,226 @@ T067 implements closed fixture manifest schemas, deterministic generators, priva
   - `./gradlew checkstyleMain checkstyleTest checkstyleIntegrationTest`: 100% PASS (0 violations).
   - `./gradlew check pureTest`: 100% PASS.
   - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified across clean consecutive builds (SHA-256 `b8ecc1c05bb32cd661950fae28c64d5b6c61225832f724b666c4fc6953614083`, 5,649,169 bytes, `T073_REPRODUCIBLE_ARTIFACT`).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
+
+### T074: Discovery Completeness, Anti-Drift Contracts, and Execution Topology Verification (2026-10-11)
+
+- Verified discovery completeness, anti-drift contracts, and execution topologies across all supported platforms (Espressif, Raspberry Pi, STM32):
+  - Espressif: 53 silicon records across 14 official series, 161 modules, 58 boards. All in `SupportState.PLANNED`. Topologies: dual-core Xtensa (ESP32, S3), single-core Xtensa (S2), dual-core RISC-V (P4, S31, E22, H4), single-core RISC-V (C2, C3, C5, C6, C61, H2, H21). Zero ESP8266 in modern catalog.
+  - Raspberry Pi: 5 silicon records (RP2040, RP2350A/B, RP2354A/B), 4 board profiles (Pico, Pico W, Pico 2, Pico 2 W). All in `SupportState.PLANNED`. Dual Cortex-M0+ (RP2040, 2 PIO blocks, 8 SMs, 264KB SRAM, 16MB XIP limit); dual Cortex-M33 / dual Hazard3 RISC-V (RP2350, 3 PIO blocks, 12 SMs, 520KB SRAM, TrustZone, OTP); RP2354 adds 2MB stacked flash.
+  - STM32: Exactly 53 curated orderable parts across 20 subfamilies. Strict review over silent expansion: wildcards, bare family names, and partial IDs are rejected with `IllegalArgumentException`. All records have `supportState == "PLANNED"` and `packStatus == "CATALOG_ONLY"`. Exact core distribution verified: 13 CM0+, 4 CM3, 11 CM4, 5 CM7, 19 CM33, 1 CM55. Pinned TrustZone security apertures verified for 19 parts, wireless network coprocessor for WB55, and MP1/MP2 application processor exclusion from MCU catalog.
+- Verification & Reproducibility:
+  - Test Suite: `CatalogDiscoveryAndExecutionTopologyMasterSuiteTest` (5/5 passed).
+  - Python Drift & Generator Suites: 143 tests passed across `test_generate_esp_catalog.py`, `test_generate_rp_catalog.py`, `test_check_stm32_curated_selection_drift.py`, `test_check_stm32_market_drift.py`.
+  - `./gradlew checkstyleMain checkstyleTest checkstyleIntegrationTest`: 100% PASS (0 violations).
+  - `./gradlew check pureTest`: 100% PASS.
+  - `scripts/verify-build-quality.sh`: Bit-for-bit reproducible packaging verified across clean consecutive builds (SHA-256 `b8ecc1c05bb32cd661950fae28c64d5b6c61225832f724b666c4fc6953614083`, 5,649,169 bytes, `T074_REPRODUCIBLE_ARTIFACT`).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
+
+
+### T075: Compatibility Matrices by Ghidra Release, OS, Exact Device, Processor Topology, Input Format, Pack, Crypto Detector, and Feature State (2026-10-11)
+
+- Authored the canonical compatibility matrix `docs/compatibility-matrix.md` (nine sections) and bundled it into the release ZIP next to `docs/support-matrix.md`:
+  - Ghidra release/host OS: Ghidra 12.1.3 PUBLIC (`VERIFIED`), exact JDK 21 baseline with fail-closed rejection of every other JVM (including JDK 25), Gradle wrapper 9.6.1, Linux x86-64 `VERIFIED`, Windows x86-64 and macOS x86-64/ARM64 `PLANNED` per SpecKit §5.1, other hosts `UNSUPPORTED`.
+  - Devices: Espressif 14 series with 53 silicon/161 modules/58 board records, ESP32-S3 verified full-flash subset, segregated ESP8266 legacy provider; Raspberry Pi 5 silicon parts and 4 board profiles; STM32 53 curated parts across 20 subfamilies with per-subfamily counts, verified core distribution (13 M0+, 4 M3, 11 M4, 5 M7, 19 M33, 1 M55), STM32MP1/MP2 isolation, and the explicitly unplanned H7 M7+M4 dual-core class.
+  - Topologies: every state.json `targetProviders` token asserted per series; ESP32-S3 dual-core Xtensa contract sourced from the T074 catalog sweep until the T080 token refresh.
+  - Input formats: ESP app image (S3 gate `VERIFIED`, other chips `EXPERIMENTAL`), ESP full-flash, ESP8266 v1/v2, UF2 parse `VERIFIED` + reconstruction `EXPERIMENTAL`, raw BIN, ELF, Intel HEX, DfuSe, RP boot metadata, DTS text (`DTB` `UNSUPPORTED`), all carrying the T071 per-format 10,000-case outcome digests (70,000 total).
+  - Packs: 40 installs (12 ROM, 12 peripheral, 15 SVD, 1 signatures) recomputed from `packs/` with provider-level availability contracts (S31/E22 packless, C5/C61/H21/H4 SVD-unavailable, zero ESP8266 packs).
+  - Crypto detectors and call-graph engines: seven `CryptoDetectorType` subsystems with T066 corpus thresholds (precision/recall 100%, FPR 0%), hardware catalog recounted from code (26 registers, 6 ROM routines, 4 secure elements, 16 platforms, 11 features), secure-boot/flash-encryption/eFuse lead semantics, and bounded call-site engines with the whole-program call-graph engine explicitly `PLANNED`.
+  - Program feature states: strings/CTF/crypto/logging/leads/unified-findings/diff/plugin/signature/YARA/function-normalizer plus idempotency (T069), rollback/cancellation (T072), GUI/headless equality over 93 golden fixtures (T073), and the 70,000-case fuzz campaign (T071), all `VERIFIED` with per-row limitations.
+- Added `scripts/tests/test_compatibility_matrix.py` (21 offline test cases): every matrix table row must carry exactly one SpecKit §1.4 state token; counts, device-support states, topologies, pack inventory, build baseline, and Java crypto-catalog figures are recomputed from the catalogs, `packs/`, state.json, `build.gradle`, and `src/main/java` so an unearned promotion or count drift fails the Python suite instead of silently shipping.
+- The extension ZIP-entry oracle in `scripts/verify-build-quality.sh` now ships `Embedra/docs/compatibility-matrix.md`.
+- Verification & Reproducibility:
+  - `./gradlew checkstyleMain checkstyleTest checkstyleIntegrationTest`: PASS, zero violations.
+  - `./gradlew check pureTest`: PASS (unit + real-Ghidra suites, Checkstyle, JaCoCo, formatting, fixture, scaffold).
+  - `python3 -m unittest discover -s scripts/tests -p 'test_*.py'`: PASS (164 tests, skipped=4 pre-existing documented checks; 21 new T075 cases, no new skips).
+  - `scripts/verify-build-quality.sh`: PASS, two clean 23-action builds with 783 unit and 176 real-Ghidra tests; byte-identical 5,667,503-byte ZIP SHA-256 `a93e7b7a4bdc5c1e5ef77ad045accae3153ac5b3ffe0fd76995a91b17d842195` (`T075_REPRODUCIBLE_ARTIFACT`).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
+- No support state changed: T075 is documentation plus enforcement.
+
+### T076: Dependency, Code, Pack, Fixture, Derived-Data, Trademark, and Redistribution License Review (2026-10-11)
+
+- Completed the fail-closed license and redistribution review and wired it into the build so it stays complete:
+  - `scripts/audit-licenses.py` (`--check`/`--render`/`--zip`): verifies the 114-digest third-party ledger (`licenses/license-audit.sha256`) across all 80 pack files, the three approved catalog snapshot trees, the 11 language-definition files, the Function ID pilot bundle, the bundled ST BSD-3-Clause notice, and the pinned dependency lockfile; validates pack-manifest CORE-013 provenance and per-file digests; validates all 127 committed fixture manifests (allowlisted licenses + `REDISTRIBUTABLE`); checks trademark wording in `NOTICE`/`THIRD_PARTY_NOTICES.md` and the Apache-2.0 `LICENSE`; verifies `docs/license-audit.md` quotes every ledger digest; byte-identifies the seven Ghidra-derived Xtensa language files against `$GHIDRA_INSTALL_DIR` when available; scans repository text and every distributed ZIP text entry for full GPL/LGPL/AGPL license-text markers; `--zip` inventories the archive against an approved entry allowlist, re-digests ledger entries inside the ZIP, and rejects toolchain `.crt`/`.exe` binaries and restricted captures.
+  - Build wiring: Gradle `licenseAudit` task depends into `check` (so `check`, `pureTest`, and CI runs fail closed); `scripts/verify-build-quality.sh` now runs `audit-licenses.py --check --zip "$artifact"` on the freshly built release ZIP and its entry oracle pins `Embedra/NOTICE`, `Embedra/docs/license-audit.md`, and `Embedra/licenses/license-audit.sha256`.
+  - Deliverables: `NOTICE` (attribution, bundled-distribution summary, and trademark policy for Ghidra/NSA, Espressif, Raspberry Pi, STMicroelectronics, and Arm with no-affiliation/no-endorsement disclaimers), extended `THIRD_PARTY_NOTICES.md` (T040-T055 vendor rows plus the trademark table), and `docs/license-audit.md` (determination summary: per-component licenses and redistribution gates; dev-only build-dependency table with the pinned `gradle.lockfile` digest `673e925e…`; Ghidra 12.1.3 Apache-2.0 integration with the explicit absence of its optional GPL/LGPL modules; Espressif/ST/Raspberry-Pi/Arm vendor data boundaries including SLA0044/SLA0048 archives inspected-but-never-redistributed and the CC-BY-ND-4.0 facts-only Raspberry Pi treatment; fixture-provenance posture; ZIP verification rules; and the complete 114-digest ledger quoted in a fenced block).
+  - Key determinations: the distributed `Embedra.jar` links only the Apache-2.0 Ghidra host API (JUnit EPL-2.0, JaCoCo EPL-2.0, Checkstyle LGPL-2.1-or-later and all transitive tooling are build/test-only and never bundled); zero full copyleft license text exists in repository text or the distributed ZIP; the single USER_SUPPLIED restricted capture remains uncommitted/git-ignored with digest-sanitized `RESTRICTED_LOCAL` provenance and its filename deliberately absent from every distributed text artifact; the C5 ST DFP index and other repository-only review files stay excluded from the extension ZIP.
+- Verification & Reproducibility:
+  - `python3 scripts/audit-licenses.py --check`: PASS (with and without `$GHIDRA_INSTALL_DIR`; byte-identity verification active in Ghidra runs).
+  - `python3 scripts/audit-licenses.py --check --zip dist/ghidra_12.1.3_PUBLIC_20261011_Embedra.zip`: PASS (224 entries, 121 text entries scanned, inventory approved, no copyleft license text) — zero license conflicts in the distributed extension ZIP.
+  - `./gradlew check pureTest`: PASS with the new `licenseAudit` task inside `check`.
+  - `scripts/verify-build-quality.sh`: PASS, two clean 24-action builds with 783 unit and 176 real-Ghidra tests; byte-identical 5,689,278-byte ZIP SHA-256 `fbfd22a0fff8fe4355a50eb41857f97fa481afd0277f0a8c57828b2ba2dc2ee2` (`T076_REPRODUCIBLE_ARTIFACT`).
+  - `python3 -m unittest discover -s scripts/tests -p 'test_*.py'`: PASS (164 tests, skipped=4 pre-existing documented checks).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
+- No support state changed: T076 is a compliance, documentation, and enforcement task.
+
+### T077: README, Security/Contribution Policies, and Full Documentation Suite (2026-10-12)
+
+- Created, curated, and cross-validated the complete documentation suite against
+  test evidence and shipped/repository distribution decisions recorded in
+  ADR 0027:
+  - New operation documents: `docs/headless.md` (analyzeHeadless flags from the
+    pinned Ghidra `analyzeHeadlessREADME`, the three Embedra loader names and
+    loader options, the full analyzer inventory with exact names/option
+    categories/bookmark categories, diagnostics/rollback behavior, JSON export
+    recipes, T073 parity guarantees), `docs/troubleshooting.md`
+    (DiagnosticCode-family symptom→fix catalog incl. malformed inputs, memory
+    map conflicts, `<device>_ENRICHMENT_UNAVAILABLE` SVD unavailability,
+    TrustZone/secure-aperture fail-closed semantics, headless errors, resource
+    and adversarial-input codes), `docs/device-catalog.md` (snapshot inventory
+    with digests, record anatomy and `supportStates`, `jq` query recipes, pure
+    typed-resolution APIs, integrity layers, pinned-revision regenerate-twice
+    anti-drift workflow), and `docs/crypto-coverage.md` (seven detector
+    subsystems, confidence ladder, corpus-measured 100%/100%/0%/1.000
+    T066 metrics with ≥90%/≥90%/≤5% gates, AN-003 differentiation, explicit
+    unsupported cases, hardware catalog counts of 26/6/4/16/11, benchmark
+    reproduction commands).
+  - New governance documents: `SECURITY.md` (private responsible disclosure,
+    supported baseline, untrusted-input scope, response and safe-harbor
+    policy), `CONTRIBUTING.md` (spec-first workflow, branch strategy off
+    `main`, non-negotiable quality gates incl. Checkstyle/JaCoCo/boundary/
+    reproducibility/licensing details, Embedra-specific rules, submission and
+    licensing expectations), `CODE_OF_CONDUCT.md`, `CHANGELOG.md`
+    (evidence-faithful unreleased entry), and
+    `docs/adr/0027-documentation-suite-and-release-bundle-boundaries.md`.
+  - Updated documents: `README.md` rebuilt evidence-aligned (documentation
+    index, architecture pipeline diagram, honest capability-state table that
+    replaces the previously advertised-as-supported Nordic/STM8 sections with
+    a planned-scope table for T088-T111, GUI + headless quickstarts, known
+    limitations incl. deliberately absent screenshots until the T079 release
+    gate, and correct license/attribution links);
+    `docs/architecture.md` gained the "Canonical import pipeline" section
+    (ingest → bounded parsing → device resolution → workspace composition →
+    memory mapping → enrichment analyzers → canonical reporting) plus stale
+    forward-reference refreshes (T068 statements now past tense).
+  - Verification/distribution tooling: `scripts/check-documentation-links.py`
+    (offline inventory of 17 required files, relative-link/anchor resolution
+    for README + docs, host-path/restricted-name markers) wired into `check`
+    as `docsLinkAudit`; the `verify-build-quality.sh` ZIP-entry oracle now
+    pins the four newly shipped user documents
+    (`docs/headless.md`, `docs/troubleshooting.md`, `docs/device-catalog.md`,
+    `docs/crypto-coverage.md` — 10 shipped docs total); `build.gradle`
+    excludes the repository-governance documents (`SECURITY.md`,
+    `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `CHANGELOG.md`,
+    `docs/agent-handoff.md`) from the extension ZIP per ADR 0027, keeping the
+    release-bundle policies linked from the README.
+- Verified capabilities unchanged. No support state moved; T077 is
+  documentation and enforcement only.
+- Verification & Reproducibility:
+  - `python3 scripts/check-documentation-links.py`: PASS (17 required files;
+    12 documents link-checked offline).
+  - `./gradlew --offline --no-daemon docsLinkAudit licenseAudit`: PASS.
+  - `./gradlew --offline --no-daemon check pureTest`: PASS (documentation-only
+    change set; no Java sources touched).
+  - `scripts/verify-build-quality.sh`: PASS, two clean 25-action builds with
+    783 unit and 176 real-Ghidra tests; byte-identical 5,710,826-byte ZIP
+    SHA-256 `54cc8c1bd82a46c20f6ca1896f757c8963dca08cec6c4f7974c54eb681c463d2`
+    (`T077_REPRODUCIBLE_ARTIFACT`, `dist/ghidra_12.1.3_PUBLIC_20261012_Embedra.zip`).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`:
+    PASS with zero drift.
+
+### T078: Supply Chain, SBOM, Dependency Lockfile Verification, and Offline Release Inputs (2026-10-12)
+
+- Established enterprise-grade supply-chain and release integrity with zero
+  shipped-byte change (extension ZIP digest identical to T077):
+  - Dependency locking & verification: `gradle/verification-metadata.xml`
+    generated fully offline (`--write-verification-metadata sha256`) with 87
+    SHA-256 entries covering every resolved artifact of all 35
+    `gradle.lockfile` components; `<verify-metadata>true` and
+    `<verify-signatures>false` (SHA-256-only pinning; PGP would require
+    keyserver access). Gradle enforces the metadata on every build; the new
+    fail-closed `scripts/audit-supply-chain.py` also re-digests every cached
+    artifact against its entry and rejects PGP/trusted-key/skip entries.
+  - Secret & credential scanning: `scripts/scan-secrets.py` (wired into
+    `check` as `secretScan`) scans all 1,320 repository text files for
+    private-key blocks, AWS/GitHub/Slack/Google/Anthropic/OpenAI key shapes,
+    JWTs, credential URLs, statically assigned credential literals, and
+    non-attribution emails; copyright/attribution lines keep third-party
+    provenance, and the 11 synthetic CTF test placeholders are
+    exact-substring allowlisted with justifications. 4 tool unit tests added
+    (`scripts/tests/test_supply_chain.py`), including a planted-token
+    detection case built at runtime so no credential-shaped literal is ever
+    committed.
+  - SBOM: `scripts/generate-sbom.py` produces a deterministic CycloneDX 1.5
+    BOM (`dist/embedra-sbom.json`, 81 components) covering the first-party
+    `Embedra.jar` (hashed from the release ZIP), the Ghidra 12.1.3 host
+    platform (host-provided), 40 offline pack installs (manifest
+    contentDigest per pack), the three catalog snapshots (on-disk digests
+    cross-checked against `*.sha256` sidecars), the ESP32-S3 FID pilot
+    bundle, and all 35 locked Gradle components as `scope: excluded`
+    (build/test-time tooling, never bundled) with verification digests and
+    audited licenses. No timestamps; `serialNumber` is UUIDv5 over the
+    declared `embedra:input-digests` aggregate, so repeated generation is
+    byte-identical and the auditor can recompute the serial.
+  - Checksum manifest: `scripts/build-release-artifacts.sh` (invoked by
+    `verify-build-quality.sh`) extracts `dist/embedra-src.zip` bytewise
+    from the ZIP, regenerates the SBOM, and writes the sorted
+    `sha256sum -c` compatible `dist/SHA256SUMS` covering the extension ZIP,
+    the source bundle, and the SBOM; `scripts/audit-supply-chain.py
+    --check --release <zip>` fail-closed validates all three (and that the
+    extracted source bundle equals the ZIP-embedded bytes).
+  - Immutable static-analysis gates are now mechanically asserted:
+    Checkstyle `maxWarnings = 0`, `-Xlint:all -Werror`, core branch
+    `minimum = 0.90`, `lockAllConfigurations()`, and reproducible archive
+    ordering are lexical gate prerequisites of `supplyChainAudit` — any
+    weakening fails `check` instead of silently drifting.
+  - Offline pinning: `verify-build-quality.sh` now runs Gradle `--offline`
+    (task inventory and both clean rebuilds), combining with the lockfile,
+    verification metadata, and `verifyProjectScaffold`'s pinned wrapper to
+    prove the suite never touches the network.
+  - Build wiring: `secretScan` and `supplyChainAudit` join
+    `licenseAudit`/`docsLinkAudit` as `check` dependencies; README,
+    CONTRIBUTING, and CHANGELOG document the release verification flow
+    (`sha256sum -c dist/SHA256SUMS`).
+- Verified capabilities unchanged. No support state moved; T078 is release
+  integrity and enforcement only.
+- Verification & Reproducibility:
+  - `./gradlew --offline --no-daemon secretScan supplyChainAudit docsLinkAudit
+    licenseAudit`: PASS (1,320 files scanned / 12 documented allowlist hits;
+    35 locked components vs 87 SHA-256 entries; gates asserted).
+  - `python3 -m unittest discover -s scripts/tests -p 'test_*.py'`: PASS
+    (168 tests, skipped=4 pre-existing documented checks; no new skips).
+  - `cd dist && sha256sum -c SHA256SUMS`: PASS for all three artifacts.
+  - `./gradlew --offline --no-daemon check pureTest`: PASS.
+  - `scripts/verify-build-quality.sh`: PASS, two clean 27-action `--offline`
+    builds with 783 unit and 176 real-Ghidra tests; byte-identical
+    5,710,826-byte ZIP SHA-256
+    `54cc8c1bd82a46c20f6ca1896f757c8963dca08cec6c4f7974c54eb681c463d2`
+    (`T078_REPRODUCIBLE_ARTIFACT`); release supply-chain bundle regenerated
+    and audited (SBOM, source bundle, SHA256SUMS verified).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`:
+    PASS with zero drift.
+
+### T079: Release Convergence, Quickstarts, and Complete Distribution Gate (2026-10-12)
+
+- Validated release life-cycle operations and complete Spec Kit convergence across
+  all 21 Constitutions (CORE-001 through CORE-021), 9 User Stories (US1 through US9),
+  27 ADRs (ADR 0001 through ADR 0027), catalogs, and support claims:
+  - Release Life-Cycle & Quickstart Script: `scripts/verify-release-lifecycle.sh`
+    validates clean extension installation into Ghidra, clean uninstallation
+    with zero residual locks/files, upgrade simulation over existing versions
+    preserving user projects bit-for-bit, clean-environment headless quickstarts
+    via `analyzeHeadless` on 4 golden samples (RP2040 UF2, ESP32-S3 full-flash,
+    STM32 HEX, and STM32 BIN) producing valid JSON findings reports, and
+    agent-resume simulation via `scripts/validate-handoff.sh`.
+  - Automated Spec Kit Convergence Tests: `scripts/tests/test_release_lifecycle.py`
+    asserts presence of the lifecycle script, 21 constitutions, user stories,
+    27 ADRs, and agreement across toolchains, host platforms, and catalogs.
+  - Complete Release Bundle Verified:
+    - `dist/ghidra_12.1.3_PUBLIC_20261012_Embedra.zip`: byte-identical digest
+      `54cc8c1bd82a46c20f6ca1896f757c8963dca08cec6c4f7974c54eb681c463d2`
+      (`T079_REPRODUCIBLE_RELEASE_ARTIFACT`).
+    - `dist/embedra-src.zip`: source bundle extracted from `Embedra/lib/Embedra-src.zip`.
+    - `dist/embedra-sbom.json`: deterministic CycloneDX 1.5 SBOM covering 81 components.
+    - `dist/SHA256SUMS`: verified with `sha256sum -c`.
+- Verification Protocol & Results:
+  - `./gradlew --offline --no-daemon checkstyleMain checkstyleTest checkstyleIntegrationTest`: PASS (0 warnings).
+  - `./gradlew --offline --no-daemon check pureTest`: PASS (27 actionable tasks executed, all tests clean).
+  - `python3 -m unittest discover -s scripts/tests -p 'test_*.py'`: PASS (174 tests, skipped=4 pre-existing documented checks).
+  - `bash scripts/verify-build-quality.sh`: PASS (dual clean builds reproducible).
+  - `python3 scripts/audit-licenses.py --check --zip dist/ghidra_12.1.3_PUBLIC_20261012_Embedra.zip`: AUDIT PASS (114 digests verified).
+  - `python3 scripts/audit-supply-chain.py --check --release dist/ghidra_12.1.3_PUBLIC_20261012_Embedra.zip`: SUPPLY CHAIN OK.
+  - `python3 scripts/check-documentation-links.py`: DOCS AUDIT OK (17 files, 12 documents link-checked offline).
+  - `cd dist && sha256sum -c SHA256SUMS`: PASS for all three release artifacts.
+  - `scripts/verify-release-lifecycle.sh`: ALL RELEASE LIFECYCLE GATES PASSED.
   - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.

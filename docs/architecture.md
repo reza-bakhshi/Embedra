@@ -16,17 +16,61 @@
 
 Subpackages inherit the rules of their nearest boundary. Vendor- and format-specific implementation remains below `formats` and `targets`; the common core does not gain target-selection branches.
 
+## Canonical import pipeline
+
+Every supported target, GUI or headless, moves through the same pipeline. The
+stages are pure until the final adapter stage, and failures fail closed at any
+stage without partial mutation:
+
+1. **Binary ingest** — a bounded, read-only byte view of the input
+   (`ByteProvider`/`SourceRange`); the file name is never an input to any
+   decision (CORE-001).
+2. **Format detection and bounded parsing** — `formats.*` parsers validate
+   structure byte-by-byte under shared `ParserLimits`, resource budgets, and
+   cooperative cancellation, returning immutable models or typed diagnostics
+   (CORE-002/CORE-003/CORE-007).
+3. **Device resolution** — `targets.*` providers accept the validated model
+   plus optional explicit identity assertions, resolve exact language,
+   compiler specification, memory map facts, and entry decisions, and emit an
+   immutable `ExecutionTopology` (T027/T031 contract; provider implementation
+   matrix in `docs/support-matrix.md`).
+4. **Workspace composition** — pure planners compose multi-program workspaces
+   (full-flash partition workspaces, dual-core/heterogeneous setups,
+   external-memory windows) and preflight every planned region, permission,
+   and conflict before any mutation.
+5. **Memory mapping** — the `ghidra.*` loader/mapper opens one
+   rollback-by-default transaction per logical program, maps validated bytes
+   at encoded addresses, applies the entry point, and preserves existing
+   user artifacts (T072 evidence).
+6. **Enrichment analyzers** — after mapping, Embedra analyzers run inside the
+   normal automatic-analysis cycle: layered crypto detection, logging/panic
+   recovery, security leads, CTF entities, strings, YARA rules, function
+   normalization, and local scanner plugins; per-target applicators apply
+   only evidence-gated, opt-in ROM/peripheral/SVD packs
+   (`docs/pack-format.md`).
+7. **Canonical reporting** — canonical reports contain input digests,
+   provider and pack identities, selected language/compiler specification,
+   applied mappings, validation results, and warnings, and are byte-equal
+   across GUI and headless for every golden fixture (T073);
+   `docs/headless.md` documents the offline workflows and
+   `docs/troubleshooting.md` maps every diagnostic code emitted by these
+   stages.
+
+Catalog-backed device resolution is described separately in
+`docs/device-catalog.md`; the crypto pipeline internals are in
+`docs/crypto-coverage.md`.
+
 ## Enforced dependency direction
 
 Production Java under `core`, `formats`, `targets`, `analyzers`, and `pack` must not import Ghidra APIs or the Embedra `ghidra` adapter package. `ArchitectureBoundaryTest` walks all Java source below those roots and reports the repository-relative file and line for a forbidden reference. A synthetic forbidden-import fixture proves that the detector runs and rejects the prohibited dependency form.
 
-The `ghidra` boundary may depend on pure boundaries. No Ghidra mutation begins in a pure boundary. Later tasks will add finer-grained dependency rules when concrete interfaces exist; this task does not create placeholder providers or claim functional firmware support.
+The `ghidra` boundary may depend on pure boundaries. No Ghidra mutation begins in a pure boundary. T068 hardened this story with shared runtime accounting and adversarial enforcement for archive, XML, regex, and plugin workloads. Finer-grained dependency rules may be added when concrete interfaces exist; placeholder providers and unearned functional-firmware claims stay prohibited.
 
 ## Core safety and topology foundation
 
 Source and target ranges are immutable half-open ranges. Construction rejects negative values and checked-addition overflow. Target ranges carry an address-space ID, so a flash offset and a CPU address cannot overlap accidentally. `BoundedLittleEndianReader` operates only inside an explicit source range, checks cancellation before each operation, preserves its cursor after failures, and returns typed diagnostics for truncation and allocation-limit violations.
 
-`ParserLimits` centralizes the initial parser bounds. Defaults are 256 MiB input, 16 MiB per allocation, 512 MiB extracted data, 1,000,000 objects, nesting depth 32, and 30 seconds wall time. Format parsers may accept stricter caller-supplied values. T068 will add shared runtime accounting and adversarial enforcement across archive, XML, regex, and plugin workloads.
+`ParserLimits` centralizes the initial parser bounds. Defaults are 256 MiB input, 16 MiB per allocation, 512 MiB extracted data, 1,000,000 objects, nesting depth 32, and 30 seconds wall time. Format parsers may accept stricter caller-supplied values. T068 added shared runtime accounting and adversarial enforcement across archive, XML, regex, and plugin workloads.
 
 Execution topology is a validated graph rather than a processor count. Processor nodes distinguish CPU cores, programmable coprocessors, radio processors, boot ROM code, DMA/bus masters, fixed-function accelerators, and non-programmable radio hardware. Nodes retain ISA, optional Ghidra language/compiler IDs, role, ownership, address spaces, reset/entry candidates, firmware-source relationship, security domain, confidence, and evidence. The topology separately records symmetric or alternative-boot groups, shared memory and aliases, boot/reset relationships, inter-processor communication, and whether faithful representation requires shared or separate Ghidra programs.
 
@@ -36,7 +80,7 @@ ESP application-image detection and parsing live entirely below `formats.esp` an
 
 Optional `esp_app_desc_t` extraction runs only on an already validated immutable image. It scans bounded segment bytes for the versioned magic, requires the complete 256-byte structure, decodes every fixed-width string without reading past its field, and retains exact source and target provenance. Missing metadata is not an error; truncated, malformed UTF-8, control-bearing text, or an invalid MMU exponent produces a stable warning and cannot invalidate the primary image. Digest bytes are defensively copied.
 
-The generic parser reports the image's encoded chip ID without selecting a target. A caller may instead supply an expected chip ID for an explicit mismatch check. The pure layer enforces only architecture-neutral structural entry evidence: even alignment and containment in an encoded segment. Executable-memory classification, exact language alignment, and Ghidra entry creation remain target-provider and loader responsibilities in later tasks; the parser does not guess them.
+The generic parser reports the image's encoded chip ID without selecting a target. A caller may instead supply an expected chip ID for an explicit mismatch check. The pure layer enforces only architecture-neutral structural entry evidence: even alignment and containment in an encoded segment. Executable-memory classification, exact language alignment, and Ghidra entry creation remain target-provider and loader responsibilities; the parser does not guess them.
 
 ## Implemented ESP target providers
 

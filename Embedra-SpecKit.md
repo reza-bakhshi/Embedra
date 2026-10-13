@@ -290,6 +290,19 @@ As a maintainer, I can run parsing, import, enrichment, diffing, and report gene
 - **NRF-009**: Transform redistributable Nordic SVD / MDK device definitions into Ghidra registers, types, and comments, including EasyDMA list pointer and buffer-size registers, PPI/DPPI (Programmable Peripheral Interconnect) event/task channels, and Arm CryptoCell (CC310 / CC312) accelerator interfaces.
 - **NRF-010**: All exact Nordic part records MUST initialize in the `PLANNED` state. Promoting any Nordic part to `EXPERIMENTAL` or `VERIFIED` requires passing all acceptance gates, reproducible fixtures, real-Ghidra import verification, rollback, and headless parity.
 
+### 4.3C Atmel / Microchip microcontroller family (future)
+
+- **ATMEL-001**: Model Atmel / Microchip as a dedicated target provider family supporting both 8-bit AVR microcontrollers (classic megaAVR, tinyAVR, and modern AVR-0/1/2-series / AVR-DA/DB/DD) and 32-bit ARM-based SAM microcontrollers (SAMD Cortex-M0+, SAME/SAMS/SAMV Cortex-M7, SAML/SAMC Cortex-M0+, and legacy SAM3 Cortex-M3).
+- **ATMEL-002**: Model the 8-bit AVR Harvard architecture with explicit Ghidra address space separation: Flash program memory (`code` / `mem`, accounting for word-addressed program counter vs byte-addressed instruction stream), internal/external SRAM data space (`data`), non-volatile EEPROM (`eeprom`), I/O register address space (`io`), and modern unified linear memory views for AVR-DA/DB/DD families. For 32-bit SAM devices, maintain 32-bit linear physical memory maps.
+- **ATMEL-003**: Accept Intel HEX (predominant AVR and SAM programming format), ELF (compiled avr-gcc / arm-none-eabi-gcc), raw BIN/flash dump, and Microchip Device Family Pack (DFP) inputs. Address-bearing formats preserve their encoded load addresses; raw BIN inputs require explicit part and base address confirmation.
+- **ATMEL-004**: Discover and decode AVR interrupt vector tables anchored at 0x0000 (or the bootloader reset address `BOOTRST`), consisting of `RJMP` (2-byte) or `JMP` (4-byte) vectors to Reset and interrupt service routines, dynamically scaled by the exact part's vector count. For SAM Cortex-M devices, decode standard Cortex-M vector tables starting at 0x00000000 or relocated via VTOR.
+- **ATMEL-005**: Model non-volatile configuration memory: AVR Fuse bits (Low, High, Extended fuses, and Lock bits) controlling clock selection, Brown-out Detection (BOD), JTAG/debugWIRE enable, Watchdog, and Bootloader section size (`BOOTSZ`); and SAM User Page / NVMCTRL security bits.
+- **ATMEL-006**: Model AVR bootloader configurations: configurable boot flash section sizing (`BOOTSZ0`/`BOOTSZ1`), dual entry points (Application reset at 0x0000 vs Bootloader reset at high Flash), and Optiboot / STK500 / Arduino bootloader fingerprinting.
+- **ATMEL-007**: Model SAM-BA ROM bootloader interfaces, NVM security bits, and bus matrix memory remap operations (Flash mapped to 0x00000000 vs Boot ROM mapped to 0x00000000) on SAMD and SAM3/SAM7/SAM9 platforms.
+- **ATMEL-008**: Curate exact-part records across classic ATmega (ATmega328P, ATmega2560, ATmega32U4, ATmega128), ATtiny (ATtiny85, ATtiny13A, ATtiny84, ATtiny1614), modern AVR-DA/DB, and SAM series (SAMD21G18A, SAMD51J19A, SAME70Q21, SAM3X8E) from official Microchip Device Family Packs (DFP) and ATDF (Atmel Device Description) schemas; forbid wildcard fabrication.
+- **ATMEL-009**: Transform redistributable Microchip ATDF / SVD device definitions into Ghidra peripheral registers, bitfield unions, I/O port structures, and interrupt vector names.
+- **ATMEL-010**: All exact Atmel/Microchip part records MUST initialize in the `PLANNED` state. Promoting any part to `EXPERIMENTAL` or `VERIFIED` requires passing all acceptance gates, reproducible fixtures, real-Ghidra import verification, rollback, and headless parity.
+
 ### 4.4 Raspberry Pi RP2040 and RP2350/RP2354
 
 - **RP-001**: Parse UF2 as addressed blocks and never load UF2 file offsets as CPU addresses.
@@ -616,6 +629,16 @@ SoftDevice binaries (e.g. S110, S132, S140) enforce specific memory offsets. Whe
 
 For dual-core nRF5340 devices, Embedra models the 128 MHz Cortex-M33 Application Core (with 1 MB Flash, 512 KB RAM, and QSPI) and the 64 MHz Cortex-M33 Network Core (with 256 KB Flash, 64 KB RAM, and 2.4 GHz radio) as separate, coordinated Ghidra programs connected via shared RAM and IPC peripheral registers. On nRF9160 and nRF5340, ARM TrustZone security partitioning (SPU) is modeled with explicit Secure and Non-Secure program separation. Hardware crypto accelerators, including Arm CryptoCell CC310/CC312 engines, are mapped to exact peripheral MMIO boundaries.
 
+### 8.3B Atmel / Microchip (AVR and SAM)
+
+Atmel / Microchip support spans two distinct architectural branches: classic 8-bit AVR RISC microcontrollers and 32-bit ARM Cortex-M based SMART SAM microcontrollers.
+
+8-bit AVR microcontrollers utilize a modified Harvard architecture where program code, data memory, and EEPROM reside in physically distinct address spaces. In Ghidra, code memory is represented in the program address space with word-addressed PC semantics (where PC increments by 1 word = 16 bits), while SRAM, register file (R0–R31), and standard I/O registers occupy the separate `data` space. Standard I/O memory (0x0020–0x005F data address space, corresponding to 0x00–0x3F I/O space) and extended I/O memory (up to 0x00FF or 0x01FF on larger megaAVR parts) map directly to peripheral registers. Modern AVR-DA, AVR-DB, and AVR-DD series feature a unified linear memory map where Flash is aliased into data space starting at 0x8000, which Embedra models with explicit overlay and alias tracking.
+
+Interrupt vectors for AVR reside at the base of Flash (0x0000), or at the start of the boot flash section when the `BOOTRST` fuse is programmed. Smaller devices (<= 8 KB Flash) use 2-byte `RJMP` instructions; larger devices use 4-byte `JMP` instructions. Embedra determines vector stride and total vector table extent dynamically from the catalog record for the exact part. Non-volatile fuses (Low, High, Extended, and Lock bits) are modeled as distinct configuration blocks, enabling accurate determination of brownout reset thresholds, clock source frequencies, and bootloader boundaries (`BOOTSZ0`/`BOOTSZ1`).
+
+32-bit SAM devices (SAMD21, SAMD51, SAME70, SAMS70, SAMV71, SAML, SAMC, SAM3) are ARM Cortex-M microcontrollers featuring linear 32-bit memory maps with internal Flash starting at 0x00000000, SRAM starting at 0x20000000, and peripheral MMIO blocks starting at 0x40000000. SAM-BA ROM bootloaders, NVMCTRL User Page / security bits, and bus matrix remap functionality are modeled with explicit program and memory boundaries. Embedra ingests official Microchip ATDF (Atmel Device Description) and CMSIS-SVD files from Microchip Device Family Packs (DFP) to populate peripheral structures, registers, bitfields, and interrupt names.
+
 ### 8.4 Cryptographic recovery strategy
 
 Crypto analysis runs from strongest to weakest evidence: exact symbols/debug metadata, versioned signatures, vendor ROM and hardware APIs, constants/tables, instruction patterns, call-graph/data-flow semantics, protocol/key/certificate structures, then bounded heuristics. It emits separate findings for implementations, wrappers, use-sites, hardware engines, algorithms/modes, candidate material, and verified encoded objects.
@@ -806,12 +829,12 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 - [x] T071 Run at least 10,000 deterministic malformed inputs per implemented binary format.
 - [x] T072 Verify all program-transaction rollback, cancellation, and partial-workspace cleanup cases.
 - [x] T073 Verify canonical GUI/headless equality for every golden fixture.
-- [ ] T074 Verify ESP and Raspberry Pi discovery completeness/drift, and verify exact support state and execution topology for every selected STM32 catalog part; STM32 additions require explicit review rather than silent expansion.
-- [ ] T075 Complete compatibility matrices by Ghidra release, OS, exact device, processor topology, input format, pack, crypto detector, and feature state.
-- [ ] T076 Complete dependency, code, pack, fixture, derived-data, trademark, and redistribution license review.
-- [ ] T077 Create and validate README, security/contribution policies, architecture, pack, fixture, headless, troubleshooting, support, device-catalog, crypto-coverage, and agent-handoff documentation.
-- [ ] T078 Enable dependency locking/verification, secret scanning, static analysis, SBOM generation, artifact checksums, and pinned release inputs.
-- [ ] T079 Execute install, uninstall, upgrade, agent-resume, and full clean-environment quickstarts on every claimed host platform; produce the installable extension ZIP and complete release bundle, then run Spec Kit convergence until every constitution, requirement, plan, task, test, document, catalog, and support claim agrees.
+- [x] T074 Verify ESP and Raspberry Pi discovery completeness/drift, and verify exact support state and execution topology for every selected STM32 catalog part; STM32 additions require explicit review rather than silent expansion.
+- [x] T075 Complete compatibility matrices by Ghidra release, OS, exact device, processor topology, input format, pack, crypto detector, and feature state.
+- [x] T076 Complete dependency, code, pack, fixture, derived-data, trademark, and redistribution license review.
+- [x] T077 Create and validate README, security/contribution policies, architecture, pack, fixture, headless, troubleshooting, support, device-catalog, crypto-coverage, and agent-handoff documentation.
+- [x] T078 Enable dependency locking/verification, secret scanning, static analysis, SBOM generation, artifact checksums, and pinned release inputs.
+- [x] T079 Execute install, uninstall, upgrade, agent-resume, and full clean-environment quickstarts on every claimed host platform; produce the installable extension ZIP and complete release bundle, then run Spec Kit convergence until every constitution, requirement, plan, task, test, document, catalog, and support claim agrees.
 
 ### Future ESP32-branded full-flash expansion
 
@@ -846,6 +869,21 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 - [ ] T102 Implement nRF5 SDK and nRF Connect SDK (Zephyr-based) crypto/networking signatures, BLE stack identifiers, and CTF/string/lead enrichment using shared analyzers.
 - [ ] T103 Complete Nordic verification, test coverage, support matrix documentation, and acceptance gate review across all cataloged nRF parts, promoting only verified parts and leaving all other combinations `PLANNED` or `UNSUPPORTED`.
 
+### Future Atmel / Microchip microcontroller support
+
+- [ ] T104 Audit and catalog specification for Atmel/Microchip across 8-bit AVR (ATmega, ATtiny, AVR-DA/DB/DD) and 32-bit SAM (SAMD, SAME, SAMS, SAMV, SAML, SAMC, SAM3) against pinned Microchip Device Family Packs (DFP), ATDF schemas, datasheets, and license terms. Record an exact-part allowlist with Flash/SRAM/EEPROM sizes, I/O ports, fuses, and capability matrix.
+- [ ] T105 [P] Build independently generated, redistributable Atmel/Microchip fixtures and official-tool oracles (Intel HEX, ELF, raw BIN) for representative ATmega328P, ATmega2560, ATtiny85, SAMD21G18A, and SAME70Q21 parts, covering standard entry, bootloader sections (Optiboot, SAM-BA), fuse/lock configurations, and interrupt vector tables. Add malformed, truncated, wrong-checksum, overlapping, and invalid-vector fixtures.
+- [ ] T106 Implement pure Atmel/Microchip target providers, exact-part catalog registry, and memory planners (Flash `code`, SRAM `data`, EEPROM `eeprom`, I/O registers `io`, Fuse/Lock bytes, and SAM 32-bit linear memory) under shared `ParserLimits` and `CancellationToken`, strictly isolated from other families.
+- [ ] T107 Implement AVR interrupt vector table parsing, scoring, entry-point resolution, and handler label generation for `RJMP` (2-byte) and `JMP` (4-byte) vector tables at 0x0000 and `BOOTSZ` bootloader addresses, plus Cortex-M vector tables for SAM parts.
+- [ ] T108 Implement Atmel/Microchip ATDF / SVD peripheral register data packs, I/O port bitfield definitions, fuse bit maps, and schema transforms from redistributable Microchip DFP device definitions.
+- [ ] T109 Wire Atmel/Microchip target plans into real-Ghidra GUI and headless multi-program import for Intel HEX, ELF, and raw BIN, validating Ghidra `avr8:LE:16:default` (and variants) and ARM Cortex-M language bindings, multi-address-space mapping, transactional rollback, user artifact preservation, and headless parity.
+- [ ] T110 Implement AVR and SAM common runtime signatures (Arduino core libraries, AVR-libc, Atmel START / ASF, FreeRTOS) and CTF/string/lead enrichment using shared analyzers.
+- [ ] T111 Complete Atmel/Microchip verification, test coverage, support matrix documentation, and acceptance gate review across all cataloged Atmel/Microchip parts, promoting only verified parts and leaving all other combinations `PLANNED` or `UNSUPPORTED`.
+
+### Final release and convergence gate
+
+- [ ] T112 Execute clean install, upgrade, and quickstarts on all platforms across all supported microcontroller families; produce the final production extension ZIP and complete release bundle, and achieve full Spec Kit convergence until every constitution, requirement, plan, task, test, document, catalog, and support claim agrees.
+
 ## 12. Acceptance Gates by Workstream
 
 | Workstream | Gate before moving on |
@@ -859,6 +897,7 @@ The ESP32-branded full-flash expansion below is a future workstream. Its T080-T0
 | STM32 advanced | TrustZone, dual-core, wireless/network-core, STM32MP, and external memory do not contaminate simple-device behavior and cross-program relationships are verified |
 | STM8 8-bit MCU family (T088-T095) | Curated STM8S/L/A/T catalog snapshot is complete with pinned provenance; 8-bit CISC memory maps, 0x8000 vector tables, and peripheral registers are verified against vendor datasheets and independent oracles without 32-bit Cortex-M contamination; imports pass in real Ghidra with rollback, user preservation, and headless equality |
 | Nordic Semiconductor nRF family (T096-T103) | Curated nRF51/52/53/54/91 catalog snapshot is complete with pinned provenance; Cortex-M0/M4/M33 memory maps, FICR/UICR regions, SoftDevice/MBR boundaries, and CryptoCell peripherals verified against vendor specifications; dual-core nRF5340 and TrustZone nRF9160 verified in real Ghidra with rollback, user preservation, and headless equality |
+| Atmel / Microchip family (T104-T111) | Curated AVR (ATmega/ATtiny/AVR-Dx) and SAM (SAMD/SAME) catalog snapshot is complete with pinned provenance; Harvard address space separation (code, data, eeprom, io), vector tables, fuses/lock bits, and ATDF/SVD peripheral registers verified against Microchip specifications; imports pass in real Ghidra with rollback, user preservation, and headless equality |
 | RP2040/RP2350 family | RP2040 and RP2350A/B/RP2354A/B UF2/ELF/raw, flash, ARM/RISC-V, dual-core, TrustZone, vector/trap, and PIO results match official tools and builds |
 | Crypto analysis | Positive/negative multi-ISA corpus reports measured precision/recall and hardware/software/inlined coverage without promoting weak candidates to verified secrets/functions |
 | Shared analyzers | Known-positive/negative corpus and false-positive measurements documented |

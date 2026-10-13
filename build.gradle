@@ -67,6 +67,17 @@ tasks.named('check') {
     dependsOn tasks.named('verifyEspCatalogGenerator')
 }
 
+tasks.register('verifyRpCatalogGenerator', Exec) {
+    group = 'verification'
+    description = 'Runs offline Raspberry Pi catalog and fixture generator tests.'
+    commandLine 'python3', '-m', 'unittest', 'discover', '-s', 'scripts/tests',
+        '-p', 'test_*rp*.py'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('verifyRpCatalogGenerator')
+}
+
 tasks.register('verifySTM32CatalogGenerator', Exec) {
     group = 'verification'
     description = 'Runs offline STM32 catalog generator, coverage, and integrity tests.'
@@ -86,6 +97,46 @@ tasks.register('verifySTM32FixtureCatalog', Exec) {
 
 tasks.named('check') {
     dependsOn tasks.named('verifySTM32FixtureCatalog')
+}
+
+tasks.register('licenseAudit', Exec) {
+    group = 'verification'
+    description = 'Runs the fail-closed license and redistribution audit (T076).'
+    commandLine 'python3', 'scripts/audit-licenses.py', '--check'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('licenseAudit')
+}
+
+tasks.register('secretScan', Exec) {
+    group = 'verification'
+    description = 'Runs the fail-closed repository secret scan (T078).'
+    commandLine 'python3', 'scripts/scan-secrets.py'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('secretScan')
+}
+
+tasks.register('supplyChainAudit', Exec) {
+    group = 'verification'
+    description = 'Runs the fail-closed dependency-locking, verification-metadata, and SBOM audit (T078).'
+    commandLine 'python3', 'scripts/audit-supply-chain.py', '--check'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('supplyChainAudit')
+}
+
+tasks.register('docsLinkAudit', Exec) {
+    group = 'verification'
+    description = 'Validates the documentation inventory and Markdown link health (T077).'
+    commandLine 'python3', 'scripts/check-documentation-links.py'
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('docsLinkAudit')
 }
 
 if (!configuredGhidraDir.isBlank()) {
@@ -177,6 +228,13 @@ if (!configuredGhidraDir.isBlank()) {
         exclude '.embedra/**'
         exclude '.codex/**'
         exclude 'docs/adr/**'
+        // T077 / ADR 0027: repository-governance and AI-agent documents remain
+        // repository-only; the release bundle links them through the README.
+        exclude 'docs/agent-handoff.md'
+        exclude 'SECURITY.md'
+        exclude 'CONTRIBUTING.md'
+        exclude 'CODE_OF_CONDUCT.md'
+        exclude 'CHANGELOG.md'
         exclude 'Embedra-SpecKit.md'
         exclude 'esp32s3_ctf_dump_4MB.bin'
         exclude 'flash_dump.bin'

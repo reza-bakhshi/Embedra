@@ -16,7 +16,7 @@ trap 'rm -f "$task_list"; rm -rf "$work_dir"' EXIT HUP INT TERM
     "$work_dir/embedra_esp32s3.sla" >"$work_dir/sleigh.log" 2>&1
 cmp data/languages/embedra_esp32s3.sla "$work_dir/embedra_esp32s3.sla"
 
-./gradlew -PGHIDRA_INSTALL_DIR="$GHIDRA_INSTALL_DIR" tasks --all >"$task_list"
+./gradlew --offline -PGHIDRA_INSTALL_DIR="$GHIDRA_INSTALL_DIR" tasks --all >"$task_list"
 
 for required_task in \
     checkstyleMain \
@@ -38,6 +38,7 @@ done
 
 run_build() {
     ./gradlew \
+        --offline \
         --no-build-cache --rerun-tasks \
         -PGHIDRA_INSTALL_DIR="$GHIDRA_INSTALL_DIR" \
         clean check jacocoTestReport jacocoTestCoverageVerification buildExtension
@@ -71,6 +72,7 @@ Embedra/lib/
 Embedra/lib/Embedra.jar
 Embedra/LICENSE
 Embedra/Module.manifest
+Embedra/NOTICE
 Embedra/README.md
 Embedra/THIRD_PARTY_NOTICES.md
 Embedra/catalogs/
@@ -112,9 +114,15 @@ Embedra/data/languages/xtensaInstructions.sinc
 Embedra/data/languages/xtensaMain.sinc
 Embedra/docs/
 Embedra/docs/architecture.md
+Embedra/docs/compatibility-matrix.md
+Embedra/docs/crypto-coverage.md
+Embedra/docs/device-catalog.md
 Embedra/docs/fixture-policy.md
+Embedra/docs/headless.md
+Embedra/docs/license-audit.md
 Embedra/docs/pack-format.md
 Embedra/docs/support-matrix.md
+Embedra/docs/troubleshooting.md
 Embedra/fid/
 Embedra/fid/esp32s3/
 Embedra/fid/esp32s3/README.md
@@ -123,6 +131,7 @@ Embedra/fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.fidb
 Embedra/fid/esp32s3/esp-idf-v6.0-662a3be35475-esp32s3-Os.json
 Embedra/licenses/
 Embedra/licenses/STMicroelectronics-STM32-open-pin-data-BSD-3-Clause.txt
+Embedra/licenses/license-audit.sha256
 Embedra/packs/
 Embedra/packs/espressif.esp32.peripherals/
 Embedra/packs/espressif.esp32.peripherals/1.0.0/
@@ -302,6 +311,12 @@ then
     echo "Extension ZIP text content contains host paths or restricted capture names." >&2
     exit 1
 fi
+
+python3 scripts/audit-licenses.py --check --zip "$artifact"
+
+# T078 supply-chain release bundle: source bundle, deterministic CycloneDX
+# SBOM, and a sorted sha256sum-compatible checksum manifest, all fail-closed.
+sh scripts/build-release-artifacts.sh "$artifact"
 
 if printf '%s\n' "$actual_entries" | grep -q '^Embedra/lib/Embedra-src.zip$'; then
     unzip -p "$artifact" Embedra/lib/Embedra-src.zip >"$work_dir/source.zip"

@@ -196,3 +196,63 @@ hashes. The C5 index is retained in the repository for review and excluded
 from the curated extension ZIP. No source PDSC, SVD XML, or pack archive is bundled. Other ST-hosted
 DFP archives inspected during T032 carried SLA0044 terms restricting use to
 ST processing units; those archives were excluded from generated snapshots.
+
+T040-T048 extend the STM32 surface with reviewed derived data whose sources
+follow the same boundaries: the shipped CMSIS-SVD register packs derive from
+modm-io/cmsis-svd-stm32 at pinned revision `e79021accd49bf19bd0b16065f5471fb073ff3ac`
+(permissively licensed ST CMSIS-SVD files redistributed here only as derived
+facts), the interrupt/vector plan derives from the pinned Apache-2.0 ST CMSIS
+device headers, board profiles derive from pinned BSD-3-Clause ST BSP
+repositories, the TrustZone security-domain record derives from pinned
+Apache-2.0 CMSIS evidence, and the STM32MP providers derive from pinned
+redistributable inputs (Linux kernel DTS facts GPL-2.0+/BSD-3-Clause with the
+BSD branch exercised by the committed fixture, ARM TF-A BSD-3-Clause, ST
+CMSIS Apache-2.0, ST open pin data BSD-3-Clause, OpenOCD scripts GPL-2.0+).
+All of these are repository-derived facts at pinned revisions; no vendor
+source file is bundled, and the per-artifact dispositions are enumerated in
+`docs/license-audit.md`.
+
+T050-T055 use the official Raspberry Pi product datasheets as the
+documentation source of record for silicon facts and board profiles, with
+each catalog record carrying the datasheet title, URL, and release as
+provenance. The datasheets are supplied by Raspberry Pi for public reference
+and are not redistributed by Embedra; the committed catalogs contain only
+normalized, non-expressive factual derivations (part identities, memory and
+flash capacities, PIO counts, pin and package facts, and numeric board
+settings). The UF2 block-format and image-definition constants are published
+format facts; the freestanding fixtures are original project source compiled
+with the locally added Raspberry Pi Pico SDK toolchain during generation, and
+no MicroPython or other non-Embedra binary blob is bundled.
+
+T056-T074 add no new third-party footprint.
+
+## Trademarks and names
+
+This distribution uses the following third-party names for compatibility
+identification only, subject to nominative fair use:
+
+| Name | Owner of the corresponding name/trademark | How Embedra uses it |
+|---|---|---|
+| Ghidra | The U.S. National Security Agency's open-source reverse-engineering project (distributed under Apache-2.0) | An independent extension built against the Ghidra 12.1.3 PUBLIC API; identifies compatibility and build integration |
+| Espressif / ESP32 / ESP8266 / ESP-IDF / esptool | Espressif Systems | Identifies the silicon families, SDK, and format oracle documented and parsed by the extension |
+| Raspberry Pi / RP2040 / RP2350 / Pico | Raspberry Pi Ltd | Identifies the silicon parts and board profiles cataloged by the extension |
+| STM32 / STM8 / STM32Cube / Nucleo / Discovery | STMicroelectronics | Identifies the devices, SDKs, and board profiles cataloged by the extension |
+| Arm / Cortex / CMSIS | Arm Limited (or its subsidiaries) | Identifies the processor architectures and header conventions parsed by the extension |
+
+Embedra is an independent project. There is no affiliation with, sponsorship
+by, or endorsement of Embedra by the U.S. National Security Agency, Espressif
+Systems, Raspberry Pi Ltd, STMicroelectronics, or Arm Limited, and no such
+endorsement is implied. Third parties retain all rights in their respective
+names, marks, and logos; the public Ghidra, Espressif, Raspberry Pi, and
+STMicroelectronics brand names are referenced only to state which formats and
+devices the extension works with.
+
+## Complete license audit
+
+The per-artifact license determinations, redistribution gate outcomes, and
+the SHA-256 digest ledger of every third-party-derived artifact shipped in
+the extension are recorded in `docs/license-audit.md` and pinned in
+`licenses/license-audit.sha256`. The automated fail-closed verification runs
+as `python3 scripts/audit-licenses.py --check` (wired into the Gradle
+`check` task) and `python3 scripts/audit-licenses.py --check --zip <zip>`
+for the distributed extension archive.
