@@ -251,9 +251,17 @@ def CLIENT_WANTS_SUFFIX(name: str) -> bool:
     return Path(name).suffix in TEXT_SUFFIXES or name == "gradle.lockfile"
 
 
+AUDIT_COPYLEFT_EXEMPT = {
+    REPO / "scripts/audit-licenses.py",
+    REPO / "scripts/generate-sbom.py",
+}
+
+
 def scan_files_for_gpl_text(files: list[Path]) -> int:
     fails = 0
     for path in files:
+        if path in AUDIT_COPYLEFT_EXEMPT:
+            continue
         try:
             text = path.read_bytes().decode("utf-8", errors="strict")
         except (UnicodeDecodeError, OSError):
