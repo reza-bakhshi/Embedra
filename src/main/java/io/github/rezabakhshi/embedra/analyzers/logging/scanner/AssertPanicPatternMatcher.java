@@ -151,6 +151,38 @@ public final class AssertPanicPatternMatcher {
                     }
                 }
             }
+            case STM8 -> {
+                if (mnemonic.equals("trap") || mnemonic.equals("halt") || mnemonic.equals("break")) {
+                    return true;
+                }
+                if (mnemonic.equals("jra") || mnemonic.equals("jp")) {
+                    List<String> ops = instruction.operands();
+                    if (!ops.isEmpty()) {
+                        String target = ops.get(0).trim();
+                        if (".".equals(target) || "#0".equals(target)
+                                || target.equalsIgnoreCase(String.format("0x%x", instruction.address()))
+                                || target.equalsIgnoreCase(String.format("0x%08x", instruction.address()))) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            case AVR8 -> {
+                if (mnemonic.equals("break") || mnemonic.equals("sleep")) {
+                    return true;
+                }
+                if (mnemonic.equals("rjmp") || mnemonic.equals("jmp")) {
+                    List<String> ops = instruction.operands();
+                    if (!ops.isEmpty()) {
+                        String target = ops.get(0).trim();
+                        if (".".equals(target) || "#0".equals(target) || ".-2".equals(target)
+                                || target.equalsIgnoreCase(String.format("0x%x", instruction.address()))
+                                || target.equalsIgnoreCase(String.format("0x%08x", instruction.address()))) {
+                            return true;
+                        }
+                    }
+                }
+            }
         }
         return false;
     }

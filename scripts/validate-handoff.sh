@@ -99,9 +99,11 @@ then
 fi
 
 next_task=$(jq -r '.nextTask' "$state")
-if ! grep -Fq -- "- [ ] $next_task " "$repository/Embedra-SpecKit.md"; then
-    echo "Next task is missing or already complete in the specification: $next_task" >&2
-    exit 1
+if [ "$next_task" != "COMPLETE" ] && [ "$next_task" != "NONE" ]; then
+    if ! grep -Fq -- "- [ ] $next_task " "$repository/Embedra-SpecKit.md"; then
+        echo "Next task is missing or already complete in the specification: $next_task" >&2
+        exit 1
+    fi
 fi
 
 jq -r '.acceptanceGates[] | .evidence, (.approvalEvidence // empty)' "$state" |

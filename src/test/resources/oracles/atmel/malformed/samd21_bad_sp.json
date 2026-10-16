@@ -1,0 +1,5 @@
+{
+  "errorExpected": true,
+  "diagnosticCode": "INVALID_INITIAL_SP",
+  "reason": "Initial stack pointer 0xFFFFFFFC lies outside physical SRAM aperture"
+}

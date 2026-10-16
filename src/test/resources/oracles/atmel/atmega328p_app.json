@@ -1,0 +1,34 @@
+{
+  "part": "ATmega328P",
+  "family": "AVR",
+  "series": "ATmega",
+  "core": "AVR RISC",
+  "ghidraLanguage": "avr8:LE:16:default",
+  "addressModel": "HARVARD_SEPARATE",
+  "flashRange": {
+    "start": "0x00000000",
+    "end": "0x00007FFF"
+  },
+  "ramRange": {
+    "start": "0x00000100",
+    "end": "0x000008FF"
+  },
+  "eepromRange": {
+    "start": "0x00000000",
+    "end": "0x000003FF"
+  },
+  "vectorTable": {
+    "origin": "0x00000000",
+    "count": 26,
+    "strideBytes": 4,
+    "instruction": "JMP",
+    "resetHandlerByte": "0x00000068",
+    "resetHandlerWord": "0x00000034"
+  },
+  "fuses": {
+    "low": "0xFF",
+    "high": "0xDE",
+    "extended": "0xFD",
+    "lock": "0xCF"
+  }
+}

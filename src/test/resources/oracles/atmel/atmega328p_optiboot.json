@@ -1,0 +1,11 @@
+{
+  "part": "ATmega328P",
+  "family": "AVR",
+  "bootloaderType": "Optiboot",
+  "bootAddress": "0x00007E00",
+  "bootSizeBytes": 512,
+  "entryPointWord": "0x00003F00",
+  "protocol": "STK500v1",
+  "baudRate": 115200,
+  "bootszFuses": "11"
+}

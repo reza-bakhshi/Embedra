@@ -1,0 +1,22 @@
+{
+  "fixtureId": "nordic.t097.malformed.nrf52_truncated.hex",
+  "sha256": "bc075761fa96d52de6fa539e4c59968f8cbde2f194b2c234da098fff1aa667d5",
+  "target": "nRF52832-QFAA",
+  "inputFormat": "INTEL_HEX",
+  "origin": "Freestanding synthetic deterministic test fixture for nRF52832-QFAA",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e0016nordicdeterministicv1",
+  "generationCommand": "python3 scripts/generate-nordic-fixtures.py",
+  "toolchain": "Embedra Nordic deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/nordic/malformed/nrf52_truncated.json",
+  "requirements": [
+    "T097",
+    "NRF-002"
+  ]
+}

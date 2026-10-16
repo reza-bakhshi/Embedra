@@ -1,0 +1,40 @@
+{
+  "device": "STM8L152R8T6",
+  "target": "STM8L152R8T6",
+  "fixtureId": "stm8.t089.stm8l152r8t6.elf",
+  "inputFormat": "ELF executable",
+  "origin": "Freestanding STM8 assembly and vector table compiled for STM8L152R8T6",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e001600310044stm8deterministicv1",
+  "generationCommand": "python3 scripts/generate-stm8-fixtures.py",
+  "toolchain": "Embedra STM8 deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>",
+    "objcopy -O srec <ELF> <S19>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/stm8/STM8L152R8T6.json",
+  "requirements": [
+    "T089",
+    "STM8-001",
+    "STM8-002",
+    "STM8-003",
+    "STM8-004",
+    "STM8-005"
+  ],
+  "sha256": "3416cbfca3a4f760ba917b5a71e523c1741aad9f44ca9e42236e814ead34914c",
+  "sourceProvenance": {
+    "name": "ST STM8L152R8T6 Datasheet DocID15093",
+    "distribution": "STMicroelectronics Official Technical Documentation",
+    "license": "Proprietary / ST Permissive Factual Data",
+    "path": "datasheets/DocID15093.pdf",
+    "facts": [
+      "FLASH_BASE 0x008000",
+      "RAM_BASE 0x000000",
+      "EEPROM_BASE 0x004000",
+      "PERIPHERAL_BASE 0x005000"
+    ]
+  }
+}

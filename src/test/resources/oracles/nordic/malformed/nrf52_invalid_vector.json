@@ -1,0 +1,5 @@
+{
+  "fixture": "nrf52_invalid_vector.bin",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "INVALID_INITIAL_SP_AND_EVEN_RESET_VECTOR"
+}

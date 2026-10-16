@@ -1,0 +1,22 @@
+{
+  "fixtureId": "nordic.t097.nrf9160_nonsecure.elf",
+  "sha256": "508c4f8be446aed404b8fb793c8f9f54d90e9c8dde61291b447b719024cf23d5",
+  "target": "nRF9160-SICA",
+  "inputFormat": "ELF",
+  "origin": "Freestanding synthetic deterministic test fixture for nRF9160-SICA",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e0016nordicdeterministicv1",
+  "generationCommand": "python3 scripts/generate-nordic-fixtures.py",
+  "toolchain": "Embedra Nordic deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/nordic/nrf9160_nonsecure.json",
+  "requirements": [
+    "T097",
+    "NRF-007"
+  ]
+}

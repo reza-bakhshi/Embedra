@@ -1,0 +1,33 @@
+{
+  "device": "STM8_MALFORMED",
+  "target": "STM8_MALFORMED",
+  "fixtureId": "stm8.t089.malformed.stm8s103_truncated.bin",
+  "inputFormat": "raw binary",
+  "origin": "Intentionally malformed STM8 fixture: Truncated binary: 64 bytes is less than the 128-byte vector table requirement",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e001600310044stm8deterministicv1",
+  "generationCommand": "python3 scripts/generate-stm8-fixtures.py",
+  "toolchain": "Embedra STM8 deterministic generator",
+  "oracleCommands": [
+    "readelf -h <ELF> || false",
+    "objcopy <INPUT> /dev/null || false"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/stm8/malformed/stm8s103_truncated.bin.json",
+  "requirements": [
+    "T089",
+    "STM8-002",
+    "STM8-003",
+    "STM8-004"
+  ],
+  "sha256": "27fe798e74c5dc0d78125543bf108b67789f61d31c02d36f7bda4e3b395d388e",
+  "sourceProvenance": {
+    "name": "Synthetic malformed fixture for fail-closed validation",
+    "distribution": "Embedra Test Fixtures",
+    "license": "Apache-2.0",
+    "path": "scripts/generate-stm8-fixtures.py#stm8s103_truncated.bin",
+    "facts": [
+      "Truncated binary: 64 bytes is less than the 128-byte vector table requirement"
+    ]
+  }
+}

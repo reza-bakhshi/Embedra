@@ -1,0 +1,8 @@
+{
+  "part": "nRF52832-QFAA",
+  "softDevice": "S132",
+  "mbrBase": "0x00000000",
+  "softDeviceBase": "0x00001000",
+  "applicationOffset": "0x00026000",
+  "applicationResetVector": "0x00026101"
+}

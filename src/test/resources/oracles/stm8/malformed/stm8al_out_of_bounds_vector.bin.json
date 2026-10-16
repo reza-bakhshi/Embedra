@@ -1,0 +1,7 @@
+{
+  "fixture": "stm8al_out_of_bounds_vector.bin",
+  "errorType": "stm8.t089.malformed.stm8al_out_of_bounds_vector.bin",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "Reset vector target 0x040000 is outside 64 KiB physical flash boundary",
+  "sha256": "3ace091383323d163cf794a8eef9d855659d6654df64294c93944b6c030601a4"
+}

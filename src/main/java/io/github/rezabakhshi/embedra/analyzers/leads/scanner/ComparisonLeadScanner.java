@@ -282,6 +282,8 @@ public final class ComparisonLeadScanner {
             case ARM_THUMB -> m.equals("bl") || m.equals("blx");
             case RISCV32 -> m.equals("call") || m.equals("jal") || m.equals("jalr");
             case XTENSA -> m.startsWith("call");
+            case STM8 -> m.equals("call") || m.equals("callf") || m.equals("callr");
+            case AVR8 -> m.equals("call") || m.equals("rcall") || m.equals("icall");
         };
     }
 
@@ -323,6 +325,8 @@ public final class ComparisonLeadScanner {
             case ARM_THUMB -> "r" + index;
             case RISCV32 -> "a" + index;
             case XTENSA -> "a" + (index + 2);
+            case STM8 -> index == 0 ? "x" : (index == 1 ? "y" : "a");
+            case AVR8 -> "r" + (24 - index * 2);
         };
     }
 
@@ -341,6 +345,12 @@ public final class ComparisonLeadScanner {
             return s;
         }
         if (arch == InstructionArch.XTENSA && s.matches("^a(?:[2-9]|1[0-5])$")) {
+            return s;
+        }
+        if (arch == InstructionArch.STM8 && s.matches("^(?:a|x|y|sp|xl|xh|yl|yh)$")) {
+            return s;
+        }
+        if (arch == InstructionArch.AVR8 && s.matches("^r(?:[0-9]|[12][0-9]|3[01])$")) {
             return s;
         }
         return null;
@@ -402,6 +412,20 @@ public final class ComparisonLeadScanner {
                         map.put(destReg, ResolvedOperand.ofImmediate(imm));
                     }
                 }
+            } else if (arch == InstructionArch.STM8) {
+                if (mnemonic.startsWith("ld")) {
+                    Long imm = parseImmediate(ops.get(1));
+                    if (imm != null) {
+                        map.put(destReg, ResolvedOperand.ofImmediate(imm));
+                    }
+                }
+            } else if (arch == InstructionArch.AVR8) {
+                if (mnemonic.equals("ldi") || mnemonic.equals("mov") || mnemonic.equals("movw")) {
+                    Long imm = parseImmediate(ops.get(1));
+                    if (imm != null) {
+                        map.put(destReg, ResolvedOperand.ofImmediate(imm));
+                    }
+                }
             }
         }
 
@@ -422,6 +446,10 @@ public final class ComparisonLeadScanner {
                 case RISCV32 -> m.equals("beqz") || m.equals("bnez") || m.equals("beq") || m.equals("bne");
                 case XTENSA -> m.startsWith("beqz") || m.startsWith("bnez")
                         || m.startsWith("beqi") || m.startsWith("bnei");
+                case STM8 -> m.equals("jreq") || m.equals("jrne") || m.equals("jrmi")
+                        || m.equals("jrpl") || m.startsWith("jr");
+                case AVR8 -> m.startsWith("br") || m.equals("breq") || m.equals("brne")
+                        || m.equals("brcs") || m.equals("brcc") || m.equals("brmi") || m.equals("brpl");
             };
 
             if (isBranch) {

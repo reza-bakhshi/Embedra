@@ -1,0 +1,35 @@
+{
+  "fixtureId": "esp32c3.full-flash.malformed-overlapping-partitions",
+  "sha256": "ae42998ba31ad2eff24f40aa85a5ee561c650bcc6a76b798327e9d2065bf5d75",
+  "target": "ESP32-C3",
+  "device": "ESP32-C3 (chip ID 5; synthetic flash; no exact variant claim)",
+  "inputFormat": "Synthetic Espressif raw flash image",
+  "origin": "Deterministically generated ESP32-C3 flash image with overlapping partitions in table",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "sourceProvenance": [
+    {
+      "name": "ESP-IDF partition table format and generator",
+      "revision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+      "license": "Apache-2.0",
+      "url": "https://github.com/espressif/esp-idf/blob/v6.0/components/partition_table/gen_esp32part.py"
+    }
+  ],
+  "generatorRevision": "sha256:dbef26173fd9b1a99c2dc4724f3ba51bf8ae64836599053e59a3127962dd3da1",
+  "scriptRevision": "sha256:dbef26173fd9b1a99c2dc4724f3ba51bf8ae64836599053e59a3127962dd3da1",
+  "generationCommand": "python3 scripts/generate-esp-full-flash-fixtures.py",
+  "toolchain": "ESP-IDF v6.0 gen_esp32part.py 1.5; POSIX shell/coreutils/jq",
+  "oracleCommands": [
+    "gen_esp32part.py <extracted-table.bin> <decoded.csv>",
+    "compare two isolated deterministic generations"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/esp32c3/full-flash/malformed-overlapping-partitions.expectations.json",
+  "malformed": true,
+  "requirements": [
+    "T081",
+    "ESP-022",
+    "ESP-023",
+    "ESP-024",
+    "ESP-025"
+  ]
+}

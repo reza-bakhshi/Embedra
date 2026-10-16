@@ -36,11 +36,18 @@ public final class EspPartitionTableDiscovery {
 
     public static EspPartitionTable discover(byte[] flash, ParserLimits limits,
             CancellationToken cancellation) throws DiagnosticException {
+        return discover(flash, DEFAULT_OFFSET, 0, flash.length, limits, cancellation);
+    }
+
+    public static EspPartitionTable discover(byte[] flash, long defaultOffset,
+            long minOffset, long maxOffset, ParserLimits limits,
+            CancellationToken cancellation) throws DiagnosticException {
         validateInput(flash, limits, cancellation);
         DiagnosticException strongestFailure = null;
-        if (hasCandidateMagic(flash, DEFAULT_OFFSET)) {
+        if (defaultOffset >= minOffset && defaultOffset <= maxOffset
+                && hasCandidateMagic(flash, defaultOffset)) {
             try {
-                return parseCandidate(flash, DEFAULT_OFFSET,
+                return parseCandidate(flash, defaultOffset,
                     EspPartitionDiscoveryMethod.DEFAULT_OFFSET, limits, cancellation);
             }
             catch (DiagnosticException failure) {
@@ -48,10 +55,12 @@ public final class EspPartitionTableDiscovery {
                 strongestFailure = stronger(strongestFailure, failure);
             }
         }
-        for (long offset = 0; offset + ENTRY_SIZE <= flash.length;
+        long scanStart = Math.max(0, (minOffset / TABLE_SIZE) * TABLE_SIZE);
+        long scanLimit = Math.min(flash.length, maxOffset + TABLE_SIZE);
+        for (long offset = scanStart; offset + ENTRY_SIZE <= flash.length && offset < scanLimit;
                 offset += TABLE_SIZE) {
             cancellation.throwIfCancellationRequested();
-            if (offset == DEFAULT_OFFSET || !hasCandidateMagic(flash, offset)) {
+            if (offset == defaultOffset || !hasCandidateMagic(flash, offset)) {
                 continue;
             }
             try {

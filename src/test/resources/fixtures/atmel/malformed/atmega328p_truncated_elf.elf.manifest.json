@@ -1,0 +1,22 @@
+{
+  "fixtureId": "atmel.t105.malformed.atmega328p_truncated_elf.elf",
+  "sha256": "7bb2d34a01fbfdec017a91cf997e363e07134531f84591a358a3bb26b78d3267",
+  "target": "ATmega328P",
+  "inputFormat": "ELF",
+  "origin": "Freestanding synthetic deterministic test fixture for ATmega328P",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:e1050016atmeldeterministicv1",
+  "generationCommand": "python3 scripts/generate-atmel-fixtures.py",
+  "toolchain": "Embedra Atmel deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/atmel/malformed/atmega328p_truncated_elf.json",
+  "requirements": [
+    "T105",
+    "CORE-004"
+  ]
+}

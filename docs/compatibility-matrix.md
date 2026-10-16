@@ -194,6 +194,145 @@ Total: 53 parts, 53 verified plans (T039 `readyCount 53/53`), 142 cores.
 
 All 53 curated STM32 part records remain `PLANNED` for device support.
 
+## 4.2 STM8 8-bit MCU family coverage
+
+Curated snapshot `catalogs/stm8/2026-10-13/catalog.json` (digest
+`a29012b1c9e39c25109c10fb097b0a25225ec416fe9fe43c86a65a0a1270bbb7`): exactly
+**32 curated orderable parts across 4 families** (14 STM8S, 8 STM8L, 7 STM8A, 3 STM8T).
+STM8 devices employ an 8-bit CISC architecture with a 24-bit program counter, 16-bit
+index registers (X, Y) and stack pointer, and an 8-bit accumulator (A). STM8 support is
+architecturally isolated from 32-bit Cortex-M STM32.
+
+Memory invariants:
+- Unified linear address space with RAM at `0x000000`, EEPROM at `0x004000`,
+  option bytes at `0x004800`, peripheral registers at `0x005000`–`0x0057FF`,
+  boot ROM at `0x006000`–`0x0067FF`, and Flash at `0x008000`.
+- Vector table anchored at `0x008000` with 32 4-byte entries (opcode `0x82` followed
+  by 24-bit handler address).
+
+### 4.2.1 Verified STM8 parts (SUPPORTED)
+
+The 8 representative parts verified across fixture, oracle, Ghidra transactional import,
+and signature matching suites are promoted to `SUPPORTED`:
+
+| Exact Part | Family | Subfamily / Line | Package | Flash | RAM | EEPROM | Support State |
+|---|---|---|---|---|---|---|---|
+| `STM8S003F3P6` | STM8S | Value line | TSSOP20 | 8 KiB | 1 KiB | 128 B | SUPPORTED |
+| `STM8S103F3P6` | STM8S | Access line | TSSOP20 | 8 KiB | 1 KiB | 640 B | SUPPORTED |
+| `STM8S208RBT6` | STM8S | Performance line (CAN) | LQFP64 | 128 KiB | 6 KiB | 2 KiB | SUPPORTED |
+| `STM8L151C8T6` | STM8L | Low-power line | LQFP48 | 64 KiB | 4 KiB | 2 KiB | SUPPORTED |
+| `STM8L152R8T6` | STM8L | Ultra-low-power line (LCD) | LQFP64 | 64 KiB | 4 KiB | 2 KiB | SUPPORTED |
+| `STM8AF5288TAY` | STM8A | Automotive line (CAN) | LQFP48 | 64 KiB | 6 KiB | 2 KiB | SUPPORTED |
+| `STM8AL3188TA` | STM8A | Automotive low-power line | LQFP48 | 64 KiB | 4 KiB | 2 KiB | SUPPORTED |
+| `STM8T143AU` | STM8T | Touch-sensing line | UFQFPN20 | 8 KiB | 1 KiB | 128 B | SUPPORTED |
+
+All remaining 24 cataloged parts remain strictly `PLANNED`.
+
+### 4.2.2 STM8 feature and toolchain coverage
+
+| Feature | State | Evidence | Limitations |
+|---|---|---|---|
+| Catalog registry & exact-part lookup | VERIFIED | T088 audit, T090 registry; 8 SUPPORTED, 24 PLANNED parts | Wildcards, bare family names, and fuzzy matching rejected |
+| Multi-format decoding (BIN, HEX, S19, ELF) | VERIFIED | T091/T093 decoder suites; strict checksum and boundary enforcement | Overlapping records and corrupted checksums reject fail-closed |
+| Memory planning & transactional mapping | VERIFIED | T090/T093 mapper suites; Ghidra transactional rollback on failure | Standard Ghidra 12.1.3 requires external STM8 SLEIGH definition |
+| Peripheral register packs & interrupt tables | VERIFIED | T092 peripheral packs for STM8S, STM8L, STM8A | Register definitions derived from licensed ST reference manuals |
+| SPL & compiler runtime signatures (SDCC, Cosmic) | VERIFIED | T094 signature matcher; 11 masked signatures; evidence gating | Requires family and compiler evidence per STM8-009 |
+| CTF entity scanner & 16/24-bit pointer leads | VERIFIED | T094 CTF enrichment analyzer suite | Exploitability is never inferred |
+
+## 4.3 Nordic Semiconductor nRF family coverage
+
+Curated snapshot `catalogs/nordic/2026-10-13/catalog.json` (digest
+`b95b84f1a476e7e2585b96b1981a185040fa761d021fdf751959e6abb618f5d9`): exactly
+**21 curated orderable parts across 5 series** (5 nRF51, 8 nRF52, 2 nRF53, 2 nRF54, 4 nRF91).
+Nordic Semiconductor nRF devices are single- or dual-core wireless SoCs based on ARM Cortex-M
+(Cortex-M0, Cortex-M4F, Cortex-M33) and RISC-V coprocessors.
+
+Memory invariants:
+- Unified physical memory maps with Flash at `0x00000000`, SRAM at `0x20000000`,
+  FICR at `0x10000000` (`0x00FF0000` on nRF53/nRF54), UICR at `0x10001000` (`0x00FF8000` on nRF53/nRF54),
+  Non-Secure APB peripherals at `0x40000000`, and Secure MMIO peripherals at `0x50000000`.
+- Hardware crypto apertures: CryptoCell CC310 at `0x5002A000` (nRF52840) and CryptoCell CC312 at `0x50840000` (nRF5340, nRF9160).
+- SoftDevice memory layouts: MBR at `0x00000000`–`0x00000FFF`, SoftDevice stack at `0x00001000` upwards,
+  application vector relocation at `0x00019000` (S112), `0x00026000` (S132), or `0x00027000` (S140),
+  and bootloader address discoverable from UICR `BOOTLOADERADDR` (`0x10001014`).
+- Dual-core nRF5340: Application Core (128 MHz Cortex-M33 with 1 MB Flash, 512 KB RAM) and Network Core
+  (64 MHz Cortex-M33 with 256 KB Flash, 64 KB RAM) connected via 16 shared IPC channels.
+- ARM TrustZone security domains on nRF9160 and nRF5340 cleanly separating Secure and Non-Secure domains.
+
+### 4.3.1 Verified Nordic parts (SUPPORTED)
+
+The 5 representative parts verified across fixture, oracle, Ghidra transactional import,
+and signature matching suites are promoted to `SUPPORTED`:
+
+| Exact Part | Series | Core / Architecture | Flash | RAM | Crypto / Special | Support State |
+|---|---|---|---|---|---|---|
+| `nRF51822-QFAA` | nRF51 | ARM Cortex-M0 (ARMv6-M) | 256 KiB | 16 KiB | BLE 4.x / 2.4 GHz RF | SUPPORTED |
+| `nRF52832-QFAA` | nRF52 | ARM Cortex-M4F (ARMv7E-M) | 512 KiB | 64 KiB | BLE 5.x / NFC | SUPPORTED |
+| `nRF52840-QIAA` | nRF52 | ARM Cortex-M4F (ARMv7E-M) | 1024 KiB | 256 KiB | CryptoCell CC310 / USB | SUPPORTED |
+| `nRF5340-QKAA` | nRF53 | Dual ARM Cortex-M33 (ARMv8-M) | 1280 KiB (App+Net) | 576 KiB (App+Net) | Dual-core, TrustZone, CryptoCell CC312 | SUPPORTED |
+| `nRF9160-SICA` | nRF91 | ARM Cortex-M33 (ARMv8-M) | 1024 KiB | 256 KiB | TrustZone LTE-M/NB-IoT, CryptoCell CC312 | SUPPORTED |
+
+All remaining 16 cataloged parts remain strictly `PLANNED`.
+
+### 4.3.2 Nordic feature and toolchain coverage
+
+| Feature | State | Evidence | Limitations |
+|---|---|---|---|
+| Catalog registry & exact-part lookup | VERIFIED | T096 audit, T098 registry; 5 SUPPORTED, 16 PLANNED parts | Wildcards, bare series names, and fuzzy matching rejected |
+| Multi-format decoding (BIN, HEX, ELF) | VERIFIED | T097/T101 decoder suites; strict checksum and boundary enforcement | Malformed records and out-of-aperture addresses reject fail-closed |
+| Multi-image layout resolution | VERIFIED | T099/T101 detector & mapper suites; MBR/SoftDevice/App/Bootloader alignment | Relocated application must align to SoftDevice boundary |
+| Dual-core cross-program binding (nRF5340) | VERIFIED | T099/T101 dual-core analyzer & service; shared IPC channel mapping | Application and Network core images mapped to distinct programs |
+| TrustZone security partitioning (nRF9160) | VERIFIED | T098/T101 memory planner & service; Secure/Non-Secure separation | Separate program workspaces with SPU boundary modeling |
+| Peripheral register packs & EasyDMA schemas | VERIFIED | T100 peripheral packs for nRF51, nRF52, nRF53, nRF54, nRF91 | EasyDMA list pointers and MAXCNT validated |
+| nRF5 SDK & Zephyr signatures | VERIFIED | T102 signature matcher; 10 masked signatures; evidence gating | Requires exact-part and series evidence per NRF-009 |
+| CTF entity scanner & 32-bit pointer leads | VERIFIED | T102 CTF enrichment analyzer suite | Exploitability is never inferred |
+
+## 4.4 Atmel / Microchip microcontroller family coverage
+
+Curated snapshot `catalogs/atmel/2026-10-14/catalog.json` (digest
+`049a9b6debc502998735913c01baa1dd61f8cd7e12730bbac4140d55a1e934a9`): exactly
+**27 curated orderable parts across 5 series** (7 ATmega, 6 ATtiny, 5 AVR-Dx, 5 SAMD, 4 SAME).
+Atmel / Microchip devices encompass 8-bit AVR Harvard-architecture microcontrollers
+(AVR RISC and AVR-Dx AVR8X) and 32-bit SAM ARM Cortex-M microcontrollers (Cortex-M0+, Cortex-M7, Cortex-M3).
+
+Memory invariants:
+- AVR Classic (ATmega / ATtiny): Separate Harvard address spaces: Flash code space (`0x00000000` upwards),
+  SRAM data space (`0x00000100` / `0x00000060` upwards after 32 general-purpose registers and I/O mapped memory),
+  EEPROM separate memory space (`0x00000000` upwards), I/O registers space, and Fuse/Lock memory space.
+- AVR Unified (AVR-Dx): Unified data space addressing with Flash mapped into data space via memory-mapped window
+  starting at `0x8000`, internal SRAM starting at `0x4000`, and I/O configuration at `0x0000`–`0x0FFF`.
+- SAM 32-bit linear memory: Code Flash starting at `0x00000000` (SAMD) or `0x00400000` (SAME70),
+  internal SRAM at `0x20000000`, peripheral AHB/APB MMIO at `0x40000000`, and TCM tightly coupled memory.
+- Vector tables: 2-byte RJMP instructions for <=8 KB Flash AVR devices (ATtiny85); 4-byte JMP instructions for >8 KB Flash AVR devices (ATmega328P, ATmega2560); 4-byte vector addresses for Cortex-M SAM devices.
+- Bootloader layouts: Optiboot sections configurable via `BOOTSZ` fuses on ATmega; SAM-BA ROM bootloader routines on SAM devices.
+
+### 4.4.1 Verified Atmel / Microchip parts (SUPPORTED)
+
+The 5 representative parts verified across fixture, oracle, Ghidra transactional import,
+and signature matching suites are promoted to `SUPPORTED`:
+
+| Exact Part | Series | Core / Architecture | Flash | RAM | EEPROM / Special | Support State |
+|---|---|---|---|---|---|---|
+| `ATmega328P` | ATmega | AVR RISC (AVR8) | 32 KiB | 2 KiB | 1 KiB EEPROM, Optiboot (0x7E00) | SUPPORTED |
+| `ATmega2560` | ATmega | AVR RISC (AVR8) | 256 KiB | 8 KiB | 4 KiB EEPROM, >64KB RAMPZ | SUPPORTED |
+| `ATtiny85` | ATtiny | AVR RISC (AVR8) | 8 KiB | 512 B | 512 B EEPROM, 2-byte RJMP vectors | SUPPORTED |
+| `SAMD21G18A` | SAMD | ARM Cortex-M0+ (ARMv6-M) | 256 KiB | 32 KiB | USB, SAM-BA bootloader | SUPPORTED |
+| `SAME70Q21` | SAME | ARM Cortex-M7 (ARMv7E-M) | 2048 KiB | 384 KiB | FPU, Ethernet, TCM | SUPPORTED |
+
+All remaining 22 cataloged parts remain strictly `PLANNED`.
+
+### 4.4.2 Atmel / Microchip feature and toolchain coverage
+
+| Feature | State | Evidence | Limitations |
+|---|---|---|---|
+| Catalog registry & exact-part lookup | VERIFIED | T104 audit, T106 registry; 5 SUPPORTED, 22 PLANNED parts | Wildcards, bare series names, and fuzzy matching rejected |
+| Multi-format decoding (Intel HEX, ELF, raw BIN) | VERIFIED | T105/T109 loader & mapper suites; strict checksum and boundary enforcement | Malformed records and out-of-aperture addresses reject fail-closed |
+| Harvard multi-address-space mapping | VERIFIED | T106/T109 memory planner & mapper; separate `code`, `data`, `eeprom`, `io`, and `fuses` spaces | Ghidra multi-address-space bindings require explicit target part |
+| Interrupt vector table parsing & scoring | VERIFIED | T107 vector parser; 2-byte RJMP vs 4-byte JMP automatic classification | Handler labels require valid vector entries within code space |
+| ATDF / SVD peripheral register packs | VERIFIED | T108 peripheral packs for ATmega, ATtiny, AVR-Dx, SAMD, SAME | Schema transforms derived from redistributable Microchip DFPs |
+| Arduino core, AVR-libc, ASF & FreeRTOS signatures | VERIFIED | T110 signature matcher; masked signatures; evidence gating | Requires exact-part and series evidence per ATMEL-009 |
+| CTF entity scanner & 16/32-bit pointer leads | VERIFIED | T110 CTF enrichment analyzer suite | Exploitability is never inferred |
+
 ## 5. Input formats
 
 | Format | Parser / engine | Family applicability | State | Evidence | Limitations |

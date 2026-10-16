@@ -1,0 +1,33 @@
+{
+  "device": "STM8_MALFORMED",
+  "target": "STM8_MALFORMED",
+  "fixtureId": "stm8.t089.malformed.stm8l151_checksum.s19",
+  "inputFormat": "Motorola S-Record",
+  "origin": "Intentionally malformed STM8 fixture: Corrupted S-Record checksum on data record",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e001600310044stm8deterministicv1",
+  "generationCommand": "python3 scripts/generate-stm8-fixtures.py",
+  "toolchain": "Embedra STM8 deterministic generator",
+  "oracleCommands": [
+    "readelf -h <ELF> || false",
+    "objcopy <INPUT> /dev/null || false"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/stm8/malformed/stm8l151_checksum.s19.json",
+  "requirements": [
+    "T089",
+    "STM8-002",
+    "STM8-003",
+    "STM8-004"
+  ],
+  "sha256": "764d1c3dc78b2edd19404ac37078a8b2177bd90a0996d10e7d6c46ebc6f00eba",
+  "sourceProvenance": {
+    "name": "Synthetic malformed fixture for fail-closed validation",
+    "distribution": "Embedra Test Fixtures",
+    "license": "Apache-2.0",
+    "path": "scripts/generate-stm8-fixtures.py#stm8l151_checksum.s19",
+    "facts": [
+      "Corrupted S-Record checksum on data record"
+    ]
+  }
+}

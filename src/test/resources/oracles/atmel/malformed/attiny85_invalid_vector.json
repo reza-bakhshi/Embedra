@@ -1,0 +1,5 @@
+{
+  "errorExpected": true,
+  "diagnosticCode": "INVALID_AVR_VECTOR_TABLE",
+  "reason": "Vector table does not contain valid RJMP or JMP instructions"
+}

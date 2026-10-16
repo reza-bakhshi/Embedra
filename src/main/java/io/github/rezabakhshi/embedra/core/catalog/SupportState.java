@@ -5,5 +5,6 @@ public enum SupportState {
     PLANNED,
     EXPERIMENTAL,
     VERIFIED,
-    UNSUPPORTED
+    UNSUPPORTED,
+    SUPPORTED
 }

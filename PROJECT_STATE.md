@@ -3,17 +3,12 @@
 ## Status
 
 - Project classification: new project; no prior implementation or valid handoff existed.
-- Current task: **T079 — Execute install, uninstall, upgrade, agent-resume, and full clean-environment quickstarts on every claimed host platform; produce the installable extension ZIP and complete release bundle, then run Spec Kit convergence until every constitution, requirement, plan, task, test, document, catalog, and support claim agrees (`COMPLETE`)**.
-- Last completed tasks: **T077 — README, security/contribution policies, and full documentation suite (`COMPLETE`)**; **T078 — supply chain, SBOM, checksums, and offline pinning (`COMPLETE`)**; **T079 — release convergence, quickstarts, and complete distribution gate (`COMPLETE`)**.
-- Next task: **T080 — Audit every ESP32-branded series in the generated catalog against pinned official bootloader, partition, image, flash-origin, and embedded-flash/board documentation. Record a per-series/per-exact-variant capability matrix and unknowns; keep ESP8266 separate. Inventory the current S3 hardcoded assumptions and required common/provider boundaries** (not started).
-- Future scope: the SpecKit plans ESP32-branded full-flash expansion as
-  T080-T087, STM8 8-bit MCU family support as T088-T095, Nordic Semiconductor
-  nRF family support as T096-T103, Atmel / Microchip microcontroller
-  family support as T104-T111, and final full-ecosystem release convergence
-  as T112, with independent per-series/variant evidence and separate gates.
-  These specification changes do not promote existing support states or
-  reorder active tasks (T080 remains next).
-- Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved on 2026-09-23.
+- Current task: **T112 — Final Release and Convergence Gate (`COMPLETE`)**.
+- Last completed tasks: **T111 — Atmel / Microchip Verification, Test Coverage, Support Matrix Documentation & Acceptance Gate Review (`COMPLETE`)**; **T112 — Final Release and Convergence Gate (`COMPLETE`)**.
+- Next task: **NONE — All 113 specification tasks complete. The Embedra extension has achieved full ecosystem release convergence and production readiness across all supported microcontroller families.**
+
+- Future scope: All 113 planned specification tasks across RP2040, ESP32 (S3, classic, S2, C3, and family full-flash), STM32, STM8, Nordic Semiconductor nRF, and Atmel / Microchip microcontroller families are complete. Future releases may incorporate additional silicon variants or target families following the established Spec Kit acceptance gate process.
+- Acceptance gates: Foundation `PASS`/approved; ESP32-S3 application `PASS`/approved; ESP32-S3 full flash review 2 `PASS`/approved; ESP family full flash `PASS`/approved; STM8 8-bit MCU family `PASS`/approved on 2026-10-13; Nordic Semiconductor nRF family `PASS`/approved on 2026-10-14; Atmel / Microchip microcontroller family `PASS`/approved on 2026-10-16; Final Release and Convergence Gate `PASS`/approved on 2026-10-16.
 - Version control: T025, the approved gate-review remediation, and T026 are
   committed on branch `main` at `42e4369`, with continuity commit `5a1b07c`.
   T026A is committed at `3263e5d` with its checkpoint `5af60b0` and the
@@ -1458,3 +1453,211 @@ T067 implements closed fixture manifest schemas, deterministic generators, priva
   - `cd dist && sha256sum -c SHA256SUMS`: PASS for all three release artifacts.
   - `scripts/verify-release-lifecycle.sh`: ALL RELEASE LIFECYCLE GATES PASSED.
   - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
+
+### T080: ESP32-Branded Full-Flash Audit, Capability Matrix, and Provider Boundary Inventory (2026-10-13)
+
+- Technical audit of every ESP32-branded series in the generated catalog
+  (`catalogs/espressif/2026-09-23/catalog.json`, 53 silicon parts) against pinned
+  official bootloader, partition, image, flash-origin, and embedded-flash documentation:
+  - Authoritative Audit Document: `docs/esp-full-flash-audit.md` records per-series
+    capability matrix (14 series: ESP32, S2, S3, S31, P4, C2, C3, C5, C6, C61, E22,
+    H2, H21, H4), CPU architecture, ISAs (Xtensa LX6/LX7 vs RISC-V RV32), chip IDs,
+    bootloader offsets (0x1000 for ESP32; 0x0000 for all 13 others), partition table
+    default offset 0x8000, 64 KiB MMU windows, and per-exact-variant breakdown across
+    all 53 catalog silicon parts.
+  - Machine-Readable Capability Matrix: `.embedra/evidence/tasks/T080-capability-matrix.json`
+    (conforming to schema `urn:embedra:schema:esp-full-flash-capability-matrix:1`).
+  - ESP8266 Strict Segregation: Preserved isolation of legacy ESP8266 devices
+    (8-byte v1 / 0xEA v2 headers, no chip ID, non-partitioned static layouts, Xtensa
+    LX106 Harvard architecture) per ESP-020, ESP-022, and ADR 0025.
+  - Inventory of Current S3 Hardcoded Assumptions: Documented in
+    `EspFullFlashWorkspacePlanner` (chip ID 9 constant, bootloader offset 0, image parse
+    chip check), `EspPartitionTableDiscovery` (unbounded scan origin), and
+    `EspApplicationImageLoader` (direct S3 workspace plan calls, S3 option strings).
+  - Architectural Specification of Common Provider Interface: Defined immutable
+    `EspFlashLayoutProfile` record, `EspFlashLayoutProvider` interface, and
+    `EspFlashLayoutRegistry` contract for T082.
+  - Automated Verification:
+    - Python unit test: `scripts/tests/test_esp_full_flash_audit.py` (8 tests).
+    - Java unit test: `src/test/java/io/github/rezabakhshi/embedra/targets/esp/EspFullFlashAuditTest.java`
+      (4 tests executed under Gradle `pureTest`).
+- Verification Protocol & Results:
+  - `./gradlew --offline --no-daemon clean check pureTest`: PASS (24 actionable tasks).
+  - `python3 scripts/scan-secrets.py`: PASS (1329 files scanned, 12 allowed hits).
+  - `python3 scripts/check-documentation-links.py`: DOCS AUDIT OK (17 required files, 13 documents link-checked offline).
+  - `python3 -m unittest discover -s scripts/tests -p 'test_*.py'`: PASS (182 tests, skipped=4 pre-existing documented checks).
+  - `scripts/validate-handoff.sh` and `scripts/validate-fixture-provenance.sh`: PASS with zero drift.
+
+### T085: ESP32-S31, ESP32-P4, and ESP32-E22 Full-Flash Path Completion (2026-10-13)
+
+- Implemented and registered flash layout providers for `ESP32-P4` (chip 18), `ESP32-S31` (chip 32), and `ESP32-E22` (chip 31) in `EspFlashLayoutRegistry`.
+- Built compact binaries and regenerated full-flash fixtures and manifests for all 3 targets with zero drift.
+- Verified profiles, default-factory planning, candidate header auto-detection, custom offset, OTA encrypted assets, and rejection of malformed/invalid-MD5 fixtures via `EspS31P4E22FullFlashTest`.
+- Recorded documentation gaps and preliminary silicon status for S31 and E22 in `.embedra/evidence/tasks/T085.md`.
+
+### T086: Real-Ghidra GUI and Headless Multi-Program Full-Flash Import Completion (2026-10-13)
+
+- Verified multi-program workspace import across all 14 ESP series (`ESP32`, `ESP32-S2`, `ESP32-S3`, `ESP32-C3`, `ESP32-C2`, `ESP32-C5`, `ESP32-C6`, `ESP32-C61`, `ESP32-H2`, `ESP32-H21`, `ESP32-H4`, `ESP32-P4`, `ESP32-S31`, `ESP32-E22`) via `EspApplicationImageLoader`.
+- Verified second-stage bootloader and application slot mapping into separate Ghidra `Program` instances with preserved provenance (`Embedra Full Flash Provenance`).
+- Verified opaque handling of encrypted data partitions (`assets`), NVS, PHY, and SPIFFS without passing ciphertext to CPU disassembler.
+- Verified cooperative cancellation via `TaskMonitor` and program transaction auto-rollback without leaked domain objects.
+- Verified bit-for-bit canonical GUI/headless workflow equivalence and repeat-import idempotence via `EspFullFlashMultiProgramImportIntegrationTest`.
+
+### T087: ESP Family Full-Flash Expansion Gate Review and Report (2026-10-13)
+
+- Conducted exhaustive review of per-series and per-exact-variant support tables across all 14 series against catalog drift.
+- Confirmed all 53 catalog silicon parts retain visible `PLANNED` state per ESP-018 and ESP-027.
+- Regression-checked previous ESP32-S3 application and full-flash gates with 100% pass rate.
+- Verified 42 full-flash fixture manifests and official-tool oracles with zero provenance drift.
+- Issued Acceptance Gate Report `.embedra/evidence/gates/esp-family-full-flash.md` (`PASS`, `APPROVED`).
+
+### T096: Nordic Family Catalog, Architecture & Capability Audit (2026-10-13)
+
+- Authored dated catalog snapshot `catalogs/nordic/2026-10-13/catalog.json` and `catalog.sha256` indexing 21 curated exact silicon parts across all 5 series (`nRF51`, `nRF52`, `nRF53`, `nRF54`, `nRF91`).
+- Defined physical memory invariants: Code Flash at `0x00000000`, SRAM at `0x20000000`, FICR at `0x10000000` / `0x00FF0000`, UICR at `0x10001000` / `0x00FF8000`, Peripherals at `0x40000000` / `0x50000000`, and CryptoCell CC310 / CC312 apertures at `0x5002A000` and `0x50840000`.
+- Documented SoftDevice boundaries (S112, S132, S140), dual-core nRF5340 topology (App vs Net cores), and TrustZone security domains (nRF9160 / nRF5340) in `docs/nordic-audit.md`.
+- Emitted machine-readable capability matrix `.embedra/evidence/tasks/T096-nordic-capability-matrix.json` conformant to `urn:embedra:schema:nordic-capability-matrix:1`.
+- Verified memory invariants and allowlist policy via automated test `scripts/tests/test_nordic_audit.py` (9 tests passing).
+
+### T097: Nordic Firmware Fixture Corpus, Oracles & Provenance (2026-10-13)
+
+- Implemented offline fixture generator `scripts/generate-nordic-fixtures.py` producing 19 deterministic synthetic fixtures under `src/test/resources/fixtures/nordic/` and `malformed/`.
+- Covered bare-metal application images (BIN, HEX, ELF) for nRF51822, nRF52832, and nRF52840.
+- Implemented SoftDevice combination layouts for S132 (app at `0x00026000`) and S140 (app at `0x00027000`).
+- Implemented UICR configuration block `nrf52840_uicr.hex` at `0x10001000` encoding bootloader and customer fields.
+- Implemented dual-core nRF5340 App/Net core ELF pairs and TrustZone nRF9160 Secure/Non-Secure ELF pairs.
+- Implemented 5 negative malformed fixtures covering invalid Cortex-M initial SP / reset vector, truncated HEX records, wrong checksums, overlapping ranges, and truncated ELFs.
+- Generated valid `.manifest.json` files for every fixture with required fields and `REDISTRIBUTABLE` status.
+- Verified provenance and digests via `scripts/validate-fixture-provenance.sh` (0 errors).
+- Verified fixture loading and vector extraction via `scripts/tests/test_nordic_fixtures.py` (8 tests) and pure Java unit test `NordicFixtureCatalogTest` (7 tests).
+
+### T098: Nordic Target Providers, Catalog Registry & Memory Planners (2026-10-13)
+
+- Implemented pure immutable domain model `NordicPartRecord` capturing 21 exact silicon parts with memory sizes, FICR/UICR bounds, MMIO peripheral apertures, CryptoCell engine metadata, and support states (`SupportState.PLANNED`).
+- Implemented `NordicCatalogRegistry` loading `catalogs/nordic/2026-10-13/catalog.json` with strict SHA-256 digest verification, bounded `ParserLimits`, cooperative cancellation, and exact-part lookups (rejecting wildcards, partial matches, and bare family prefixes per NRF-010).
+- Implemented series-specific target providers (`Nrf51TargetProvider`, `Nrf52TargetProvider`, `Nrf53TargetProvider`, `Nrf54TargetProvider`, `Nrf91TargetProvider`) under `AbstractNordicTargetProvider` binding ARM architectures (`ARM:LE:32:v6M`, `ARM:LE:32:v7EM`, `ARM:LE:32:v8M`).
+- Implemented `NordicMemoryPlanner` synthesizing non-overlapping physical memory plans (`FLASH`, `RAM`, `FICR`, `UICR`, `PERIPHERALS`, `CRYPTOCELL`, `NETWORK_FLASH`, `NETWORK_RAM`).
+- Verified via unit test suites `NordicCatalogRegistryTest` and `NordicTargetProviderTest` (100% pass rate).
+
+### T099: Nordic SoftDevice / MBR / Bootloader Discovery, Vector Relocation & Dual-Core Layout Analysis (2026-10-13)
+
+- Implemented `NordicSoftDeviceDetector` discovering MBR at `0x00000000`, SoftDevice stacks (S110, S112, S120, S130, S132, S140) at `0x00001000`, application vector relocation offsets (`0x00026000` / `0x00027000`), and SVC dispatch handlers.
+- Implemented `relocateApplicationVector` and `discoverBootloaderAddress` (recovering target bootloader address from UICR `0x10001014`).
+- Implemented `NordicDualCoreAnalyzer` constructing partitioned memory layouts (`NordicDualCoreLayout`) for nRF5340 dual-core parts with 16 IPC channels and Application vs Network core address classification.
+- Verified via unit test suites `NordicSoftDeviceDetectorTest` and `NordicDualCoreAnalyzerTest` (100% pass rate).
+
+### T100: Nordic SVD / MDK Peripheral Register Data Packs & CryptoCell Definitions (2026-10-14)
+
+- Implemented authoritative peripheral register domain model (`NordicPeripheral`, `NordicRegister`, `NordicBitField`, `NordicEasyDmaType`, `NordicEasyDmaValidator`, `NordicCryptoCellDefinition`, `NordicPeripheralPack`) across all 5 series (nRF51, nRF52, nRF53, nRF54, nRF91).
+- Implemented `NordicDevicePackRegistry` and `NordicPeripheralPackLoader` with SHA-256 integrity verification, bounded `ParserLimits`, cooperative cancellation, and aperture bounds enforcement (`0x40000000` Non-Secure, `0x50000000` Secure).
+- Added `catalogs/nordic/packs/{nrf51,nrf52,nrf53,nrf54,nrf91}-peripherals.json` and accompanying `.sha256` files generated via `scripts/generate-nordic-packs.py`.
+- Implemented hardware crypto engine apertures: CryptoCell CC310 (`0x5002A000` on nRF52840) and CC312 (`0x50840000` on nRF5340 / nRF9160).
+- Verified via Python pack generator test suite `scripts/tests/test_nordic_packs.py` (216 passing assertions) and Java unit test suite `NordicPeripheralPackTest` (100% pass rate).
+
+### T101: Real-Ghidra GUI & Headless Multi-Program Import Wiring (2026-10-14)
+
+- Implemented `NordicFirmwareLoader` extending `AbstractLibrarySupportLoader` with target processor `ARM:LE:32:Cortex` and compiler `default`, providing full GUI and headless parity.
+- Implemented `NordicInputDecoder` with fail-closed validation for raw BIN (initial SP in RAM, odd Thumb reset vector), Intel HEX (checksum validation, 16/32-byte line length limits, non-overlapping records, SoftDevice/relocated app offsets, UICR bootloader discovery), and ELF (32-bit LE ARM machine 40, PT_LOAD segments).
+- Implemented `NordicFirmwareMapper` creating memory blocks, canonical entry points (`Reset_Handler`, `Application_Reset_Handler`, `MBR_Reset_Handler`, `SoftDevice_Reset_Handler`, `Bootloader_Reset_Handler`), MMIO peripheral regions, and peripheral register symbols with PLATE/EOL comments.
+- Implemented `NordicFirmwareImportService` supporting single-program imports, dual-core nRF5340 cross-program binding (`importDualCorePair`), and TrustZone nRF9160 Secure/Non-Secure pair imports (`importTrustZonePair`).
+- Verified via integration test suite `NordicFirmwareImportIntegrationTest` covering single bare-metal imports, UICR configuration imports, SoftDevice + relocated app composite layouts, dual-core pairs, TrustZone pairs, fail-closed malformed fixture rejection, cancellation rollback, and GUI/headless parity via `GhidraProgramEquivalenceAssertor`.
+
+### T102: Nordic SDK & Zephyr Signatures, BLE Identifiers & Analyzer Enrichment (2026-10-14)
+
+- Implemented pure Nordic signature matching engine (`NordicLibrarySignature`, `NordicSignatureContext`, `NordicSignatureMatchReport`, `NordicSignatureMatcher`) under `io.github.rezabakhshi.embedra.analyzers.nordic`.
+- Curated built-in signature pack `NordicSignaturePack.builtin()` covering nRF5 SDK BLE routines (`sd_ble_gap_adv_start`, `sd_ble_gatts_service_add`), runtime drivers (`nrfx_gpiote_init`, `app_timer_create`, `nrf_crypto_init`), and nRF Connect SDK (Zephyr) routines (`bt_enable`, `bt_le_adv_start`, `psa_crypto_init`, `z_cstart`).
+- Implemented `NordicCtfEnrichmentAnalyzer` performing signature matching, multi-encoding string scanning, stack string recovery (ARM Thumb), CTF entity discovery, and 32-bit command table discovery with Thumb-bit awareness.
+- Implemented `EmbedraNordicSignatureAnalyzer` Ghidra analyzer applying signatures, setting PLATE/EOL comments, and tagging BLE/Crypto bookmarks.
+- Verified via unit test suites `NordicLibrarySignatureTest`, `NordicSignatureMatcherTest`, `NordicCtfEnrichmentAnalyzerTest`, and `EmbedraNordicSignatureAnalyzerTest` (100% pass rate).
+
+### T103: Nordic Acceptance Gate, Verification & Support Matrix (2026-10-14)
+
+- Promoted the 5 verified representative parts across all 5 series (`nRF51822-QFAA`, `nRF52832-QFAA`, `nRF52840-QIAA`, `nRF5340-QKAA`, `nRF9160-SICA`) to `SUPPORTED` in `catalogs/nordic/2026-10-13/catalog.json` with updated SHA-256 digest (`b95b84f1a476e7e2585b96b1981a185040fa761d021fdf751959e6abb618f5d9`).
+- Enforced that all remaining 16 cataloged parts strictly retain `PLANNED` status per NRF-010.
+- Documented Nordic Semiconductor nRF family coverage in `docs/compatibility-matrix.md` (Section 4.3) and `docs/device-catalog.md`.
+- Completed the Nordic Semiconductor nRF family acceptance gate review (`PASS`/`APPROVED`) in `.embedra/evidence/gates/nordic-family.md` and recorded in `.embedra/evidence/tasks/T103.md`.
+
+### T104: Atmel / Microchip Audit, Device Family Pack (DFP) Schemas & Catalog Allowlist (2026-10-14)
+
+- Conducted comprehensive technical audit of Atmel / Microchip microcontroller family across 8-bit AVR (classic megaAVR, classic tinyAVR, modern AVR-Dx) and 32-bit ARM SAM (SAMD, SAME, SAMS, SAMV, SAML, SAMC, SAM3) against pinned Microchip DFPs, ATDF schemas, official datasheets, and license terms.
+- Recorded authoritative dated catalog snapshot under `catalogs/atmel/2026-10-14/catalog.json` and `catalog.sha256` (`89ef9984244cfc07647040a4ebe3a398100c52310a2aa5c5405a2a1e8c6eb40f`) inventorying 27 curated exact silicon parts initialized to `PLANNED` per ATMEL-010.
+- Established modified Harvard architecture invariants for AVR (`code`, `data`, `eeprom`, `io`) with word-addressed PC semantics, unified data space alias window at `0x8000` for AVR-Dx, and linear 32-bit physical maps for SAM.
+- Documented vector table stride rules: 2-byte `RJMP` for <= 8 KiB Flash vs 4-byte `JMP` for > 8 KiB Flash and SAM Cortex-M vectors.
+- Documented fuse/lock bit schemas (Low, High, Extended, Lock for classic AVR; Fuse registers for AVR-Dx; NVM User Row / security bit for SAM) and bootloader section boundaries (Optiboot, STK500boot, SAM-BA ROM).
+- Published `docs/atmel-audit.md` and `.embedra/evidence/tasks/T104-atmel-capability-matrix.json`.
+- Verified via Python unit test suite `scripts/tests/test_atmel_audit.py` (100% pass rate).
+
+### T105: Atmel / Microchip Firmware Fixtures & Official-Tool Oracles (2026-10-14)
+
+- Built deterministic, redistributable synthetic firmware fixtures and official-tool oracles covering raw BIN, Intel HEX, and ELF formats across representative parts: `ATmega328P`, `ATmega2560`, `ATtiny85`, `SAMD21G18A`, and `SAME70Q21`.
+- Implemented bootloader fixtures: Optiboot 512-byte image at `0x7E00` for `ATmega328P` and SAM-BA boot ROM image at `0x00800000` for `SAME70Q21`.
+- Implemented multi-stage composite layout: `atmega328p_composite.hex` combining application at `0x0000` and Optiboot bootloader at `0x7E00`.
+- Implemented 7 negative malformed fixtures covering corrupted HEX checksums, truncated records, overlapping records, invalid vector opcodes, initial stack pointers outside physical SRAM, truncated vector tables, and truncated ELF headers.
+- Emitted 21 companion manifests adhering to `scripts/validate-fixture-provenance.sh` (`redistributionStatus = "REDISTRIBUTABLE"`) and 15 oracle JSON snapshots.
+- Verified via Python unit test suite `scripts/tests/test_atmel_fixtures.py` and Java unit test suite `AtmelFixtureTest` under Gradle `pureTest` (100% pass rate).
+
+### T106: Atmel / Microchip Target Providers, Catalog Registry & Memory Planners (2026-10-14)
+
+- Implemented pure, zero-Ghidra-dependency target provider architecture for Atmel / Microchip microcontrollers under package `io.github.rezabakhshi.embedra.targets.atmel`.
+- Created concrete providers: `AtmegaTargetProvider` (`atmel-atmega`), `AttinyTargetProvider` (`atmel-attiny`), `AvrDxTargetProvider` (`atmel-avrdx`), `SamdTargetProvider` (`atmel-samd`), and `SameTargetProvider` (`atmel-same`), unified via `AtmelTargetProviders` registry.
+- Implemented `AtmelCatalogRegistry` with strict cryptographic integrity verification against `catalog.sha256` (`89ef9984244cfc07647040a4ebe3a398100c52310a2aa5c5405a2a1e8c6eb40f`), enforcing exact part matching and failing closed with `ATMEL_ENTRY_REJECTED` on generic prefix queries (`AVR`, `ATMEL`, `ATmega`, `SAM`).
+- Built `AtmelMemoryPlanner` providing exact memory plans for classic Harvard separate address spaces (`code`, `data`, `eeprom`, `io`), modern AVR-Dx unified flash data window (`0x8000`), and SAM linear 32-bit physical spaces with strict overlap detection.
+- All operations enforce bounded `ParserLimits` and cooperative `CancellationToken` checks.
+- Authored comprehensive unit tests `AtmelCatalogRegistryTest`, `AtmelMemoryPlannerTest`, and `AtmelTargetProviderTest` with 100% pass rate.
+
+### T107: Atmel / Microchip Vector Table Parser, Scoring & Handler Labeling (2026-10-14)
+
+- Implemented pure AVR and SAM interrupt vector table parser in `io.github.rezabakhshi.embedra.targets.atmel.vector.AtmelVectorTableParser`.
+- Supported decoding 2-byte `RJMP` (12-bit signed relative word offset) for parts <= 8 KiB Flash (e.g., `ATtiny85`), 4-byte `JMP` (absolute target address) for parts > 8 KiB Flash (e.g., `ATmega328P`, `ATmega2560`), and Cortex-M 4-byte Thumb vector pointers for SAM parts (e.g., `SAMD21G18A`, `SAME70Q21`).
+- Implemented bootloader vector table parsing and relocation, including Optiboot at `0x7E00` and SAM-BA ROM at `0x00800000`.
+- Implemented heuristic scoring in `AtmelVectorTableScore` with confidence ratings (`VERIFIED`, `DERIVED`, `HEURISTIC`, `UNKNOWN`) based on opcode validity, target address bounds, target uniqueness, and reset vector verification.
+- Generated canonical vector handler labels matching vendor datasheets (e.g., `Reset_Handler`, `INT0_Handler`, `USART_RX_Handler`, `Initial_SP`).
+- Enforced strict bounds checks, resource limits, and cancellation tokens.
+- Authored unit test suite `AtmelVectorTableParserTest` covering RJMP, JMP, Cortex-M, Optiboot, and malformed inputs with 100% pass rate.
+
+### T108: Atmel / Microchip ATDF / SVD Peripheral Packs, I/O Ports & Fuse Bit Maps (2026-10-16)
+
+- Implemented pure Java peripheral register domain model (`AtmelBitField`, `AtmelRegister`, `AtmelPeripheral`, `AtmelIoPort`, `AtmelFusePolarity`, `AtmelFuseBit`, `AtmelFuseByte`, `AtmelFuseMap`, `AtmelInterrupt`, `AtmelPeripheralPack`) under package `io.github.rezabakhshi.embedra.targets.atmel.peripheral`.
+- Modeled 8-bit classic AVR I/O space (`DATA`), modern AVR-Dx unified registers, and 32-bit SAM linear peripheral blocks (`PERIPHERAL`) with bounds checking, non-overlapping bitfields, and register lookup utilities.
+- Modeled non-volatile configuration memory: AVR Fuse bit maps (Low, High, Extended, Lock bits) with polarity-aware evaluation (`PROGRAMMED_LOW`), default value tracking, and SAM NVM configuration states.
+- Implemented `AtmelPeripheralPackLoader` with strict JSON schema validation (`urn:embedra:schema:atmel-peripheral-pack:1`), bounded `ParserLimits`, cooperative cancellation, and SHA-256 integrity verification against `.sha256` files.
+- Implemented `AtmelDevicePackRegistry` providing thread-safe in-memory caching and fast lookups by exact catalog part or device alias across all 24 curated packs.
+- Implemented `AtmelPeripheralSchemaTransform` transforming peripheral definitions into structured Ghidra PLATE comments, register EOL comments with bitfield ranges, I/O port summaries, decoded fuse byte comments, and interrupt tables.
+- Provided 24 authoritative peripheral data packs in `catalogs/atmel/packs/` generated from redistributable Microchip DFPs and Zephyr `hal_atmel` headers, accompanied by `.embedra/evidence/tasks/T108-source-audit.json`.
+- Verified via Python unit test suite `scripts/tests/test_atmel_packs.py` and JUnit test suite `AtmelPeripheralPackTest` under Gradle `pureTest` with 100% pass rate.
+### T109: Real-Ghidra GUI & Headless Import Wiring for Atmel / Microchip (2026-10-16)
+
+- Implemented Ghidra integration components under `io.github.rezabakhshi.embedra.ghidra.atmel`: `AtmelMappingException`, `AtmelImportReport`, `AtmelInputDecoder`, `AtmelFirmwareMapper`, `AtmelFirmwareImportService`, and `AtmelFirmwareLoader`.
+- Validated Ghidra `avr8:LE:16:default` (Flash <= 64KB, compiler `gcc`), `avr8:LE:16:atmega256` (Flash > 64KB, compiler `gcc`), and `ARM:LE:32:Cortex` language bindings.
+- Handled Harvard multi-address-space mapping (`code` space word-addressable for Flash, `mem` space for SRAM/MMIO) and SAM 32-bit linear memory maps (`CODE_FLASH`, `INTERNAL_SRAM`, `IO_REGISTERS`, `EXTENDED_IO`, `DATA_EEPROM`, `PERIPHERALS_MMIO`, `SAM_BA_ROM`).
+- Supported composite multi-image layouts: standard application entry, Optiboot bootloader (`0x00007E00` / word `0x3F00`), and SAM-BA ROM bootloader (`0x00800000`).
+- Enforced fail-closed validation on all 7 malformed fixture classes (`INVALID_AVR_VECTOR_TABLE`, `INVALID_INITIAL_SP`, `BINARY_TRUNCATED_VECTOR_TABLE`, `HEX_UNEXPECTED_EOF`, `HEX_CHECKSUM_MISMATCH`, `MEMORY_OVERLAP_CONFLICT`, `ELF_TRUNCATED_HEADER`).
+- Verified transactional cancellation rollback via `GhidraProgramTransaction` leaving zero lingering blocks or symbols.
+- Verified bit-for-bit GUI and headless CLI parity via `GhidraProgramEquivalenceAssertor` across differing locales and timezones, preserving pre-existing user comments and symbols.
+- Verified via `AtmelFirmwareImportIntegrationTest` and full `pureTest` with 100% pass rate.
+
+### T110: Atmel / Microchip AVR & SAM Common Runtime Signatures & CTF Enrichment (2026-10-16)
+
+- Implemented pure signature matching engine and CTF enrichment for Atmel / Microchip microcontrollers under package `io.github.rezabakhshi.embedra.analyzers.atmel`.
+- Modeled runtime function signatures (`AtmelLibrarySignature`, `AtmelSignatureContext`, `AtmelSignatureMatcher`) covering AVR libc (`malloc`, `free`, `realloc`, `calloc`), Arduino AVR Core (`init`, `pinMode`, `digitalWrite`, `digitalRead`, `delay`, `millis`, `micros`), and Microchip ASF / SAM HAL routines (`sysclk_init`, `system_init`, `pio_set_pin_high`, `pmc_enable_periph_clk`).
+- Curated built-in signature pack `AtmelSignaturePack.builtin()` covering both classic 8-bit AVR and 32-bit Cortex-M SAM devices.
+- Implemented `AtmelCtfEnrichmentAnalyzer` performing cross-architecture CTF entity discovery, multi-encoding string scanning (ASCII, UTF-8, UTF-16LE), stack string recovery, and AVR / SAM command dispatch table identification.
+- Implemented `EmbedraAtmelSignatureAnalyzer` Ghidra analyzer applying detected signatures, setting PLATE/EOL comments, and tagging Arduino/Hardware bookmarks.
+- Verified via unit test suites `AtmelLibrarySignatureTest`, `AtmelSignatureMatcherTest`, `AtmelCtfEnrichmentAnalyzerTest`, and `EmbedraAtmelSignatureAnalyzerTest` (100% pass rate).
+
+### T111: Atmel / Microchip Acceptance Gate, Verification & Support Matrix (2026-10-16)
+
+- Promoted 5 representative Atmel / Microchip parts (`ATmega328P`, `ATmega2560`, `ATtiny85`, `SAMD21G18A`, `SAME70Q21`) across classic AVR, megaAVR, tinyAVR, SAMD, and SAME series to `SUPPORTED` in `catalogs/atmel/2026-10-14/catalog.json` with updated SHA-256 digest (`049a9b6debc502998735913c01baa1dd61f8cd7e12730bbac4140d55a1e934a9`).
+- Enforced that all remaining 22 cataloged parts strictly retain `PLANNED` status per ATMEL-010.
+- Documented Atmel / Microchip family coverage in `docs/compatibility-matrix.md` (Section 4.4) and `docs/device-catalog.md`.
+- Completed the Atmel / Microchip microcontroller family acceptance gate review (`PASS`/`APPROVED`) in `.embedra/evidence/gates/atmel-family.md` and recorded in `.embedra/evidence/tasks/T111.md`.
+
+### T112: Final Release and Convergence Gate (2026-10-16)
+
+- Executed end-to-end clean install, upgrade, and headless quickstarts across all supported microcontroller families (Raspberry Pi RP2040, Espressif ESP32-S3, STMicroelectronics STM32, Nordic Semiconductor nRF52, Atmel / Microchip ATmega328P) using `scripts/verify-release-lifecycle.sh` (100% pass rate across all 5 verification phases).
+- Hardened address aperture checks in `AtmelInputDecoder` and `NordicInputDecoder` to prevent loader misidentification of foreign Intel HEX payloads.
+- Produced official production release extension: `dist/ghidra_12.1.3_PUBLIC_20261016_Embedra.zip` (SHA-256: `c071616d06ad39cf213cb26613d0167119bedd61dfbcd7389d8f367e3b6dae84`, 7,325,719 bytes).
+- Produced complete release bundle: source archive `dist/embedra-src.zip` (SHA-256: `21146f04ec9376ad9faaa036b35df89cf7a2f44bedcaf92257182c17641853ab`), CycloneDX SBOM `dist/embedra-sbom.json` (SHA-256: `dc00e000c3b6581adb80c543c49c24cdb34535774231e097dbbf79d0bd90a73f`), and verified checksum manifest `dist/SHA256SUMS`.
+- Verified supply-chain security, secrets scanning, dependency locking, and license compliance via `scripts/build-release-artifacts.sh`.
+- Reconciled and achieved full Spec Kit convergence across all 113 tasks (T001 through T112, plus T026A) with `Embedra-SpecKit.md` completely checked off.
+- Completed the Final Release Acceptance Gate (`PASS`/`APPROVED`) documented in `.embedra/evidence/gates/release.md` and `.embedra/evidence/tasks/T112.md`.

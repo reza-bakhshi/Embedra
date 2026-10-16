@@ -1,0 +1,22 @@
+{
+  "part": "SAMD21G18A",
+  "family": "SAM",
+  "series": "SAMD",
+  "core": "ARM Cortex-M0+",
+  "ghidraLanguage": "ARM:LE:32:v6M",
+  "flashRange": {
+    "start": "0x00000000",
+    "end": "0x0003FFFF"
+  },
+  "ramRange": {
+    "start": "0x20000000",
+    "end": "0x20007FFF"
+  },
+  "vectorTable": {
+    "origin": "0x00000000",
+    "count": 44,
+    "strideBytes": 4,
+    "initialSp": "0x20008000",
+    "resetHandler": "0x000000C1"
+  }
+}

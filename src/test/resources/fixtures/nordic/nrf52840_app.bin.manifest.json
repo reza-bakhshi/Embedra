@@ -1,0 +1,23 @@
+{
+  "fixtureId": "nordic.t097.nrf52840_app.bin",
+  "sha256": "b962e3a833697001ab7ba4f44f0dddcb63872ebd80d7e87ccde09f68f1511dc0",
+  "target": "nRF52840-QIAA",
+  "inputFormat": "RAW_BINARY",
+  "origin": "Freestanding synthetic deterministic test fixture for nRF52840-QIAA",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e0016nordicdeterministicv1",
+  "generationCommand": "python3 scripts/generate-nordic-fixtures.py",
+  "toolchain": "Embedra Nordic deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/nordic/nrf52840_app.json",
+  "requirements": [
+    "T097",
+    "NRF-001",
+    "NRF-002"
+  ]
+}

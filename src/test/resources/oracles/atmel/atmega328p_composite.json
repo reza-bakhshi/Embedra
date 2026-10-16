@@ -1,0 +1,18 @@
+{
+  "part": "ATmega328P",
+  "composite": true,
+  "sections": [
+    {
+      "name": ".app",
+      "address": "0x00000000",
+      "sizeBytes": 152
+    },
+    {
+      "name": ".bootloader",
+      "address": "0x00007E00",
+      "sizeBytes": 512
+    }
+  ],
+  "appEntryPoint": "0x00000000",
+  "bootEntryPoint": "0x00007E00"
+}

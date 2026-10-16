@@ -1,0 +1,24 @@
+{
+  "fixtureId": "atmel.t105.atmega328p_app.bin",
+  "sha256": "51e01c6161c50590a8d31b603ec7b0345d1ac42848730fe334030fad4f419123",
+  "target": "ATmega328P",
+  "inputFormat": "RAW_BINARY",
+  "origin": "Freestanding synthetic deterministic test fixture for ATmega328P",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:e1050016atmeldeterministicv1",
+  "generationCommand": "python3 scripts/generate-atmel-fixtures.py",
+  "toolchain": "Embedra Atmel deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/atmel/atmega328p_app.json",
+  "requirements": [
+    "T105",
+    "ATMEL-001",
+    "ATMEL-002",
+    "ATMEL-004"
+  ]
+}

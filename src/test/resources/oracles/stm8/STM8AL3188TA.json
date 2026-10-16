@@ -1,0 +1,23 @@
+{
+  "part": "STM8AL3188TA",
+  "family": "STM8A",
+  "architecture": "STM8 (8-bit CISC)",
+  "flashBase": "0x008000",
+  "flashKiB": 64,
+  "flashBytes": 65536,
+  "ramBase": "0x000000",
+  "ramKiB": 4,
+  "ramBytes": 4096,
+  "eepromBase": "0x004000",
+  "eepromBytes": 2048,
+  "vectorTableBase": "0x008000",
+  "vectorCount": 32,
+  "resetVector": "0x008080",
+  "trapVector": "0x008090",
+  "artifactSha256": {
+    "bin": "0c71bb2b3e03c3caa56052f961158fca75590d7f6e18710a6094418c48a6272f",
+    "hex": "f0c9d6bc900a12d5f98f8b983771bade475f361d6f4a742c15bf083e74f39bb4",
+    "s19": "2272fe326234c9d27e298f0ff6a03d92e19bc51defd35ee38e9a20688c69b293",
+    "elf": "3416cbfca3a4f760ba917b5a71e523c1741aad9f44ca9e42236e814ead34914c"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "part": "nRF9160-SICA",
+  "securityDomain": "NON_SECURE",
+  "flashBase": "0x00040000",
+  "initialSp": "0x20040000",
+  "resetVector": "0x00040101",
+  "entryPoint": "0x00040100"
+}

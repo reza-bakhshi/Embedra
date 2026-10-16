@@ -140,6 +140,10 @@ public final class StackStringRecoveryAnalyzer {
                     registers, stackPointers, stackMemory);
             case XTENSA -> processXtensaInstruction(instr, instructionIndex, mnem, ops,
                     registers, stackPointers, stackMemory);
+            case STM8 -> processStm8Instruction(instr, instructionIndex, mnem, ops,
+                    registers, stackPointers, stackMemory);
+            case AVR8 -> processAvrInstruction(instr, instructionIndex, mnem, ops,
+                    registers, stackPointers, stackMemory);
         }
     }
 
@@ -496,6 +500,174 @@ public final class StackStringRecoveryAnalyzer {
         }
     }
 
+    private void processStm8Instruction(
+            StackInstruction instr,
+            int idx,
+            String mnem,
+            List<String> ops,
+            Map<String, Long> registers,
+            Map<String, Long> stackPointers,
+            Map<Long, StackByteRecord> stackMemory) {
+        String baseMnem = stripCondition(mnem);
+        stackPointers.putIfAbsent("sp", 0L);
+
+        // Immediate loads: ld a, #imm; ldw x, #imm; ldw y, #imm
+        if ((baseMnem.equals("ld") || baseMnem.equals("ldw")) && ops.size() >= 2) {
+            String dest = normalizeReg(ops.get(0));
+            OptionalLong imm = parseImmediate(ops.get(1));
+            if (imm.isPresent()) {
+                long mask = baseMnem.equals("ldw") ? 0xFFFFL : 0xFFL;
+                registers.put(dest, imm.getAsLong() & mask);
+                return;
+            } else {
+                String src = normalizeReg(ops.get(1));
+                if (registers.containsKey(src)) {
+                    registers.put(dest, registers.get(src));
+                    return;
+                }
+            }
+        }
+
+        // Direct store to stack: mov (offset, sp), #imm
+        if (baseMnem.equals("mov") && ops.size() >= 2) {
+            MemTarget target = parseMemTarget(ops.get(0));
+            OptionalLong imm = parseImmediate(ops.get(1));
+            if (target != null && stackPointers.containsKey(target.baseReg) && imm.isPresent()) {
+                long effectiveOffset = stackPointers.get(target.baseReg) + target.offset;
+                writeStackBytes(stackMemory, effectiveOffset, imm.getAsLong() & 0xFFL, 1, instr.address(), idx);
+                return;
+            }
+        }
+
+        // Register stores: ld (offset, sp), a or ldw (offset, sp), x
+        if ((baseMnem.equals("ld") || baseMnem.equals("ldw")) && ops.size() >= 2) {
+            MemTarget target = parseMemTarget(ops.get(0));
+            if (target != null && stackPointers.containsKey(target.baseReg)) {
+                String srcReg = normalizeReg(ops.get(1));
+                Long val = registers.get(srcReg);
+                if (val != null) {
+                    int size = baseMnem.endsWith("w") ? 2 : 1;
+                    long effectiveOffset = stackPointers.get(target.baseReg) + target.offset;
+                    writeStackBytes(stackMemory, effectiveOffset, val, size, instr.address(), idx);
+                    return;
+                }
+            }
+        }
+
+        // Stack pushes: push #imm; push a; pushw x; pushw y
+        if (baseMnem.equals("push") || baseMnem.equals("pushw")) {
+            if (!ops.isEmpty()) {
+                long currentSp = stackPointers.get("sp");
+                int size = baseMnem.equals("pushw") ? 2 : 1;
+                OptionalLong imm = parseImmediate(ops.get(0));
+                if (imm.isPresent()) {
+                    writeStackBytes(stackMemory, currentSp - size, imm.getAsLong(), size, instr.address(), idx);
+                    stackPointers.put("sp", currentSp - size);
+                } else {
+                    String srcReg = normalizeReg(ops.get(0));
+                    Long val = registers.get(srcReg);
+                    if (val != null) {
+                        writeStackBytes(stackMemory, currentSp - size, val, size, instr.address(), idx);
+                    }
+                    stackPointers.put("sp", currentSp - size);
+                }
+                return;
+            }
+        }
+
+        // Stack adjustments: addw sp, #imm / subw sp, #imm
+        if (baseMnem.equals("addw") && ops.size() >= 2 && normalizeReg(ops.get(0)).equals("sp")) {
+            parseImmediate(ops.get(1)).ifPresent(imm -> stackPointers.put("sp", stackPointers.get("sp") + imm));
+            return;
+        }
+        if (baseMnem.equals("subw") && ops.size() >= 2 && normalizeReg(ops.get(0)).equals("sp")) {
+            parseImmediate(ops.get(1)).ifPresent(imm -> stackPointers.put("sp", stackPointers.get("sp") - imm));
+            return;
+        }
+    }
+
+    private void processAvrInstruction(
+            StackInstruction instr,
+            int idx,
+            String mnem,
+            List<String> ops,
+            Map<String, Long> registers,
+            Map<String, Long> stackPointers,
+            Map<Long, StackByteRecord> stackMemory) {
+        String baseMnem = stripCondition(mnem);
+        stackPointers.putIfAbsent("sp", 0L);
+        stackPointers.putIfAbsent("y", 0L);
+
+        // Immediate loads: ldi rd, #imm
+        if (baseMnem.equals("ldi") && ops.size() >= 2) {
+            String dest = normalizeReg(ops.get(0));
+            OptionalLong imm = parseImmediate(ops.get(1));
+            if (imm.isPresent()) {
+                registers.put(dest, imm.getAsLong() & 0xFFL);
+                return;
+            }
+        }
+
+        // Register copies: mov rd, rr / movw rd, rr
+        if ((baseMnem.equals("mov") || baseMnem.equals("movw")) && ops.size() >= 2) {
+            String dest = normalizeReg(ops.get(0));
+            String src = normalizeReg(ops.get(1));
+            if (registers.containsKey(src)) {
+                registers.put(dest, registers.get(src));
+                return;
+            }
+        }
+
+        // Stack pushes: push rr
+        if (baseMnem.equals("push") && !ops.isEmpty()) {
+            long currentSp = stackPointers.get("sp");
+            OptionalLong imm = parseImmediate(ops.get(0));
+            if (imm.isPresent()) {
+                writeStackBytes(stackMemory, currentSp - 1, imm.getAsLong() & 0xFFL, 1, instr.address(), idx);
+            } else {
+                String srcReg = normalizeReg(ops.get(0));
+                Long val = registers.get(srcReg);
+                if (val != null) {
+                    writeStackBytes(stackMemory, currentSp - 1, val & 0xFFL, 1, instr.address(), idx);
+                }
+            }
+            stackPointers.put("sp", currentSp - 1);
+            return;
+        }
+
+        // Direct / displaced store to Y pointer or SP: std Y+q, rr / st Y, rr
+        if ((baseMnem.equals("std") || baseMnem.equals("st")) && ops.size() >= 2) {
+            MemTarget target = parseMemTarget(ops.get(0));
+            if (target != null && stackPointers.containsKey(target.baseReg)) {
+                String srcReg = normalizeReg(ops.get(1));
+                Long val = registers.get(srcReg);
+                if (val == null) {
+                    OptionalLong imm = parseImmediate(ops.get(1));
+                    if (imm.isPresent()) {
+                        val = imm.getAsLong();
+                    }
+                }
+                if (val != null) {
+                    long effectiveOffset = stackPointers.get(target.baseReg) + target.offset;
+                    writeStackBytes(stackMemory, effectiveOffset, val & 0xFFL, 1, instr.address(), idx);
+                    return;
+                }
+            }
+        }
+
+        // Pointer adjustments: sbiw Y, imm / adiw Y, imm
+        if ((baseMnem.equals("sbiw") || baseMnem.equals("adiw")) && ops.size() >= 2) {
+            String reg = normalizeReg(ops.get(0));
+            if (stackPointers.containsKey(reg)) {
+                OptionalLong imm = parseImmediate(ops.get(1));
+                if (imm.isPresent()) {
+                    long delta = baseMnem.equals("sbiw") ? -imm.getAsLong() : imm.getAsLong();
+                    stackPointers.put(reg, stackPointers.get(reg) + delta);
+                }
+            }
+        }
+    }
+
     private void writeStackBytes(
             Map<Long, StackByteRecord> stackMemory,
             long baseOffset,
@@ -657,6 +829,50 @@ public final class StackStringRecoveryAnalyzer {
 
         long offset = parseImmediate(offsetPart).orElse(0L);
         return new MemTarget(normalizeReg(basePart), offset);
+    }
+
+    private static MemTarget parseMemTarget(String operand) {
+        if (operand == null || operand.isBlank()) {
+            return null;
+        }
+        MemTarget bracket = parseBracketMem(operand);
+        if (bracket != null) {
+            return bracket;
+        }
+        MemTarget paren = parseParenMem(operand);
+        if (paren != null) {
+            return paren;
+        }
+        String trimmed = operand.trim();
+        if (trimmed.startsWith("(") && trimmed.endsWith(")")) {
+            String inside = trimmed.substring(1, trimmed.length() - 1).trim();
+            String[] parts = inside.split(",");
+            if (parts.length == 2) {
+                OptionalLong imm1 = parseImmediate(parts[0].trim());
+                if (imm1.isPresent()) {
+                    return new MemTarget(normalizeReg(parts[1].trim()), imm1.getAsLong());
+                }
+                OptionalLong imm2 = parseImmediate(parts[1].trim());
+                if (imm2.isPresent()) {
+                    return new MemTarget(normalizeReg(parts[0].trim()), imm2.getAsLong());
+                }
+            } else if (parts.length == 1) {
+                return new MemTarget(normalizeReg(parts[0].trim()), 0L);
+            }
+        }
+        if (trimmed.contains("+") && !trimmed.startsWith("[")) {
+            String[] parts = trimmed.split("\\+");
+            if (parts.length == 2) {
+                OptionalLong imm = parseImmediate(parts[1].trim());
+                if (imm.isPresent()) {
+                    return new MemTarget(normalizeReg(parts[0].trim()), imm.getAsLong());
+                }
+            }
+        }
+        if (trimmed.equalsIgnoreCase("y") || trimmed.equalsIgnoreCase("z") || trimmed.equalsIgnoreCase("x")) {
+            return new MemTarget(normalizeReg(trimmed), 0L);
+        }
+        return null;
     }
 
     private static OptionalLong parseImmediate(String token) {

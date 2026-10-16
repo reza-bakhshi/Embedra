@@ -1,0 +1,10 @@
+{
+  "part": "nRF52840-QIAA",
+  "format": "MULTI_FORMAT",
+  "core": "ARM Cortex-M4F",
+  "flashBase": "0x00000000",
+  "initialSp": "0x20040000",
+  "resetVector": "0x00000101",
+  "entryPoint": "0x00000100",
+  "vectorCount": 48
+}

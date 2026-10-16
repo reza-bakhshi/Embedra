@@ -1,0 +1,7 @@
+{
+  "fixture": "stm8l151_checksum.s19",
+  "errorType": "stm8.t089.malformed.stm8l151_checksum.s19",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "Corrupted S-Record checksum on data record",
+  "sha256": "764d1c3dc78b2edd19404ac37078a8b2177bd90a0996d10e7d6c46ebc6f00eba"
+}

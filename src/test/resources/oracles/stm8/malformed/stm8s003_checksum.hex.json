@@ -1,0 +1,7 @@
+{
+  "fixture": "stm8s003_checksum.hex",
+  "errorType": "stm8.t089.malformed.stm8s003_checksum.hex",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "Corrupted record checksum on Intel HEX data record",
+  "sha256": "76226440b313f626189da1016d8df27867a3b373fb64ff0fe652c02c09dbfff1"
+}

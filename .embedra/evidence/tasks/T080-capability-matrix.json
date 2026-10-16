@@ -1,0 +1,984 @@
+{
+  "schemaId": "urn:embedra:schema:esp-full-flash-capability-matrix:1",
+  "metadata": {
+    "task": "T080",
+    "catalogSnapshot": "catalogs/espressif/2026-09-23/catalog.json",
+    "authoritativeReferences": [
+      "ESP-IDF v6.0 reference tree 662a3be354759d9487bf4b1a629fadb766cb1800",
+      "esptool v5.4.0 target definitions",
+      "Espressif Technical Reference Manuals"
+    ],
+    "totalSeriesCount": 14,
+    "totalSiliconPartCount": 53
+  },
+  "series": [
+    {
+      "series": "ESP32",
+      "chipId": 0,
+      "chipIdHex": "0x0000",
+      "displayName": "ESP32",
+      "isa": "XTENSA",
+      "coreCount": 2,
+      "ghidraLanguageId": "Xtensa:LE:32:default",
+      "ghidraCompilerSpecId": "default",
+      "bootloaderOffset": "0x1000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x3F400000",
+          "end": "0x3F800000"
+        },
+        "irom": {
+          "start": "0x400D0000",
+          "end": "0x40400000"
+        }
+      },
+      "maxFlashSizeMb": 16,
+      "referenceSource": "esptool/targets/esp32.py + ESP-IDF components/soc/esp32/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-C2",
+      "chipId": 12,
+      "chipIdHex": "0x000C",
+      "displayName": "ESP32-C2",
+      "isa": "RISCV",
+      "coreCount": 1,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x3C000000",
+          "end": "0x3C400000"
+        },
+        "irom": {
+          "start": "0x42000000",
+          "end": "0x42400000"
+        }
+      },
+      "maxFlashSizeMb": 4,
+      "referenceSource": "esptool/targets/esp32c2.py + ESP-IDF components/soc/esp32c2/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-C3",
+      "chipId": 5,
+      "chipIdHex": "0x0005",
+      "displayName": "ESP32-C3",
+      "isa": "RISCV",
+      "coreCount": 1,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x3C000000",
+          "end": "0x3C800000"
+        },
+        "irom": {
+          "start": "0x42000000",
+          "end": "0x42800000"
+        }
+      },
+      "maxFlashSizeMb": 16,
+      "referenceSource": "esptool/targets/esp32c3.py + ESP-IDF components/soc/esp32c3/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-C5",
+      "chipId": 23,
+      "chipIdHex": "0x0017",
+      "displayName": "ESP32-C5",
+      "isa": "RISCV",
+      "coreCount": 1,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x42000000",
+          "end": "0x44000000"
+        },
+        "irom": {
+          "start": "0x42000000",
+          "end": "0x44000000"
+        }
+      },
+      "maxFlashSizeMb": 32,
+      "referenceSource": "esptool/targets/esp32c5.py + ESP-IDF components/soc/esp32c5/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-C6",
+      "chipId": 13,
+      "chipIdHex": "0x000D",
+      "displayName": "ESP32-C6",
+      "isa": "RISCV",
+      "coreCount": 1,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x42000000",
+          "end": "0x43000000"
+        },
+        "irom": {
+          "start": "0x42000000",
+          "end": "0x43000000"
+        }
+      },
+      "maxFlashSizeMb": 16,
+      "referenceSource": "esptool/targets/esp32c6.py + ESP-IDF components/soc/esp32c6/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-C61",
+      "chipId": 20,
+      "chipIdHex": "0x0014",
+      "displayName": "ESP32-C61",
+      "isa": "RISCV",
+      "coreCount": 1,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x42000000",
+          "end": "0x44000000"
+        },
+        "irom": {
+          "start": "0x42000000",
+          "end": "0x44000000"
+        }
+      },
+      "maxFlashSizeMb": 32,
+      "referenceSource": "esptool/targets/esp32c61.py + ESP-IDF components/soc/esp32c61/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-E22",
+      "chipId": 31,
+      "chipIdHex": "0x001F",
+      "displayName": "ESP32-E22",
+      "isa": "RISCV",
+      "coreCount": 2,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x3C000000",
+          "end": "0x40000000"
+        },
+        "irom": {
+          "start": "0x3C000000",
+          "end": "0x40000000"
+        }
+      },
+      "maxFlashSizeMb": 32,
+      "referenceSource": "esptool/targets/esp32e22.py MEMORY_MAP"
+    },
+    {
+      "series": "ESP32-H2",
+      "chipId": 16,
+      "chipIdHex": "0x0010",
+      "displayName": "ESP32-H2",
+      "isa": "RISCV",
+      "coreCount": 1,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x42000000",
+          "end": "0x43000000"
+        },
+        "irom": {
+          "start": "0x42000000",
+          "end": "0x43000000"
+        }
+      },
+      "maxFlashSizeMb": 16,
+      "referenceSource": "esptool/targets/esp32h2.py + ESP-IDF components/soc/esp32h2/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-H21",
+      "chipId": 25,
+      "chipIdHex": "0x0019",
+      "displayName": "ESP32-H21",
+      "isa": "RISCV",
+      "coreCount": 1,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x42000000",
+          "end": "0x43000000"
+        },
+        "irom": {
+          "start": "0x42000000",
+          "end": "0x43000000"
+        }
+      },
+      "maxFlashSizeMb": 16,
+      "referenceSource": "esptool/targets/esp32h21.py + ESP-IDF components/soc/esp32h21/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-H4",
+      "chipId": 28,
+      "chipIdHex": "0x001C",
+      "displayName": "ESP32-H4",
+      "isa": "RISCV",
+      "coreCount": 2,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x42000000",
+          "end": "0x44000000"
+        },
+        "irom": {
+          "start": "0x42000000",
+          "end": "0x44000000"
+        }
+      },
+      "maxFlashSizeMb": 16,
+      "referenceSource": "esptool/targets/esp32h4.py + ESP-IDF components/soc/esp32h4/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-P4",
+      "chipId": 18,
+      "chipIdHex": "0x0012",
+      "displayName": "ESP32-P4",
+      "isa": "RISCV",
+      "coreCount": 2,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x48000000",
+          "end": "0x4A000000"
+        },
+        "irom": {
+          "start": "0x40000000",
+          "end": "0x44000000"
+        }
+      },
+      "maxFlashSizeMb": 32,
+      "referenceSource": "esptool/targets/esp32p4.py + ESP-IDF components/soc/esp32p4/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-S2",
+      "chipId": 2,
+      "chipIdHex": "0x0002",
+      "displayName": "ESP32-S2",
+      "isa": "XTENSA",
+      "coreCount": 1,
+      "ghidraLanguageId": "Xtensa:LE:32:default",
+      "ghidraCompilerSpecId": "default",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x3F000000",
+          "end": "0x3FF80000"
+        },
+        "irom": {
+          "start": "0x40080000",
+          "end": "0x40800000"
+        }
+      },
+      "maxFlashSizeMb": 16,
+      "referenceSource": "esptool/targets/esp32s2.py + ESP-IDF components/soc/esp32s2/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-S3",
+      "chipId": 9,
+      "chipIdHex": "0x0009",
+      "displayName": "ESP32-S3",
+      "isa": "XTENSA",
+      "coreCount": 2,
+      "ghidraLanguageId": "Xtensa:LE:32:default",
+      "ghidraCompilerSpecId": "default",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x3C000000",
+          "end": "0x3E000000"
+        },
+        "irom": {
+          "start": "0x42000000",
+          "end": "0x44000000"
+        }
+      },
+      "maxFlashSizeMb": 32,
+      "referenceSource": "esptool/targets/esp32s3.py + ESP-IDF components/soc/esp32s3/include/soc/soc.h"
+    },
+    {
+      "series": "ESP32-S31",
+      "chipId": 32,
+      "chipIdHex": "0x0020",
+      "displayName": "ESP32-S31",
+      "isa": "RISCV",
+      "coreCount": 2,
+      "ghidraLanguageId": "RISCV:LE:32:default",
+      "ghidraCompilerSpecId": "gcc",
+      "bootloaderOffset": "0x0000",
+      "defaultPartitionTableOffset": "0x8000",
+      "mmuPageSize": "0x10000",
+      "mmuWindows": {
+        "drom": {
+          "start": "0x40000000",
+          "end": "0x54000000"
+        },
+        "irom": {
+          "start": "0x40000000",
+          "end": "0x54000000"
+        }
+      },
+      "maxFlashSizeMb": 32,
+      "referenceSource": "esptool/targets/esp32s31.py MEMORY_MAP"
+    }
+  ],
+  "siliconParts": [
+    {
+      "exactPart": "ESP32-C3",
+      "series": "ESP32-C3",
+      "chipId": 5,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C3FH4",
+      "series": "ESP32-C3",
+      "chipId": 5,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C3FH4X",
+      "series": "ESP32-C3",
+      "chipId": 5,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C3FH8X",
+      "series": "ESP32-C3",
+      "chipId": 5,
+      "embeddedFlashMb": "8",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C3FN4",
+      "series": "ESP32-C3",
+      "chipId": 5,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C5HF4",
+      "series": "ESP32-C5",
+      "chipId": 23,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 6x6",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C5HR2",
+      "series": "ESP32-C5",
+      "chipId": 23,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "2",
+      "package": "QFN 6x6",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C5HR8",
+      "series": "ESP32-C5",
+      "chipId": 23,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "8",
+      "package": "QFN 6x6",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C5NF8R2LA",
+      "series": "ESP32-C5",
+      "chipId": 23,
+      "embeddedFlashMb": "8",
+      "embeddedPsramMb": "2",
+      "package": "LGA 6x6",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C6",
+      "series": "ESP32-C6",
+      "chipId": 13,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C61HF4",
+      "series": "ESP32-C61",
+      "chipId": 20,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C61HR2",
+      "series": "ESP32-C61",
+      "chipId": 20,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "2",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C61HR8",
+      "series": "ESP32-C61",
+      "chipId": 20,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "8",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C61NF8R8LA",
+      "series": "ESP32-C61",
+      "chipId": 20,
+      "embeddedFlashMb": "8",
+      "embeddedPsramMb": "8",
+      "package": "LGA 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C6FH4",
+      "series": "ESP32-C6",
+      "chipId": 13,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-C6FH8",
+      "series": "ESP32-C6",
+      "chipId": 13,
+      "embeddedFlashMb": "8",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-D0WD",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-D0WD-V3",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-D0WDQ6",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 6x6",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-D0WDQ6-V3",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 6x6",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-D0WDRH2-V3",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "2",
+      "package": "QFN 5x5",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-E22",
+      "series": "ESP32-E22",
+      "chipId": 31,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 9x9",
+      "isa": "RISCV",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-H21HF4",
+      "series": "ESP32-H21",
+      "chipId": 25,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 4x4",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-H2FH2S",
+      "series": "ESP32-H2",
+      "chipId": 16,
+      "embeddedFlashMb": "2",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 4x4",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-H2FH4S",
+      "series": "ESP32-H2",
+      "chipId": 16,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 4x4",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-H4HF4",
+      "series": "ESP32-H4",
+      "chipId": 28,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 6x6",
+      "isa": "RISCV",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-H4HR2",
+      "series": "ESP32-H4",
+      "chipId": 28,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "2",
+      "package": "QFN 6x6",
+      "isa": "RISCV",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-P4NRW16",
+      "series": "ESP32-P4",
+      "chipId": 18,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "16",
+      "package": "QFN 10x10",
+      "isa": "RISCV",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-P4NRW16X",
+      "series": "ESP32-P4",
+      "chipId": 18,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "16",
+      "package": "QFN 10x10",
+      "isa": "RISCV",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-P4NRW32",
+      "series": "ESP32-P4",
+      "chipId": 18,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "32",
+      "package": "QFN 10x10",
+      "isa": "RISCV",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-P4NRW32X",
+      "series": "ESP32-P4",
+      "chipId": 18,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "32",
+      "package": "QFN 10x10",
+      "isa": "RISCV",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-PICO-D4",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "LGA 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-PICO-V3",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "LGA 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-PICO-V3-02",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "8",
+      "embeddedPsramMb": "2",
+      "package": "LGA 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S0WD",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S2",
+      "series": "ESP32-S2",
+      "chipId": 2,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S2FH4",
+      "series": "ESP32-S2",
+      "chipId": 2,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S2FN4R2",
+      "series": "ESP32-S2",
+      "chipId": 2,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "2",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S2R2",
+      "series": "ESP32-S2",
+      "chipId": 2,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "2",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S3",
+      "series": "ESP32-S3",
+      "chipId": 9,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S3-PICO-1-N8R2",
+      "series": "ESP32-S3",
+      "chipId": 9,
+      "embeddedFlashMb": "8",
+      "embeddedPsramMb": "2",
+      "package": "LGA 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S3-PICO-1-N8R8",
+      "series": "ESP32-S3",
+      "chipId": 9,
+      "embeddedFlashMb": "8",
+      "embeddedPsramMb": "8",
+      "package": "LGA 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S31NRV16",
+      "series": "ESP32-S31",
+      "chipId": 32,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "16",
+      "package": "QFN 8x8",
+      "isa": "RISCV",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S31NRV32",
+      "series": "ESP32-S31",
+      "chipId": 32,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "32",
+      "package": "QFN 8x8",
+      "isa": "RISCV",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S3FH4R2",
+      "series": "ESP32-S3",
+      "chipId": 9,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "2",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S3FN8",
+      "series": "ESP32-S3",
+      "chipId": 9,
+      "embeddedFlashMb": "8",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S3R16V",
+      "series": "ESP32-S3",
+      "chipId": 9,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "16",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S3R8",
+      "series": "ESP32-S3",
+      "chipId": 9,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "8",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-S3RH2",
+      "series": "ESP32-S3",
+      "chipId": 9,
+      "embeddedFlashMb": "N/A",
+      "embeddedPsramMb": "2",
+      "package": "QFN 7x7",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP32-U4WDH",
+      "series": "ESP32",
+      "chipId": 0,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 5x5",
+      "isa": "XTENSA",
+      "applicationCoreCount": 2,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP8684H2X",
+      "series": "ESP32-C2",
+      "chipId": 12,
+      "embeddedFlashMb": "2",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 4x4",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP8684H4X",
+      "series": "ESP32-C2",
+      "chipId": 12,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 4x4",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    },
+    {
+      "exactPart": "ESP8685H4",
+      "series": "ESP32-C3",
+      "chipId": 5,
+      "embeddedFlashMb": "4",
+      "embeddedPsramMb": "N/A",
+      "package": "QFN 4x4",
+      "isa": "RISCV",
+      "applicationCoreCount": 1,
+      "supportState": "PLANNED"
+    }
+  ],
+  "esp8266Segregation": {
+    "series": "ESP8266",
+    "excludedFromEsp32FullFlash": true,
+    "reasons": [
+      "Predates ESP32 extended 0xE9 image header; lacks 16-bit chip ID field in header",
+      "Does not use partition tables (no 0x50AA entries or 0xEBEB MD5 records)",
+      "Uses legacy non-partitioned flashing offsets (0x00000, 0x01000, 0x10000, 0x40000, 0x81000)",
+      "Employs Xtensa LX106 Harvard architecture with 1 MiB bank mapping rather than 64 KiB MMU pages",
+      "ADR 0025 and ESP-020 strictly isolate ESP8266 as a separate legacy workflow"
+    ]
+  },
+  "s3AssumptionsInventory": {
+    "EspFullFlashWorkspacePlanner": [
+      "ESP32_S3_CHIP_ID = 9 constant at line 21",
+      "Unconditional bootloader extraction from offset 0 at line 50 (fails on ESP32 offset 0x1000)",
+      "Hardcoded chip ID check 9 during image parsing at line 112"
+    ],
+    "EspPartitionTableDiscovery": [
+      "Static DEFAULT_OFFSET = 0x8000 and TABLE_SIZE = 0x1000",
+      "Unbounded scan loop starting at offset 0 up to EOF without layout profile bounds"
+    ],
+    "EspApplicationImageLoader": [
+      "Direct call to EspFullFlashWorkspacePlanner.plan() in findSupportedLoadSpecs and loadProgram",
+      "S3-specific option names (APPLY_ESP32S3_PACKS_OPTION) and codes (ENRICHMENT_OPTIONS)",
+      "Assumption of single homogeneous architecture for all programs in workspace"
+    ]
+  },
+  "providerContract": {
+    "profileRecord": "EspFlashLayoutProfile",
+    "providerInterface": "EspFlashLayoutProvider",
+    "registryClass": "EspFlashLayoutRegistry",
+    "targetTask": "T082"
+  }
+}

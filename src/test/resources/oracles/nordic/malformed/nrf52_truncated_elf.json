@@ -1,0 +1,5 @@
+{
+  "fixture": "nrf52_truncated_elf.elf",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "TRUNCATED_ELF_FILE"
+}

@@ -1,0 +1,8 @@
+{
+  "part": "nRF52840-QIAA",
+  "softDevice": "S140",
+  "mbrBase": "0x00000000",
+  "softDeviceBase": "0x00001000",
+  "applicationOffset": "0x00027000",
+  "applicationResetVector": "0x00027101"
+}

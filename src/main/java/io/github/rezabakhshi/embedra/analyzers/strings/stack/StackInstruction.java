@@ -45,6 +45,14 @@ public record StackInstruction(
         return new StackInstruction(address, mnemonic, List.of(operands), InstructionArch.XTENSA);
     }
 
+    public static StackInstruction stm8(long address, String mnemonic, String... operands) {
+        return new StackInstruction(address, mnemonic, List.of(operands), InstructionArch.STM8);
+    }
+
+    public static StackInstruction avr8(long address, String mnemonic, String... operands) {
+        return new StackInstruction(address, mnemonic, List.of(operands), InstructionArch.AVR8);
+    }
+
     /**
      * Parses an assembly line into a StackInstruction.
      */

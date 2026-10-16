@@ -1,0 +1,33 @@
+{
+  "device": "STM8_MALFORMED",
+  "target": "STM8_MALFORMED",
+  "fixtureId": "stm8.t089.malformed.stm8s208_overlapping.hex",
+  "inputFormat": "Intel HEX",
+  "origin": "Intentionally malformed STM8 fixture: Conflicting data records mapping overlapping addresses with different bytes",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e001600310044stm8deterministicv1",
+  "generationCommand": "python3 scripts/generate-stm8-fixtures.py",
+  "toolchain": "Embedra STM8 deterministic generator",
+  "oracleCommands": [
+    "readelf -h <ELF> || false",
+    "objcopy <INPUT> /dev/null || false"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/stm8/malformed/stm8s208_overlapping.hex.json",
+  "requirements": [
+    "T089",
+    "STM8-002",
+    "STM8-003",
+    "STM8-004"
+  ],
+  "sha256": "1983c7d83343a8e262d2fe2ffd2912708a4cfaa0b8f62da76f2bc0fb157c3baa",
+  "sourceProvenance": {
+    "name": "Synthetic malformed fixture for fail-closed validation",
+    "distribution": "Embedra Test Fixtures",
+    "license": "Apache-2.0",
+    "path": "scripts/generate-stm8-fixtures.py#stm8s208_overlapping.hex",
+    "facts": [
+      "Conflicting data records mapping overlapping addresses with different bytes"
+    ]
+  }
+}

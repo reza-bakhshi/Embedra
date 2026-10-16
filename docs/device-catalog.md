@@ -16,12 +16,24 @@ Current snapshots:
 | `catalogs/espressif/2026-09-23/catalog.json` | `espressif.esp32-family` | 53 SILICON + 161 MODULE + 58 BOARD records | `a012ee03ad12ec075b8b782cd8b3abd66cc236216cfe4001cf2c2a2a92990a00` |
 | `catalogs/rp/2026-10-02/catalog.json` | `raspberrypi.rp-family` | 5 SILICON records (RP2040, RP2350A/B, RP2354A/B); `board-profiles.json` adds 4 board profiles | `e640c605824e0878337f027bc7146914fbdbc7f8ed5c495983784b52f64d6a7a` |
 | `catalogs/stm32/2026-09-29/curated-catalog.json` | `stm32.curated-board-backed-exact` | 53 curated exact orderable parts across 20 family labels | `afc66a47cd79c2025d115049c8aebd2db671c1112d42531b1db50df8514858f9` |
+| `catalogs/stm8/2026-10-13/catalog.json` | `stm8-catalog-2026-10-13` | 32 exact parts (8 SUPPORTED, 24 PLANNED) across 4 families (STM8S, STM8L, STM8A, STM8T) | `a29012b1c9e39c25109c10fb097b0a25225ec416fe9fe43c86a65a0a1270bbb7` |
+| `catalogs/nordic/2026-10-13/catalog.json` | `nordic.nrf-family` | 21 exact parts (5 SUPPORTED, 16 PLANNED) across 5 series (nRF51, nRF52, nRF53, nRF54, nRF91) | `b95b84f1a476e7e2585b96b1981a185040fa761d021fdf751959e6abb618f5d9` |
+| `catalogs/atmel/2026-10-14/catalog.json` | `atmel.avr-sam-family` | 27 exact parts (5 SUPPORTED, 22 PLANNED) across 5 series (ATmega, ATtiny, AVR-Dx, SAMD, SAME) | `049a9b6debc502998735913c01baa1dd61f8cd7e12730bbac4140d55a1e934a9` |
 
 Companion STM32 artifacts in the same dated directory carry their own digests:
 `selection.json` (the finite acceptance allowlist), `memory-plans.json`
 (per-part memory topology), `security-domains.json` (pinned TrustZone alias
 apertures), `svd-applicability.json` (exact SVD availability classification),
 and `board-profiles.json` (reviewed board-backed external memory/boot facts).
+
+Companion STM8 peripheral packs in `catalogs/stm8/packs/`:
+`stm8s-peripherals.json`, `stm8l-peripherals.json`, and `stm8a-peripherals.json`.
+
+Companion Nordic peripheral packs in `catalogs/nordic/packs/`:
+`nrf51-peripherals.json`, `nrf52-peripherals.json`, `nrf53-peripherals.json`, `nrf54-peripherals.json`, and `nrf91-peripherals.json`.
+
+Companion Atmel / Microchip peripheral packs in `catalogs/atmel/packs/`:
+`atmega-peripherals.json`, `attiny-peripherals.json`, `avr-dx-peripherals.json`, `samd-peripherals.json`, and `same-peripherals.json`.
 
 ## Record anatomy
 
@@ -85,6 +97,12 @@ resolution apply the same rules the importers use:
 - STM32: `targets/stm32`/`Stm32CuratedPartIds` exact-part search (T038) —
   wildcards and bare family names are rejected; search candidates never
   become an inferred part.
+- STM8: `targets/stm8/catalog`/`Stm8CatalogRegistry` (T090/T095) — 32 parts, exact-part search,
+  rejecting wildcards and bare family prefixes; 8 parts promoted to SUPPORTED.
+- Nordic: `targets/nordic/catalog`/`NordicCatalogRegistry` (T098/T103) — 21 parts across 5 series,
+  exact-part search, rejecting wildcards and bare family prefixes; 5 parts promoted to SUPPORTED.
+- Atmel / Microchip: `targets/atmel/catalog`/`AtmelCatalogRegistry` (T106/T111) — 27 parts across 5 series,
+  exact-part search, rejecting wildcards and bare family prefixes; 5 parts promoted to SUPPORTED.
 
 The shipped extension bundles these snapshot trees under `catalogs/` so the
 Ghidra-side resolution works offline; the `*.sha256` files beside each JSON

@@ -207,6 +207,8 @@ public final class CallSiteArgumentResolver {
             case ARM_THUMB -> m.equals("bl") || m.equals("blx");
             case RISCV32 -> m.equals("call") || m.equals("jal") || m.equals("jalr");
             case XTENSA -> m.startsWith("call");
+            case STM8 -> m.equals("call") || m.equals("callf") || m.equals("callr");
+            case AVR8 -> m.equals("call") || m.equals("rcall") || m.equals("icall");
         };
     }
 
@@ -339,6 +341,20 @@ public final class CallSiteArgumentResolver {
                     Long addr = parseAddressOrLiteral(ops.get(1));
                     map.put(destReg, new ResolvedArg(addr, null, strLiteral));
                 }
+            } else if (arch == InstructionArch.STM8) {
+                if (mnemonic.startsWith("ld")) {
+                    Long imm = parseImmediate(ops.get(1));
+                    if (imm != null) {
+                        map.put(destReg, new ResolvedArg(imm, imm, strLiteral));
+                    }
+                }
+            } else if (arch == InstructionArch.AVR8) {
+                if (mnemonic.equals("ldi") || mnemonic.equals("mov") || mnemonic.equals("movw")) {
+                    Long imm = parseImmediate(ops.get(1));
+                    if (imm != null) {
+                        map.put(destReg, new ResolvedArg(imm, imm, strLiteral));
+                    }
+                }
             }
         }
         return map;
@@ -388,6 +404,17 @@ public final class CallSiteArgumentResolver {
                     list.add(regMap.get("a7"));
                 }
             }
+            case STM8 -> {
+                list.add(regMap.get("x"));
+                list.add(regMap.get("y"));
+                list.add(regMap.get("a"));
+            }
+            case AVR8 -> {
+                list.add(regMap.get("r24"));
+                list.add(regMap.get("r22"));
+                list.add(regMap.get("r20"));
+                list.add(regMap.get("r18"));
+            }
         }
         return list;
     }
@@ -407,6 +434,14 @@ public final class CallSiteArgumentResolver {
             }
         } else if (arch == InstructionArch.XTENSA) {
             if (clean.matches("a(?:[0-9]|1[0-5])")) {
+                return clean;
+            }
+        } else if (arch == InstructionArch.STM8) {
+            if (clean.matches("a|x|y")) {
+                return clean;
+            }
+        } else if (arch == InstructionArch.AVR8) {
+            if (clean.matches("r(?:1[89]|2[0-5])")) {
                 return clean;
             }
         }

@@ -1,0 +1,35 @@
+{
+  "fixtureId": "esp32c61.full-flash.custom-offset-misleading-magic",
+  "sha256": "b06bfbea188595862ebd232dae3e924d2424a2c15790aa166c048da76918d73f",
+  "target": "ESP32-C61",
+  "device": "ESP32-C61 (chip ID 20; synthetic flash; no exact variant claim)",
+  "inputFormat": "Synthetic Espressif raw flash image",
+  "origin": "Deterministically assembled from repository CSV layouts and the ESP32-C61 minimal application image",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "sourceProvenance": [
+    {
+      "name": "ESP-IDF partition table format and generator",
+      "revision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+      "license": "Apache-2.0",
+      "url": "https://github.com/espressif/esp-idf/blob/v6.0/components/partition_table/gen_esp32part.py"
+    }
+  ],
+  "generatorRevision": "sha256:dbef26173fd9b1a99c2dc4724f3ba51bf8ae64836599053e59a3127962dd3da1",
+  "scriptRevision": "sha256:dbef26173fd9b1a99c2dc4724f3ba51bf8ae64836599053e59a3127962dd3da1",
+  "generationCommand": "python3 scripts/generate-esp-full-flash-fixtures.py",
+  "toolchain": "ESP-IDF v6.0 gen_esp32part.py 1.5; POSIX shell/coreutils/jq",
+  "oracleCommands": [
+    "gen_esp32part.py <extracted-table.bin> <decoded.csv>",
+    "compare two isolated deterministic generations"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/esp32c61/full-flash/custom-offset-misleading-magic.expectations.json",
+  "malformed": false,
+  "requirements": [
+    "T081",
+    "ESP-022",
+    "ESP-023",
+    "ESP-024",
+    "ESP-025"
+  ]
+}

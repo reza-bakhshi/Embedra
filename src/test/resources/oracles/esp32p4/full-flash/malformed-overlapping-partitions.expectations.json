@@ -1,0 +1,12 @@
+{
+  "fixtureId": "esp32p4.full-flash.malformed-overlapping-partitions",
+  "flashSize": 524288,
+  "partitionTableOffset": 32768,
+  "expectedOutcome": "REJECT_OVERLAPPING_PARTITIONS",
+  "md5Required": true,
+  "partitions": [],
+  "misleadingOffsets": [],
+  "espIdfRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+  "generator": "gen_esp32part.py 1.5",
+  "expectedErrorCode": "ESP_PARTITION_OVERLAP"
+}

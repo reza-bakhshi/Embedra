@@ -1,0 +1,5 @@
+{
+  "errorExpected": true,
+  "diagnosticCode": "MEMORY_OVERLAP_CONFLICT",
+  "reason": "Address range 0x00000000..0x0000000F defined twice with conflicting values"
+}

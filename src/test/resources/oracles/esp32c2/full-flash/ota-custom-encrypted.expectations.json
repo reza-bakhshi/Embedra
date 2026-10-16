@@ -1,0 +1,60 @@
+{
+  "fixtureId": "esp32c2.full-flash.ota-custom-encrypted",
+  "flashSize": 524288,
+  "partitionTableOffset": 32768,
+  "expectedOutcome": "ACCEPT",
+  "md5Required": true,
+  "partitions": [
+    {
+      "label": "nvs",
+      "type": 1,
+      "subtype": 2,
+      "offset": 36864,
+      "size": 16384,
+      "flags": 0
+    },
+    {
+      "label": "otadata",
+      "type": 1,
+      "subtype": 0,
+      "offset": 53248,
+      "size": 8192,
+      "flags": 0
+    },
+    {
+      "label": "phy_init",
+      "type": 1,
+      "subtype": 1,
+      "offset": 61440,
+      "size": 4096,
+      "flags": 0
+    },
+    {
+      "label": "ota_0",
+      "type": 0,
+      "subtype": 16,
+      "offset": 65536,
+      "size": 131072,
+      "flags": 0
+    },
+    {
+      "label": "ota_1",
+      "type": 0,
+      "subtype": 17,
+      "offset": 196608,
+      "size": 131072,
+      "flags": 0
+    },
+    {
+      "label": "assets",
+      "type": 64,
+      "subtype": 127,
+      "offset": 327680,
+      "size": 65536,
+      "flags": 1
+    }
+  ],
+  "misleadingOffsets": [],
+  "espIdfRevision": "662a3be354759d9487bf4b1a629fadb766cb1800",
+  "generator": "gen_esp32part.py 1.5"
+}

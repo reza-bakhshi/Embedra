@@ -1,0 +1,5840 @@
+{
+  "schemaId": "urn:embedra:schema:nordic-peripheral-pack:1",
+  "packId": "nrf54-peripherals",
+  "series": "nRF54",
+  "sourceReference": "Nordic Semiconductor nRF54 Series Product Specification",
+  "peripherals": [
+    {
+      "name": "SPU",
+      "baseAddress": "0x50003000",
+      "endExclusive": "0x50004000",
+      "description": "ARM TrustZone System Protection Unit (SPU)",
+      "registers": [
+        {
+          "name": "FLASHNSC0_REGION",
+          "address": "0x50003600",
+          "offset": "0x0600",
+          "widthBits": 32,
+          "description": "Flash NSC Region 0 Selection",
+          "bitfields": []
+        },
+        {
+          "name": "FLASHNSC0_SIZE",
+          "address": "0x50003604",
+          "offset": "0x0604",
+          "widthBits": 32,
+          "description": "Flash NSC Region 0 Size",
+          "bitfields": []
+        },
+        {
+          "name": "FLASHNSC1_REGION",
+          "address": "0x50003608",
+          "offset": "0x0608",
+          "widthBits": 32,
+          "description": "Flash NSC Region 1 Selection",
+          "bitfields": []
+        },
+        {
+          "name": "FLASHNSC1_SIZE",
+          "address": "0x5000360C",
+          "offset": "0x060C",
+          "widthBits": 32,
+          "description": "Flash NSC Region 1 Size",
+          "bitfields": []
+        },
+        {
+          "name": "FLASHREGION_0_PERM",
+          "address": "0x50003700",
+          "offset": "0x0700",
+          "widthBits": 32,
+          "description": "Flash Region 0 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_0_PERM",
+          "address": "0x50003800",
+          "offset": "0x0800",
+          "widthBits": 32,
+          "description": "RAM Region 0 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_1_PERM",
+          "address": "0x50003704",
+          "offset": "0x0704",
+          "widthBits": 32,
+          "description": "Flash Region 1 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_1_PERM",
+          "address": "0x50003804",
+          "offset": "0x0804",
+          "widthBits": 32,
+          "description": "RAM Region 1 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_2_PERM",
+          "address": "0x50003708",
+          "offset": "0x0708",
+          "widthBits": 32,
+          "description": "Flash Region 2 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_2_PERM",
+          "address": "0x50003808",
+          "offset": "0x0808",
+          "widthBits": 32,
+          "description": "RAM Region 2 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_3_PERM",
+          "address": "0x5000370C",
+          "offset": "0x070C",
+          "widthBits": 32,
+          "description": "Flash Region 3 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_3_PERM",
+          "address": "0x5000380C",
+          "offset": "0x080C",
+          "widthBits": 32,
+          "description": "RAM Region 3 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_4_PERM",
+          "address": "0x50003710",
+          "offset": "0x0710",
+          "widthBits": 32,
+          "description": "Flash Region 4 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_4_PERM",
+          "address": "0x50003810",
+          "offset": "0x0810",
+          "widthBits": 32,
+          "description": "RAM Region 4 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_5_PERM",
+          "address": "0x50003714",
+          "offset": "0x0714",
+          "widthBits": 32,
+          "description": "Flash Region 5 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_5_PERM",
+          "address": "0x50003814",
+          "offset": "0x0814",
+          "widthBits": 32,
+          "description": "RAM Region 5 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_6_PERM",
+          "address": "0x50003718",
+          "offset": "0x0718",
+          "widthBits": 32,
+          "description": "Flash Region 6 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_6_PERM",
+          "address": "0x50003818",
+          "offset": "0x0818",
+          "widthBits": 32,
+          "description": "RAM Region 6 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_7_PERM",
+          "address": "0x5000371C",
+          "offset": "0x071C",
+          "widthBits": 32,
+          "description": "Flash Region 7 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_7_PERM",
+          "address": "0x5000381C",
+          "offset": "0x081C",
+          "widthBits": 32,
+          "description": "RAM Region 7 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_8_PERM",
+          "address": "0x50003720",
+          "offset": "0x0720",
+          "widthBits": 32,
+          "description": "Flash Region 8 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_8_PERM",
+          "address": "0x50003820",
+          "offset": "0x0820",
+          "widthBits": 32,
+          "description": "RAM Region 8 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_9_PERM",
+          "address": "0x50003724",
+          "offset": "0x0724",
+          "widthBits": 32,
+          "description": "Flash Region 9 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_9_PERM",
+          "address": "0x50003824",
+          "offset": "0x0824",
+          "widthBits": 32,
+          "description": "RAM Region 9 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_10_PERM",
+          "address": "0x50003728",
+          "offset": "0x0728",
+          "widthBits": 32,
+          "description": "Flash Region 10 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_10_PERM",
+          "address": "0x50003828",
+          "offset": "0x0828",
+          "widthBits": 32,
+          "description": "RAM Region 10 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_11_PERM",
+          "address": "0x5000372C",
+          "offset": "0x072C",
+          "widthBits": 32,
+          "description": "Flash Region 11 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_11_PERM",
+          "address": "0x5000382C",
+          "offset": "0x082C",
+          "widthBits": 32,
+          "description": "RAM Region 11 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_12_PERM",
+          "address": "0x50003730",
+          "offset": "0x0730",
+          "widthBits": 32,
+          "description": "Flash Region 12 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_12_PERM",
+          "address": "0x50003830",
+          "offset": "0x0830",
+          "widthBits": 32,
+          "description": "RAM Region 12 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_13_PERM",
+          "address": "0x50003734",
+          "offset": "0x0734",
+          "widthBits": 32,
+          "description": "Flash Region 13 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_13_PERM",
+          "address": "0x50003834",
+          "offset": "0x0834",
+          "widthBits": 32,
+          "description": "RAM Region 13 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_14_PERM",
+          "address": "0x50003738",
+          "offset": "0x0738",
+          "widthBits": 32,
+          "description": "Flash Region 14 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_14_PERM",
+          "address": "0x50003838",
+          "offset": "0x0838",
+          "widthBits": 32,
+          "description": "RAM Region 14 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_15_PERM",
+          "address": "0x5000373C",
+          "offset": "0x073C",
+          "widthBits": 32,
+          "description": "Flash Region 15 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_15_PERM",
+          "address": "0x5000383C",
+          "offset": "0x083C",
+          "widthBits": 32,
+          "description": "RAM Region 15 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_16_PERM",
+          "address": "0x50003740",
+          "offset": "0x0740",
+          "widthBits": 32,
+          "description": "Flash Region 16 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_16_PERM",
+          "address": "0x50003840",
+          "offset": "0x0840",
+          "widthBits": 32,
+          "description": "RAM Region 16 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_17_PERM",
+          "address": "0x50003744",
+          "offset": "0x0744",
+          "widthBits": 32,
+          "description": "Flash Region 17 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_17_PERM",
+          "address": "0x50003844",
+          "offset": "0x0844",
+          "widthBits": 32,
+          "description": "RAM Region 17 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_18_PERM",
+          "address": "0x50003748",
+          "offset": "0x0748",
+          "widthBits": 32,
+          "description": "Flash Region 18 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_18_PERM",
+          "address": "0x50003848",
+          "offset": "0x0848",
+          "widthBits": 32,
+          "description": "RAM Region 18 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_19_PERM",
+          "address": "0x5000374C",
+          "offset": "0x074C",
+          "widthBits": 32,
+          "description": "Flash Region 19 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_19_PERM",
+          "address": "0x5000384C",
+          "offset": "0x084C",
+          "widthBits": 32,
+          "description": "RAM Region 19 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_20_PERM",
+          "address": "0x50003750",
+          "offset": "0x0750",
+          "widthBits": 32,
+          "description": "Flash Region 20 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_20_PERM",
+          "address": "0x50003850",
+          "offset": "0x0850",
+          "widthBits": 32,
+          "description": "RAM Region 20 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_21_PERM",
+          "address": "0x50003754",
+          "offset": "0x0754",
+          "widthBits": 32,
+          "description": "Flash Region 21 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_21_PERM",
+          "address": "0x50003854",
+          "offset": "0x0854",
+          "widthBits": 32,
+          "description": "RAM Region 21 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_22_PERM",
+          "address": "0x50003758",
+          "offset": "0x0758",
+          "widthBits": 32,
+          "description": "Flash Region 22 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_22_PERM",
+          "address": "0x50003858",
+          "offset": "0x0858",
+          "widthBits": 32,
+          "description": "RAM Region 22 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_23_PERM",
+          "address": "0x5000375C",
+          "offset": "0x075C",
+          "widthBits": 32,
+          "description": "Flash Region 23 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_23_PERM",
+          "address": "0x5000385C",
+          "offset": "0x085C",
+          "widthBits": 32,
+          "description": "RAM Region 23 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_24_PERM",
+          "address": "0x50003760",
+          "offset": "0x0760",
+          "widthBits": 32,
+          "description": "Flash Region 24 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_24_PERM",
+          "address": "0x50003860",
+          "offset": "0x0860",
+          "widthBits": 32,
+          "description": "RAM Region 24 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_25_PERM",
+          "address": "0x50003764",
+          "offset": "0x0764",
+          "widthBits": 32,
+          "description": "Flash Region 25 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_25_PERM",
+          "address": "0x50003864",
+          "offset": "0x0864",
+          "widthBits": 32,
+          "description": "RAM Region 25 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_26_PERM",
+          "address": "0x50003768",
+          "offset": "0x0768",
+          "widthBits": 32,
+          "description": "Flash Region 26 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_26_PERM",
+          "address": "0x50003868",
+          "offset": "0x0868",
+          "widthBits": 32,
+          "description": "RAM Region 26 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_27_PERM",
+          "address": "0x5000376C",
+          "offset": "0x076C",
+          "widthBits": 32,
+          "description": "Flash Region 27 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_27_PERM",
+          "address": "0x5000386C",
+          "offset": "0x086C",
+          "widthBits": 32,
+          "description": "RAM Region 27 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_28_PERM",
+          "address": "0x50003770",
+          "offset": "0x0770",
+          "widthBits": 32,
+          "description": "Flash Region 28 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_28_PERM",
+          "address": "0x50003870",
+          "offset": "0x0870",
+          "widthBits": 32,
+          "description": "RAM Region 28 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_29_PERM",
+          "address": "0x50003774",
+          "offset": "0x0774",
+          "widthBits": 32,
+          "description": "Flash Region 29 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_29_PERM",
+          "address": "0x50003874",
+          "offset": "0x0874",
+          "widthBits": 32,
+          "description": "RAM Region 29 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_30_PERM",
+          "address": "0x50003778",
+          "offset": "0x0778",
+          "widthBits": 32,
+          "description": "Flash Region 30 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_30_PERM",
+          "address": "0x50003878",
+          "offset": "0x0878",
+          "widthBits": 32,
+          "description": "RAM Region 30 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "FLASHREGION_31_PERM",
+          "address": "0x5000377C",
+          "offset": "0x077C",
+          "widthBits": 32,
+          "description": "Flash Region 31 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "RAMREGION_31_PERM",
+          "address": "0x5000387C",
+          "offset": "0x087C",
+          "widthBits": 32,
+          "description": "RAM Region 31 Security Permissions",
+          "bitfields": [
+            {
+              "name": "EXECUTE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Allow instruction execution"
+            },
+            {
+              "name": "WRITE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Allow write operations"
+            },
+            {
+              "name": "READ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Allow read operations"
+            },
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Security attribution: 0=Secure, 1=Non-Secure"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_0_PERM",
+          "address": "0x50003900",
+          "offset": "0x0900",
+          "widthBits": 32,
+          "description": "Peripheral ID 0 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_1_PERM",
+          "address": "0x50003904",
+          "offset": "0x0904",
+          "widthBits": 32,
+          "description": "Peripheral ID 1 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_2_PERM",
+          "address": "0x50003908",
+          "offset": "0x0908",
+          "widthBits": 32,
+          "description": "Peripheral ID 2 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_3_PERM",
+          "address": "0x5000390C",
+          "offset": "0x090C",
+          "widthBits": 32,
+          "description": "Peripheral ID 3 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_4_PERM",
+          "address": "0x50003910",
+          "offset": "0x0910",
+          "widthBits": 32,
+          "description": "Peripheral ID 4 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_5_PERM",
+          "address": "0x50003914",
+          "offset": "0x0914",
+          "widthBits": 32,
+          "description": "Peripheral ID 5 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_6_PERM",
+          "address": "0x50003918",
+          "offset": "0x0918",
+          "widthBits": 32,
+          "description": "Peripheral ID 6 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_7_PERM",
+          "address": "0x5000391C",
+          "offset": "0x091C",
+          "widthBits": 32,
+          "description": "Peripheral ID 7 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_8_PERM",
+          "address": "0x50003920",
+          "offset": "0x0920",
+          "widthBits": 32,
+          "description": "Peripheral ID 8 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_9_PERM",
+          "address": "0x50003924",
+          "offset": "0x0924",
+          "widthBits": 32,
+          "description": "Peripheral ID 9 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_10_PERM",
+          "address": "0x50003928",
+          "offset": "0x0928",
+          "widthBits": 32,
+          "description": "Peripheral ID 10 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_11_PERM",
+          "address": "0x5000392C",
+          "offset": "0x092C",
+          "widthBits": 32,
+          "description": "Peripheral ID 11 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_12_PERM",
+          "address": "0x50003930",
+          "offset": "0x0930",
+          "widthBits": 32,
+          "description": "Peripheral ID 12 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_13_PERM",
+          "address": "0x50003934",
+          "offset": "0x0934",
+          "widthBits": 32,
+          "description": "Peripheral ID 13 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_14_PERM",
+          "address": "0x50003938",
+          "offset": "0x0938",
+          "widthBits": 32,
+          "description": "Peripheral ID 14 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_15_PERM",
+          "address": "0x5000393C",
+          "offset": "0x093C",
+          "widthBits": 32,
+          "description": "Peripheral ID 15 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_16_PERM",
+          "address": "0x50003940",
+          "offset": "0x0940",
+          "widthBits": 32,
+          "description": "Peripheral ID 16 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_17_PERM",
+          "address": "0x50003944",
+          "offset": "0x0944",
+          "widthBits": 32,
+          "description": "Peripheral ID 17 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_18_PERM",
+          "address": "0x50003948",
+          "offset": "0x0948",
+          "widthBits": 32,
+          "description": "Peripheral ID 18 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_19_PERM",
+          "address": "0x5000394C",
+          "offset": "0x094C",
+          "widthBits": 32,
+          "description": "Peripheral ID 19 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_20_PERM",
+          "address": "0x50003950",
+          "offset": "0x0950",
+          "widthBits": 32,
+          "description": "Peripheral ID 20 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_21_PERM",
+          "address": "0x50003954",
+          "offset": "0x0954",
+          "widthBits": 32,
+          "description": "Peripheral ID 21 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_22_PERM",
+          "address": "0x50003958",
+          "offset": "0x0958",
+          "widthBits": 32,
+          "description": "Peripheral ID 22 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_23_PERM",
+          "address": "0x5000395C",
+          "offset": "0x095C",
+          "widthBits": 32,
+          "description": "Peripheral ID 23 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_24_PERM",
+          "address": "0x50003960",
+          "offset": "0x0960",
+          "widthBits": 32,
+          "description": "Peripheral ID 24 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_25_PERM",
+          "address": "0x50003964",
+          "offset": "0x0964",
+          "widthBits": 32,
+          "description": "Peripheral ID 25 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_26_PERM",
+          "address": "0x50003968",
+          "offset": "0x0968",
+          "widthBits": 32,
+          "description": "Peripheral ID 26 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_27_PERM",
+          "address": "0x5000396C",
+          "offset": "0x096C",
+          "widthBits": 32,
+          "description": "Peripheral ID 27 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_28_PERM",
+          "address": "0x50003970",
+          "offset": "0x0970",
+          "widthBits": 32,
+          "description": "Peripheral ID 28 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_29_PERM",
+          "address": "0x50003974",
+          "offset": "0x0974",
+          "widthBits": 32,
+          "description": "Peripheral ID 29 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_30_PERM",
+          "address": "0x50003978",
+          "offset": "0x0978",
+          "widthBits": 32,
+          "description": "Peripheral ID 30 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "PERIPHID_31_PERM",
+          "address": "0x5000397C",
+          "offset": "0x097C",
+          "widthBits": 32,
+          "description": "Peripheral ID 31 Security Permissions",
+          "bitfields": [
+            {
+              "name": "SECATTR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "0=Secure, 1=Non-Secure"
+            },
+            {
+              "name": "DMASEC",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "0=Secure DMA, 1=Non-Secure DMA"
+            }
+          ]
+        },
+        {
+          "name": "CAPABILITIES",
+          "address": "0x50003F00",
+          "offset": "0x0F00",
+          "widthBits": 32,
+          "description": "SPU System Protection Unit Capabilities",
+          "bitfields": []
+        }
+      ]
+    },
+    {
+      "name": "CLOCK",
+      "baseAddress": "0x50005000",
+      "endExclusive": "0x50006000",
+      "description": "Clock Management",
+      "registers": [
+        {
+          "name": "TASKS_HFCLKSTART",
+          "address": "0x50005000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Start HFCLK clock source",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_HFCLKSTOP",
+          "address": "0x50005004",
+          "offset": "0x0004",
+          "widthBits": 32,
+          "description": "Stop HFCLK clock source",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_LFCLKSTART",
+          "address": "0x50005008",
+          "offset": "0x0008",
+          "widthBits": 32,
+          "description": "Start LFCLK clock source",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_LFCLKSTOP",
+          "address": "0x5000500C",
+          "offset": "0x000C",
+          "widthBits": 32,
+          "description": "Stop LFCLK clock source",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_HFCLKSTARTED",
+          "address": "0x50005100",
+          "offset": "0x0100",
+          "widthBits": 32,
+          "description": "HFCLK oscillator started",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_LFCLKSTARTED",
+          "address": "0x50005104",
+          "offset": "0x0104",
+          "widthBits": 32,
+          "description": "LFCLK oscillator started",
+          "bitfields": []
+        },
+        {
+          "name": "RESETREAS",
+          "address": "0x50005400",
+          "offset": "0x0400",
+          "widthBits": 32,
+          "description": "Reset Reason",
+          "bitfields": [
+            {
+              "name": "RESETPIN",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Reset from pin assertion"
+            },
+            {
+              "name": "DOG",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Reset from watchdog timeout"
+            },
+            {
+              "name": "SREQ",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Reset from AIRCR.SYSRESETREQ"
+            },
+            {
+              "name": "LOCKUP",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Reset from CPU lockup"
+            }
+          ]
+        },
+        {
+          "name": "SYSTEMOFF",
+          "address": "0x50005500",
+          "offset": "0x0500",
+          "widthBits": 32,
+          "description": "Enter System OFF Power Mode",
+          "bitfields": [
+            {
+              "name": "ENTER",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "W",
+              "description": "Enter system off"
+            }
+          ]
+        },
+        {
+          "name": "LFCLKSRC",
+          "address": "0x50005518",
+          "offset": "0x0518",
+          "widthBits": 32,
+          "description": "Clock Source for the LFCLK",
+          "bitfields": [
+            {
+              "name": "SRC",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=RC, 1=XTAL, 2=Synth"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RADIO",
+      "baseAddress": "0x50001000",
+      "endExclusive": "0x50002000",
+      "description": "2.4 GHz Multi-Protocol Radio",
+      "registers": [
+        {
+          "name": "TASKS_TXEN",
+          "address": "0x50001000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Enable Radio in TX mode",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_RXEN",
+          "address": "0x50001004",
+          "offset": "0x0004",
+          "widthBits": 32,
+          "description": "Enable Radio in RX mode",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_START",
+          "address": "0x50001008",
+          "offset": "0x0008",
+          "widthBits": 32,
+          "description": "Start Radio operation",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STOP",
+          "address": "0x5000100C",
+          "offset": "0x000C",
+          "widthBits": 32,
+          "description": "Stop Radio operation",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_DISABLE",
+          "address": "0x50001010",
+          "offset": "0x0010",
+          "widthBits": 32,
+          "description": "Disable Radio",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_READY",
+          "address": "0x50001100",
+          "offset": "0x0100",
+          "widthBits": 32,
+          "description": "Radio has ramped up and is ready",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_ADDRESS",
+          "address": "0x50001104",
+          "offset": "0x0104",
+          "widthBits": 32,
+          "description": "Address sent or received",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_PAYLOAD",
+          "address": "0x50001108",
+          "offset": "0x0108",
+          "widthBits": 32,
+          "description": "Payload sent or received",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_END",
+          "address": "0x5000110C",
+          "offset": "0x010C",
+          "widthBits": 32,
+          "description": "Packet transmission/reception complete",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_DISABLED",
+          "address": "0x50001110",
+          "offset": "0x0110",
+          "widthBits": 32,
+          "description": "Radio has ramped down",
+          "bitfields": []
+        },
+        {
+          "name": "SHORTS",
+          "address": "0x50001200",
+          "offset": "0x0200",
+          "widthBits": 32,
+          "description": "Shortcuts between local events and tasks",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x50001304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x50001308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "CRCSTATUS",
+          "address": "0x50001400",
+          "offset": "0x0400",
+          "widthBits": 32,
+          "description": "CRC Status",
+          "bitfields": [
+            {
+              "name": "CRCSTATUS",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R",
+              "description": "CRC status of packet received"
+            }
+          ]
+        },
+        {
+          "name": "PACKETPTR",
+          "address": "0x50001504",
+          "offset": "0x0504",
+          "widthBits": 32,
+          "description": "Packet Data Pointer",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "PTR"
+        },
+        {
+          "name": "FREQUENCY",
+          "address": "0x50001508",
+          "offset": "0x0508",
+          "widthBits": 32,
+          "description": "Frequency in 2.4 GHz Band",
+          "bitfields": [
+            {
+              "name": "FREQ",
+              "bitOffset": 0,
+              "bitWidth": 7,
+              "mask": 127,
+              "access": "R/W",
+              "description": "Channel frequency 2400 + FREQ MHz"
+            }
+          ]
+        },
+        {
+          "name": "TXPOWER",
+          "address": "0x5000150C",
+          "offset": "0x050C",
+          "widthBits": 32,
+          "description": "Output Power",
+          "bitfields": [
+            {
+              "name": "TXPOWER",
+              "bitOffset": 0,
+              "bitWidth": 8,
+              "mask": 255,
+              "access": "R/W",
+              "description": "RADIO transmit power dBm"
+            }
+          ]
+        },
+        {
+          "name": "MODE",
+          "address": "0x50001510",
+          "offset": "0x0510",
+          "widthBits": 32,
+          "description": "Data Rate and Modulation",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 4,
+              "mask": 15,
+              "access": "R/W",
+              "description": "0=1Mbps BLE, 1=2Mbps BLE, 2=250kbps, 3=BLE Long Range"
+            }
+          ]
+        },
+        {
+          "name": "PCNF0",
+          "address": "0x50001514",
+          "offset": "0x0514",
+          "widthBits": 32,
+          "description": "Packet Configuration Register 0",
+          "bitfields": []
+        },
+        {
+          "name": "PCNF1",
+          "address": "0x50001518",
+          "offset": "0x0518",
+          "widthBits": 32,
+          "description": "Packet Configuration Register 1",
+          "bitfields": []
+        }
+      ]
+    },
+    {
+      "name": "UARTE0",
+      "baseAddress": "0x50002000",
+      "endExclusive": "0x50003000",
+      "description": "Universal Asynchronous Receiver/Transmitter",
+      "registers": [
+        {
+          "name": "TASKS_STARTRX",
+          "address": "0x50002000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Start UART receiver",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STOPRX",
+          "address": "0x50002004",
+          "offset": "0x0004",
+          "widthBits": 32,
+          "description": "Stop UART receiver",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STARTTX",
+          "address": "0x50002008",
+          "offset": "0x0008",
+          "widthBits": 32,
+          "description": "Start UART transmitter",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STOPTX",
+          "address": "0x5000200C",
+          "offset": "0x000C",
+          "widthBits": 32,
+          "description": "Stop UART transmitter",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_CTS",
+          "address": "0x50002100",
+          "offset": "0x0100",
+          "widthBits": 32,
+          "description": "CTS activated",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_NCTS",
+          "address": "0x50002104",
+          "offset": "0x0104",
+          "widthBits": 32,
+          "description": "CTS deactivated",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_RXDRDY",
+          "address": "0x50002108",
+          "offset": "0x0108",
+          "widthBits": 32,
+          "description": "Data received in RXD",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_ENDRX",
+          "address": "0x50002110",
+          "offset": "0x0110",
+          "widthBits": 32,
+          "description": "Receive buffer complete",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_TXDRDY",
+          "address": "0x5000211C",
+          "offset": "0x011C",
+          "widthBits": 32,
+          "description": "Data sent from TXD",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_ENDTX",
+          "address": "0x50002120",
+          "offset": "0x0120",
+          "widthBits": 32,
+          "description": "Last TX byte transmitted",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_ERROR",
+          "address": "0x50002124",
+          "offset": "0x0124",
+          "widthBits": 32,
+          "description": "Error detected",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x50002304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x50002308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "ERRORSRC",
+          "address": "0x50002480",
+          "offset": "0x0480",
+          "widthBits": 32,
+          "description": "Error Source",
+          "bitfields": [
+            {
+              "name": "OVERRUN",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Overrun error"
+            },
+            {
+              "name": "PARITY",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Parity error"
+            },
+            {
+              "name": "FRAMING",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Framing error"
+            },
+            {
+              "name": "BREAK",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Break condition"
+            }
+          ]
+        },
+        {
+          "name": "ENABLE",
+          "address": "0x50002500",
+          "offset": "0x0500",
+          "widthBits": 32,
+          "description": "Enable UART",
+          "bitfields": [
+            {
+              "name": "ENABLE",
+              "bitOffset": 0,
+              "bitWidth": 4,
+              "mask": 15,
+              "access": "R/W",
+              "description": "4=Enable UART, 8=Enable UARTE"
+            }
+          ]
+        },
+        {
+          "name": "BAUDRATE",
+          "address": "0x50002524",
+          "offset": "0x0524",
+          "widthBits": 32,
+          "description": "Baud Rate",
+          "bitfields": []
+        },
+        {
+          "name": "RXD_PTR",
+          "address": "0x50002534",
+          "offset": "0x0534",
+          "widthBits": 32,
+          "description": "RX Buffer Address",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "PTR"
+        },
+        {
+          "name": "RXD_MAXCNT",
+          "address": "0x50002538",
+          "offset": "0x0538",
+          "widthBits": 32,
+          "description": "Maximum RX Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "MAXCNT"
+        },
+        {
+          "name": "RXD_AMOUNT",
+          "address": "0x5000253C",
+          "offset": "0x053C",
+          "widthBits": 32,
+          "description": "Received Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "AMOUNT"
+        },
+        {
+          "name": "TXD_PTR",
+          "address": "0x50002544",
+          "offset": "0x0544",
+          "widthBits": 32,
+          "description": "TX Buffer Address",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "PTR"
+        },
+        {
+          "name": "TXD_MAXCNT",
+          "address": "0x50002548",
+          "offset": "0x0548",
+          "widthBits": 32,
+          "description": "Maximum TX Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "MAXCNT"
+        },
+        {
+          "name": "TXD_AMOUNT",
+          "address": "0x5000254C",
+          "offset": "0x054C",
+          "widthBits": 32,
+          "description": "Transmitted Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "AMOUNT"
+        },
+        {
+          "name": "CONFIG",
+          "address": "0x5000256C",
+          "offset": "0x056C",
+          "widthBits": 32,
+          "description": "Configuration Register",
+          "bitfields": [
+            {
+              "name": "HWFC",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Hardware flow control enable"
+            },
+            {
+              "name": "PARITY",
+              "bitOffset": 1,
+              "bitWidth": 3,
+              "mask": 14,
+              "access": "R/W",
+              "description": "Parity selection"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SPIM0",
+      "baseAddress": "0x50003000",
+      "endExclusive": "0x50004000",
+      "description": "Serial Peripheral Interface Master",
+      "registers": [
+        {
+          "name": "TASKS_START",
+          "address": "0x50003010",
+          "offset": "0x0010",
+          "widthBits": 32,
+          "description": "Start SPI transaction",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STOP",
+          "address": "0x50003014",
+          "offset": "0x0014",
+          "widthBits": 32,
+          "description": "Stop SPI transaction",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_STOPPED",
+          "address": "0x50003104",
+          "offset": "0x0104",
+          "widthBits": 32,
+          "description": "SPI transaction stopped",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_ENDRX",
+          "address": "0x50003110",
+          "offset": "0x0110",
+          "widthBits": 32,
+          "description": "End of RXD buffer reached",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_END",
+          "address": "0x50003118",
+          "offset": "0x0118",
+          "widthBits": 32,
+          "description": "End of RXD and TXD transactions",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_ENDTX",
+          "address": "0x50003120",
+          "offset": "0x0120",
+          "widthBits": 32,
+          "description": "End of TXD buffer reached",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x50003304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x50003308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "ENABLE",
+          "address": "0x50003500",
+          "offset": "0x0500",
+          "widthBits": 32,
+          "description": "Enable SPIM",
+          "bitfields": [
+            {
+              "name": "ENABLE",
+              "bitOffset": 0,
+              "bitWidth": 4,
+              "mask": 15,
+              "access": "R/W",
+              "description": "7=Enable SPIM"
+            }
+          ]
+        },
+        {
+          "name": "FREQUENCY",
+          "address": "0x50003524",
+          "offset": "0x0524",
+          "widthBits": 32,
+          "description": "SPI Frequency",
+          "bitfields": []
+        },
+        {
+          "name": "RXD_PTR",
+          "address": "0x50003534",
+          "offset": "0x0534",
+          "widthBits": 32,
+          "description": "RX Buffer Address",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "PTR"
+        },
+        {
+          "name": "RXD_MAXCNT",
+          "address": "0x50003538",
+          "offset": "0x0538",
+          "widthBits": 32,
+          "description": "Maximum RX Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "MAXCNT"
+        },
+        {
+          "name": "RXD_AMOUNT",
+          "address": "0x5000353C",
+          "offset": "0x053C",
+          "widthBits": 32,
+          "description": "Received Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "AMOUNT"
+        },
+        {
+          "name": "RXD_LIST",
+          "address": "0x50003540",
+          "offset": "0x0540",
+          "widthBits": 32,
+          "description": "RX EasyDMA List Type",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "LIST"
+        },
+        {
+          "name": "TXD_PTR",
+          "address": "0x50003544",
+          "offset": "0x0544",
+          "widthBits": 32,
+          "description": "TX Buffer Address",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "PTR"
+        },
+        {
+          "name": "TXD_MAXCNT",
+          "address": "0x50003548",
+          "offset": "0x0548",
+          "widthBits": 32,
+          "description": "Maximum TX Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "MAXCNT"
+        },
+        {
+          "name": "TXD_AMOUNT",
+          "address": "0x5000354C",
+          "offset": "0x054C",
+          "widthBits": 32,
+          "description": "Transmitted Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "AMOUNT"
+        },
+        {
+          "name": "TXD_LIST",
+          "address": "0x50003550",
+          "offset": "0x0550",
+          "widthBits": 32,
+          "description": "TX EasyDMA List Type",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "LIST"
+        },
+        {
+          "name": "CONFIG",
+          "address": "0x50003554",
+          "offset": "0x0554",
+          "widthBits": 32,
+          "description": "SPI Configuration Register",
+          "bitfields": [
+            {
+              "name": "ORDER",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "0=MSB first, 1=LSB first"
+            },
+            {
+              "name": "CPHA",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "0=Leading edge, 1=Trailing edge"
+            },
+            {
+              "name": "CPOL",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "0=Active high, 1=Active low"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TWIM0",
+      "baseAddress": "0x50004000",
+      "endExclusive": "0x50005000",
+      "description": "Two-Wire Interface Master (I2C)",
+      "registers": [
+        {
+          "name": "TASKS_STARTRX",
+          "address": "0x50004000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Start TWI receive sequence",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STARTTX",
+          "address": "0x50004008",
+          "offset": "0x0008",
+          "widthBits": 32,
+          "description": "Start TWI transmit sequence",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STOP",
+          "address": "0x50004014",
+          "offset": "0x0014",
+          "widthBits": 32,
+          "description": "Stop TWI transaction",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_STOPPED",
+          "address": "0x50004104",
+          "offset": "0x0104",
+          "widthBits": 32,
+          "description": "TWI stopped",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_ERROR",
+          "address": "0x50004124",
+          "offset": "0x0124",
+          "widthBits": 32,
+          "description": "Error detected",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x50004304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x50004308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "ENABLE",
+          "address": "0x50004500",
+          "offset": "0x0500",
+          "widthBits": 32,
+          "description": "Enable TWIM",
+          "bitfields": [
+            {
+              "name": "ENABLE",
+              "bitOffset": 0,
+              "bitWidth": 4,
+              "mask": 15,
+              "access": "R/W",
+              "description": "6=Enable TWIM"
+            }
+          ]
+        },
+        {
+          "name": "FREQUENCY",
+          "address": "0x50004524",
+          "offset": "0x0524",
+          "widthBits": 32,
+          "description": "TWI Bus Clock Frequency",
+          "bitfields": []
+        },
+        {
+          "name": "RXD_PTR",
+          "address": "0x50004534",
+          "offset": "0x0534",
+          "widthBits": 32,
+          "description": "RX Buffer Address",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "PTR"
+        },
+        {
+          "name": "RXD_MAXCNT",
+          "address": "0x50004538",
+          "offset": "0x0538",
+          "widthBits": 32,
+          "description": "Maximum RX Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "MAXCNT"
+        },
+        {
+          "name": "RXD_AMOUNT",
+          "address": "0x5000453C",
+          "offset": "0x053C",
+          "widthBits": 32,
+          "description": "Received Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "AMOUNT"
+        },
+        {
+          "name": "RXD_LIST",
+          "address": "0x50004540",
+          "offset": "0x0540",
+          "widthBits": 32,
+          "description": "RX List Type",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "LIST"
+        },
+        {
+          "name": "TXD_PTR",
+          "address": "0x50004544",
+          "offset": "0x0544",
+          "widthBits": 32,
+          "description": "TX Buffer Address",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "PTR"
+        },
+        {
+          "name": "TXD_MAXCNT",
+          "address": "0x50004548",
+          "offset": "0x0548",
+          "widthBits": 32,
+          "description": "Maximum TX Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "MAXCNT"
+        },
+        {
+          "name": "TXD_AMOUNT",
+          "address": "0x5000454C",
+          "offset": "0x054C",
+          "widthBits": 32,
+          "description": "Transmitted Bytes",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "AMOUNT"
+        },
+        {
+          "name": "TXD_LIST",
+          "address": "0x50004550",
+          "offset": "0x0550",
+          "widthBits": 32,
+          "description": "TX List Type",
+          "bitfields": [],
+          "isEasyDma": true,
+          "easyDmaType": "LIST"
+        },
+        {
+          "name": "ADDRESS",
+          "address": "0x50004588",
+          "offset": "0x0588",
+          "widthBits": 32,
+          "description": "Target I2C Slave Address",
+          "bitfields": [
+            {
+              "name": "ADDRESS",
+              "bitOffset": 0,
+              "bitWidth": 7,
+              "mask": 127,
+              "access": "R/W",
+              "description": "7-bit I2C slave address"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "GPIOTE",
+      "baseAddress": "0x50006000",
+      "endExclusive": "0x50007000",
+      "description": "GPIO Tasks and Events",
+      "registers": [
+        {
+          "name": "TASKS_OUT_0",
+          "address": "0x50006000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Task for output pin 0",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_SET_0",
+          "address": "0x50006030",
+          "offset": "0x0030",
+          "widthBits": 32,
+          "description": "Task to set pin 0",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLR_0",
+          "address": "0x50006060",
+          "offset": "0x0060",
+          "widthBits": 32,
+          "description": "Task to clear pin 0",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_IN_0",
+          "address": "0x50006100",
+          "offset": "0x0100",
+          "widthBits": 32,
+          "description": "Event from pin 0",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG_0",
+          "address": "0x50006510",
+          "offset": "0x0510",
+          "widthBits": 32,
+          "description": "Configuration for channel 0",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Disabled, 1=Event, 2=Task"
+            },
+            {
+              "name": "PSEL",
+              "bitOffset": 8,
+              "bitWidth": 5,
+              "mask": 7936,
+              "access": "R/W",
+              "description": "GPIO Pin select"
+            },
+            {
+              "name": "POLARITY",
+              "bitOffset": 16,
+              "bitWidth": 2,
+              "mask": 196608,
+              "access": "R/W",
+              "description": "0=None, 1=LoToHi, 2=HiToLo, 3=Toggle"
+            }
+          ]
+        },
+        {
+          "name": "TASKS_OUT_1",
+          "address": "0x50006004",
+          "offset": "0x0004",
+          "widthBits": 32,
+          "description": "Task for output pin 1",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_SET_1",
+          "address": "0x50006034",
+          "offset": "0x0034",
+          "widthBits": 32,
+          "description": "Task to set pin 1",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLR_1",
+          "address": "0x50006064",
+          "offset": "0x0064",
+          "widthBits": 32,
+          "description": "Task to clear pin 1",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_IN_1",
+          "address": "0x50006104",
+          "offset": "0x0104",
+          "widthBits": 32,
+          "description": "Event from pin 1",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG_1",
+          "address": "0x50006514",
+          "offset": "0x0514",
+          "widthBits": 32,
+          "description": "Configuration for channel 1",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Disabled, 1=Event, 2=Task"
+            },
+            {
+              "name": "PSEL",
+              "bitOffset": 8,
+              "bitWidth": 5,
+              "mask": 7936,
+              "access": "R/W",
+              "description": "GPIO Pin select"
+            },
+            {
+              "name": "POLARITY",
+              "bitOffset": 16,
+              "bitWidth": 2,
+              "mask": 196608,
+              "access": "R/W",
+              "description": "0=None, 1=LoToHi, 2=HiToLo, 3=Toggle"
+            }
+          ]
+        },
+        {
+          "name": "TASKS_OUT_2",
+          "address": "0x50006008",
+          "offset": "0x0008",
+          "widthBits": 32,
+          "description": "Task for output pin 2",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_SET_2",
+          "address": "0x50006038",
+          "offset": "0x0038",
+          "widthBits": 32,
+          "description": "Task to set pin 2",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLR_2",
+          "address": "0x50006068",
+          "offset": "0x0068",
+          "widthBits": 32,
+          "description": "Task to clear pin 2",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_IN_2",
+          "address": "0x50006108",
+          "offset": "0x0108",
+          "widthBits": 32,
+          "description": "Event from pin 2",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG_2",
+          "address": "0x50006518",
+          "offset": "0x0518",
+          "widthBits": 32,
+          "description": "Configuration for channel 2",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Disabled, 1=Event, 2=Task"
+            },
+            {
+              "name": "PSEL",
+              "bitOffset": 8,
+              "bitWidth": 5,
+              "mask": 7936,
+              "access": "R/W",
+              "description": "GPIO Pin select"
+            },
+            {
+              "name": "POLARITY",
+              "bitOffset": 16,
+              "bitWidth": 2,
+              "mask": 196608,
+              "access": "R/W",
+              "description": "0=None, 1=LoToHi, 2=HiToLo, 3=Toggle"
+            }
+          ]
+        },
+        {
+          "name": "TASKS_OUT_3",
+          "address": "0x5000600C",
+          "offset": "0x000C",
+          "widthBits": 32,
+          "description": "Task for output pin 3",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_SET_3",
+          "address": "0x5000603C",
+          "offset": "0x003C",
+          "widthBits": 32,
+          "description": "Task to set pin 3",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLR_3",
+          "address": "0x5000606C",
+          "offset": "0x006C",
+          "widthBits": 32,
+          "description": "Task to clear pin 3",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_IN_3",
+          "address": "0x5000610C",
+          "offset": "0x010C",
+          "widthBits": 32,
+          "description": "Event from pin 3",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG_3",
+          "address": "0x5000651C",
+          "offset": "0x051C",
+          "widthBits": 32,
+          "description": "Configuration for channel 3",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Disabled, 1=Event, 2=Task"
+            },
+            {
+              "name": "PSEL",
+              "bitOffset": 8,
+              "bitWidth": 5,
+              "mask": 7936,
+              "access": "R/W",
+              "description": "GPIO Pin select"
+            },
+            {
+              "name": "POLARITY",
+              "bitOffset": 16,
+              "bitWidth": 2,
+              "mask": 196608,
+              "access": "R/W",
+              "description": "0=None, 1=LoToHi, 2=HiToLo, 3=Toggle"
+            }
+          ]
+        },
+        {
+          "name": "TASKS_OUT_4",
+          "address": "0x50006010",
+          "offset": "0x0010",
+          "widthBits": 32,
+          "description": "Task for output pin 4",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_SET_4",
+          "address": "0x50006040",
+          "offset": "0x0040",
+          "widthBits": 32,
+          "description": "Task to set pin 4",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLR_4",
+          "address": "0x50006070",
+          "offset": "0x0070",
+          "widthBits": 32,
+          "description": "Task to clear pin 4",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_IN_4",
+          "address": "0x50006110",
+          "offset": "0x0110",
+          "widthBits": 32,
+          "description": "Event from pin 4",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG_4",
+          "address": "0x50006520",
+          "offset": "0x0520",
+          "widthBits": 32,
+          "description": "Configuration for channel 4",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Disabled, 1=Event, 2=Task"
+            },
+            {
+              "name": "PSEL",
+              "bitOffset": 8,
+              "bitWidth": 5,
+              "mask": 7936,
+              "access": "R/W",
+              "description": "GPIO Pin select"
+            },
+            {
+              "name": "POLARITY",
+              "bitOffset": 16,
+              "bitWidth": 2,
+              "mask": 196608,
+              "access": "R/W",
+              "description": "0=None, 1=LoToHi, 2=HiToLo, 3=Toggle"
+            }
+          ]
+        },
+        {
+          "name": "TASKS_OUT_5",
+          "address": "0x50006014",
+          "offset": "0x0014",
+          "widthBits": 32,
+          "description": "Task for output pin 5",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_SET_5",
+          "address": "0x50006044",
+          "offset": "0x0044",
+          "widthBits": 32,
+          "description": "Task to set pin 5",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLR_5",
+          "address": "0x50006074",
+          "offset": "0x0074",
+          "widthBits": 32,
+          "description": "Task to clear pin 5",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_IN_5",
+          "address": "0x50006114",
+          "offset": "0x0114",
+          "widthBits": 32,
+          "description": "Event from pin 5",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG_5",
+          "address": "0x50006524",
+          "offset": "0x0524",
+          "widthBits": 32,
+          "description": "Configuration for channel 5",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Disabled, 1=Event, 2=Task"
+            },
+            {
+              "name": "PSEL",
+              "bitOffset": 8,
+              "bitWidth": 5,
+              "mask": 7936,
+              "access": "R/W",
+              "description": "GPIO Pin select"
+            },
+            {
+              "name": "POLARITY",
+              "bitOffset": 16,
+              "bitWidth": 2,
+              "mask": 196608,
+              "access": "R/W",
+              "description": "0=None, 1=LoToHi, 2=HiToLo, 3=Toggle"
+            }
+          ]
+        },
+        {
+          "name": "TASKS_OUT_6",
+          "address": "0x50006018",
+          "offset": "0x0018",
+          "widthBits": 32,
+          "description": "Task for output pin 6",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_SET_6",
+          "address": "0x50006048",
+          "offset": "0x0048",
+          "widthBits": 32,
+          "description": "Task to set pin 6",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLR_6",
+          "address": "0x50006078",
+          "offset": "0x0078",
+          "widthBits": 32,
+          "description": "Task to clear pin 6",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_IN_6",
+          "address": "0x50006118",
+          "offset": "0x0118",
+          "widthBits": 32,
+          "description": "Event from pin 6",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG_6",
+          "address": "0x50006528",
+          "offset": "0x0528",
+          "widthBits": 32,
+          "description": "Configuration for channel 6",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Disabled, 1=Event, 2=Task"
+            },
+            {
+              "name": "PSEL",
+              "bitOffset": 8,
+              "bitWidth": 5,
+              "mask": 7936,
+              "access": "R/W",
+              "description": "GPIO Pin select"
+            },
+            {
+              "name": "POLARITY",
+              "bitOffset": 16,
+              "bitWidth": 2,
+              "mask": 196608,
+              "access": "R/W",
+              "description": "0=None, 1=LoToHi, 2=HiToLo, 3=Toggle"
+            }
+          ]
+        },
+        {
+          "name": "TASKS_OUT_7",
+          "address": "0x5000601C",
+          "offset": "0x001C",
+          "widthBits": 32,
+          "description": "Task for output pin 7",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_SET_7",
+          "address": "0x5000604C",
+          "offset": "0x004C",
+          "widthBits": 32,
+          "description": "Task to set pin 7",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLR_7",
+          "address": "0x5000607C",
+          "offset": "0x007C",
+          "widthBits": 32,
+          "description": "Task to clear pin 7",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_IN_7",
+          "address": "0x5000611C",
+          "offset": "0x011C",
+          "widthBits": 32,
+          "description": "Event from pin 7",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG_7",
+          "address": "0x5000652C",
+          "offset": "0x052C",
+          "widthBits": 32,
+          "description": "Configuration for channel 7",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Disabled, 1=Event, 2=Task"
+            },
+            {
+              "name": "PSEL",
+              "bitOffset": 8,
+              "bitWidth": 5,
+              "mask": 7936,
+              "access": "R/W",
+              "description": "GPIO Pin select"
+            },
+            {
+              "name": "POLARITY",
+              "bitOffset": 16,
+              "bitWidth": 2,
+              "mask": 196608,
+              "access": "R/W",
+              "description": "0=None, 1=LoToHi, 2=HiToLo, 3=Toggle"
+            }
+          ]
+        },
+        {
+          "name": "EVENTS_PORT",
+          "address": "0x5000617C",
+          "offset": "0x017C",
+          "widthBits": 32,
+          "description": "Event from any GPIO port pin",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x50006304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x50006308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        }
+      ]
+    },
+    {
+      "name": "TIMER0",
+      "baseAddress": "0x50008000",
+      "endExclusive": "0x50009000",
+      "description": "Timer / Counter Peripheral",
+      "registers": [
+        {
+          "name": "TASKS_START",
+          "address": "0x50008000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Start Timer",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STOP",
+          "address": "0x50008004",
+          "offset": "0x0004",
+          "widthBits": 32,
+          "description": "Stop Timer",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_COUNT",
+          "address": "0x50008008",
+          "offset": "0x0008",
+          "widthBits": 32,
+          "description": "Increment Timer in Counter mode",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLEAR",
+          "address": "0x5000800C",
+          "offset": "0x000C",
+          "widthBits": 32,
+          "description": "Clear Timer",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_COMPARE_0",
+          "address": "0x50008140",
+          "offset": "0x0140",
+          "widthBits": 32,
+          "description": "Compare event on channel 0",
+          "bitfields": []
+        },
+        {
+          "name": "CC_0",
+          "address": "0x50008540",
+          "offset": "0x0540",
+          "widthBits": 32,
+          "description": "Capture/Compare value 0",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_COMPARE_1",
+          "address": "0x50008144",
+          "offset": "0x0144",
+          "widthBits": 32,
+          "description": "Compare event on channel 1",
+          "bitfields": []
+        },
+        {
+          "name": "CC_1",
+          "address": "0x50008544",
+          "offset": "0x0544",
+          "widthBits": 32,
+          "description": "Capture/Compare value 1",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_COMPARE_2",
+          "address": "0x50008148",
+          "offset": "0x0148",
+          "widthBits": 32,
+          "description": "Compare event on channel 2",
+          "bitfields": []
+        },
+        {
+          "name": "CC_2",
+          "address": "0x50008548",
+          "offset": "0x0548",
+          "widthBits": 32,
+          "description": "Capture/Compare value 2",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_COMPARE_3",
+          "address": "0x5000814C",
+          "offset": "0x014C",
+          "widthBits": 32,
+          "description": "Compare event on channel 3",
+          "bitfields": []
+        },
+        {
+          "name": "CC_3",
+          "address": "0x5000854C",
+          "offset": "0x054C",
+          "widthBits": 32,
+          "description": "Capture/Compare value 3",
+          "bitfields": []
+        },
+        {
+          "name": "SHORTS",
+          "address": "0x50008200",
+          "offset": "0x0200",
+          "widthBits": 32,
+          "description": "Shortcuts between local events and tasks",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x50008304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x50008308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "MODE",
+          "address": "0x50008504",
+          "offset": "0x0504",
+          "widthBits": 32,
+          "description": "Timer Mode",
+          "bitfields": [
+            {
+              "name": "MODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Timer, 1=Counter, 2=LowPowerCounter"
+            }
+          ]
+        },
+        {
+          "name": "BITMODE",
+          "address": "0x50008508",
+          "offset": "0x0508",
+          "widthBits": 32,
+          "description": "Bit Width",
+          "bitfields": [
+            {
+              "name": "BITMODE",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=16-bit, 1=8-bit, 2=24-bit, 3=32-bit"
+            }
+          ]
+        },
+        {
+          "name": "PRESCALER",
+          "address": "0x50008510",
+          "offset": "0x0510",
+          "widthBits": 32,
+          "description": "Timer Prescaler",
+          "bitfields": [
+            {
+              "name": "PRESCALER",
+              "bitOffset": 0,
+              "bitWidth": 4,
+              "mask": 15,
+              "access": "R/W",
+              "description": "f_TIMER = 16 MHz / (2^PRESCALER)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RTC0",
+      "baseAddress": "0x5000B000",
+      "endExclusive": "0x5000C000",
+      "description": "Real-Time Counter (32.768 kHz)",
+      "registers": [
+        {
+          "name": "TASKS_START",
+          "address": "0x5000B000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Start RTC counter",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STOP",
+          "address": "0x5000B004",
+          "offset": "0x0004",
+          "widthBits": 32,
+          "description": "Stop RTC counter",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_CLEAR",
+          "address": "0x5000B008",
+          "offset": "0x0008",
+          "widthBits": 32,
+          "description": "Clear RTC counter",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_TICK",
+          "address": "0x5000B100",
+          "offset": "0x0100",
+          "widthBits": 32,
+          "description": "Event on RTC tick",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_OVRFLW",
+          "address": "0x5000B104",
+          "offset": "0x0104",
+          "widthBits": 32,
+          "description": "Event on counter overflow",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_COMPARE_0",
+          "address": "0x5000B140",
+          "offset": "0x0140",
+          "widthBits": 32,
+          "description": "Compare event on channel 0",
+          "bitfields": []
+        },
+        {
+          "name": "CC_0",
+          "address": "0x5000B540",
+          "offset": "0x0540",
+          "widthBits": 32,
+          "description": "Compare register 0",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_COMPARE_1",
+          "address": "0x5000B144",
+          "offset": "0x0144",
+          "widthBits": 32,
+          "description": "Compare event on channel 1",
+          "bitfields": []
+        },
+        {
+          "name": "CC_1",
+          "address": "0x5000B544",
+          "offset": "0x0544",
+          "widthBits": 32,
+          "description": "Compare register 1",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_COMPARE_2",
+          "address": "0x5000B148",
+          "offset": "0x0148",
+          "widthBits": 32,
+          "description": "Compare event on channel 2",
+          "bitfields": []
+        },
+        {
+          "name": "CC_2",
+          "address": "0x5000B548",
+          "offset": "0x0548",
+          "widthBits": 32,
+          "description": "Compare register 2",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_COMPARE_3",
+          "address": "0x5000B14C",
+          "offset": "0x014C",
+          "widthBits": 32,
+          "description": "Compare event on channel 3",
+          "bitfields": []
+        },
+        {
+          "name": "CC_3",
+          "address": "0x5000B54C",
+          "offset": "0x054C",
+          "widthBits": 32,
+          "description": "Compare register 3",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x5000B304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x5000B308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "COUNTER",
+          "address": "0x5000B504",
+          "offset": "0x0504",
+          "widthBits": 32,
+          "description": "Current Counter Value (24-bit)",
+          "bitfields": [
+            {
+              "name": "COUNTER",
+              "bitOffset": 0,
+              "bitWidth": 24,
+              "mask": 16777215,
+              "access": "R",
+              "description": "Current 24-bit counter"
+            }
+          ]
+        },
+        {
+          "name": "PRESCALER",
+          "address": "0x5000B508",
+          "offset": "0x0508",
+          "widthBits": 32,
+          "description": "RTC Prescaler",
+          "bitfields": [
+            {
+              "name": "PRESCALER",
+              "bitOffset": 0,
+              "bitWidth": 12,
+              "mask": 4095,
+              "access": "R/W",
+              "description": "RTC frequency = 32768 / (PRESCALER + 1)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TEMP",
+      "baseAddress": "0x5000C000",
+      "endExclusive": "0x5000D000",
+      "description": "On-Chip Temperature Sensor",
+      "registers": [
+        {
+          "name": "TASKS_START",
+          "address": "0x5000C000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Start temperature measurement",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STOP",
+          "address": "0x5000C004",
+          "offset": "0x0004",
+          "widthBits": 32,
+          "description": "Stop temperature measurement",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_DATARDY",
+          "address": "0x5000C100",
+          "offset": "0x0100",
+          "widthBits": 32,
+          "description": "Temperature measurement ready",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x5000C304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x5000C308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "TEMP",
+          "address": "0x5000C508",
+          "offset": "0x0508",
+          "widthBits": 32,
+          "description": "Temperature Value in Steps of 0.25 deg C",
+          "bitfields": []
+        }
+      ]
+    },
+    {
+      "name": "RNG",
+      "baseAddress": "0x5000D000",
+      "endExclusive": "0x5000E000",
+      "description": "Random Number Generator",
+      "registers": [
+        {
+          "name": "TASKS_START",
+          "address": "0x5000D000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Start random number generation",
+          "bitfields": []
+        },
+        {
+          "name": "TASKS_STOP",
+          "address": "0x5000D004",
+          "offset": "0x0004",
+          "widthBits": 32,
+          "description": "Stop random number generation",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_VALRDY",
+          "address": "0x5000D100",
+          "offset": "0x0100",
+          "widthBits": 32,
+          "description": "New random value ready",
+          "bitfields": []
+        },
+        {
+          "name": "SHORTS",
+          "address": "0x5000D200",
+          "offset": "0x0200",
+          "widthBits": 32,
+          "description": "Shortcuts between local events and tasks",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x5000D304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x5000D308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG",
+          "address": "0x5000D504",
+          "offset": "0x0504",
+          "widthBits": 32,
+          "description": "Configuration Register",
+          "bitfields": [
+            {
+              "name": "DERCEN",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Digital error correction enable"
+            }
+          ]
+        },
+        {
+          "name": "VALUE",
+          "address": "0x5000D508",
+          "offset": "0x0508",
+          "widthBits": 32,
+          "description": "Generated 8-bit Random Value",
+          "bitfields": [
+            {
+              "name": "VALUE",
+              "bitOffset": 0,
+              "bitWidth": 8,
+              "mask": 255,
+              "access": "R",
+              "description": "Random value byte"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WDT",
+      "baseAddress": "0x50010000",
+      "endExclusive": "0x50011000",
+      "description": "Watchdog Timer",
+      "registers": [
+        {
+          "name": "TASKS_START",
+          "address": "0x50010000",
+          "offset": "0x0000",
+          "widthBits": 32,
+          "description": "Start Watchdog",
+          "bitfields": []
+        },
+        {
+          "name": "EVENTS_TIMEOUT",
+          "address": "0x50010100",
+          "offset": "0x0100",
+          "widthBits": 32,
+          "description": "Watchdog timeout event",
+          "bitfields": []
+        },
+        {
+          "name": "INTENSET",
+          "address": "0x50010304",
+          "offset": "0x0304",
+          "widthBits": 32,
+          "description": "Enable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "INTENCLR",
+          "address": "0x50010308",
+          "offset": "0x0308",
+          "widthBits": 32,
+          "description": "Disable interrupt",
+          "bitfields": []
+        },
+        {
+          "name": "RUNSTATUS",
+          "address": "0x50010400",
+          "offset": "0x0400",
+          "widthBits": 32,
+          "description": "Watchdog Run Status",
+          "bitfields": [
+            {
+              "name": "RUNSTATUS",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R",
+              "description": "WDT running flag"
+            }
+          ]
+        },
+        {
+          "name": "CRV",
+          "address": "0x50010504",
+          "offset": "0x0504",
+          "widthBits": 32,
+          "description": "Counter Reload Value",
+          "bitfields": []
+        },
+        {
+          "name": "RREN",
+          "address": "0x50010508",
+          "offset": "0x0508",
+          "widthBits": 32,
+          "description": "Reload Request Enable",
+          "bitfields": []
+        },
+        {
+          "name": "CONFIG",
+          "address": "0x5001050C",
+          "offset": "0x050C",
+          "widthBits": 32,
+          "description": "Watchdog Configuration",
+          "bitfields": [
+            {
+              "name": "SLEEP",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Keep running while CPU is in sleep"
+            },
+            {
+              "name": "HALT",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Keep running while CPU is halted by debugger"
+            }
+          ]
+        },
+        {
+          "name": "RR_0",
+          "address": "0x50010600",
+          "offset": "0x0600",
+          "widthBits": 32,
+          "description": "Reload Request Register 0",
+          "bitfields": []
+        },
+        {
+          "name": "RR_1",
+          "address": "0x50010604",
+          "offset": "0x0604",
+          "widthBits": 32,
+          "description": "Reload Request Register 1",
+          "bitfields": []
+        },
+        {
+          "name": "RR_2",
+          "address": "0x50010608",
+          "offset": "0x0608",
+          "widthBits": 32,
+          "description": "Reload Request Register 2",
+          "bitfields": []
+        },
+        {
+          "name": "RR_3",
+          "address": "0x5001060C",
+          "offset": "0x060C",
+          "widthBits": 32,
+          "description": "Reload Request Register 3",
+          "bitfields": []
+        },
+        {
+          "name": "RR_4",
+          "address": "0x50010610",
+          "offset": "0x0610",
+          "widthBits": 32,
+          "description": "Reload Request Register 4",
+          "bitfields": []
+        },
+        {
+          "name": "RR_5",
+          "address": "0x50010614",
+          "offset": "0x0614",
+          "widthBits": 32,
+          "description": "Reload Request Register 5",
+          "bitfields": []
+        },
+        {
+          "name": "RR_6",
+          "address": "0x50010618",
+          "offset": "0x0618",
+          "widthBits": 32,
+          "description": "Reload Request Register 6",
+          "bitfields": []
+        },
+        {
+          "name": "RR_7",
+          "address": "0x5001061C",
+          "offset": "0x061C",
+          "widthBits": 32,
+          "description": "Reload Request Register 7",
+          "bitfields": []
+        }
+      ]
+    },
+    {
+      "name": "DPPI",
+      "baseAddress": "0x50025000",
+      "endExclusive": "0x50026000",
+      "description": "Distributed Programmable Peripheral Interconnect (DPPI)",
+      "registers": [
+        {
+          "name": "CHEN",
+          "address": "0x50025500",
+          "offset": "0x0500",
+          "widthBits": 32,
+          "description": "DPPI Channel Enable",
+          "bitfields": []
+        },
+        {
+          "name": "CHENSET",
+          "address": "0x50025504",
+          "offset": "0x0504",
+          "widthBits": 32,
+          "description": "Set DPPI Channel Enable",
+          "bitfields": []
+        },
+        {
+          "name": "CHENCLR",
+          "address": "0x50025508",
+          "offset": "0x0508",
+          "widthBits": 32,
+          "description": "Clear DPPI Channel Enable",
+          "bitfields": []
+        },
+        {
+          "name": "CHG_0",
+          "address": "0x50025800",
+          "offset": "0x0800",
+          "widthBits": 32,
+          "description": "Channel Group 0",
+          "bitfields": []
+        },
+        {
+          "name": "CHG_1",
+          "address": "0x50025804",
+          "offset": "0x0804",
+          "widthBits": 32,
+          "description": "Channel Group 1",
+          "bitfields": []
+        },
+        {
+          "name": "CHG_2",
+          "address": "0x50025808",
+          "offset": "0x0808",
+          "widthBits": 32,
+          "description": "Channel Group 2",
+          "bitfields": []
+        },
+        {
+          "name": "CHG_3",
+          "address": "0x5002580C",
+          "offset": "0x080C",
+          "widthBits": 32,
+          "description": "Channel Group 3",
+          "bitfields": []
+        },
+        {
+          "name": "CHG_4",
+          "address": "0x50025810",
+          "offset": "0x0810",
+          "widthBits": 32,
+          "description": "Channel Group 4",
+          "bitfields": []
+        },
+        {
+          "name": "CHG_5",
+          "address": "0x50025814",
+          "offset": "0x0814",
+          "widthBits": 32,
+          "description": "Channel Group 5",
+          "bitfields": []
+        }
+      ]
+    },
+    {
+      "name": "RRAMC",
+      "baseAddress": "0x50039000",
+      "endExclusive": "0x5003A000",
+      "description": "Non-Volatile Memory Controller",
+      "registers": [
+        {
+          "name": "READY",
+          "address": "0x50039400",
+          "offset": "0x0400",
+          "widthBits": 32,
+          "description": "Ready Flag",
+          "bitfields": [
+            {
+              "name": "READY",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R",
+              "description": "NVMC ready flag (0=busy, 1=ready)"
+            }
+          ]
+        },
+        {
+          "name": "CONFIG",
+          "address": "0x50039504",
+          "offset": "0x0504",
+          "widthBits": 32,
+          "description": "Configuration Register",
+          "bitfields": [
+            {
+              "name": "WEN",
+              "bitOffset": 0,
+              "bitWidth": 2,
+              "mask": 3,
+              "access": "R/W",
+              "description": "0=Read-only, 1=Write enable, 2=Erase enable"
+            }
+          ]
+        },
+        {
+          "name": "ERASEPAGE",
+          "address": "0x50039508",
+          "offset": "0x0508",
+          "widthBits": 32,
+          "description": "Erase Page",
+          "bitfields": []
+        },
+        {
+          "name": "ERASEALL",
+          "address": "0x5003950C",
+          "offset": "0x050C",
+          "widthBits": 32,
+          "description": "Erase All User Flash",
+          "bitfields": []
+        },
+        {
+          "name": "ERASEUICR",
+          "address": "0x50039514",
+          "offset": "0x0514",
+          "widthBits": 32,
+          "description": "Erase UICR Registers",
+          "bitfields": []
+        },
+        {
+          "name": "ICACHECNF",
+          "address": "0x50039540",
+          "offset": "0x0540",
+          "widthBits": 32,
+          "description": "Instruction Cache Configuration",
+          "bitfields": [
+            {
+              "name": "CACHEEN",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Enable instruction cache"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

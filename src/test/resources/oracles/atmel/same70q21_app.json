@@ -1,0 +1,22 @@
+{
+  "part": "SAME70Q21",
+  "family": "SAM",
+  "series": "SAME",
+  "core": "ARM Cortex-M7",
+  "ghidraLanguage": "ARM:LE:32:v7EM",
+  "flashRange": {
+    "start": "0x00400000",
+    "end": "0x005FFFFF"
+  },
+  "ramRange": {
+    "start": "0x20400000",
+    "end": "0x2045FFFF"
+  },
+  "vectorTable": {
+    "origin": "0x00400000",
+    "count": 85,
+    "strideBytes": 4,
+    "initialSp": "0x20460000",
+    "resetHandler": "0x00400201"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "fixtureId": "atmel.t105.same70q21_app.hex",
+  "sha256": "35078f5ecb83c8c1828fc9e964583b8b7d097168c01db4d2a3e0922c2239fdf9",
+  "target": "SAME70Q21",
+  "inputFormat": "INTEL_HEX",
+  "origin": "Freestanding synthetic deterministic test fixture for SAME70Q21",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:e1050016atmeldeterministicv1",
+  "generationCommand": "python3 scripts/generate-atmel-fixtures.py",
+  "toolchain": "Embedra Atmel deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/atmel/same70q21_app.json",
+  "requirements": [
+    "T105",
+    "ATMEL-001",
+    "ATMEL-003",
+    "ATMEL-004"
+  ]
+}

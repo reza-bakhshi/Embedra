@@ -1,0 +1,9 @@
+{
+  "part": "nRF52840-QIAA",
+  "region": "UICR",
+  "baseAddress": "0x10001000",
+  "bootloaderAddr": "0x000F8000",
+  "nrffw0": "0x00027000",
+  "customer0": "0xCAFEBABE",
+  "customer1": "0xDEADBEEF"
+}

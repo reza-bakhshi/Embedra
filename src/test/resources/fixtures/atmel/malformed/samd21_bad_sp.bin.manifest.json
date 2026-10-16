@@ -1,0 +1,22 @@
+{
+  "fixtureId": "atmel.t105.malformed.samd21_bad_sp.bin",
+  "sha256": "46b2a267e62c92fca2655bebc5d758db3df2108a1d1493df81ce306980ff4dd5",
+  "target": "SAMD21G18A",
+  "inputFormat": "RAW_BINARY",
+  "origin": "Freestanding synthetic deterministic test fixture for SAMD21G18A",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:e1050016atmeldeterministicv1",
+  "generationCommand": "python3 scripts/generate-atmel-fixtures.py",
+  "toolchain": "Embedra Atmel deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/atmel/malformed/samd21_bad_sp.json",
+  "requirements": [
+    "T105",
+    "ATMEL-004"
+  ]
+}

@@ -167,6 +167,14 @@ public final class EmbedraCtfAnalyzer extends AbstractAnalyzer {
             return InstructionArch.RISCV32;
         } else if (langId.contains("Xtensa")) {
             return InstructionArch.XTENSA;
+        } else if (langId.toLowerCase(java.util.Locale.ROOT).contains("stm8")
+                || program.getLanguage().getProcessor().toString()
+                        .toLowerCase(java.util.Locale.ROOT).contains("stm8")) {
+            return InstructionArch.STM8;
+        } else if (langId.toLowerCase(java.util.Locale.ROOT).contains("avr")
+                || program.getLanguage().getProcessor().toString()
+                        .toLowerCase(java.util.Locale.ROOT).contains("avr")) {
+            return InstructionArch.AVR8;
         }
         return null;
     }

@@ -1,0 +1,691 @@
+#!/usr/bin/env python3
+"""Generates authoritative Nordic Semiconductor catalog and capability matrix.
+
+Task T096:
+- catalogs/nordic/2026-10-13/catalog.json
+- catalogs/nordic/2026-10-13/catalog.sha256
+- .embedra/evidence/tasks/T096-nordic-capability-matrix.json
+"""
+
+import hashlib
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+CATALOG_DIR = ROOT / "catalogs" / "nordic" / "2026-10-13"
+EVIDENCE_DIR = ROOT / ".embedra" / "evidence" / "tasks"
+
+SERIES_DEFINITIONS = [
+    {
+        "series": "nRF51",
+        "displayName": "nRF51 Series (Cortex-M0)",
+        "core": "ARM Cortex-M0",
+        "arch": "ARMv6-M",
+        "maxClockMHz": 16,
+        "flashRange": "128 KiB - 256 KiB",
+        "ramRange": "16 KiB - 32 KiB",
+        "targetUse": "Ultra-low power Bluetooth Low Energy and 2.4 GHz proprietary RF SoC"
+    },
+    {
+        "series": "nRF52",
+        "displayName": "nRF52 Series (Cortex-M4 / Cortex-M4F)",
+        "core": "ARM Cortex-M4 / Cortex-M4F",
+        "arch": "ARMv7E-M",
+        "maxClockMHz": 64,
+        "flashRange": "192 KiB - 1024 KiB",
+        "ramRange": "24 KiB - 256 KiB",
+        "targetUse": "High-performance multiprotocol BLE 5.x, 802.15.4 (Thread/Zigbee), USB, NFC"
+    },
+    {
+        "series": "nRF53",
+        "displayName": "nRF53 Series (Dual Cortex-M33)",
+        "core": "Dual ARM Cortex-M33 (App + Net)",
+        "arch": "ARMv8-M Mainline",
+        "maxClockMHz": 128,
+        "flashRange": "1280 KiB total (1024 KiB App + 256 KiB Net)",
+        "ramRange": "576 KiB total (512 KiB App + 64 KiB Net)",
+        "targetUse": "Dual-core advanced wireless audio (LE Audio), industrial IoT, multiprotocol"
+    },
+    {
+        "series": "nRF54",
+        "displayName": "nRF54 Series (Cortex-M33 / RISC-V)",
+        "core": "ARM Cortex-M33 + RISC-V Coprocessor",
+        "arch": "ARMv8-M / RV32",
+        "maxClockMHz": 128,
+        "flashRange": "1.5 MiB - 2 MiB Non-Volatile Memory (RRAM)",
+        "ramRange": "256 KiB - 1024 KiB",
+        "targetUse": "Next-generation ultra-low power wireless SoC with advanced compute efficiency"
+    },
+    {
+        "series": "nRF91",
+        "displayName": "nRF91 Series (Cortex-M33 Cellular IoT & TrustZone)",
+        "core": "ARM Cortex-M33 with ARM TrustZone",
+        "arch": "ARMv8-M Mainline",
+        "maxClockMHz": 64,
+        "flashRange": "1024 KiB",
+        "ramRange": "256 KiB",
+        "targetUse": "Low-power cellular IoT (LTE-M, NB-IoT) and DECT NR+ with hardware security"
+    }
+]
+
+INVARIANTS = {
+    "flashBase": "0x00000000",
+    "ramBase": "0x20000000",
+    "ficrBase": "0x10000000",
+    "uicrBase": "0x10001000",
+    "peripheralBaseMmio": "0x40000000",
+    "peripheralSecureMmio": "0x50000000",
+    "cryptoCellAperture52": "0x5002A000",
+    "cryptoCellApertureModern": "0x50840000",
+    "cortexMVectorTableSlots": 16,
+    "endianness": "LITTLE_ENDIAN"
+}
+
+SOFTDEVICE_BOUNDARIES = [
+    {
+        "softDevice": "S110",
+        "version": "v8.0.0",
+        "series": "nRF51",
+        "mbrRange": {"start": "0x00000000", "end": "0x00000FFF"},
+        "softDeviceRange": {"start": "0x00001000", "end": "0x00017FFF"},
+        "applicationOffset": "0x00018000",
+        "description": "BLE Peripheral stack for nRF51"
+    },
+    {
+        "softDevice": "S130",
+        "version": "v2.0.1",
+        "series": "nRF51",
+        "mbrRange": {"start": "0x00000000", "end": "0x00000FFF"},
+        "softDeviceRange": {"start": "0x00001000", "end": "0x0001BFFF"},
+        "applicationOffset": "0x0001C000",
+        "description": "BLE Central + Peripheral stack for nRF51"
+    },
+    {
+        "softDevice": "S112",
+        "version": "v7.2.0",
+        "series": "nRF52",
+        "mbrRange": {"start": "0x00000000", "end": "0x00000FFF"},
+        "softDeviceRange": {"start": "0x00001000", "end": "0x00018FFF"},
+        "applicationOffset": "0x00019000",
+        "description": "Memory-optimized BLE Peripheral stack for nRF52810/nRF52811/nRF52832"
+    },
+    {
+        "softDevice": "S132",
+        "version": "v7.2.0",
+        "series": "nRF52",
+        "mbrRange": {"start": "0x00000000", "end": "0x00000FFF"},
+        "softDeviceRange": {"start": "0x00001000", "end": "0x00025FFF"},
+        "applicationOffset": "0x00026000",
+        "description": "Feature-rich BLE Central + Peripheral stack for nRF52832"
+    },
+    {
+        "softDevice": "S140",
+        "version": "v7.2.0",
+        "series": "nRF52",
+        "mbrRange": {"start": "0x00000000", "end": "0x00000FFF"},
+        "softDeviceRange": {"start": "0x00001000", "end": "0x00026FFF"},
+        "applicationOffset": "0x00027000",
+        "description": "Feature-rich BLE Central + Peripheral + Long Range + Coded PHY stack for nRF52840/nRF52833"
+    }
+]
+
+PARTS = [
+    # nRF51
+    {
+        "exactPart": "nRF51822-QFAA",
+        "series": "nRF51",
+        "subfamily": "nRF51822",
+        "package": "QFN48",
+        "core": "ARM Cortex-M0",
+        "fpu": False,
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 16384,
+        "ramRange": {"start": "0x20000000", "end": "0x20003FFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100000FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100010FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x4002FFFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF51822 Product Specification v3.3"
+    },
+    {
+        "exactPart": "nRF51822-QFAC",
+        "series": "nRF51",
+        "subfamily": "nRF51822",
+        "package": "QFN48",
+        "core": "ARM Cortex-M0",
+        "fpu": False,
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 32768,
+        "ramRange": {"start": "0x20000000", "end": "0x20007FFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100000FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100010FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x4002FFFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF51822 Product Specification v3.3"
+    },
+    {
+        "exactPart": "nRF51802-QFAA",
+        "series": "nRF51",
+        "subfamily": "nRF51802",
+        "package": "QFN48",
+        "core": "ARM Cortex-M0",
+        "fpu": False,
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 16384,
+        "ramRange": {"start": "0x20000000", "end": "0x20003FFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100000FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100010FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x4002FFFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF51802 Product Specification v1.3"
+    },
+    {
+        "exactPart": "nRF51422-QFAA",
+        "series": "nRF51",
+        "subfamily": "nRF51422",
+        "package": "QFN48",
+        "core": "ARM Cortex-M0",
+        "fpu": False,
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 16384,
+        "ramRange": {"start": "0x20000000", "end": "0x20003FFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100000FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100010FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x4002FFFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF51422 Product Specification v3.2"
+    },
+    {
+        "exactPart": "nRF51824-QFAA",
+        "series": "nRF51",
+        "subfamily": "nRF51824",
+        "package": "QFN48",
+        "core": "ARM Cortex-M0",
+        "fpu": False,
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 16384,
+        "ramRange": {"start": "0x20000000", "end": "0x20003FFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100000FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100010FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x4002FFFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF51824 Product Specification v1.1 (AEC-Q100)"
+    },
+
+    # nRF52
+    {
+        "exactPart": "nRF52832-QFAA",
+        "series": "nRF52",
+        "subfamily": "nRF52832",
+        "package": "QFN48",
+        "core": "ARM Cortex-M4F",
+        "fpu": True,
+        "flashBytes": 524288,
+        "flashRange": {"start": "0x00000000", "end": "0x0007FFFF"},
+        "ramBytes": 65536,
+        "ramRange": {"start": "0x20000000", "end": "0x2000FFFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100001FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52832 Product Specification v1.8"
+    },
+    {
+        "exactPart": "nRF52832-CIAA",
+        "series": "nRF52",
+        "subfamily": "nRF52832",
+        "package": "WLCSP50",
+        "core": "ARM Cortex-M4F",
+        "fpu": True,
+        "flashBytes": 524288,
+        "flashRange": {"start": "0x00000000", "end": "0x0007FFFF"},
+        "ramBytes": 65536,
+        "ramRange": {"start": "0x20000000", "end": "0x2000FFFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100001FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52832 Product Specification v1.8"
+    },
+    {
+        "exactPart": "nRF52840-QIAA",
+        "series": "nRF52",
+        "subfamily": "nRF52840",
+        "package": "aQFN73",
+        "core": "ARM Cortex-M4F",
+        "fpu": True,
+        "flashBytes": 1048576,
+        "flashRange": {"start": "0x00000000", "end": "0x000FFFFF"},
+        "ramBytes": 262144,
+        "ramRange": {"start": "0x20000000", "end": "0x2003FFFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100007FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": {"name": "ARM CryptoCell CC310", "base": "0x5002A000", "size": 4096},
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52840 Product Specification v1.7"
+    },
+    {
+        "exactPart": "nRF52840-CKAA",
+        "series": "nRF52",
+        "subfamily": "nRF52840",
+        "package": "WLCSP93",
+        "core": "ARM Cortex-M4F",
+        "fpu": True,
+        "flashBytes": 1048576,
+        "flashRange": {"start": "0x00000000", "end": "0x000FFFFF"},
+        "ramBytes": 262144,
+        "ramRange": {"start": "0x20000000", "end": "0x2003FFFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100007FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": {"name": "ARM CryptoCell CC310", "base": "0x5002A000", "size": 4096},
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52840 Product Specification v1.7"
+    },
+    {
+        "exactPart": "nRF52810-QCAA",
+        "series": "nRF52",
+        "subfamily": "nRF52810",
+        "package": "QFN32",
+        "core": "ARM Cortex-M4",
+        "fpu": False,
+        "flashBytes": 196608,
+        "flashRange": {"start": "0x00000000", "end": "0x0002FFFF"},
+        "ramBytes": 24576,
+        "ramRange": {"start": "0x20000000", "end": "0x20005FFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100001FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52810 Product Specification v1.4"
+    },
+    {
+        "exactPart": "nRF52810-QFAA",
+        "series": "nRF52",
+        "subfamily": "nRF52810",
+        "package": "QFN48",
+        "core": "ARM Cortex-M4",
+        "fpu": False,
+        "flashBytes": 196608,
+        "flashRange": {"start": "0x00000000", "end": "0x0002FFFF"},
+        "ramBytes": 24576,
+        "ramRange": {"start": "0x20000000", "end": "0x20005FFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100001FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52810 Product Specification v1.4"
+    },
+    {
+        "exactPart": "nRF52811-QCAA",
+        "series": "nRF52",
+        "subfamily": "nRF52811",
+        "package": "QFN32",
+        "core": "ARM Cortex-M4",
+        "fpu": False,
+        "flashBytes": 196608,
+        "flashRange": {"start": "0x00000000", "end": "0x0002FFFF"},
+        "ramBytes": 24576,
+        "ramRange": {"start": "0x20000000", "end": "0x20005FFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100001FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52811 Product Specification v1.1"
+    },
+    {
+        "exactPart": "nRF52820-QDAA",
+        "series": "nRF52",
+        "subfamily": "nRF52820",
+        "package": "QFN40",
+        "core": "ARM Cortex-M4",
+        "fpu": False,
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 32768,
+        "ramRange": {"start": "0x20000000", "end": "0x20007FFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100001FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52820 Product Specification v1.2"
+    },
+    {
+        "exactPart": "nRF52833-QIAA",
+        "series": "nRF52",
+        "subfamily": "nRF52833",
+        "package": "aQFN73",
+        "core": "ARM Cortex-M4F",
+        "fpu": True,
+        "flashBytes": 524288,
+        "flashRange": {"start": "0x00000000", "end": "0x0007FFFF"},
+        "ramBytes": 131072,
+        "ramRange": {"start": "0x20000000", "end": "0x2001FFFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100007FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52833 Product Specification v1.5"
+    },
+    {
+        "exactPart": "nRF52833-CJAA",
+        "series": "nRF52",
+        "subfamily": "nRF52833",
+        "package": "WLCSP51",
+        "core": "ARM Cortex-M4F",
+        "fpu": True,
+        "flashBytes": 524288,
+        "flashRange": {"start": "0x00000000", "end": "0x0007FFFF"},
+        "ramBytes": 131072,
+        "ramRange": {"start": "0x20000000", "end": "0x2001FFFF"},
+        "ficrRange": {"start": "0x10000000", "end": "0x100007FF"},
+        "uicrRange": {"start": "0x10001000", "end": "0x100013FF"},
+        "peripheralsRange": {"start": "0x40000000", "end": "0x40037FFF"},
+        "cryptoCell": None,
+        "trustZone": False,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF52833 Product Specification v1.5"
+    },
+
+    # nRF53
+    {
+        "exactPart": "nRF5340-QKAA",
+        "series": "nRF53",
+        "subfamily": "nRF5340",
+        "package": "aQFN94",
+        "core": "Dual ARM Cortex-M33 (App + Net)",
+        "fpu": True,
+        "flashBytes": 1310720,
+        "flashRange": {"start": "0x00000000", "end": "0x000FFFFF"},
+        "ramBytes": 589824,
+        "ramRange": {"start": "0x20000000", "end": "0x2007FFFF"},
+        "ficrRange": {"start": "0x00FF0000", "end": "0x00FF07FF"},
+        "uicrRange": {"start": "0x00FF8000", "end": "0x00FF87FF"},
+        "peripheralsRange": {"start": "0x50000000", "end": "0x5003FFFF"},
+        "cryptoCell": {"name": "ARM CryptoCell CC312", "base": "0x50840000", "size": 65536},
+        "trustZone": True,
+        "dualCore": True,
+        "dualCoreDetails": {
+            "applicationCore": {
+                "core": "ARM Cortex-M33 with FPU",
+                "maxClockMHz": 128,
+                "flashBytes": 1048576,
+                "flashRange": {"start": "0x00000000", "end": "0x000FFFFF"},
+                "ramBytes": 524288,
+                "ramRange": {"start": "0x20000000", "end": "0x2007FFFF"},
+                "peripheralsSecureBase": "0x50000000",
+                "peripheralsNonSecureBase": "0x40000000"
+            },
+            "networkCore": {
+                "core": "ARM Cortex-M33",
+                "maxClockMHz": 64,
+                "flashBytes": 262144,
+                "flashRange": {"start": "0x01000000", "end": "0x0103FFFF"},
+                "ramBytes": 65536,
+                "ramRange": {"start": "0x21000000", "end": "0x2100FFFF"},
+                "peripheralsBase": "0x41000000"
+            }
+        },
+        "supportState": "PLANNED",
+        "datasheet": "nRF5340 Product Specification v1.3"
+    },
+    {
+        "exactPart": "nRF5340-CLAA",
+        "series": "nRF53",
+        "subfamily": "nRF5340",
+        "package": "WLCSP95",
+        "core": "Dual ARM Cortex-M33 (App + Net)",
+        "fpu": True,
+        "flashBytes": 1310720,
+        "flashRange": {"start": "0x00000000", "end": "0x000FFFFF"},
+        "ramBytes": 589824,
+        "ramRange": {"start": "0x20000000", "end": "0x2007FFFF"},
+        "ficrRange": {"start": "0x00FF0000", "end": "0x00FF07FF"},
+        "uicrRange": {"start": "0x00FF8000", "end": "0x00FF87FF"},
+        "peripheralsRange": {"start": "0x50000000", "end": "0x5003FFFF"},
+        "cryptoCell": {"name": "ARM CryptoCell CC312", "base": "0x50840000", "size": 65536},
+        "trustZone": True,
+        "dualCore": True,
+        "dualCoreDetails": {
+            "applicationCore": {
+                "core": "ARM Cortex-M33 with FPU",
+                "maxClockMHz": 128,
+                "flashBytes": 1048576,
+                "flashRange": {"start": "0x00000000", "end": "0x000FFFFF"},
+                "ramBytes": 524288,
+                "ramRange": {"start": "0x20000000", "end": "0x2007FFFF"},
+                "peripheralsSecureBase": "0x50000000",
+                "peripheralsNonSecureBase": "0x40000000"
+            },
+            "networkCore": {
+                "core": "ARM Cortex-M33",
+                "maxClockMHz": 64,
+                "flashBytes": 262144,
+                "flashRange": {"start": "0x01000000", "end": "0x0103FFFF"},
+                "ramBytes": 65536,
+                "ramRange": {"start": "0x21000000", "end": "0x2100FFFF"},
+                "peripheralsBase": "0x41000000"
+            }
+        },
+        "supportState": "PLANNED",
+        "datasheet": "nRF5340 Product Specification v1.3"
+    },
+
+    # nRF54
+    {
+        "exactPart": "nRF54L15",
+        "series": "nRF54",
+        "subfamily": "nRF54L",
+        "package": "QFN48",
+        "core": "ARM Cortex-M33 + RISC-V Coprocessor",
+        "fpu": True,
+        "flashBytes": 1572864,
+        "flashRange": {"start": "0x00000000", "end": "0x0017FFFF"},
+        "ramBytes": 262144,
+        "ramRange": {"start": "0x20000000", "end": "0x2003FFFF"},
+        "ficrRange": {"start": "0x00FF0000", "end": "0x00FF07FF"},
+        "uicrRange": {"start": "0x00FF8000", "end": "0x00FF87FF"},
+        "peripheralsRange": {"start": "0x50000000", "end": "0x5003FFFF"},
+        "cryptoCell": None,
+        "trustZone": True,
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF54L15 Product Brief & Architecture Spec"
+    },
+    {
+        "exactPart": "nRF54H20",
+        "series": "nRF54",
+        "subfamily": "nRF54H",
+        "package": "BGA",
+        "core": "Multiple ARM Cortex-M33 + RISC-V Coprocessors",
+        "fpu": True,
+        "flashBytes": 2097152,
+        "flashRange": {"start": "0x00000000", "end": "0x001FFFFF"},
+        "ramBytes": 1048576,
+        "ramRange": {"start": "0x20000000", "end": "0x200FFFFF"},
+        "ficrRange": {"start": "0x00FF0000", "end": "0x00FF07FF"},
+        "uicrRange": {"start": "0x00FF8000", "end": "0x00FF87FF"},
+        "peripheralsRange": {"start": "0x50000000", "end": "0x5003FFFF"},
+        "cryptoCell": None,
+        "trustZone": True,
+        "dualCore": True,
+        "supportState": "PLANNED",
+        "datasheet": "nRF54H20 Product Brief & Architecture Spec"
+    },
+
+    # nRF91
+    {
+        "exactPart": "nRF9160-SICA",
+        "series": "nRF91",
+        "subfamily": "nRF9160",
+        "package": "LGA",
+        "core": "ARM Cortex-M33 with TrustZone + LTE-M/NB-IoT Modem Subsystem",
+        "fpu": True,
+        "flashBytes": 1048576,
+        "flashRange": {"start": "0x00000000", "end": "0x000FFFFF"},
+        "ramBytes": 262144,
+        "ramRange": {"start": "0x20000000", "end": "0x2003FFFF"},
+        "ficrRange": {"start": "0x00FF0000", "end": "0x00FF07FF"},
+        "uicrRange": {"start": "0x00FF8000", "end": "0x00FF87FF"},
+        "peripheralsRange": {"start": "0x50000000", "end": "0x5003FFFF"},
+        "cryptoCell": {"name": "ARM CryptoCell CC312", "base": "0x50840000", "size": 65536},
+        "trustZone": True,
+        "trustZoneDetails": {
+            "flashSecureAlias": {"start": "0x00000000", "end": "0x000FFFFF"},
+            "flashNonSecureAlias": {"start": "0x00000000", "end": "0x000FFFFF"},
+            "sramSecureBase": "0x20000000",
+            "sramNonSecureBase": "0x20000000",
+            "peripheralsSecureBase": "0x50000000",
+            "peripheralsNonSecureBase": "0x40000000",
+            "spuBase": "0x50003000"
+        },
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF9160 Product Specification v2.1"
+    },
+    {
+        "exactPart": "nRF9161-SICA",
+        "series": "nRF91",
+        "subfamily": "nRF9161",
+        "package": "LGA",
+        "core": "ARM Cortex-M33 with TrustZone + LTE-M/NB-IoT/DECT NR+ Modem Subsystem",
+        "fpu": True,
+        "flashBytes": 1048576,
+        "flashRange": {"start": "0x00000000", "end": "0x000FFFFF"},
+        "ramBytes": 262144,
+        "ramRange": {"start": "0x20000000", "end": "0x2003FFFF"},
+        "ficrRange": {"start": "0x00FF0000", "end": "0x00FF07FF"},
+        "uicrRange": {"start": "0x00FF8000", "end": "0x00FF87FF"},
+        "peripheralsRange": {"start": "0x50000000", "end": "0x5003FFFF"},
+        "cryptoCell": {"name": "ARM CryptoCell CC312", "base": "0x50840000", "size": 65536},
+        "trustZone": True,
+        "trustZoneDetails": {
+            "flashSecureAlias": {"start": "0x00000000", "end": "0x000FFFFF"},
+            "flashNonSecureAlias": {"start": "0x00000000", "end": "0x000FFFFF"},
+            "sramSecureBase": "0x20000000",
+            "sramNonSecureBase": "0x20000000",
+            "peripheralsSecureBase": "0x50000000",
+            "peripheralsNonSecureBase": "0x40000000",
+            "spuBase": "0x50003000"
+        },
+        "dualCore": False,
+        "supportState": "PLANNED",
+        "datasheet": "nRF9161 Product Specification v1.1"
+    }
+]
+
+
+def generate_catalog():
+    CATALOG_DIR.mkdir(parents=True, exist_ok=True)
+    catalog = {
+        "$schema": "urn:embedra:schema:nordic-catalog:1",
+        "catalogId": "nordic-catalog-2026-10-13",
+        "vendor": "Nordic Semiconductor",
+        "snapshotDate": "2026-10-13",
+        "recordCount": len(PARTS),
+        "invariants": INVARIANTS,
+        "families": SERIES_DEFINITIONS,
+        "softDeviceBoundaries": SOFTDEVICE_BOUNDARIES,
+        "records": PARTS
+    }
+
+    catalog_path = CATALOG_DIR / "catalog.json"
+    catalog_json_text = json.dumps(catalog, indent=2, sort_keys=False) + "\n"
+    catalog_path.write_text(catalog_json_text, encoding="utf-8")
+
+    digest = hashlib.sha256(catalog_json_text.encode("utf-8")).hexdigest()
+    sha256_path = CATALOG_DIR / "catalog.sha256"
+    sha256_path.write_text(f"{digest}  catalog.json\n", encoding="utf-8")
+    print(f"Generated {catalog_path} (digest: {digest})")
+
+
+def generate_capability_matrix():
+    EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+    matrix = {
+        "schemaId": "urn:embedra:schema:nordic-capability-matrix:1",
+        "metadata": {
+            "task": "T096",
+            "catalogSnapshot": "catalogs/nordic/2026-10-13/catalog.json",
+            "authoritativeReferences": [
+                "Nordic Semiconductor nRF51822 Product Specification v3.3",
+                "Nordic Semiconductor nRF52832 Product Specification v1.8",
+                "Nordic Semiconductor nRF52840 Product Specification v1.7",
+                "Nordic Semiconductor nRF5340 Product Specification v1.3",
+                "Nordic Semiconductor nRF9160 Product Specification v2.1",
+                "Nordic Semiconductor nRF54L15 / nRF54H20 Product Briefs & Architecture Specs",
+                "Nordic MDK / nrfx v3.5.0 device headers (BSD-3-Clause)",
+                "Nordic S112/S132/S140 SoftDevice Specification documents"
+            ],
+            "totalSeriesCount": len(SERIES_DEFINITIONS),
+            "totalExactPartCount": len(PARTS)
+        },
+        "invariants": INVARIANTS,
+        "series": SERIES_DEFINITIONS,
+        "softDeviceBoundaries": SOFTDEVICE_BOUNDARIES,
+        "parts": PARTS,
+        "allowlistPolicy": {
+            "policy": "EXACT_PART_MATCH_ONLY",
+            "rejectionRules": [
+                "No wildcards (*, ?)",
+                "No bare series prefixes (nRF51, nRF52, nRF53, nRF54, nRF91)",
+                "No fuzzy or partial matching",
+                "Initial supportState must be PLANNED for all cataloged parts"
+            ]
+        }
+    }
+
+    matrix_path = EVIDENCE_DIR / "T096-nordic-capability-matrix.json"
+    matrix_path.write_text(json.dumps(matrix, indent=2, sort_keys=False) + "\n", encoding="utf-8")
+    print(f"Generated {matrix_path}")
+
+
+if __name__ == "__main__":
+    generate_catalog()
+    generate_capability_matrix()

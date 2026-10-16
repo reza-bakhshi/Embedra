@@ -1,0 +1,45 @@
+{
+  "task": "T109",
+  "name": "Real-Ghidra GUI & Headless Multi-Program Import Wiring for Atmel / Microchip",
+  "timestamp": "2026-10-16T15:58:00+03:30",
+  "deliverables": [
+    {
+      "path": "src/main/java/io/github/rezabakhshi/embedra/ghidra/atmel/AtmelMappingException.java",
+      "role": "Checked exception for Atmel Ghidra mapping failures"
+    },
+    {
+      "path": "src/main/java/io/github/rezabakhshi/embedra/ghidra/atmel/AtmelImportReport.java",
+      "role": "Immutable outcome report for Atmel firmware import"
+    },
+    {
+      "path": "src/main/java/io/github/rezabakhshi/embedra/ghidra/atmel/AtmelInputDecoder.java",
+      "role": "Validating multi-format decoder for ELF, Intel HEX, and raw BIN"
+    },
+    {
+      "path": "src/main/java/io/github/rezabakhshi/embedra/ghidra/atmel/AtmelFirmwareMapper.java",
+      "role": "Transactional memory layout, vector table, and peripheral pack mapper"
+    },
+    {
+      "path": "src/main/java/io/github/rezabakhshi/embedra/ghidra/atmel/AtmelFirmwareImportService.java",
+      "role": "High-level orchestration service for Atmel firmware imports"
+    },
+    {
+      "path": "src/main/java/io/github/rezabakhshi/embedra/ghidra/atmel/AtmelFirmwareLoader.java",
+      "role": "Ghidra loader entry point extending AbstractLibrarySupportLoader"
+    },
+    {
+      "path": "src/integrationTest/java/io/github/rezabakhshi/embedra/ghidra/atmel/AtmelFirmwareImportIntegrationTest.java",
+      "role": "Real-Ghidra integration test suite verifying GUI/headless parity, malformed fail-closed, and rollback"
+    }
+  ],
+  "verificationCommand": "JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 GHIDRA_INSTALL_DIR=$PWD/ghidra_12.1.3_PUBLIC_20260817/ghidra_12.1.3_PUBLIC ./gradlew --offline --no-daemon checkstyleMain checkstyleTest checkstyleIntegrationTest ghidraIntegrationTest --tests \"io.github.rezabakhshi.embedra.ghidra.atmel.*\"",
+  "testsPassed": [
+    "testSingleImageBaremetalImports",
+    "testCompositeAndBootloaderImages",
+    "testMalformedFixturesFailClosed",
+    "testCancellationRollsBackCleanly",
+    "testGuiAndHeadlessParity",
+    "testUserArtifactPreservation"
+  ],
+  "status": "PASS"
+}

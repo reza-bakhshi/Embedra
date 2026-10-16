@@ -1,0 +1,5 @@
+{
+  "errorExpected": true,
+  "diagnosticCode": "HEX_UNEXPECTED_EOF",
+  "reason": "File ended abruptly inside a data record"
+}

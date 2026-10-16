@@ -1,0 +1,10 @@
+{
+  "part": "nRF51822-QFAA",
+  "format": "MULTI_FORMAT",
+  "core": "ARM Cortex-M0",
+  "flashBase": "0x00000000",
+  "initialSp": "0x20004000",
+  "resetVector": "0x000000C1",
+  "entryPoint": "0x000000C0",
+  "vectorCount": 48
+}

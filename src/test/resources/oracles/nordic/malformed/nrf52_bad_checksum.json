@@ -1,0 +1,5 @@
+{
+  "fixture": "nrf52_bad_checksum.hex",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "CHECKSUM_MISMATCH"
+}

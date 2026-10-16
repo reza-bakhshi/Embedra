@@ -1,0 +1,22 @@
+{
+  "fixtureId": "atmel.t105.malformed.atmel_bad_checksum.hex",
+  "sha256": "f6cc9d74aa64a0459fd9e4edf6f868111d6a6c0069dee0faffce1c346f076d6f",
+  "target": "ATmega328P",
+  "inputFormat": "INTEL_HEX",
+  "origin": "Freestanding synthetic deterministic test fixture for ATmega328P",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:e1050016atmeldeterministicv1",
+  "generationCommand": "python3 scripts/generate-atmel-fixtures.py",
+  "toolchain": "Embedra Atmel deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/atmel/malformed/atmel_bad_checksum.json",
+  "requirements": [
+    "T105",
+    "CORE-004"
+  ]
+}

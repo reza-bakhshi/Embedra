@@ -222,6 +222,7 @@ assert isinstance(data['findings'], list), 'findings must be a list'
 
 # 4.1 RP2040 UF2
 echo "Quickstart 4.1: Raspberry Pi RP2040 UF2"
+mkdir -p "$quickstart_proj"
 "$GHIDRA_INSTALL_DIR/support/analyzeHeadless" \
     "$quickstart_proj" RP2040_Quickstart \
     -import src/test/resources/fixtures/rp/rp2040-pico-blinky.uf2 \
@@ -237,6 +238,7 @@ validate_json_report "$quickstart_reports/rp2040-pico-blinky.uf2.report.json"
 
 # 4.2 ESP32-S3 Full-Flash
 echo "Quickstart 4.2: ESP32-S3 Full-Flash"
+mkdir -p "$quickstart_proj"
 "$GHIDRA_INSTALL_DIR/support/analyzeHeadless" \
     "$quickstart_proj" ESP32S3_Quickstart \
     -import src/test/resources/fixtures/esp32s3/full-flash/default-factory.bin \
@@ -252,6 +254,7 @@ validate_json_report "$quickstart_reports/default-factory_factory.report.json"
 
 # 4.3 STM32 Intel HEX
 echo "Quickstart 4.3: STM32 Intel HEX"
+mkdir -p "$quickstart_proj"
 "$GHIDRA_INSTALL_DIR/support/analyzeHeadless" \
     "$quickstart_proj" STM32HEX_Quickstart \
     -import src/test/resources/fixtures/stm32-core-samples/STM32F401RET6.hex \
@@ -262,12 +265,14 @@ echo "Quickstart 4.3: STM32 Intel HEX"
 
 grep -q "Analysis succeeded for file" "$work_dir/stm32hex.log" || {
     echo "LIFECYCLE FAIL: STM32 HEX analysis failed." >&2
+    cat "$work_dir/stm32hex.log" >&2
     exit 1
 }
 validate_json_report "$quickstart_reports/STM32F401RET6.hex.report.json"
 
 # 4.4 STM32 Raw BIN
 echo "Quickstart 4.4: STM32 Raw BIN"
+mkdir -p "$quickstart_proj"
 "$GHIDRA_INSTALL_DIR/support/analyzeHeadless" \
     "$quickstart_proj" STM32BIN_Quickstart \
     -import src/test/resources/fixtures/stm32-core-samples/STM32F401RET6.bin \
@@ -282,6 +287,40 @@ grep -q "Analysis succeeded for file" "$work_dir/stm32bin.log" || {
     exit 1
 }
 validate_json_report "$quickstart_reports/STM32F401RET6.bin.report.json"
+
+# 4.5 Nordic nRF52 Intel HEX
+echo "Quickstart 4.5: Nordic nRF52 Intel HEX"
+mkdir -p "$quickstart_proj"
+"$GHIDRA_INSTALL_DIR/support/analyzeHeadless" \
+    "$quickstart_proj" NRF52_Quickstart \
+    -import src/test/resources/fixtures/nordic/nrf52832_app.hex \
+    -processor "ARM:LE:32:Cortex" \
+    -scriptPath "$quickstart_scripts" \
+    -postScript ExportEmbedraReport.java "$quickstart_reports" \
+    -readOnly -deleteProject > "$work_dir/nrf52.log" 2>&1
+
+grep -q "Analysis succeeded for file" "$work_dir/nrf52.log" || {
+    echo "LIFECYCLE FAIL: Nordic nRF52 HEX analysis failed." >&2
+    exit 1
+}
+validate_json_report "$quickstart_reports/nrf52832_app.hex.report.json"
+
+# 4.6 Atmel ATmega328P Intel HEX
+echo "Quickstart 4.6: Atmel ATmega328P Intel HEX"
+mkdir -p "$quickstart_proj"
+"$GHIDRA_INSTALL_DIR/support/analyzeHeadless" \
+    "$quickstart_proj" ATMEGA328P_Quickstart \
+    -import src/test/resources/fixtures/atmel/atmega328p_app.hex \
+    -processor "avr8:LE:16:default" \
+    -scriptPath "$quickstart_scripts" \
+    -postScript ExportEmbedraReport.java "$quickstart_reports" \
+    -readOnly -deleteProject > "$work_dir/atmega328p.log" 2>&1
+
+grep -q "Analysis succeeded for file" "$work_dir/atmega328p.log" || {
+    echo "LIFECYCLE FAIL: Atmel ATmega328P HEX analysis failed." >&2
+    exit 1
+}
+validate_json_report "$quickstart_reports/atmega328p_app.hex.report.json"
 
 # Clean up temporary installation
 rm -rf "$GHIDRA_INSTALL_DIR/Ghidra/Extensions/Embedra"

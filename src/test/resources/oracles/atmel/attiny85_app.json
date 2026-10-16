@@ -1,0 +1,25 @@
+{
+  "part": "ATtiny85",
+  "family": "AVR",
+  "series": "ATtiny",
+  "ghidraLanguage": "avr8:LE:16:default",
+  "flashRange": {
+    "start": "0x00000000",
+    "end": "0x00001FFF"
+  },
+  "ramRange": {
+    "start": "0x00000060",
+    "end": "0x0000025F"
+  },
+  "eepromRange": {
+    "start": "0x00000000",
+    "end": "0x000001FF"
+  },
+  "vectorTable": {
+    "origin": "0x00000000",
+    "count": 15,
+    "strideBytes": 2,
+    "instruction": "RJMP",
+    "resetHandlerByte": "0x0000001E"
+  }
+}

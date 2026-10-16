@@ -1,0 +1,8 @@
+{
+  "part": "nRF5340-QKAA",
+  "core": "Application Core",
+  "flashBase": "0x00000000",
+  "initialSp": "0x20080000",
+  "resetVector": "0x00000101",
+  "entryPoint": "0x00000100"
+}

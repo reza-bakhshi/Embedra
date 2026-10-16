@@ -1,0 +1,7 @@
+{
+  "fixture": "stm8s103_truncated.bin",
+  "errorType": "stm8.t089.malformed.stm8s103_truncated.bin",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "Truncated binary: 64 bytes is less than the 128-byte vector table requirement",
+  "sha256": "27fe798e74c5dc0d78125543bf108b67789f61d31c02d36f7bda4e3b395d388e"
+}

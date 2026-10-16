@@ -1,0 +1,1076 @@
+#!/usr/bin/env python3
+"""Generates authoritative Atmel / Microchip catalog and capability matrix.
+
+Task T104:
+- catalogs/atmel/2026-10-14/catalog.json
+- catalogs/atmel/2026-10-14/catalog.sha256
+- .embedra/evidence/tasks/T104-atmel-capability-matrix.json
+"""
+
+import hashlib
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+CATALOG_DIR = ROOT / "catalogs" / "atmel" / "2026-10-14"
+EVIDENCE_DIR = ROOT / ".embedra" / "evidence" / "tasks"
+
+SERIES_DEFINITIONS = [
+    {
+        "series": "ATmega",
+        "family": "AVR",
+        "displayName": "classic megaAVR 8-bit RISC Microcontrollers",
+        "core": "AVR RISC (classic)",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "maxClockMHz": 20,
+        "flashRange": "8 KiB - 256 KiB",
+        "ramRange": "1 KiB - 8 KiB",
+        "eepromRange": "512 B - 4096 B",
+        "addressModel": "HARVARD_SEPARATE",
+        "vectorStrideBytes": 4,  # parts <= 8KB use 2, >8KB use 4
+        "targetUse": "General-purpose embedded control, Arduino UNO/Mega platforms, industrial controllers"
+    },
+    {
+        "series": "ATtiny",
+        "family": "AVR",
+        "displayName": "classic tinyAVR 8-bit RISC Microcontrollers",
+        "core": "AVR RISC (tiny)",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "maxClockMHz": 20,
+        "flashRange": "1 KiB - 16 KiB",
+        "ramRange": "64 B - 2 KiB",
+        "eepromRange": "64 B - 512 B",
+        "addressModel": "HARVARD_SEPARATE",
+        "vectorStrideBytes": 2,  # tiny parts <= 8KB use 2-byte RJMP
+        "targetUse": "Ultra-compact footprint sensors, smart interface bridging, cost-sensitive controllers"
+    },
+    {
+        "series": "AVR-Dx",
+        "family": "AVR",
+        "displayName": "modern AVR-DA / AVR-DB / AVR-DD Microcontrollers",
+        "core": "AVRxt",
+        "arch": "AVR8X",
+        "ghidraLanguage": "avr8:LE:24:xmega",
+        "maxClockMHz": 24,
+        "flashRange": "32 KiB - 128 KiB",
+        "ramRange": "4 KiB - 16 KiB",
+        "eepromRange": "512 B",
+        "addressModel": "HARVARD_UNIFIED_DATA_ALIAS",
+        "vectorStrideBytes": 4,
+        "targetUse": "Real-time control with Core Independent Peripherals (CIP), Event System, MVIO"
+    },
+    {
+        "series": "SAMD",
+        "family": "SAM",
+        "displayName": "SAM D21 / D51 / L21 / C21 32-bit ARM Cortex-M0+ / M4F",
+        "core": "ARM Cortex-M0+ / Cortex-M4F",
+        "arch": "ARMv6-M / ARMv7E-M",
+        "ghidraLanguage": "ARM:LE:32:v6M",
+        "maxClockMHz": 120,
+        "flashRange": "256 KiB - 512 KiB",
+        "ramRange": "32 KiB - 192 KiB",
+        "eepromRange": "Emulated / None",
+        "addressModel": "LINEAR_32BIT",
+        "vectorStrideBytes": 4,
+        "targetUse": "Low power IoT, USB interfaces, motor control, capacitive touch, Arduino Zero/MKR"
+    },
+    {
+        "series": "SAME",
+        "family": "SAM",
+        "displayName": "SAM E70 / S70 / V71 / SAM3X 32-bit ARM Cortex-M7 / M3",
+        "core": "ARM Cortex-M7 / Cortex-M3",
+        "arch": "ARMv7E-M / ARMv7-M",
+        "ghidraLanguage": "ARM:LE:32:v7EM",
+        "maxClockMHz": 300,
+        "flashRange": "512 KiB - 2048 KiB",
+        "ramRange": "96 KiB - 384 KiB",
+        "eepromRange": "None",
+        "addressModel": "LINEAR_32BIT",
+        "vectorStrideBytes": 4,
+        "targetUse": "High-performance connectivity, Ethernet, CAN-FD, DSP, audio, Arduino Due"
+    }
+]
+
+INVARIANTS = {
+    "avrClassic": {
+        "flashCodeBase": "0x00000000",
+        "sramDataBase": "0x00000060",  # Or 0x0100 / 0x0200 depending on I/O extent
+        "ioSpaceBase": "0x00000000",
+        "ioSpaceSize": "0x00000040",   # 64 standard I/O registers
+        "dataIoOffset": "0x00000020",  # Standard I/O mapped to 0x20..0x5F in data space
+        "eepromBase": "0x00000000",
+        "fuses": ["LOW", "HIGH", "EXTENDED", "LOCK"]
+    },
+    "avrUnifiedDx": {
+        "flashCodeBase": "0x00000000",
+        "flashDataAliasBase": "0x00008000",
+        "sramDataBase": "0x00004000",
+        "eepromDataBase": "0x00001400",
+        "peripheralMmioBase": "0x00000000",
+        "peripheralMmioEnd": "0x00000FFF",
+        "fuses": ["WDTCFG", "BODCFG", "OSCCFG", "TCD0CFG", "SYSCFG0", "SYSCFG1", "APPEND", "BOOTEND"]
+    },
+    "samArm": {
+        "flashLinearBase": "0x00000000",      # SAMD; SAME70 uses 0x00400000, SAM3X uses 0x00080000
+        "sramLinearBase": "0x20000000",       # SAMD/SAM3X; SAME70 uses 0x20400000
+        "peripheralBase": "0x40000000",
+        "cortexMVectorTableSlots": 16,
+        "endianness": "LITTLE_ENDIAN"
+    }
+}
+
+PARTS_ALLOWLIST = [
+    # --- Classic ATmega (7 parts) ---
+    {
+        "exactPart": "ATmega328P",
+        "family": "AVR",
+        "series": "ATmega",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "TQFP32 / DIP28",
+        "datasheet": "Microchip DS40002061B / Atmel 8271",
+        "flashBytes": 32768,
+        "flashRange": {"start": "0x00000000", "end": "0x00007FFF"},
+        "ramBytes": 2048,
+        "ramRange": {"start": "0x00000100", "end": "0x000008FF"},
+        "eepromBytes": 1024,
+        "eepromRange": {"start": "0x00000000", "end": "0x000003FF"},
+        "ioPorts": ["PORTB", "PORTC", "PORTD"],
+        "vectorCount": 26,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"sizeBytes": 512, "startAddress": "0x00007E00", "bootsz": "11"},
+            {"sizeBytes": 1024, "startAddress": "0x00007C00", "bootsz": "10"},
+            {"sizeBytes": 2048, "startAddress": "0x00007800", "bootsz": "01"},
+            {"sizeBytes": 4096, "startAddress": "0x00007000", "bootsz": "00"}
+        ],
+        "defaultBootloader": "Optiboot (0x7E00)",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x62", "arduinoUno": "0xFF"},
+            "high": {"name": "HIGH", "default": "0xD9", "arduinoUno": "0xDE"},
+            "extended": {"name": "EXTENDED", "default": "0xFF", "arduinoUno": "0xFD"},
+            "lock": {"name": "LOCK", "default": "0xFF", "arduinoUno": "0xCF"}
+        },
+        "peripherals": ["USART0", "SPI0", "TWI0", "TC0", "TC1", "TC2", "ADC", "AC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATmega2560",
+        "family": "AVR",
+        "series": "ATmega",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:24:default",
+        "package": "TQFP100",
+        "datasheet": "Microchip DS40002211A / Atmel 2549",
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 8192,
+        "ramRange": {"start": "0x00000200", "end": "0x000021FF"},
+        "eepromBytes": 4096,
+        "eepromRange": {"start": "0x00000000", "end": "0x00000FFF"},
+        "ioPorts": ["PORTA", "PORTB", "PORTC", "PORTD", "PORTE", "PORTF", "PORTG", "PORTH", "PORTJ", "PORTK", "PORTL"],
+        "vectorCount": 57,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"sizeBytes": 1024, "startAddress": "0x0003FC00", "bootsz": "11"},
+            {"sizeBytes": 2048, "startAddress": "0x0003F800", "bootsz": "10"},
+            {"sizeBytes": 4096, "startAddress": "0x0003F000", "bootsz": "01"},
+            {"sizeBytes": 8192, "startAddress": "0x0003E000", "bootsz": "00"}
+        ],
+        "defaultBootloader": "STK500boot (0x3E000)",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x62", "arduinoMega": "0xFF"},
+            "high": {"name": "HIGH", "default": "0x99", "arduinoMega": "0xD8"},
+            "extended": {"name": "EXTENDED", "default": "0xFF", "arduinoMega": "0xFD"},
+            "lock": {"name": "LOCK", "default": "0xFF", "arduinoMega": "0xCF"}
+        },
+        "peripherals": ["USART0", "USART1", "USART2", "USART3", "SPI0", "TWI0", "TC0", "TC1", "TC2", "TC3", "TC4", "TC5", "ADC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATmega32U4",
+        "family": "AVR",
+        "series": "ATmega",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "TQFP44 / QFN44",
+        "datasheet": "Microchip DS40002056B / Atmel 7766",
+        "flashBytes": 32768,
+        "flashRange": {"start": "0x00000000", "end": "0x00007FFF"},
+        "ramBytes": 2560,
+        "ramRange": {"start": "0x00000100", "end": "0x00000AFF"},
+        "eepromBytes": 1024,
+        "eepromRange": {"start": "0x00000000", "end": "0x000003FF"},
+        "ioPorts": ["PORTB", "PORTC", "PORTD", "PORTE", "PORTF"],
+        "vectorCount": 43,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"sizeBytes": 512, "startAddress": "0x00007E00", "bootsz": "11"},
+            {"sizeBytes": 1024, "startAddress": "0x00007C00", "bootsz": "10"},
+            {"sizeBytes": 2048, "startAddress": "0x00007800", "bootsz": "01"},
+            {"sizeBytes": 4096, "startAddress": "0x00007000", "bootsz": "00"}
+        ],
+        "defaultBootloader": "Caterina / DFU Bootloader (0x7000)",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x5E", "arduinoLeonardo": "0xFF"},
+            "high": {"name": "HIGH", "default": "0x99", "arduinoLeonardo": "0xD8"},
+            "extended": {"name": "EXTENDED", "default": "0xF3", "arduinoLeonardo": "0xCB"},
+            "lock": {"name": "LOCK", "default": "0xFF", "arduinoLeonardo": "0xCF"}
+        },
+        "peripherals": ["USB", "USART1", "SPI0", "TWI0", "TC0", "TC1", "TC3", "TC4", "ADC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATmega128",
+        "family": "AVR",
+        "series": "ATmega",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "TQFP64",
+        "datasheet": "Microchip DS40002196A / Atmel 2467",
+        "flashBytes": 131072,
+        "flashRange": {"start": "0x00000000", "end": "0x0001FFFF"},
+        "ramBytes": 4096,
+        "ramRange": {"start": "0x00000100", "end": "0x000010FF"},
+        "eepromBytes": 4096,
+        "eepromRange": {"start": "0x00000000", "end": "0x00000FFF"},
+        "ioPorts": ["PORTA", "PORTB", "PORTC", "PORTD", "PORTE", "PORTF", "PORTG"],
+        "vectorCount": 35,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"sizeBytes": 1024, "startAddress": "0x0001FC00", "bootsz": "11"},
+            {"sizeBytes": 2048, "startAddress": "0x0001F800", "bootsz": "10"},
+            {"sizeBytes": 4096, "startAddress": "0x0001F000", "bootsz": "01"},
+            {"sizeBytes": 8192, "startAddress": "0x0001E000", "bootsz": "00"}
+        ],
+        "defaultBootloader": "STK500boot (0x1E000)",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0xE1"},
+            "high": {"name": "HIGH", "default": "0x99"},
+            "extended": {"name": "EXTENDED", "default": "0xFD"},
+            "lock": {"name": "LOCK", "default": "0xFF"}
+        },
+        "peripherals": ["USART0", "USART1", "SPI0", "TWI0", "TC0", "TC1", "TC2", "TC3", "ADC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATmega168P",
+        "family": "AVR",
+        "series": "ATmega",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "TQFP32 / DIP28",
+        "datasheet": "Microchip DS40002061B",
+        "flashBytes": 16384,
+        "flashRange": {"start": "0x00000000", "end": "0x00003FFF"},
+        "ramBytes": 1024,
+        "ramRange": {"start": "0x00000100", "end": "0x000004FF"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00000000", "end": "0x000001FF"},
+        "ioPorts": ["PORTB", "PORTC", "PORTD"],
+        "vectorCount": 26,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"sizeBytes": 256, "startAddress": "0x00003F00", "bootsz": "11"},
+            {"sizeBytes": 512, "startAddress": "0x00003E00", "bootsz": "10"},
+            {"sizeBytes": 1024, "startAddress": "0x00003C00", "bootsz": "01"},
+            {"sizeBytes": 2048, "startAddress": "0x00003800", "bootsz": "00"}
+        ],
+        "defaultBootloader": "Optiboot (0x3E00)",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x62"},
+            "high": {"name": "HIGH", "default": "0xDF"},
+            "extended": {"name": "EXTENDED", "default": "0xF9"},
+            "lock": {"name": "LOCK", "default": "0xFF"}
+        },
+        "peripherals": ["USART0", "SPI0", "TWI0", "TC0", "TC1", "TC2", "ADC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATmega88P",
+        "family": "AVR",
+        "series": "ATmega",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "TQFP32 / DIP28",
+        "datasheet": "Microchip DS40002061B",
+        "flashBytes": 8192,
+        "flashRange": {"start": "0x00000000", "end": "0x00001FFF"},
+        "ramBytes": 1024,
+        "ramRange": {"start": "0x00000100", "end": "0x000004FF"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00000000", "end": "0x000001FF"},
+        "ioPorts": ["PORTB", "PORTC", "PORTD"],
+        "vectorCount": 26,
+        "vectorStrideBytes": 2,
+        "vectorInstruction": "RJMP",
+        "bootSections": [
+            {"sizeBytes": 256, "startAddress": "0x00001F00", "bootsz": "11"},
+            {"sizeBytes": 512, "startAddress": "0x00001E00", "bootsz": "10"},
+            {"sizeBytes": 1024, "startAddress": "0x00001C00", "bootsz": "01"},
+            {"sizeBytes": 2048, "startAddress": "0x00001800", "bootsz": "00"}
+        ],
+        "defaultBootloader": "Optiboot (0x1E00)",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x62"},
+            "high": {"name": "HIGH", "default": "0xDF"},
+            "extended": {"name": "EXTENDED", "default": "0xF9"},
+            "lock": {"name": "LOCK", "default": "0xFF"}
+        },
+        "peripherals": ["USART0", "SPI0", "TWI0", "TC0", "TC1", "TC2", "ADC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATmega8A",
+        "family": "AVR",
+        "series": "ATmega",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "TQFP32 / DIP28",
+        "datasheet": "Microchip DS40001977A / Atmel 8159",
+        "flashBytes": 8192,
+        "flashRange": {"start": "0x00000000", "end": "0x00001FFF"},
+        "ramBytes": 1024,
+        "ramRange": {"start": "0x00000060", "end": "0x0000045F"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00000000", "end": "0x000001FF"},
+        "ioPorts": ["PORTB", "PORTC", "PORTD"],
+        "vectorCount": 19,
+        "vectorStrideBytes": 2,
+        "vectorInstruction": "RJMP",
+        "bootSections": [
+            {"sizeBytes": 256, "startAddress": "0x00001F00", "bootsz": "11"},
+            {"sizeBytes": 512, "startAddress": "0x00001E00", "bootsz": "10"},
+            {"sizeBytes": 1024, "startAddress": "0x00001C00", "bootsz": "01"},
+            {"sizeBytes": 2048, "startAddress": "0x00001800", "bootsz": "00"}
+        ],
+        "defaultBootloader": "Optiboot (0x1E00)",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0xE1"},
+            "high": {"name": "HIGH", "default": "0xD9"},
+            "extended": None,
+            "lock": {"name": "LOCK", "default": "0xFF"}
+        },
+        "peripherals": ["USART0", "SPI0", "TWI0", "TC0", "TC1", "TC2", "ADC", "WDT"],
+        "supportState": "PLANNED"
+    },
+
+    # --- Classic ATtiny (6 parts) ---
+    {
+        "exactPart": "ATtiny85",
+        "family": "AVR",
+        "series": "ATtiny",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "SOIC8 / DIP8 / QFN20",
+        "datasheet": "Microchip DS40001509B / Atmel 2586",
+        "flashBytes": 8192,
+        "flashRange": {"start": "0x00000000", "end": "0x00001FFF"},
+        "ramBytes": 512,
+        "ramRange": {"start": "0x00000060", "end": "0x0000025F"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00000000", "end": "0x000001FF"},
+        "ioPorts": ["PORTB"],
+        "vectorCount": 15,
+        "vectorStrideBytes": 2,
+        "vectorInstruction": "RJMP",
+        "bootSections": [],  # tiny85 lacks hardware BOOTSZ fuse partition
+        "defaultBootloader": "Micronucleus / None",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x62", "digispark": "0xE1"},
+            "high": {"name": "HIGH", "default": "0xDF", "digispark": "0xDD"},
+            "extended": {"name": "EXTENDED", "default": "0xFF", "digispark": "0xFE"},
+            "lock": {"name": "LOCK", "default": "0xFF"}
+        },
+        "peripherals": ["TC0", "TC1", "USI", "ADC", "AC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATtiny45",
+        "family": "AVR",
+        "series": "ATtiny",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "SOIC8 / DIP8",
+        "datasheet": "Microchip DS40001509B / Atmel 2586",
+        "flashBytes": 4096,
+        "flashRange": {"start": "0x00000000", "end": "0x00000FFF"},
+        "ramBytes": 256,
+        "ramRange": {"start": "0x00000060", "end": "0x0000015F"},
+        "eepromBytes": 256,
+        "eepromRange": {"start": "0x00000000", "end": "0x000000FF"},
+        "ioPorts": ["PORTB"],
+        "vectorCount": 15,
+        "vectorStrideBytes": 2,
+        "vectorInstruction": "RJMP",
+        "bootSections": [],
+        "defaultBootloader": "None",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x62"},
+            "high": {"name": "HIGH", "default": "0xDF"},
+            "extended": {"name": "EXTENDED", "default": "0xFF"},
+            "lock": {"name": "LOCK", "default": "0xFF"}
+        },
+        "peripherals": ["TC0", "TC1", "USI", "ADC", "AC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATtiny13A",
+        "family": "AVR",
+        "series": "ATtiny",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "SOIC8 / DIP8 / QFN10",
+        "datasheet": "Microchip DS40002307A / Atmel 8126",
+        "flashBytes": 1024,
+        "flashRange": {"start": "0x00000000", "end": "0x000003FF"},
+        "ramBytes": 64,
+        "ramRange": {"start": "0x00000060", "end": "0x0000009F"},
+        "eepromBytes": 64,
+        "eepromRange": {"start": "0x00000000", "end": "0x0000003F"},
+        "ioPorts": ["PORTB"],
+        "vectorCount": 10,
+        "vectorStrideBytes": 2,
+        "vectorInstruction": "RJMP",
+        "bootSections": [],
+        "defaultBootloader": "None",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x6A"},
+            "high": {"name": "HIGH", "default": "0xFF"},
+            "extended": None,
+            "lock": {"name": "LOCK", "default": "0xFF"}
+        },
+        "peripherals": ["TC0", "ADC", "AC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATtiny84",
+        "family": "AVR",
+        "series": "ATtiny",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "SOIC14 / DIP14 / QFN20",
+        "datasheet": "Microchip DS40001500B / Atmel 8006",
+        "flashBytes": 8192,
+        "flashRange": {"start": "0x00000000", "end": "0x00001FFF"},
+        "ramBytes": 512,
+        "ramRange": {"start": "0x00000060", "end": "0x0000025F"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00000000", "end": "0x000001FF"},
+        "ioPorts": ["PORTA", "PORTB"],
+        "vectorCount": 17,
+        "vectorStrideBytes": 2,
+        "vectorInstruction": "RJMP",
+        "bootSections": [],
+        "defaultBootloader": "None",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x62"},
+            "high": {"name": "HIGH", "default": "0xDF"},
+            "extended": {"name": "EXTENDED", "default": "0xFF"},
+            "lock": {"name": "LOCK", "default": "0xFF"}
+        },
+        "peripherals": ["TC0", "TC1", "USI", "ADC", "AC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATtiny2313A",
+        "family": "AVR",
+        "series": "ATtiny",
+        "core": "AVR RISC",
+        "arch": "AVR8",
+        "ghidraLanguage": "avr8:LE:16:default",
+        "package": "SOIC20 / DIP20 / QFN20",
+        "datasheet": "Microchip DS40002166A / Atmel 8246",
+        "flashBytes": 2048,
+        "flashRange": {"start": "0x00000000", "end": "0x000007FF"},
+        "ramBytes": 128,
+        "ramRange": {"start": "0x00000060", "end": "0x000000DF"},
+        "eepromBytes": 128,
+        "eepromRange": {"start": "0x00000000", "end": "0x0000007F"},
+        "ioPorts": ["PORTA", "PORTB", "PORTD"],
+        "vectorCount": 19,
+        "vectorStrideBytes": 2,
+        "vectorInstruction": "RJMP",
+        "bootSections": [],
+        "defaultBootloader": "None",
+        "fuses": {
+            "low": {"name": "LOW", "default": "0x64"},
+            "high": {"name": "HIGH", "default": "0xDF"},
+            "extended": {"name": "EXTENDED", "default": "0xFF"},
+            "lock": {"name": "LOCK", "default": "0xFF"}
+        },
+        "peripherals": ["USART0", "USI", "TC0", "TC1", "AC", "WDT"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "ATtiny1614",
+        "family": "AVR",
+        "series": "ATtiny",
+        "core": "AVRxt",
+        "arch": "AVR8X",
+        "ghidraLanguage": "avr8:LE:24:xmega",
+        "package": "SOIC14",
+        "datasheet": "Microchip DS40001994B",
+        "flashBytes": 16384,
+        "flashRange": {"start": "0x00000000", "end": "0x00003FFF"},
+        "ramBytes": 2048,
+        "ramRange": {"start": "0x00003800", "end": "0x00003FFF"},
+        "eepromBytes": 256,
+        "eepromRange": {"start": "0x00001400", "end": "0x000014FF"},
+        "ioPorts": ["PORTA", "PORTB"],
+        "vectorCount": 28,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [],
+        "defaultBootloader": "UPDI Programming",
+        "fuses": {
+            "fuseRegisters": ["WDTCFG", "BODCFG", "OSCCFG", "TCD0CFG", "SYSCFG0", "SYSCFG1", "APPEND", "BOOTEND"]
+        },
+        "peripherals": ["USART0", "SPI0", "TWI0", "TCA0", "TCB0", "ADC0", "AC0", "WDT", "UPDI"],
+        "supportState": "PLANNED"
+    },
+
+    # --- Modern AVR-Dx (5 parts) ---
+    {
+        "exactPart": "AVR128DA48",
+        "family": "AVR",
+        "series": "AVR-Dx",
+        "core": "AVRxt",
+        "arch": "AVR8X",
+        "ghidraLanguage": "avr8:LE:24:xmega",
+        "package": "TQFP48 / VQFN48",
+        "datasheet": "Microchip DS40002183B",
+        "flashBytes": 131072,
+        "flashRange": {"start": "0x00000000", "end": "0x0001FFFF"},
+        "ramBytes": 16384,
+        "ramRange": {"start": "0x00004000", "end": "0x00007FFF"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00001400", "end": "0x000015FF"},
+        "flashDataAlias": {"start": "0x00008000", "end": "0x0000FFFF", "windowSize": 32768},
+        "ioPorts": ["PORTA", "PORTB", "PORTC", "PORTD", "PORTE", "PORTF"],
+        "vectorCount": 42,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"name": "BOOTEND_CONFIG", "granularityBytes": 256}
+        ],
+        "defaultBootloader": "DxCore / Optiboot / UPDI",
+        "fuses": {
+            "fuseRegisters": ["WDTCFG", "BODCFG", "OSCCFG", "SYSCFG0", "SYSCFG1", "CODESIZE", "BOOTSIZE"]
+        },
+        "peripherals": ["USART0", "USART1", "USART2", "SPI0", "TWI0", "TCA0", "TCB0", "TCD0", "RTC", "EVSYS", "CCL", "DAC0", "ADC0", "ZCD", "UPDI"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "AVR128DB48",
+        "family": "AVR",
+        "series": "AVR-Dx",
+        "core": "AVRxt",
+        "arch": "AVR8X",
+        "ghidraLanguage": "avr8:LE:24:xmega",
+        "package": "TQFP48 / VQFN48",
+        "datasheet": "Microchip DS40002247B",
+        "flashBytes": 131072,
+        "flashRange": {"start": "0x00000000", "end": "0x0001FFFF"},
+        "ramBytes": 16384,
+        "ramRange": {"start": "0x00004000", "end": "0x00007FFF"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00001400", "end": "0x000015FF"},
+        "flashDataAlias": {"start": "0x00008000", "end": "0x0000FFFF", "windowSize": 32768},
+        "ioPorts": ["PORTA", "PORTB", "PORTC", "PORTD", "PORTE", "PORTF"],
+        "vectorCount": 45,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"name": "BOOTEND_CONFIG", "granularityBytes": 256}
+        ],
+        "defaultBootloader": "DxCore / UPDI",
+        "fuses": {
+            "fuseRegisters": ["WDTCFG", "BODCFG", "OSCCFG", "SYSCFG0", "SYSCFG1", "CODESIZE", "BOOTSIZE"]
+        },
+        "peripherals": ["MVIO", "OPAMP", "USART0", "USART1", "USART2", "SPI0", "TWI0", "TCA0", "TCB0", "TCD0", "RTC", "CCL", "ADC0", "DAC0", "UPDI"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "AVR64DA32",
+        "family": "AVR",
+        "series": "AVR-Dx",
+        "core": "AVRxt",
+        "arch": "AVR8X",
+        "ghidraLanguage": "avr8:LE:24:xmega",
+        "package": "TQFP32 / VQFN32",
+        "datasheet": "Microchip DS40002183B",
+        "flashBytes": 65536,
+        "flashRange": {"start": "0x00000000", "end": "0x0000FFFF"},
+        "ramBytes": 8192,
+        "ramRange": {"start": "0x00004000", "end": "0x00005FFF"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00001400", "end": "0x000015FF"},
+        "flashDataAlias": {"start": "0x00008000", "end": "0x0000FFFF", "windowSize": 32768},
+        "ioPorts": ["PORTA", "PORTC", "PORTD", "PORTF"],
+        "vectorCount": 42,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"name": "BOOTEND_CONFIG", "granularityBytes": 256}
+        ],
+        "defaultBootloader": "DxCore / UPDI",
+        "fuses": {
+            "fuseRegisters": ["WDTCFG", "BODCFG", "OSCCFG", "SYSCFG0", "SYSCFG1", "CODESIZE", "BOOTSIZE"]
+        },
+        "peripherals": ["USART0", "USART1", "SPI0", "TWI0", "TCA0", "TCB0", "TCD0", "RTC", "CCL", "ADC0", "DAC0", "UPDI"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "AVR32DA28",
+        "family": "AVR",
+        "series": "AVR-Dx",
+        "core": "AVRxt",
+        "arch": "AVR8X",
+        "ghidraLanguage": "avr8:LE:24:xmega",
+        "package": "SOIC28 / SPDIP28",
+        "datasheet": "Microchip DS40002183B",
+        "flashBytes": 32768,
+        "flashRange": {"start": "0x00000000", "end": "0x00007FFF"},
+        "ramBytes": 4096,
+        "ramRange": {"start": "0x00004000", "end": "0x00004FFF"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00001400", "end": "0x000015FF"},
+        "flashDataAlias": {"start": "0x00008000", "end": "0x0000FFFF", "windowSize": 32768},
+        "ioPorts": ["PORTA", "PORTC", "PORTD", "PORTF"],
+        "vectorCount": 42,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"name": "BOOTEND_CONFIG", "granularityBytes": 256}
+        ],
+        "defaultBootloader": "DxCore / UPDI",
+        "fuses": {
+            "fuseRegisters": ["WDTCFG", "BODCFG", "OSCCFG", "SYSCFG0", "SYSCFG1", "CODESIZE", "BOOTSIZE"]
+        },
+        "peripherals": ["USART0", "USART1", "SPI0", "TWI0", "TCA0", "TCB0", "RTC", "CCL", "ADC0", "UPDI"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "AVR128DD48",
+        "family": "AVR",
+        "series": "AVR-Dx",
+        "core": "AVRxt",
+        "arch": "AVR8X",
+        "ghidraLanguage": "avr8:LE:24:xmega",
+        "package": "TQFP48 / VQFN48",
+        "datasheet": "Microchip DS40002315B",
+        "flashBytes": 131072,
+        "flashRange": {"start": "0x00000000", "end": "0x0001FFFF"},
+        "ramBytes": 16384,
+        "ramRange": {"start": "0x00004000", "end": "0x00007FFF"},
+        "eepromBytes": 512,
+        "eepromRange": {"start": "0x00001400", "end": "0x000015FF"},
+        "flashDataAlias": {"start": "0x00008000", "end": "0x0000FFFF", "windowSize": 32768},
+        "ioPorts": ["PORTA", "PORTC", "PORTD", "PORTF"],
+        "vectorCount": 42,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "JMP",
+        "bootSections": [
+            {"name": "BOOTEND_CONFIG", "granularityBytes": 256}
+        ],
+        "defaultBootloader": "DxCore / UPDI",
+        "fuses": {
+            "fuseRegisters": ["WDTCFG", "BODCFG", "OSCCFG", "SYSCFG0", "SYSCFG1", "CODESIZE", "BOOTSIZE"]
+        },
+        "peripherals": ["MVIO", "USART0", "USART1", "SPI0", "TWI0", "TCA0", "TCB0", "TCD0", "RTC", "CCL", "ADC0", "UPDI"],
+        "supportState": "PLANNED"
+    },
+
+    # --- SAM Cortex-M0+ / M4 (5 parts) ---
+    {
+        "exactPart": "SAMD21G18A",
+        "family": "SAM",
+        "series": "SAMD",
+        "core": "ARM Cortex-M0+",
+        "arch": "ARMv6-M",
+        "ghidraLanguage": "ARM:LE:32:v6M",
+        "package": "TQFP48 / QFN48",
+        "datasheet": "Microchip DS40001882G / Atmel 42181",
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 32768,
+        "ramRange": {"start": "0x20000000", "end": "0x20007FFF"},
+        "eepromBytes": 0,
+        "eepromRange": None,
+        "ioPorts": ["PORTA", "PORTB"],
+        "vectorCount": 44,  # 16 Cortex-M + 28 peripheral IRQs
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "THUMB_VECTOR",
+        "bootSections": [
+            {"name": "SAM-BA_BOOT_ROM", "startAddress": "0x00000000", "sizeBytes": 8192, "mapped": "ROM_OR_FLASH"}
+        ],
+        "defaultBootloader": "SAM-BA ROM / Arduino Zero Bootloader",
+        "fuses": {
+            "userRowAddress": "0x00804000",
+            "nvmctrlSecurityBit": "NVMCTRL_CTRLB_CMD_SSB",
+            "bootprotBits": "BOOTPROT[2:0]"
+        },
+        "peripherals": ["USB", "SERCOM0", "SERCOM1", "SERCOM2", "SERCOM3", "SERCOM4", "SERCOM5", "TC3", "TC4", "TC5", "TCC0", "TCC1", "TCC2", "ADC", "DAC", "AC", "RTC", "DMAC", "SYSCTRL", "PM", "NVMCTRL"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "SAMD21E18A",
+        "family": "SAM",
+        "series": "SAMD",
+        "core": "ARM Cortex-M0+",
+        "arch": "ARMv6-M",
+        "ghidraLanguage": "ARM:LE:32:v6M",
+        "package": "TQFP32 / QFN32",
+        "datasheet": "Microchip DS40001882G",
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 32768,
+        "ramRange": {"start": "0x20000000", "end": "0x20007FFF"},
+        "eepromBytes": 0,
+        "eepromRange": None,
+        "ioPorts": ["PORTA"],
+        "vectorCount": 44,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "THUMB_VECTOR",
+        "bootSections": [
+            {"name": "SAM-BA_BOOT_ROM", "startAddress": "0x00000000", "sizeBytes": 8192, "mapped": "ROM_OR_FLASH"}
+        ],
+        "defaultBootloader": "SAM-BA ROM",
+        "fuses": {
+            "userRowAddress": "0x00804000",
+            "bootprotBits": "BOOTPROT[2:0]"
+        },
+        "peripherals": ["USB", "SERCOM0", "SERCOM1", "SERCOM2", "SERCOM3", "TC3", "TCC0", "TCC1", "TCC2", "ADC", "DAC", "RTC", "DMAC"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "SAMD51J19A",
+        "family": "SAM",
+        "series": "SAMD",
+        "core": "ARM Cortex-M4F",
+        "arch": "ARMv7E-M",
+        "ghidraLanguage": "ARM:LE:32:v7EM",
+        "package": "TQFP64 / QFN64",
+        "datasheet": "Microchip DS40001995E",
+        "flashBytes": 524288,
+        "flashRange": {"start": "0x00000000", "end": "0x0007FFFF"},
+        "ramBytes": 196608,
+        "ramRange": {"start": "0x20000000", "end": "0x2002FFFF"},
+        "eepromBytes": 0,
+        "eepromRange": None,
+        "ioPorts": ["PORTA", "PORTB"],
+        "vectorCount": 153,  # 16 Cortex-M + 137 IRQs
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "THUMB_VECTOR",
+        "bootSections": [
+            {"name": "SAM-BA_BOOT_ROM", "startAddress": "0x00000000", "sizeBytes": 16384}
+        ],
+        "defaultBootloader": "UF2 Bootloader / SAM-BA",
+        "fuses": {
+            "userRowAddress": "0x00804000",
+            "nvmctrlSecurityBit": "SECURITY_BIT"
+        },
+        "peripherals": ["QSPI", "USB", "CAN0", "CAN1", "SERCOM0", "SERCOM1", "SERCOM2", "SERCOM3", "SERCOM4", "SERCOM5", "TCC0", "TCC1", "TCC2", "TCC3", "TCC4", "TC0", "TC1", "TC2", "TC3", "TC4", "TC5", "ADC0", "ADC1", "DAC", "TRNG", "ICM", "PUKCC"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "SAML21J18B",
+        "family": "SAM",
+        "series": "SAMD",
+        "core": "ARM Cortex-M0+",
+        "arch": "ARMv6-M",
+        "ghidraLanguage": "ARM:LE:32:v6M",
+        "package": "TQFP64 / QFN64",
+        "datasheet": "Microchip DS60001477C",
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 32768,
+        "ramRange": {"start": "0x20000000", "end": "0x20007FFF"},
+        "eepromBytes": 0,
+        "eepromRange": None,
+        "ioPorts": ["PORTA", "PORTB"],
+        "vectorCount": 45,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "THUMB_VECTOR",
+        "bootSections": [],
+        "defaultBootloader": "SAM-BA ROM",
+        "fuses": {"userRowAddress": "0x00804000"},
+        "peripherals": ["USB", "SERCOM0", "SERCOM1", "SERCOM2", "SERCOM3", "SERCOM4", "SERCOM5", "TC0", "TC1", "TC4", "TCC0", "TCC1", "TCC2", "ADC", "DAC", "AC", "TRNG", "AES"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "SAMC21J18A",
+        "family": "SAM",
+        "series": "SAMD",
+        "core": "ARM Cortex-M0+",
+        "arch": "ARMv6-M",
+        "ghidraLanguage": "ARM:LE:32:v6M",
+        "package": "TQFP64 / QFN64",
+        "datasheet": "Microchip DS60001479C",
+        "flashBytes": 262144,
+        "flashRange": {"start": "0x00000000", "end": "0x0003FFFF"},
+        "ramBytes": 32768,
+        "ramRange": {"start": "0x20000000", "end": "0x20007FFF"},
+        "eepromBytes": 0,
+        "eepromRange": None,
+        "ioPorts": ["PORTA", "PORTB"],
+        "vectorCount": 48,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "THUMB_VECTOR",
+        "bootSections": [],
+        "defaultBootloader": "SAM-BA ROM",
+        "fuses": {"userRowAddress": "0x00804000"},
+        "peripherals": ["CAN0", "CAN1", "SERCOM0", "SERCOM1", "SERCOM2", "SERCOM3", "SERCOM4", "SERCOM5", "TC0", "TC1", "TC2", "TC3", "TC4", "TCC0", "TCC1", "TCC2", "ADC0", "ADC1", "DAC", "SDADC"],
+        "supportState": "PLANNED"
+    },
+
+    # --- SAM Cortex-M7 / M3 (4 parts) ---
+    {
+        "exactPart": "SAME70Q21",
+        "family": "SAM",
+        "series": "SAME",
+        "core": "ARM Cortex-M7",
+        "arch": "ARMv7E-M",
+        "ghidraLanguage": "ARM:LE:32:v7EM",
+        "package": "LQFP144 / LFBGA144",
+        "datasheet": "Microchip DS60001527E",
+        "flashBytes": 2097152,
+        "flashRange": {"start": "0x00400000", "end": "0x005FFFFF"},
+        "ramBytes": 393216,
+        "ramRange": {"start": "0x20400000", "end": "0x2045FFFF"},
+        "eepromBytes": 0,
+        "eepromRange": None,
+        "ioPorts": ["PORTA", "PORTB", "PORTC", "PORTD", "PORTE"],
+        "vectorCount": 85,  # 16 Cortex-M + 69 IRQs
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "THUMB_VECTOR",
+        "bootSections": [
+            {"name": "SAM-BA_BOOT_ROM", "startAddress": "0x00800000", "sizeBytes": 16384}
+        ],
+        "defaultBootloader": "SAM-BA ROM (0x00800000)",
+        "fuses": {
+            "gpnvmBits": ["GPNVM0 (Security)", "GPNVM1 (Boot Mode: Flash 0x00400000 vs ROM 0x00800000)", "GPNVM7 (TCM size)"],
+            "userSignatureAddress": "0x00400000"
+        },
+        "peripherals": ["GMAC", "USBHS", "MCAN0", "MCAN1", "USART0", "USART1", "USART2", "UART0", "UART1", "UART2", "UART3", "UART4", "SPI0", "SPI1", "TWIHS0", "TWIHS1", "TWIHS2", "TC0", "TC1", "TC2", "TC3", "AFEC0", "AFEC1", "DACC", "ACC", "AES", "TRNG", "ICM", "QSPI", "HSMCI"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "SAMS70N21",
+        "family": "SAM",
+        "series": "SAME",
+        "core": "ARM Cortex-M7",
+        "arch": "ARMv7E-M",
+        "ghidraLanguage": "ARM:LE:32:v7EM",
+        "package": "LQFP100 / TFBGA100",
+        "datasheet": "Microchip DS60001527E",
+        "flashBytes": 2097152,
+        "flashRange": {"start": "0x00400000", "end": "0x005FFFFF"},
+        "ramBytes": 393216,
+        "ramRange": {"start": "0x20400000", "end": "0x2045FFFF"},
+        "eepromBytes": 0,
+        "eepromRange": None,
+        "ioPorts": ["PORTA", "PORTB", "PORTC", "PORTD"],
+        "vectorCount": 85,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "THUMB_VECTOR",
+        "bootSections": [
+            {"name": "SAM-BA_BOOT_ROM", "startAddress": "0x00800000", "sizeBytes": 16384}
+        ],
+        "defaultBootloader": "SAM-BA ROM",
+        "fuses": {
+            "gpnvmBits": ["GPNVM0", "GPNVM1", "GPNVM7"]
+        },
+        "peripherals": ["USBHS", "USART0", "USART1", "USART2", "UART0", "UART1", "UART2", "UART3", "UART4", "SPI0", "TWIHS0", "TWIHS1", "TC0", "TC1", "TC2", "AFEC0", "AFEC1", "DACC", "AES", "TRNG", "QSPI"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "SAMV71Q21",
+        "family": "SAM",
+        "series": "SAME",
+        "core": "ARM Cortex-M7",
+        "arch": "ARMv7E-M",
+        "ghidraLanguage": "ARM:LE:32:v7EM",
+        "package": "LQFP144 / BGA144",
+        "datasheet": "Microchip DS60001527E",
+        "flashBytes": 2097152,
+        "flashRange": {"start": "0x00400000", "end": "0x005FFFFF"},
+        "ramBytes": 393216,
+        "ramRange": {"start": "0x20400000", "end": "0x2045FFFF"},
+        "eepromBytes": 0,
+        "eepromRange": None,
+        "ioPorts": ["PORTA", "PORTB", "PORTC", "PORTD", "PORTE"],
+        "vectorCount": 85,
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "THUMB_VECTOR",
+        "bootSections": [
+            {"name": "SAM-BA_BOOT_ROM", "startAddress": "0x00800000", "sizeBytes": 16384}
+        ],
+        "defaultBootloader": "SAM-BA ROM",
+        "fuses": {
+            "gpnvmBits": ["GPNVM0", "GPNVM1", "GPNVM7"]
+        },
+        "peripherals": ["ETH_AVB", "MLB", "MCAN0", "MCAN1", "USBHS", "USART0", "USART1", "USART2", "UART0", "UART1", "UART2", "UART3", "UART4", "SPI0", "SPI1", "TWIHS0", "TWIHS1", "TWIHS2", "TC0", "TC1", "TC2", "TC3", "AFEC0", "AFEC1", "DACC", "AES", "TRNG", "QSPI"],
+        "supportState": "PLANNED"
+    },
+    {
+        "exactPart": "SAM3X8E",
+        "family": "SAM",
+        "series": "SAME",
+        "core": "ARM Cortex-M3",
+        "arch": "ARMv7-M",
+        "ghidraLanguage": "ARM:LE:32:v7M",
+        "package": "LQFP144",
+        "datasheet": "Microchip DS11057C / Atmel 11057",
+        "flashBytes": 524288,
+        "flashRange": {"start": "0x00080000", "end": "0x000FFFFF"},  # Dual bank 2x256KB at 0x80000 / 0xC0000
+        "ramBytes": 98304,
+        "ramRange": {"start": "0x20000000", "end": "0x20017FFF"},  # 64KB SRAM0 + 32KB SRAM1
+        "eepromBytes": 0,
+        "eepromRange": None,
+        "ioPorts": ["PORTA", "PORTB", "PORTC", "PORTD"],
+        "vectorCount": 61,  # 16 Cortex-M + 45 IRQs
+        "vectorStrideBytes": 4,
+        "vectorInstruction": "THUMB_VECTOR",
+        "bootSections": [
+            {"name": "SAM-BA_BOOT_ROM", "startAddress": "0x00100000", "sizeBytes": 131072}
+        ],
+        "defaultBootloader": "SAM-BA ROM (0x00100000) / Arduino Due",
+        "fuses": {
+            "gpnvmBits": ["GPNVM0 (Security)", "GPNVM1 (Boot Mode: Flash 0x00080000 vs ROM 0x00100000)"]
+        },
+        "peripherals": ["UOTGHS", "EMAC", "CAN0", "CAN1", "USART0", "USART1", "USART2", "USART3", "UART", "SPI0", "TWI0", "TWI1", "TC0", "TC1", "TC2", "ADC", "DACC", "TRNG", "PWM", "HSMCI", "SMC"],
+        "supportState": "PLANNED"
+    }
+]
+
+AUTHORITATIVE_REFERENCES = [
+    {
+        "title": "ATmega328P 8-bit AVR Microcontroller with 32K Bytes In-System Programmable Flash Datasheet",
+        "documentId": "DS40002061B",
+        "publisher": "Microchip Technology Inc.",
+        "year": 2018,
+        "license": "Proprietary / Factual Technical Specification"
+    },
+    {
+        "title": "ATmega640/1280/1281/2560/2561 8-bit AVR Microcontroller Datasheet",
+        "documentId": "DS40002211A",
+        "publisher": "Microchip Technology Inc.",
+        "year": 2020,
+        "license": "Proprietary / Factual Technical Specification"
+    },
+    {
+        "title": "ATtiny25/45/85 8-bit AVR Microcontroller with 2/4/8K Bytes In-System Programmable Flash Datasheet",
+        "documentId": "DS40001509B",
+        "publisher": "Microchip Technology Inc.",
+        "year": 2013,
+        "license": "Proprietary / Factual Technical Specification"
+    },
+    {
+        "title": "AVR128DA28/32/48/64 Preliminary Data Sheet",
+        "documentId": "DS40002183B",
+        "publisher": "Microchip Technology Inc.",
+        "year": 2020,
+        "license": "Proprietary / Factual Technical Specification"
+    },
+    {
+        "title": "SAM D21/DA1 Family Data Sheet Complete",
+        "documentId": "DS40001882G",
+        "publisher": "Microchip Technology Inc.",
+        "year": 2020,
+        "license": "Proprietary / Factual Technical Specification"
+    },
+    {
+        "title": "SAM E70/S70/V70/V71 Family Data Sheet Complete",
+        "documentId": "DS60001527E",
+        "publisher": "Microchip Technology Inc.",
+        "year": 2019,
+        "license": "Proprietary / Factual Technical Specification"
+    },
+    {
+        "title": "Microchip Device Family Pack (DFP) ATmega, ATtiny, AVR-Dx, SAMD21, SAME70 ATDF and SVD Packs",
+        "publisher": "Microchip Technology Inc. / Atmel Corp.",
+        "license": "Apache-2.0 / BSD-3-Clause / Microchip DFP Redistribution Terms"
+    }
+]
+
+
+def build_catalog() -> dict:
+    return {
+        "$schema": "urn:embedra:schema:atmel-catalog:1",
+        "schemaVersion": 1,
+        "date": "2026-10-14",
+        "family": "Atmel / Microchip (AVR and SAM)",
+        "description": "Authoritative catalog of Atmel / Microchip 8-bit AVR and 32-bit SAM microcontrollers.",
+        "series": SERIES_DEFINITIONS,
+        "invariants": INVARIANTS,
+        "parts": PARTS_ALLOWLIST
+    }
+
+
+def build_capability_matrix() -> dict:
+    return {
+        "$schema": "urn:embedra:schema:atmel-capability-matrix:1",
+        "schemaId": "urn:embedra:schema:atmel-capability-matrix:1",
+        "schemaVersion": 1,
+        "metadata": {
+            "task": "T104",
+            "date": "2026-10-14",
+            "family": "Atmel / Microchip (AVR and SAM)",
+            "totalSeriesCount": len(SERIES_DEFINITIONS),
+            "totalExactPartCount": len(PARTS_ALLOWLIST),
+            "authoritativeReferences": AUTHORITATIVE_REFERENCES
+        },
+        "series": SERIES_DEFINITIONS,
+        "invariants": INVARIANTS,
+        "parts": PARTS_ALLOWLIST
+    }
+
+
+def main():
+    CATALOG_DIR.mkdir(parents=True, exist_ok=True)
+    EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+
+    catalog = build_catalog()
+    catalog_path = CATALOG_DIR / "catalog.json"
+    with catalog_path.open("w", encoding="utf-8") as f:
+        json.dump(catalog, f, indent=2)
+        f.write("\n")
+
+    sha256 = hashlib.sha256(catalog_path.read_bytes()).hexdigest()
+    sha256_path = CATALOG_DIR / "catalog.sha256"
+    with sha256_path.open("w", encoding="utf-8") as f:
+        f.write(f"{sha256}  catalog.json\n")
+
+    matrix = build_capability_matrix()
+    matrix_path = EVIDENCE_DIR / "T104-atmel-capability-matrix.json"
+    with matrix_path.open("w", encoding="utf-8") as f:
+        json.dump(matrix, f, indent=2)
+        f.write("\n")
+
+    print(f"Generated {catalog_path} ({len(PARTS_ALLOWLIST)} parts)")
+    print(f"Generated {sha256_path} ({sha256})")
+    print(f"Generated {matrix_path}")
+
+
+if __name__ == "__main__":
+    main()

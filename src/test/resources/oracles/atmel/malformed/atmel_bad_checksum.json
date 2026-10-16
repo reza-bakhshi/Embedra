@@ -1,0 +1,5 @@
+{
+  "errorExpected": true,
+  "diagnosticCode": "HEX_CHECKSUM_MISMATCH",
+  "reason": "Record 1 checksum does not match computed checksum"
+}

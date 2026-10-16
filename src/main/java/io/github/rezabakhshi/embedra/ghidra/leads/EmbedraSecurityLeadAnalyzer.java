@@ -183,6 +183,14 @@ public final class EmbedraSecurityLeadAnalyzer extends AbstractAnalyzer {
         if (proc.contains("xtensa")) {
             return InstructionArch.XTENSA;
         }
+        if (proc.contains("stm8")
+                || program.getLanguageID().getIdAsString().toLowerCase(Locale.ROOT).contains("stm8")) {
+            return InstructionArch.STM8;
+        }
+        if (proc.contains("avr")
+                || program.getLanguageID().getIdAsString().toLowerCase(Locale.ROOT).contains("avr")) {
+            return InstructionArch.AVR8;
+        }
         return null;
     }
 
@@ -253,46 +261,85 @@ public final class EmbedraSecurityLeadAnalyzer extends AbstractAnalyzer {
             CancellationToken token) {
         List<CommandTableEntry> entries = new ArrayList<>();
         ByteOrder order = program.getLanguage().isBigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
+        int defaultPtrSize = program.getDefaultPointerSize();
+        boolean isThumb = detectArchitecture(program) == InstructionArch.ARM_THUMB;
 
-        for (MemoryBlock block : program.getMemory().getBlocks()) {
-            if (token.isCancellationRequested() || entries.size() >= limits.maxObjects()) {
-                break;
-            }
-            if (!block.isInitialized() || block.isExecute() || block.getSize() < 8) {
-                continue;
-            }
+        // Support pointer awareness for 16-bit (2), 24-bit (3), and 32-bit (4) pointers
+        List<Integer> candidatePtrSizes = new ArrayList<>();
+        if (defaultPtrSize <= 2) {
+            candidatePtrSizes.add(2);
+            candidatePtrSizes.add(3);
+        } else if (defaultPtrSize == 3) {
+            candidatePtrSizes.add(3);
+            candidatePtrSizes.add(2);
+        } else {
+            candidatePtrSizes.add(4);
+        }
 
-            int size = (int) Math.min(block.getSize(), 65536);
-            byte[] bytes = new byte[size];
-            try {
-                block.getBytes(block.getStart(), bytes);
-            } catch (Exception e) {
-                continue;
-            }
+        for (int ptrSize : candidatePtrSizes) {
+            int entrySize = ptrSize * 2;
+            int step = ptrSize;
 
-            ByteBuffer buffer = ByteBuffer.wrap(bytes).order(order);
-            for (int offset = 0; offset <= size - 8; offset += 4) {
+            for (MemoryBlock block : program.getMemory().getBlocks()) {
                 if (token.isCancellationRequested() || entries.size() >= limits.maxObjects()) {
                     break;
                 }
+                if (!block.isInitialized() || block.isExecute() || block.getSize() < entrySize) {
+                    continue;
+                }
 
-                long strPtr = Integer.toUnsignedLong(buffer.getInt(offset));
-                long fnPtr = Integer.toUnsignedLong(buffer.getInt(offset + 4));
+                int size = (int) Math.min(block.getSize(), 65536);
+                byte[] bytes = new byte[size];
+                try {
+                    block.getBytes(block.getStart(), bytes);
+                } catch (Exception e) {
+                    continue;
+                }
 
-                // ARM Thumb odd bit clear
-                long codeAddr = fnPtr & ~1L;
+                ByteBuffer buffer = ByteBuffer.wrap(bytes).order(order);
+                for (int offset = 0; offset <= size - entrySize; offset += step) {
+                    if (token.isCancellationRequested() || entries.size() >= limits.maxObjects()) {
+                        break;
+                    }
 
-                if (stringTable.containsKey(strPtr)) {
-                    String cmdStr = stringTable.get(strPtr).trim();
-                    if (cmdStr.length() >= 2 && cmdStr.length() <= 32 && isExecutableAddress(program, codeAddr)) {
-                        long tableAddr = block.getStart().getOffset() + offset;
-                        entries.add(new CommandTableEntry(tableAddr, cmdStr, codeAddr, ""));
+                    long strPtr = readPointer(buffer, offset, ptrSize, order);
+                    long fnPtr = readPointer(buffer, offset + ptrSize, ptrSize, order);
+
+                    // Clear odd bit only on ARM Thumb
+                    long codeAddr = isThumb ? (fnPtr & ~1L) : fnPtr;
+
+                    if (stringTable.containsKey(strPtr)) {
+                        String cmdStr = stringTable.get(strPtr).trim();
+                        if (cmdStr.length() >= 2 && cmdStr.length() <= 32 && isExecutableAddress(program, codeAddr)) {
+                            long tableAddr = block.getStart().getOffset() + offset;
+                            entries.add(new CommandTableEntry(tableAddr, cmdStr, codeAddr, ""));
+                        }
                     }
                 }
+            }
+            if (!entries.isEmpty()) {
+                break;
             }
         }
 
         return entries;
+    }
+
+    private static long readPointer(ByteBuffer buffer, int offset, int ptrSize, ByteOrder order) {
+        if (ptrSize == 2) {
+            return Short.toUnsignedLong(buffer.getShort(offset));
+        } else if (ptrSize == 3) {
+            int b0 = buffer.get(offset) & 0xFF;
+            int b1 = buffer.get(offset + 1) & 0xFF;
+            int b2 = buffer.get(offset + 2) & 0xFF;
+            if (order == ByteOrder.BIG_ENDIAN) {
+                return ((long) b0 << 16) | ((long) b1 << 8) | b2;
+            } else {
+                return (long) b0 | ((long) b1 << 8) | ((long) b2 << 16);
+            }
+        } else {
+            return Integer.toUnsignedLong(buffer.getInt(offset));
+        }
     }
 
     private static boolean isExecutableAddress(Program program, long addr) {

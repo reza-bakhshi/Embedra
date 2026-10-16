@@ -1,0 +1,33 @@
+{
+  "device": "STM8_MALFORMED",
+  "target": "STM8_MALFORMED",
+  "fixtureId": "stm8.t089.malformed.stm8al_out_of_bounds_vector.bin",
+  "inputFormat": "raw binary",
+  "origin": "Intentionally malformed STM8 fixture: Reset vector target 0x040000 is outside 64 KiB physical flash boundary",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e001600310044stm8deterministicv1",
+  "generationCommand": "python3 scripts/generate-stm8-fixtures.py",
+  "toolchain": "Embedra STM8 deterministic generator",
+  "oracleCommands": [
+    "readelf -h <ELF> || false",
+    "objcopy <INPUT> /dev/null || false"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/stm8/malformed/stm8al_out_of_bounds_vector.bin.json",
+  "requirements": [
+    "T089",
+    "STM8-002",
+    "STM8-003",
+    "STM8-004"
+  ],
+  "sha256": "3ace091383323d163cf794a8eef9d855659d6654df64294c93944b6c030601a4",
+  "sourceProvenance": {
+    "name": "Synthetic malformed fixture for fail-closed validation",
+    "distribution": "Embedra Test Fixtures",
+    "license": "Apache-2.0",
+    "path": "scripts/generate-stm8-fixtures.py#stm8al_out_of_bounds_vector.bin",
+    "facts": [
+      "Reset vector target 0x040000 is outside 64 KiB physical flash boundary"
+    ]
+  }
+}

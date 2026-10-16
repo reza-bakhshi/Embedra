@@ -1,0 +1,7 @@
+{
+  "fixture": "stm8s208_overlapping.hex",
+  "errorType": "stm8.t089.malformed.stm8s208_overlapping.hex",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "Conflicting data records mapping overlapping addresses with different bytes",
+  "sha256": "1983c7d83343a8e262d2fe2ffd2912708a4cfaa0b8f62da76f2bc0fb157c3baa"
+}

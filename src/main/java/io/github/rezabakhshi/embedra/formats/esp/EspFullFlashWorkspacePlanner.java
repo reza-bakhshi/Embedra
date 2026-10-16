@@ -16,10 +16,20 @@ import java.util.HexFormat;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/** Validates and extracts an ESP32-S3 merged flash into independent workspace objects. */
-public final class EspFullFlashWorkspacePlanner {
-    private static final int ESP32_S3_CHIP_ID = 9;
+import io.github.rezabakhshi.embedra.formats.esp.layout.Esp32S3FlashLayoutProvider;
+import io.github.rezabakhshi.embedra.formats.esp.layout.EspFlashLayoutProvider;
+import io.github.rezabakhshi.embedra.formats.esp.layout.EspFlashLayoutRegistry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.HexFormat;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
+/** Validates and extracts an ESP full flash image into independent workspace objects using a layout provider. */
+public final class EspFullFlashWorkspacePlanner {
     private static final int SEGMENT_HEADER_LENGTH = 8;
 
     private static final int DIGEST_LENGTH = 32;
@@ -37,19 +47,30 @@ public final class EspFullFlashWorkspacePlanner {
 
     public static EspFullFlashWorkspace plan(byte[] flash, ParserLimits limits,
             CancellationToken cancellation) throws DiagnosticException {
+        return plan(flash, resolveProvider(flash), limits, cancellation);
+    }
+
+    public static EspFullFlashWorkspace plan(byte[] flash, EspFlashLayoutProvider provider,
+            ParserLimits limits, CancellationToken cancellation) throws DiagnosticException {
         Objects.requireNonNull(flash, "flash");
+        Objects.requireNonNull(provider, "provider");
         Objects.requireNonNull(limits, "limits");
         Objects.requireNonNull(cancellation, "cancellation");
         cancellation.throwIfCancellationRequested();
-        EspPartitionTable table = EspPartitionTableDiscovery.discover(flash, limits,
-            cancellation);
+        EspPartitionTable table = EspPartitionTableDiscovery.discover(flash,
+            provider.defaultPartitionTableOffset(),
+            provider.profile().minPartitionTableOffset(),
+            provider.profile().maxPartitionTableOffset(),
+            limits, cancellation);
         List<EspExtractedExecutable> executables = new ArrayList<>();
         List<EspExtractedPartition> dataPartitions = new ArrayList<>();
         long extractedBytes = 0;
 
-        EspExtractedExecutable bootloader = extractExecutable(flash, 0,
-            table.tableFlashRange().offset(), "bootloader",
-            EspExecutableRole.BOOTLOADER, Optional.empty(), limits, cancellation);
+        long bootloaderOffset = provider.bootloaderOffset();
+        long availableBootloader = table.tableFlashRange().offset() - bootloaderOffset;
+        EspExtractedExecutable bootloader = extractExecutable(flash, bootloaderOffset,
+            availableBootloader, "bootloader",
+            EspExecutableRole.BOOTLOADER, Optional.empty(), provider, limits, cancellation);
         extractedBytes = accountExtraction(extractedBytes,
             bootloader.flashRange().length(), limits, bootloader.sourceRange());
         executables.add(bootloader);
@@ -75,7 +96,7 @@ public final class EspFullFlashWorkspacePlanner {
                     EspExecutableRole role = executableRole(entry.subtype());
                     EspExtractedExecutable executable = extractExecutable(flash,
                         entry.flashRange().offset(), entry.flashRange().length(),
-                        entry.label(), role, Optional.of(entry.label()), limits,
+                        entry.label(), role, Optional.of(entry.label()), provider, limits,
                         cancellation);
                     extractedBytes = accountExtraction(extractedBytes,
                         executable.flashRange().length(), limits,
@@ -102,15 +123,44 @@ public final class EspFullFlashWorkspacePlanner {
             ProgramStrategy.SEPARATE_PROGRAMS, sha256(flash), analysis);
     }
 
+    private static EspFlashLayoutProvider resolveProvider(byte[] flash) {
+        if (flash != null && flash.length >= EspImageDetector.HEADER_LENGTH) {
+            // Check candidate offset 0x0000 first
+            if (Byte.toUnsignedInt(flash[0]) == EspImageDetector.MAGIC) {
+                int chipId = Byte.toUnsignedInt(flash[12]) | (Byte.toUnsignedInt(flash[13]) << 8);
+                Optional<EspFlashLayoutProvider> match = EspFlashLayoutRegistry.defaults().findByChipId(chipId);
+                if (match.isPresent()) {
+                    return match.get();
+                }
+            }
+            // Check candidate offset 0x1000 (ESP32 original bootloader start)
+            if (flash.length >= 0x1000 + EspImageDetector.HEADER_LENGTH
+                    && Byte.toUnsignedInt(flash[0x1000]) == EspImageDetector.MAGIC) {
+                int chipId = Byte.toUnsignedInt(flash[0x1000 + 12]) | (Byte.toUnsignedInt(flash[0x1000 + 13]) << 8);
+                Optional<EspFlashLayoutProvider> match = EspFlashLayoutRegistry.defaults().findByChipId(chipId);
+                if (match.isPresent()) {
+                    return match.get();
+                }
+            }
+        }
+        return Esp32S3FlashLayoutProvider.INSTANCE;
+    }
+
     private static EspExtractedExecutable extractExecutable(byte[] flash, long offset,
             long available, String name, EspExecutableRole role,
-            Optional<String> partitionLabel, ParserLimits limits,
+            Optional<String> partitionLabel, EspFlashLayoutProvider provider, ParserLimits limits,
             CancellationToken cancellation) throws DiagnosticException {
         SourceRange range = encodedImageRange(flash, offset, available, cancellation);
         byte[] bytes = extract(flash, range, limits);
         try {
-            EspImage image = EspImageParser.parseForChip(bytes, ESP32_S3_CHIP_ID,
+            EspImage image = EspImageParser.parseForChip(bytes, provider.chipId(),
                 limits, cancellation);
+            if (role == EspExecutableRole.BOOTLOADER) {
+                provider.validateBootloader(image);
+            }
+            else {
+                provider.validateApplication(image);
+            }
             return new EspExtractedExecutable(name, role, partitionLabel,
                 new EspFlashRange(range.offset(), range.length()), range, image, bytes);
         }

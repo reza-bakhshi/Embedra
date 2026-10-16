@@ -207,6 +207,16 @@ public final class EmbedraLoggingAnalyzer extends AbstractAnalyzer {
         if (langId.startsWith("Xtensa:LE:32:") || langId.startsWith("Xtensa:")) {
             return InstructionArch.XTENSA;
         }
+        if (langId.toLowerCase(java.util.Locale.ROOT).contains("stm8")
+                || program.getLanguage().getProcessor().toString()
+                        .toLowerCase(java.util.Locale.ROOT).contains("stm8")) {
+            return InstructionArch.STM8;
+        }
+        if (langId.toLowerCase(java.util.Locale.ROOT).contains("avr")
+                || program.getLanguage().getProcessor().toString()
+                        .toLowerCase(java.util.Locale.ROOT).contains("avr")) {
+            return InstructionArch.AVR8;
+        }
         return null;
     }
 }

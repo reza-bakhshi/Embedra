@@ -1,0 +1,8 @@
+{
+  "part": "SAME70Q21",
+  "family": "SAM",
+  "bootloader": "SAM-BA ROM",
+  "romAddress": "0x00800000",
+  "sizeBytes": 256,
+  "remapSupported": true
+}

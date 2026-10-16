@@ -1,0 +1,5 @@
+{
+  "errorExpected": true,
+  "diagnosticCode": "BINARY_TRUNCATED_VECTOR_TABLE",
+  "reason": "Binary length 32 bytes is insufficient to hold minimal ARM Cortex-M vector table"
+}

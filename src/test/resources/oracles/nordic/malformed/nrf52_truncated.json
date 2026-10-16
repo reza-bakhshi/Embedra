@@ -1,0 +1,5 @@
+{
+  "fixture": "nrf52_truncated.hex",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "TRUNCATED_INTEL_HEX_RECORD"
+}

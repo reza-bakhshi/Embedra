@@ -1,0 +1,7 @@
+{
+  "fixture": "stm8af_invalid_opcode.bin",
+  "errorType": "stm8.t089.malformed.stm8af_invalid_opcode.bin",
+  "expectedOutcome": "FAIL_CLOSED_VALIDATION",
+  "failureReason": "Vector table slot 0 opcode is 0x00 instead of valid 0x82 JPF opcode",
+  "sha256": "7052471c0e8cb3eed11168c7d17c3f67638b3d0a65edf2f112f3079f729f8e8b"
+}

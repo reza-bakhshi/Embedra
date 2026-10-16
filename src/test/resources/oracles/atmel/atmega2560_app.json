@@ -1,0 +1,25 @@
+{
+  "part": "ATmega2560",
+  "family": "AVR",
+  "series": "ATmega",
+  "ghidraLanguage": "avr8:LE:24:default",
+  "flashRange": {
+    "start": "0x00000000",
+    "end": "0x0003FFFF"
+  },
+  "ramRange": {
+    "start": "0x00000200",
+    "end": "0x000021FF"
+  },
+  "eepromRange": {
+    "start": "0x00000000",
+    "end": "0x00000FFF"
+  },
+  "vectorTable": {
+    "origin": "0x00000000",
+    "count": 57,
+    "strideBytes": 4,
+    "instruction": "JMP",
+    "resetHandlerByte": "0x000000E4"
+  }
+}

@@ -1,0 +1,1606 @@
+{
+  "schemaId": "urn:embedra:schema:stm8-peripheral-pack:1",
+  "packId": "stm8s-peripherals",
+  "family": "STM8S",
+  "sourceReference": "ST RM0016 Rev 15 (DocID14587)",
+  "peripherals": [
+    {
+      "name": "GPIOA",
+      "baseAddress": "0x005000",
+      "endExclusive": "0x005005",
+      "description": "General Purpose I/O Port A",
+      "registers": [
+        {
+          "name": "PA_ODR",
+          "address": "0x005000",
+          "offset": "0x00",
+          "widthBits": 8,
+          "description": "Port A Output Data Register",
+          "bitfields": [
+            {
+              "name": "ODR0",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Pin 0 output data"
+            },
+            {
+              "name": "ODR1",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Pin 1 output data"
+            },
+            {
+              "name": "ODR2",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Pin 2 output data"
+            },
+            {
+              "name": "ODR3",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Pin 3 output data"
+            },
+            {
+              "name": "ODR4",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Pin 4 output data"
+            },
+            {
+              "name": "ODR5",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Pin 5 output data"
+            },
+            {
+              "name": "ODR6",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Pin 6 output data"
+            },
+            {
+              "name": "ODR7",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Pin 7 output data"
+            }
+          ]
+        },
+        {
+          "name": "PA_IDR",
+          "address": "0x005001",
+          "offset": "0x01",
+          "widthBits": 8,
+          "description": "Port A Input Data Register",
+          "bitfields": [
+            {
+              "name": "IDR0",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "RO",
+              "description": "Pin 0 input data"
+            },
+            {
+              "name": "IDR1",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "RO",
+              "description": "Pin 1 input data"
+            },
+            {
+              "name": "IDR2",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "RO",
+              "description": "Pin 2 input data"
+            },
+            {
+              "name": "IDR3",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "RO",
+              "description": "Pin 3 input data"
+            },
+            {
+              "name": "IDR4",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "RO",
+              "description": "Pin 4 input data"
+            },
+            {
+              "name": "IDR5",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "RO",
+              "description": "Pin 5 input data"
+            },
+            {
+              "name": "IDR6",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "RO",
+              "description": "Pin 6 input data"
+            },
+            {
+              "name": "IDR7",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "RO",
+              "description": "Pin 7 input data"
+            }
+          ]
+        },
+        {
+          "name": "PA_DDR",
+          "address": "0x005002",
+          "offset": "0x02",
+          "widthBits": 8,
+          "description": "Port A Data Direction Register",
+          "bitfields": [
+            {
+              "name": "DDR0",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Pin 0 direction (0=in, 1=out)"
+            },
+            {
+              "name": "DDR1",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Pin 1 direction (0=in, 1=out)"
+            },
+            {
+              "name": "DDR2",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Pin 2 direction (0=in, 1=out)"
+            },
+            {
+              "name": "DDR3",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Pin 3 direction (0=in, 1=out)"
+            },
+            {
+              "name": "DDR4",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Pin 4 direction (0=in, 1=out)"
+            },
+            {
+              "name": "DDR5",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Pin 5 direction (0=in, 1=out)"
+            },
+            {
+              "name": "DDR6",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Pin 6 direction (0=in, 1=out)"
+            },
+            {
+              "name": "DDR7",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Pin 7 direction (0=in, 1=out)"
+            }
+          ]
+        },
+        {
+          "name": "PA_CR1",
+          "address": "0x005003",
+          "offset": "0x03",
+          "widthBits": 8,
+          "description": "Port A Control Register 1",
+          "bitfields": [
+            {
+              "name": "C10",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Pin 0 pull-up / push-pull config"
+            },
+            {
+              "name": "C11",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Pin 1 pull-up / push-pull config"
+            },
+            {
+              "name": "C12",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Pin 2 pull-up / push-pull config"
+            },
+            {
+              "name": "C13",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Pin 3 pull-up / push-pull config"
+            },
+            {
+              "name": "C14",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Pin 4 pull-up / push-pull config"
+            },
+            {
+              "name": "C15",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Pin 5 pull-up / push-pull config"
+            },
+            {
+              "name": "C16",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Pin 6 pull-up / push-pull config"
+            },
+            {
+              "name": "C17",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Pin 7 pull-up / push-pull config"
+            }
+          ]
+        },
+        {
+          "name": "PA_CR2",
+          "address": "0x005004",
+          "offset": "0x04",
+          "widthBits": 8,
+          "description": "Port A Control Register 2",
+          "bitfields": [
+            {
+              "name": "C20",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Pin 0 interrupt / speed config"
+            },
+            {
+              "name": "C21",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Pin 1 interrupt / speed config"
+            },
+            {
+              "name": "C22",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Pin 2 interrupt / speed config"
+            },
+            {
+              "name": "C23",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Pin 3 interrupt / speed config"
+            },
+            {
+              "name": "C24",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Pin 4 interrupt / speed config"
+            },
+            {
+              "name": "C25",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Pin 5 interrupt / speed config"
+            },
+            {
+              "name": "C26",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Pin 6 interrupt / speed config"
+            },
+            {
+              "name": "C27",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Pin 7 interrupt / speed config"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "GPIOB",
+      "baseAddress": "0x005005",
+      "endExclusive": "0x00500A",
+      "description": "General Purpose I/O Port B",
+      "registers": [
+        {
+          "name": "PB_ODR",
+          "address": "0x005005",
+          "offset": "0x00",
+          "widthBits": 8,
+          "description": "Port B Output Data Register",
+          "bitfields": [
+            {
+              "name": "ODR0",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Pin 0 output data"
+            },
+            {
+              "name": "ODR1",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Pin 1 output data"
+            },
+            {
+              "name": "ODR2",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Pin 2 output data"
+            },
+            {
+              "name": "ODR3",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Pin 3 output data"
+            },
+            {
+              "name": "ODR4",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Pin 4 output data"
+            },
+            {
+              "name": "ODR5",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Pin 5 output data"
+            },
+            {
+              "name": "ODR6",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Pin 6 output data"
+            },
+            {
+              "name": "ODR7",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Pin 7 output data"
+            }
+          ]
+        },
+        {
+          "name": "PB_IDR",
+          "address": "0x005006",
+          "offset": "0x01",
+          "widthBits": 8,
+          "description": "Port B Input Data Register",
+          "bitfields": [
+            {
+              "name": "IDR0",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "RO",
+              "description": "Pin 0 input data"
+            },
+            {
+              "name": "IDR1",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "RO",
+              "description": "Pin 1 input data"
+            },
+            {
+              "name": "IDR2",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "RO",
+              "description": "Pin 2 input data"
+            },
+            {
+              "name": "IDR3",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "RO",
+              "description": "Pin 3 input data"
+            },
+            {
+              "name": "IDR4",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "RO",
+              "description": "Pin 4 input data"
+            },
+            {
+              "name": "IDR5",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "RO",
+              "description": "Pin 5 input data"
+            },
+            {
+              "name": "IDR6",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "RO",
+              "description": "Pin 6 input data"
+            },
+            {
+              "name": "IDR7",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "RO",
+              "description": "Pin 7 input data"
+            }
+          ]
+        },
+        {
+          "name": "PB_DDR",
+          "address": "0x005007",
+          "offset": "0x02",
+          "widthBits": 8,
+          "description": "Port B Data Direction Register",
+          "bitfields": [
+            {
+              "name": "DDR0",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Pin 0 direction"
+            },
+            {
+              "name": "DDR1",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Pin 1 direction"
+            },
+            {
+              "name": "DDR2",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Pin 2 direction"
+            },
+            {
+              "name": "DDR3",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Pin 3 direction"
+            },
+            {
+              "name": "DDR4",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Pin 4 direction"
+            },
+            {
+              "name": "DDR5",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Pin 5 direction"
+            },
+            {
+              "name": "DDR6",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Pin 6 direction"
+            },
+            {
+              "name": "DDR7",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Pin 7 direction"
+            }
+          ]
+        },
+        {
+          "name": "PB_CR1",
+          "address": "0x005008",
+          "offset": "0x03",
+          "widthBits": 8,
+          "description": "Port B Control Register 1",
+          "bitfields": [
+            {
+              "name": "C10",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Pin 0 config 1"
+            },
+            {
+              "name": "C11",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Pin 1 config 1"
+            },
+            {
+              "name": "C12",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Pin 2 config 1"
+            },
+            {
+              "name": "C13",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Pin 3 config 1"
+            },
+            {
+              "name": "C14",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Pin 4 config 1"
+            },
+            {
+              "name": "C15",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Pin 5 config 1"
+            },
+            {
+              "name": "C16",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Pin 6 config 1"
+            },
+            {
+              "name": "C17",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Pin 7 config 1"
+            }
+          ]
+        },
+        {
+          "name": "PB_CR2",
+          "address": "0x005009",
+          "offset": "0x04",
+          "widthBits": 8,
+          "description": "Port B Control Register 2",
+          "bitfields": [
+            {
+              "name": "C20",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Pin 0 config 2"
+            },
+            {
+              "name": "C21",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Pin 1 config 2"
+            },
+            {
+              "name": "C22",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Pin 2 config 2"
+            },
+            {
+              "name": "C23",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Pin 3 config 2"
+            },
+            {
+              "name": "C24",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Pin 4 config 2"
+            },
+            {
+              "name": "C25",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Pin 5 config 2"
+            },
+            {
+              "name": "C26",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Pin 6 config 2"
+            },
+            {
+              "name": "C27",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Pin 7 config 2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CLK",
+      "baseAddress": "0x0050C0",
+      "endExclusive": "0x0050CA",
+      "description": "Clock Controller",
+      "registers": [
+        {
+          "name": "CLK_ICKR",
+          "address": "0x0050C0",
+          "offset": "0x00",
+          "widthBits": 8,
+          "description": "Internal Clock Register",
+          "bitfields": [
+            {
+              "name": "HSIEN",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "High speed internal RC oscillator enable"
+            },
+            {
+              "name": "HSIRDY",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "RO",
+              "description": "HSI ready flag"
+            },
+            {
+              "name": "FHWU",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Fast Halt wake-up"
+            },
+            {
+              "name": "LSIEN",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Low speed internal oscillator enable"
+            },
+            {
+              "name": "LSIRDY",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "RO",
+              "description": "LSI ready flag"
+            }
+          ]
+        },
+        {
+          "name": "CLK_ECKR",
+          "address": "0x0050C1",
+          "offset": "0x01",
+          "widthBits": 8,
+          "description": "External Clock Register",
+          "bitfields": [
+            {
+              "name": "HSEEN",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "High speed external crystal enable"
+            },
+            {
+              "name": "HSERDY",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "RO",
+              "description": "HSE ready flag"
+            }
+          ]
+        },
+        {
+          "name": "CLK_CMSR",
+          "address": "0x0050C3",
+          "offset": "0x03",
+          "widthBits": 8,
+          "description": "Clock Master Status Register",
+          "bitfields": [
+            {
+              "name": "CKM",
+              "bitOffset": 0,
+              "bitWidth": 8,
+              "mask": 255,
+              "access": "RO",
+              "description": "Master clock source"
+            }
+          ]
+        },
+        {
+          "name": "CLK_SMR",
+          "address": "0x0050C4",
+          "offset": "0x04",
+          "widthBits": 8,
+          "description": "Clock Master Switch Register",
+          "bitfields": [
+            {
+              "name": "SWI",
+              "bitOffset": 0,
+              "bitWidth": 8,
+              "mask": 255,
+              "access": "R/W",
+              "description": "Target master clock source"
+            }
+          ]
+        },
+        {
+          "name": "CLK_CKDIVR",
+          "address": "0x0050C6",
+          "offset": "0x06",
+          "widthBits": 8,
+          "description": "Clock Prescaler Register",
+          "bitfields": [
+            {
+              "name": "CPUDIV",
+              "bitOffset": 0,
+              "bitWidth": 3,
+              "mask": 7,
+              "access": "R/W",
+              "description": "CPU prescaler"
+            },
+            {
+              "name": "HSIDIV",
+              "bitOffset": 3,
+              "bitWidth": 2,
+              "mask": 24,
+              "access": "R/W",
+              "description": "HSI prescaler"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SPI",
+      "baseAddress": "0x005200",
+      "endExclusive": "0x005208",
+      "description": "Serial Peripheral Interface",
+      "registers": [
+        {
+          "name": "SPI_CR1",
+          "address": "0x005200",
+          "offset": "0x00",
+          "widthBits": 8,
+          "description": "SPI Control Register 1",
+          "bitfields": [
+            {
+              "name": "CPHA",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Clock Phase"
+            },
+            {
+              "name": "CPOL",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Clock Polarity"
+            },
+            {
+              "name": "MSTR",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Master Selection"
+            },
+            {
+              "name": "BR",
+              "bitOffset": 3,
+              "bitWidth": 3,
+              "mask": 56,
+              "access": "R/W",
+              "description": "Baud Rate Control"
+            },
+            {
+              "name": "SPE",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "SPI Enable"
+            },
+            {
+              "name": "LSBFIRST",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Frame Format"
+            }
+          ]
+        },
+        {
+          "name": "SPI_CR2",
+          "address": "0x005201",
+          "offset": "0x01",
+          "widthBits": 8,
+          "description": "SPI Control Register 2",
+          "bitfields": [
+            {
+              "name": "SSI",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Internal slave select"
+            },
+            {
+              "name": "SSM",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Software slave management"
+            },
+            {
+              "name": "RXONLY",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Receive only"
+            },
+            {
+              "name": "CRCNEXT",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Transmit CRC next"
+            },
+            {
+              "name": "CRCEN",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Hardware CRC enable"
+            },
+            {
+              "name": "BDOE",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Bidirectional output enable"
+            },
+            {
+              "name": "BDM",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Bidirectional data mode"
+            }
+          ]
+        },
+        {
+          "name": "SPI_SR",
+          "address": "0x005203",
+          "offset": "0x03",
+          "widthBits": 8,
+          "description": "SPI Status Register",
+          "bitfields": [
+            {
+              "name": "RXNE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "RO",
+              "description": "Receive buffer not empty"
+            },
+            {
+              "name": "TXE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "RO",
+              "description": "Transmit buffer empty"
+            },
+            {
+              "name": "WKUP",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "RO",
+              "description": "Wakeup flag"
+            },
+            {
+              "name": "CRCERR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "CRC error flag"
+            },
+            {
+              "name": "MODF",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "RO",
+              "description": "Mode fault"
+            },
+            {
+              "name": "OVR",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "RO",
+              "description": "Overrun flag"
+            },
+            {
+              "name": "BSY",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "RO",
+              "description": "Busy flag"
+            }
+          ]
+        },
+        {
+          "name": "SPI_DR",
+          "address": "0x005204",
+          "offset": "0x04",
+          "widthBits": 8,
+          "description": "SPI Data Register",
+          "bitfields": [
+            {
+              "name": "DR",
+              "bitOffset": 0,
+              "bitWidth": 8,
+              "mask": 255,
+              "access": "R/W",
+              "description": "Data register"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "UART1",
+      "baseAddress": "0x005230",
+      "endExclusive": "0x00523B",
+      "description": "Universal Asynchronous Receiver Transmitter 1",
+      "registers": [
+        {
+          "name": "UART1_SR",
+          "address": "0x005230",
+          "offset": "0x00",
+          "widthBits": 8,
+          "description": "Status Register",
+          "bitfields": [
+            {
+              "name": "PE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "RO",
+              "description": "Parity error"
+            },
+            {
+              "name": "FE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "RO",
+              "description": "Framing error"
+            },
+            {
+              "name": "NF",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "RO",
+              "description": "Noise flag"
+            },
+            {
+              "name": "OR",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "RO",
+              "description": "Overrun error"
+            },
+            {
+              "name": "IDLE",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "RO",
+              "description": "IDLE line detected"
+            },
+            {
+              "name": "RXNE",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Read data register not empty"
+            },
+            {
+              "name": "TC",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Transmission complete"
+            },
+            {
+              "name": "TXE",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "RO",
+              "description": "Transmit data register empty"
+            }
+          ]
+        },
+        {
+          "name": "UART1_DR",
+          "address": "0x005231",
+          "offset": "0x01",
+          "widthBits": 8,
+          "description": "Data Register",
+          "bitfields": [
+            {
+              "name": "DR",
+              "bitOffset": 0,
+              "bitWidth": 8,
+              "mask": 255,
+              "access": "R/W",
+              "description": "Data register"
+            }
+          ]
+        },
+        {
+          "name": "UART1_BRR1",
+          "address": "0x005232",
+          "offset": "0x02",
+          "widthBits": 8,
+          "description": "Baud Rate Register 1",
+          "bitfields": [
+            {
+              "name": "UART_DIV",
+              "bitOffset": 0,
+              "bitWidth": 8,
+              "mask": 255,
+              "access": "R/W",
+              "description": "Baud rate divider middle bits"
+            }
+          ]
+        },
+        {
+          "name": "UART1_BRR2",
+          "address": "0x005233",
+          "offset": "0x03",
+          "widthBits": 8,
+          "description": "Baud Rate Register 2",
+          "bitfields": [
+            {
+              "name": "UART_DIV_LOW",
+              "bitOffset": 0,
+              "bitWidth": 4,
+              "mask": 15,
+              "access": "R/W",
+              "description": "Divider bits [3:0]"
+            },
+            {
+              "name": "UART_DIV_HIGH",
+              "bitOffset": 4,
+              "bitWidth": 4,
+              "mask": 240,
+              "access": "R/W",
+              "description": "Divider bits [15:12]"
+            }
+          ]
+        },
+        {
+          "name": "UART1_CR1",
+          "address": "0x005234",
+          "offset": "0x04",
+          "widthBits": 8,
+          "description": "Control Register 1",
+          "bitfields": [
+            {
+              "name": "PIEN",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Parity interrupt enable"
+            },
+            {
+              "name": "PS",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Parity selection"
+            },
+            {
+              "name": "PCEN",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Parity control enable"
+            },
+            {
+              "name": "WAKE",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Wakeup method"
+            },
+            {
+              "name": "M",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Word length"
+            },
+            {
+              "name": "UARTD",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "UART disable"
+            }
+          ]
+        },
+        {
+          "name": "UART1_CR2",
+          "address": "0x005235",
+          "offset": "0x05",
+          "widthBits": 8,
+          "description": "Control Register 2",
+          "bitfields": [
+            {
+              "name": "SBK",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Send break"
+            },
+            {
+              "name": "RWU",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Receiver wakeup"
+            },
+            {
+              "name": "REN",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Receiver enable"
+            },
+            {
+              "name": "TEN",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Transmitter enable"
+            },
+            {
+              "name": "ILIEN",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "IDLE interrupt enable"
+            },
+            {
+              "name": "RIEN",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "Receiver interrupt enable"
+            },
+            {
+              "name": "TCIEN",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Transmission complete interrupt enable"
+            },
+            {
+              "name": "TIEN",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Transmitter interrupt enable"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TIM1",
+      "baseAddress": "0x005250",
+      "endExclusive": "0x005270",
+      "description": "16-bit Advanced Control Timer 1",
+      "registers": [
+        {
+          "name": "TIM1_CR1",
+          "address": "0x005250",
+          "offset": "0x00",
+          "widthBits": 8,
+          "description": "Control Register 1",
+          "bitfields": [
+            {
+              "name": "CEN",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Counter Enable"
+            },
+            {
+              "name": "UDIS",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Update Disable"
+            },
+            {
+              "name": "URS",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Update Request Source"
+            },
+            {
+              "name": "OPM",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "One Pulse Mode"
+            },
+            {
+              "name": "DIR",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Direction"
+            },
+            {
+              "name": "CMS",
+              "bitOffset": 5,
+              "bitWidth": 2,
+              "mask": 96,
+              "access": "R/W",
+              "description": "Center-aligned mode selection"
+            },
+            {
+              "name": "ARPE",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Auto-reload preload enable"
+            }
+          ]
+        },
+        {
+          "name": "TIM1_IER",
+          "address": "0x005254",
+          "offset": "0x04",
+          "widthBits": 8,
+          "description": "Interrupt Enable Register",
+          "bitfields": [
+            {
+              "name": "UIE",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Update interrupt enable"
+            },
+            {
+              "name": "CC1IE",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Capture/Compare 1 interrupt enable"
+            },
+            {
+              "name": "CC2IE",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Capture/Compare 2 interrupt enable"
+            },
+            {
+              "name": "CC3IE",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Capture/Compare 3 interrupt enable"
+            },
+            {
+              "name": "CC4IE",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Capture/Compare 4 interrupt enable"
+            },
+            {
+              "name": "COMIE",
+              "bitOffset": 5,
+              "bitWidth": 1,
+              "mask": 32,
+              "access": "R/W",
+              "description": "COM interrupt enable"
+            },
+            {
+              "name": "TIE",
+              "bitOffset": 6,
+              "bitWidth": 1,
+              "mask": 64,
+              "access": "R/W",
+              "description": "Trigger interrupt enable"
+            },
+            {
+              "name": "BIE",
+              "bitOffset": 7,
+              "bitWidth": 1,
+              "mask": 128,
+              "access": "R/W",
+              "description": "Break interrupt enable"
+            }
+          ]
+        },
+        {
+          "name": "TIM1_SR1",
+          "address": "0x005255",
+          "offset": "0x05",
+          "widthBits": 8,
+          "description": "Status Register 1",
+          "bitfields": [
+            {
+              "name": "UIF",
+              "bitOffset": 0,
+              "bitWidth": 1,
+              "mask": 1,
+              "access": "R/W",
+              "description": "Update interrupt flag"
+            },
+            {
+              "name": "CC1IF",
+              "bitOffset": 1,
+              "bitWidth": 1,
+              "mask": 2,
+              "access": "R/W",
+              "description": "Capture/Compare 1 flag"
+            },
+            {
+              "name": "CC2IF",
+              "bitOffset": 2,
+              "bitWidth": 1,
+              "mask": 4,
+              "access": "R/W",
+              "description": "Capture/Compare 2 flag"
+            },
+            {
+              "name": "CC3IF",
+              "bitOffset": 3,
+              "bitWidth": 1,
+              "mask": 8,
+              "access": "R/W",
+              "description": "Capture/Compare 3 flag"
+            },
+            {
+              "name": "CC4IF",
+              "bitOffset": 4,
+              "bitWidth": 1,
+              "mask": 16,
+              "access": "R/W",
+              "description": "Capture/Compare 4 flag"
+            }
+          ]
+        },
+        {
+          "name": "TIM1_CNTRH",
+          "address": "0x00525E",
+          "offset": "0x0E",
+          "widthBits": 8,
+          "description": "Counter High",
+          "bitfields": [
+            {
+              "name": "CNT_H",
+              "bitOffset": 0,
+              "bitWidth": 8,
+              "mask": 255,
+              "access": "R/W",
+              "description": "Counter MSB"
+            }
+          ]
+        },
+        {
+          "name": "TIM1_CNTRL",
+          "address": "0x00525F",
+          "offset": "0x0F",
+          "widthBits": 8,
+          "description": "Counter Low",
+          "bitfields": [
+            {
+              "name": "CNT_L",
+              "bitOffset": 0,
+              "bitWidth": 8,
+              "mask": 255,
+              "access": "R/W",
+              "description": "Counter LSB"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

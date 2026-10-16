@@ -4,5 +4,7 @@ package io.github.rezabakhshi.embedra.analyzers.strings.stack;
 public enum InstructionArch {
     ARM_THUMB,
     RISCV32,
-    XTENSA
+    XTENSA,
+    STM8,
+    AVR8
 }

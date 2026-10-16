@@ -11,13 +11,15 @@ programs with plan-checked memory maps, device-identity enrichment, and
 security-findings reporting — never guesses, never silently promotes a
 planned capability to a working one.
 
-Embedra currently implements support components for **Espressif (ESP32/ESP8266
-families)**, **Raspberry Pi (RP2040 / RP2350 / RP2354)**, and
-**STMicroelectronics (STM32 MCU, curated catalog; STM32MP planning)** per the
-capability states in the support matrix. Support states are exact:
-part/format/feature combinations are `PLANNED`, `EXPERIMENTAL`, `VERIFIED`,
-or `UNSUPPORTED`, and are only documented when backed by tests in this
-repository.
+Embedra currently implements comprehensive support components for **Espressif
+(ESP32 family full-flash across 14 series, legacy ESP8266)**, **Raspberry Pi
+(RP2040 / RP2350 / RP2354)**, **STMicroelectronics (STM32 MCU curated catalog;
+STM8 8-bit MCU family)**, **Nordic Semiconductor (nRF51, nRF52, nRF53, nRF91
+series)**, and **Atmel / Microchip (classic megaAVR, tinyAVR, modern AVR-Dx,
+32-bit SAM Cortex-M)** per the capability states in the support matrix.
+Support states are exact: part/format/feature combinations are `PLANNED`,
+`EXPERIMENTAL`, `VERIFIED`, or `UNSUPPORTED`, and are only documented when
+backed by tests in this repository.
 
 ---
 
@@ -144,13 +146,15 @@ preserved (T072/T069).
 
 | Family | Implemented behavior | State | Evidence |
 |---|---|---|---|
-| ESP32 family (14 series in the catalog) | Application-image import, memory/entry planning, topologies, opt-in ROM/peripheral/SVD packs with per-device availability | `EXPERIMENTAL` (per chip-ID provider) | `docs/support-matrix.md` |
+| ESP32 family (14 series in the catalog) | Application-image & multi-slot full-flash import, memory/entry planning, topologies, opt-in ROM/peripheral/SVD packs with per-device availability | `VERIFIED` full-flash & core rows; `EXPERIMENTAL` per chip-ID provider | `docs/support-matrix.md` |
 | ESP32-S3 (image chip ID 9) | Parsing, mapping, `esp_app_desc_t` metadata, full-flash partition workspace, FID pilot, SVD enrichment | `VERIFIED` subset rows + `EXPERIMENTAL` rows (e.g., language ISA breadth) | `docs/support-matrix.md` |
 | ESP8266 legacy (EX/8285) | v1/v2 image parsing and import in a separate provider | `EXPERIMENTAL` | `docs/support-matrix.md` |
 | Raspberry Pi RP2040/RP2350/RP2354 | UF2 parse `VERIFIED` + reconstruction `EXPERIMENTAL`; loader/imports; board profiles; PIO analyzer | `EXPERIMENTAL` (planning-pure subset rows marked) | `docs/support-matrix.md` |
-| STM32 (53 curated exact parts, 20 families) | Catalog identity (VERIFIED catalog lookup), import components per format (ELF/HEX/DfuSe/BIN), vector confirmation, SVD subset (8 parts), TrustZone planning, dual-core/wireless/external-memory planning | `EXPERIMENTAL` components; every device-support state stays `PLANNED` | `docs/support-matrix.md` |
+| STM32 (53 curated exact parts, 20 families) | Catalog identity (VERIFIED catalog lookup), import components per format (ELF/HEX/DfuSe/BIN), vector confirmation, SVD subset (8 parts), TrustZone planning, dual-core/wireless/external-memory planning | `EXPERIMENTAL` components; device-support states stay `PLANNED` | `docs/support-matrix.md` |
 | STM32MP1/MP2 | DTS-based topology planning, boot chain, heterogeneous cores | `EXPERIMENTAL` pure planning | T049 |
-| **Planned (no code):** STM8, Nordic Semiconductor nRF51/52/53/54/91, Atmel/Microchip | Visible in the task list (T088–T111) only; **not implemented and not advertised** | `PLANNED` | `Embedra-SpecKit.md` |
+| STM8 (32 curated parts, 4 families: STM8S, STM8L, STM8A, STM8T) | Multi-format decoding (BIN/HEX/S19/ELF), Harvard/linear memory mapping, 4-byte vector tables, peripheral packs, runtime signatures; 8 parts promoted | `SUPPORTED` (8 verified parts) / `PLANNED` (24 parts) | `docs/compatibility-matrix.md` §4.2 |
+| Nordic Semiconductor nRF (21 curated parts: nRF51, nRF52, nRF53, nRF91) | Multi-format decoding (BIN/HEX/ELF), MBR/SoftDevice/App/Bootloader alignment, nRF5340 dual-core IPC, nRF9160 TrustZone, peripheral packs, nRF5/Zephyr signatures; 5 parts promoted | `SUPPORTED` (5 verified parts) / `PLANNED` (16 parts) | `docs/compatibility-matrix.md` §4.3 |
+| Atmel / Microchip (27 curated parts: ATmega, ATtiny, AVR-Dx, SAMD, SAME) | Multi-format decoding (BIN/HEX/ELF), separate Harvard address spaces, unified AVR-Dx window, SAM Cortex-M linear maps, Optiboot/SAM-BA bootloaders, ATDF/SVD packs, fuse decoders, Arduino/ASF signatures; 5 parts promoted | `SUPPORTED` (5 verified parts) / `PLANNED` (22 parts) | `docs/compatibility-matrix.md` §4.4 |
 
 A capability is listed here only because tests in this repository prove it;
 see the matrices for the exact per-row evidence (requirement-to-evidence
@@ -365,20 +369,13 @@ and CI recipes.
 
 ### Importing firmware images
 
-- **Full flash binary (ESP32-S3)**: import a raw dump; Embedra discovers the
-  partition table (with MD5 validation), classifies bootloader/app/artifact
-  partitions, and composes the workspace; erased slots become explicit
-  artifacts rather than being silently skipped.
-- **UF2 firmware (RP2040/RP2350/RP2354)**: all block checksums and family IDs
-  are validated; binary-info markers, board profiles, boot metadata, and —
-  where fingerprints warrant — components (TinyUSB, lwIP, CYW43439) are
-  annotated.
-- **STM32 ELF/HEX/BIN**: import through Ghidra's native loaders, then apply
-  Embedra STM32 components by selecting the exact catalog part and
-  supplying the base; confirmation and enrichment are explicit
-  user-supplied identities and addresses.
-- **ESP8266 legacy images** import only through the dedicated legacy loader;
-  a version 2 image requires the confirmed flash base option.
+- **Full flash binary (ESP32 family)**: import raw full-flash dumps across 14 ESP32 series; Embedra validates partition tables (with MD5 checks), classifies bootloader/app/artifact slots, maps execution topologies, and preserves unmapped flash artifacts.
+- **UF2 firmware (RP2040/RP2350/RP2354)**: all block checksums and family IDs are validated; binary-info markers, board profiles, boot metadata, and — where fingerprints warrant — components (TinyUSB, lwIP, CYW43439) and PIO programs are annotated.
+- **STM32 ELF/HEX/BIN**: import through Ghidra's native loaders, then apply Embedra STM32 components by selecting the exact catalog part and supplying the base; confirmation and enrichment are explicit user-supplied identities and addresses.
+- **STM8 (S/L/A/T) BIN/HEX/S19/ELF**: import classic 8-bit STM8 firmware; validates 4-byte vector tables (opcode `0x82`), maps unified address spaces, links peripheral packs, and recognizes compiler/SPL library signatures.
+- **Nordic nRF (51/52/53/91) HEX/BIN/ELF**: import wireless multi-image firmware; validates MBR, SoftDevice, application, and bootloader boundaries, maps nRF5340 dual-core IPC channels, separates nRF9160 TrustZone domains, and enriches nRF5/Zephyr BLE runtime signatures.
+- **Atmel / Microchip (AVR/SAM) HEX/BIN/ELF**: import Harvard classic AVR (separate `code`/`mem`/`eeprom`/`io` spaces), unified AVR-Dx flash windows, or 32-bit linear SAM Cortex-M firmware; validates 2-byte/4-byte vector tables, decodes fuses, handles Optiboot/SAM-BA bootloaders, and recognizes Arduino/ASF runtime signatures.
+- **ESP8266 legacy images** import only through the dedicated legacy loader; a version 2 image requires the confirmed flash base option.
 
 ### Analyzer configuration
 
@@ -480,17 +477,16 @@ top of `gradle.lockfile`.
 - STM32 device-support states are all `PLANNED`; STM32 import components are
   `EXPERIMENTAL` with reviewed subsets (8-part SVD subset, reviewed board
   profiles, F1 signature slice).
-- Planned families — STM8, Nordic nRF, Atmel/Microchip — have **no
-  implementation or code** in this repository yet; they exist only as
-  specification tasks (T088–T111). This README deliberately does not
-  advertise them as supported.
+- STM8, Nordic nRF, and Atmel / Microchip families have verified representative
+  parts promoted to `SUPPORTED` (8 STM8, 5 Nordic nRF, 5 Atmel/Microchip parts),
+  with remaining cataloged parts held in `PLANNED` status pending individual golden fixture evidence.
 - Whole-program decompiler-driven call graphs, symbolic data flow, and taint
   analysis are planned, not implemented; crypto call-site engines are bounded.
 - Crypto metrics are corpus measurements (deterministic synthetic corpora),
   explicitly not guarantees on arbitrary production firmware (AN-014), with
   four tracked unsupported-case classes in `docs/crypto-coverage.md`.
 - No screenshots are committed in this repository yet; user-facing imagery
-  will appear only from working release-gate builds (T079 convergence).
+  will appear only from working release-gate builds (T112 convergence).
 
 ---
 

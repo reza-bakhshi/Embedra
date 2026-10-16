@@ -1,0 +1,22 @@
+{
+  "fixtureId": "nordic.t097.malformed.nrf52_overlapping.hex",
+  "sha256": "6b2f9e0cada0bcb2314a758ce9e32af5f142ca0dd9f40bae5d17e947bf877a61",
+  "target": "nRF52832-QFAA",
+  "inputFormat": "INTEL_HEX",
+  "origin": "Freestanding synthetic deterministic test fixture for nRF52832-QFAA",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e0016nordicdeterministicv1",
+  "generationCommand": "python3 scripts/generate-nordic-fixtures.py",
+  "toolchain": "Embedra Nordic deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/nordic/malformed/nrf52_overlapping.json",
+  "requirements": [
+    "T097",
+    "NRF-002"
+  ]
+}

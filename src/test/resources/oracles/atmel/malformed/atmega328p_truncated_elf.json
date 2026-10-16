@@ -1,0 +1,5 @@
+{
+  "errorExpected": true,
+  "diagnosticCode": "ELF_TRUNCATED_HEADER",
+  "reason": "ELF file size 48 bytes is smaller than 52-byte ELF32 header"
+}

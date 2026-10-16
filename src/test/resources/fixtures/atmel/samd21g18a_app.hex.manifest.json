@@ -1,0 +1,24 @@
+{
+  "fixtureId": "atmel.t105.samd21g18a_app.hex",
+  "sha256": "efcf3544e30e0e6dad4ac14cf9957bae0ed8963338b71c15f09a5ee31e7ccd16",
+  "target": "SAMD21G18A",
+  "inputFormat": "INTEL_HEX",
+  "origin": "Freestanding synthetic deterministic test fixture for SAMD21G18A",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:e1050016atmeldeterministicv1",
+  "generationCommand": "python3 scripts/generate-atmel-fixtures.py",
+  "toolchain": "Embedra Atmel deterministic generator; GNU readelf 2.42; GNU objcopy 2.42",
+  "oracleCommands": [
+    "readelf -h -l -S <ELF>",
+    "objcopy -O binary <ELF> <BIN>",
+    "objcopy -O ihex <ELF> <HEX>"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/atmel/samd21g18a_app.json",
+  "requirements": [
+    "T105",
+    "ATMEL-001",
+    "ATMEL-003",
+    "ATMEL-004"
+  ]
+}

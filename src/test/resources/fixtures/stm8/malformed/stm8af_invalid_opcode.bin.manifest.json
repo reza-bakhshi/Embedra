@@ -1,0 +1,33 @@
+{
+  "device": "STM8_MALFORMED",
+  "target": "STM8_MALFORMED",
+  "fixtureId": "stm8.t089.malformed.stm8af_invalid_opcode.bin",
+  "inputFormat": "raw binary",
+  "origin": "Intentionally malformed STM8 fixture: Vector table slot 0 opcode is 0x00 instead of valid 0x82 JPF opcode",
+  "license": "Apache-2.0",
+  "redistributionStatus": "REDISTRIBUTABLE",
+  "generatorRevision": "sha256:d88e001600310044stm8deterministicv1",
+  "generationCommand": "python3 scripts/generate-stm8-fixtures.py",
+  "toolchain": "Embedra STM8 deterministic generator",
+  "oracleCommands": [
+    "readelf -h <ELF> || false",
+    "objcopy <INPUT> /dev/null || false"
+  ],
+  "expectedSnapshot": "src/test/resources/oracles/stm8/malformed/stm8af_invalid_opcode.bin.json",
+  "requirements": [
+    "T089",
+    "STM8-002",
+    "STM8-003",
+    "STM8-004"
+  ],
+  "sha256": "7052471c0e8cb3eed11168c7d17c3f67638b3d0a65edf2f112f3079f729f8e8b",
+  "sourceProvenance": {
+    "name": "Synthetic malformed fixture for fail-closed validation",
+    "distribution": "Embedra Test Fixtures",
+    "license": "Apache-2.0",
+    "path": "scripts/generate-stm8-fixtures.py#stm8af_invalid_opcode.bin",
+    "facts": [
+      "Vector table slot 0 opcode is 0x00 instead of valid 0x82 JPF opcode"
+    ]
+  }
+}
