@@ -49,6 +49,7 @@ apply from: rootProject.file('gradle/build-quality.gradle')
 
 if (pureInvocation) {
     sourceSets.main.java.exclude 'io/github/rezabakhshi/embedra/ghidra/**'
+    sourceSets.test.java.exclude 'io/github/rezabakhshi/embedra/ghidra/**'
 }
 
 tasks.register('pureTest') {
