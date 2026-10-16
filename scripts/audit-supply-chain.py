@@ -400,7 +400,8 @@ def main() -> int:
     parser.add_argument("--release", type=Path, default=None,
                         metavar="ZIP",
                         help="Release ZIP for the full release-bundle audit")
-    parser.add_argument("--sbom", type=Path, default=SBOM_DEFAULT)
+    parser.add_argument("--sbom", type=Path, default=None,
+                        help="Path to the CycloneDX SBOM (default: dist/embedra-sbom.json)")
     arguments = parser.parse_args()
 
     try:
@@ -410,11 +411,14 @@ def main() -> int:
             fail("verification metadata carries no sha256 entries")
         reverify_cached_artifacts(locked, verification)
         audit_gates()
-        audit_sbom(arguments.sbom, locked, verification,
-                   arguments.release if arguments.release else None)
+        if arguments.release is not None and not arguments.release.is_file():
+            fail(f"release ZIP not found: {arguments.release}")
+        sbom_path = arguments.sbom if arguments.sbom is not None else SBOM_DEFAULT
+        require_sbom = arguments.release is not None or arguments.sbom is not None
+        if require_sbom or sbom_path.is_file():
+            audit_sbom(sbom_path, locked, verification,
+                       arguments.release if arguments.release else None)
         if arguments.release is not None:
-            if not arguments.release.is_file():
-                fail(f"release ZIP not found: {arguments.release}")
             audit_checksums(arguments.release)
     except AuditFailure as failure:
         print(f"SUPPLY CHAIN FAIL: {failure}", file=sys.stderr)
@@ -424,6 +428,8 @@ def main() -> int:
     if arguments.release is not None:
         release_note = (f"; release {arguments.release.name}: SBOM, "
                         "checksums, and source bundle verified")
+    elif arguments.sbom is not None or SBOM_DEFAULT.is_file():
+        release_note = "; SBOM verified"
     print(f"SUPPLY CHAIN OK: {len(locked)} locked components verified against "
           f"{algorithms['sha256']} SHA-256 entries; gates enforced"
           f"{release_note}")

@@ -74,7 +74,7 @@ and converged.
 ## 2. Production Release Bundle
 
 - **Extension ZIP**: `dist/ghidra_12.1.3_PUBLIC_20261016_Embedra.zip`
-  - SHA-256: `c071616d06ad39cf213cb26613d0167119bedd61dfbcd7389d8f367e3b6dae84`
+  - SHA-256: `40a0ac68929323d12efd5064dbc51c37b3ce6691417b050d55deaef6a25cda77`
   - Size: `7,325,719` bytes
   - Ghidra baseline: `12.1.3 PUBLIC` (2026-08-17)
   - Java baseline: OpenJDK 21

@@ -1656,7 +1656,7 @@ T067 implements closed fixture manifest schemas, deterministic generators, priva
 
 - Executed end-to-end clean install, upgrade, and headless quickstarts across all supported microcontroller families (Raspberry Pi RP2040, Espressif ESP32-S3, STMicroelectronics STM32, Nordic Semiconductor nRF52, Atmel / Microchip ATmega328P) using `scripts/verify-release-lifecycle.sh` (100% pass rate across all 5 verification phases).
 - Hardened address aperture checks in `AtmelInputDecoder` and `NordicInputDecoder` to prevent loader misidentification of foreign Intel HEX payloads.
-- Produced official production release extension: `dist/ghidra_12.1.3_PUBLIC_20261016_Embedra.zip` (SHA-256: `c071616d06ad39cf213cb26613d0167119bedd61dfbcd7389d8f367e3b6dae84`, 7,325,719 bytes).
+- Produced official production release extension: `dist/ghidra_12.1.3_PUBLIC_20261016_Embedra.zip` (SHA-256: `40a0ac68929323d12efd5064dbc51c37b3ce6691417b050d55deaef6a25cda77`, 7,326,561 bytes).
 - Produced complete release bundle: source archive `dist/embedra-src.zip` (SHA-256: `21146f04ec9376ad9faaa036b35df89cf7a2f44bedcaf92257182c17641853ab`), CycloneDX SBOM `dist/embedra-sbom.json` (SHA-256: `dc00e000c3b6581adb80c543c49c24cdb34535774231e097dbbf79d0bd90a73f`), and verified checksum manifest `dist/SHA256SUMS`.
 - Verified supply-chain security, secrets scanning, dependency locking, and license compliance via `scripts/build-release-artifacts.sh`.
 - Reconciled and achieved full Spec Kit convergence across all 113 tasks (T001 through T112, plus T026A) with `Embedra-SpecKit.md` completely checked off.

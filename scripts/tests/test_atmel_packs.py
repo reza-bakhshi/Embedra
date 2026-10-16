@@ -69,6 +69,25 @@ class TestAtmelPacks(unittest.TestCase):
         self.assertEqual(26, len(data["interrupts"]))
         self.assertEqual("RESET", data["interrupts"][0]["name"])
 
+    def test_modern_avr_io_ports_are_derived(self):
+        """AVR-Dx and modern tinyAVR ports use DIR/OUT/IN register triples."""
+        avr_dx = json.loads((PACKS_DIR / "avr128da48-peripherals.json").read_bytes())
+        io_port_names = {p["name"] for p in avr_dx["ioPorts"]}
+        self.assertEqual({"PORTA", "PORTB", "PORTC", "PORTD", "PORTE", "PORTF"}, io_port_names)
+        porta = next(p for p in avr_dx["ioPorts"] if p["name"] == "PORTA")
+        self.assertEqual(8, porta["pinCount"])
+        self.assertEqual("OUT", porta["dataRegister"])
+        self.assertEqual("DIR", porta["directionRegister"])
+        self.assertEqual("IN", porta["inputRegister"])
+
+        attiny1614 = json.loads((PACKS_DIR / "attiny1614-peripherals.json").read_bytes())
+        self.assertEqual(["PORTA", "PORTB"], [p["name"] for p in attiny1614["ioPorts"]])
+        self.assertEqual(8, attiny1614["ioPorts"][0]["pinCount"])
+
+        port_periph = next(p for p in avr_dx["peripherals"] if p["name"] == "PORTA")
+        register_names = {r["name"] for r in port_periph["registers"]}
+        self.assertTrue({"DIR", "OUT", "IN"} <= register_names)
+
     def test_samd21g18a_pack_semantics(self):
         pack_path = PACKS_DIR / "samd21g18a-peripherals.json"
         data = json.loads(pack_path.read_bytes().decode("utf-8"))

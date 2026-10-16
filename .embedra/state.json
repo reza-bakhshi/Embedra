@@ -1086,8 +1086,8 @@
     },
     {
       "path": "dist/ghidra_12.1.3_PUBLIC_20261016_Embedra.zip",
-      "sha256": "c071616d06ad39cf213cb26613d0167119bedd61dfbcd7389d8f367e3b6dae84",
-      "sizeBytes": 7325719,
+      "sha256": "40a0ac68929323d12efd5064dbc51c37b3ce6691417b050d55deaef6a25cda77",
+      "sizeBytes": 7326561,
       "status": "T112_FINAL_PRODUCTION_RELEASE_BUNDLE"
     }
   ],

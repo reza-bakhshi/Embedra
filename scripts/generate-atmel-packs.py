@@ -312,18 +312,16 @@ def atdf_io_ports(peripherals: list[dict]) -> list[dict]:
     for name, peripheral in by_name.items():
         registers = {r["name"] for r in peripheral["registers"]}
         suffix = name[4:] if name.startswith("PORT") else ""
-        if len(name) == 5 and suffix.isalpha() and suffix.isupper():
-            data = name
-            direction = f"DDR{suffix}"
-            input_register = f"PIN{suffix}"
-            if {data, direction, input_register} <= registers:
-                ports.append({
-                    "name": name,
-                    "pinCount": 8,
-                    "dataRegister": data,
-                    "directionRegister": direction,
-                    "inputRegister": input_register,
-                })
+        classic = len(name) == 5 and suffix.isalpha() and suffix.isupper() \
+            and {name, f"DDR{suffix}", f"PIN{suffix}"} <= registers
+        if classic:
+            ports.append({
+                "name": name,
+                "pinCount": 8,
+                "dataRegister": name,
+                "directionRegister": f"DDR{suffix}",
+                "inputRegister": f"PIN{suffix}",
+            })
         elif name.startswith("PORT") and {"DIR", "OUT", "IN"} <= registers:
             pin_count = len([r for r in peripheral["registers"]
                              if re.fullmatch(r"PIN[0-7]CTRL", r["name"])]) or 8

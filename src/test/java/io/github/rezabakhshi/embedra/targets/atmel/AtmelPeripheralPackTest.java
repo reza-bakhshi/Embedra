@@ -230,6 +230,33 @@ class AtmelPeripheralPackTest {
     }
 
     @Test
+    void testModernAvrIoPortsAreDerivedFromDirOutInTriples() throws DiagnosticException {
+        AtmelDevicePackRegistry registry = AtmelDevicePackRegistry.loadDefault();
+
+        // AVR-Dx ports are register groups with DIR/OUT/IN, not DDRx/PORTx/PINx.
+        AtmelPeripheralPack avrDx = registry.packForPart("AVR128DA48").orElseThrow();
+        assertEquals(6, avrDx.ioPorts().size());
+        AtmelIoPort porta = avrDx.findIoPortByName("PORTA").orElseThrow();
+        assertEquals(8, porta.pinCount());
+        assertEquals("OUT", porta.dataRegister());
+        assertEquals("DIR", porta.directionRegister());
+        assertEquals("IN", porta.inputRegister());
+        AtmelPeripheral portPeripheral = avrDx.findPeripheralByName("PORTA").orElseThrow();
+        assertTrue(portPeripheral.findFirstRegisterByName("DIR").isPresent());
+        assertTrue(portPeripheral.findFirstRegisterByName("OUT").isPresent());
+        assertTrue(portPeripheral.findFirstRegisterByName("IN").isPresent());
+
+        // Modern tinyAVR and DA devices with 28/32 pins expose fewer port groups.
+        AtmelPeripheralPack attiny1614 = registry.packForPart("ATtiny1614").orElseThrow();
+        assertEquals(2, attiny1614.ioPorts().size());
+        assertTrue(attiny1614.findIoPortByName("PORTB").isPresent());
+        AtmelPeripheralPack avr64da32 = registry.packForPart("AVR64DA32").orElseThrow();
+        assertEquals(4, avr64da32.ioPorts().size());
+        assertEquals(List.of("PORTA", "PORTC", "PORTD", "PORTF"),
+            avr64da32.ioPorts().stream().map(AtmelIoPort::name).toList());
+    }
+
+    @Test
     void testPackLoaderLimitsAndCancellation(@TempDir Path tempDir) throws Exception {
         Path validPack = AtmelDevicePackRegistry.DEFAULT_PACKS_DIR.resolve("atmega328p-peripherals.json");
         Path validSha = AtmelDevicePackRegistry.DEFAULT_PACKS_DIR.resolve("atmega328p-peripherals.sha256");

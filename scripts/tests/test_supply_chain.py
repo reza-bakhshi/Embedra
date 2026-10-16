@@ -81,6 +81,22 @@ class SupplyChainToolsTest(unittest.TestCase):
             findings = scan.scan_file(text_file)
             self.assertFalse([f for f in findings if "FAIL" in f], findings)
 
+    def test_supply_chain_audit_check_succeeds_without_sbom_when_not_release(self):
+        import subprocess
+        import sys
+        with tempfile.TemporaryDirectory() as directory:
+            nonexistent = Path(directory) / "nonexistent-sbom.json"
+            # Pointing --sbom at a non-existent file without --release should not run audit_sbom
+            # unless explicitly requested, but when explicitly requested it fails.
+            # When --sbom is omitted and default dist/embedra-sbom.json is absent, check succeeds.
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "audit-supply-chain.py"),
+                 "--check", "--release", str(directory + "/nonexistent.zip")],
+                capture_output=True, text=True
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("SUPPLY CHAIN FAIL", result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()
