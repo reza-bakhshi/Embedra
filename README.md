@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge)](LICENSE)
 [![Ghidra](https://img.shields.io/badge/Ghidra-12.1.3_PUBLIC-red.svg?style=for-the-badge&logo=shield)](https://ghidra-sre.org/)
 [![Java](https://img.shields.io/badge/Java-21-orange.svg?style=for-the-badge&logo=openjdk)](https://openjdk.org/projects/jdk/21/)
+[![Platforms](https://img.shields.io/badge/Platforms-Linux%20|%20Windows%20|%20macOS-informational.svg?style=for-the-badge&logo=githubactions)](docs/compatibility-matrix.md)
+[![Fixtures](https://img.shields.io/badge/Fixtures-318%20Verified-blue.svg?style=for-the-badge)](Embedra-SpecKit.md#authoritative-fixture-corpus-318-provenance-tracked-fixtures)
 [![Build & Quality](https://img.shields.io/badge/Build-Reproducible_Offline-brightgreen.svg?style=for-the-badge)](scripts/verify-build-quality.sh)
 [![SBOM](https://img.shields.io/badge/SBOM-CycloneDX_1.5-blueviolet.svg?style=for-the-badge)](dist/embedra-sbom.json)
 [![Security](https://img.shields.io/badge/Secrets-Zero_Leak-success.svg?style=for-the-badge)](scripts/scan-secrets.py)
@@ -178,6 +180,7 @@ flowchart TD
         L3["Layer 3: Vendor ROM APIs & MMIO Peripherals"]
         L4["Layer 4: Constants & S-Box Tables"]
         L5["Layer 5: Sliding-Window Shannon Entropy & Key Schedules"]
+        L6["Layer 6: Interprocedural Taint & Data Flow Engine"]
     end
 
     subgraph FUSION["Multi-Layer Corroboration Engine"]
@@ -191,8 +194,8 @@ flowchart TD
         UI["Ghidra Bookmarks · Plate Comments · Unified Findings Panel"]
     end
 
-    RAW --> L1 & L2 & L3 & L4 & L5
-    L1 & L2 & L3 & L4 & L5 --> PIPE
+    RAW --> L1 & L2 & L3 & L4 & L5 & L6
+    L1 & L2 & L3 & L4 & L5 & L6 --> PIPE
     PIPE --> CHECK
     CHECK -->|"Non-Crypto Match"| NON
     CHECK -->|"Verified Cipher Match"| CRYPTO
@@ -209,6 +212,7 @@ flowchart TD
 - **Asymmetric & Curve Primitives**: RSA public/private structures, NIST P-256, secp256k1, Curve25519/Ed25519 parameters.
 - **Hashes & Message Authentication**: MD5, SHA-1, SHA-224/256/384/512, SHA-3/Keccak round constants, BLAKE2, HMAC, HKDF, PBKDF2.
 - **Hardware Security Engines**: Peripheral register MMIO accesses for AES, SHA, RSA, True RNG, eFuse controllers, and secure boot registers.
+- **Interprocedural Taint & Data Flow**: `InterproceduralTaintAnalyzer` tracks key material, constants, and OTP/eFuse reads across whole-program call boundaries and function parameters to cryptographic sinks.
 - **Strictly Segregated Encodings**: CRC-8/16/32, Adler-32, Fletcher-16 checksums, Base64, and Deflate/zlib/LZ4 compression tables are never misclassified as encryption (AN-003).
 
 ---
