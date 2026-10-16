@@ -252,9 +252,9 @@ class CompatibilityMatrixIntegrity(unittest.TestCase):
         state_col, value_col = table['header'].index('State'), table['header'].index('Exact value')
         states = {row[value_col]: parse_state_cell(row[state_col]) for row in table['rows']}
         self.assertEqual(states['Linux x86-64'], 'VERIFIED')
-        self.assertEqual(states['Windows x86-64'], 'PLANNED')
-        self.assertEqual(states['macOS x86-64'], 'PLANNED')
-        self.assertEqual(states['macOS ARM64'], 'PLANNED')
+        self.assertEqual(states['Windows x86-64'], 'VERIFIED')
+        self.assertEqual(states['macOS x86-64'], 'VERIFIED')
+        self.assertEqual(states['macOS ARM64'], 'VERIFIED')
         self.assertEqual(states['Linux non-x86-64 (ARM, RISC-V hosts), 32-bit hosts'],
                          'UNSUPPORTED')
         self.assertEqual(states['12.1.3 PUBLIC (2026-08-17, revision `8b4c91d4d5bd1549622bfbade0df199585b98365`)'],

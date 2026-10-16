@@ -692,6 +692,344 @@ Headless operation MUST document stable options for input, input-type override, 
 
 Every fixture MUST have a machine-readable manifest containing fixture ID, SHA-256, target/device, input format, origin, license, redistribution status, generator source revision, deterministic generation command, toolchain identity, oracle commands, expected-output snapshot, and covered requirements. Private or non-redistributable fixtures may run locally by digest but MUST be absent from the repository and public CI artifacts.
 
+### Authoritative Fixture Corpus (318 Provenance-Tracked Fixtures)
+
+The repository maintains exactly 318 redistributable test fixtures under `src/test/resources/fixtures/`. Every fixture has an adjacent `.manifest.json` conforming to `urn:embedra:schema:fixture-manifest:1`, validated continuously by `scripts/validate-fixture-provenance.sh`.
+
+| MCU Family / Slice | Fixture Count | Target MCUs | Formats | Primary Verification Scope |
+|---|---|---|---|---|
+| **Espressif ESP32** (`esp32*`) | 141 | 14 series (ESP32, S2, S3, C2, C3, C5, C6, C61, E22, H2, H21, H4, P4, S31) | App image v1, Full-Flash (default, custom offset, OTA, erased, malformed) | Header parsing, segment layout, partition discovery, MD5 checks, encryption flags, fuzzing |
+| **Espressif ESP8266** (`esp8266`) | 6 | ESP8266 (EX/8285) | ROM v1, SDK OTA v2, raw IROM companion, malformed (checksum, CRC, header) | Legacy loader, flash base requirement, 2-stage header parsing, validation |
+| **STMicroelectronics STM32** (`stm32*`) | 73 | 25 curated parts across 20 Cortex-M families (F103, C0, F2, F4, F7, G0, G4, H5, H7, L4, L4+, L5, U0, U3, U5, WB0, WB, WBA, WL3, MP1) | ELF32 ARM, Intel HEX, Raw BIN, Device Tree (.dts) | Vector table discovery, memory bank layout, Thumb entry, Cortex-M variants, TrustZone planning |
+| **STMicroelectronics STM8** (`stm8`) | 38 | 8 promoted parts (STM8S003, S103, S208, L151, L152, AF5288, AL3188, T143) + malformed | ELF, Intel HEX, Motorola S19, Raw BIN | 8-bit CISC unified memory, 0x8000 vector table (opcode 0x82), peripheral mapping, malformed vectors |
+| **Nordic Semiconductor nRF** (`nordic`) | 21 | 5 promoted parts (nRF51822, nRF52832, nRF52840, nRF5340, nRF9160) + malformed | ELF, Intel HEX, Raw BIN | SoftDevice S132/S140 offsets, MBR boundaries, UICR/FICR regions, dual-core IPC, TrustZone split |
+| **Atmel / Microchip (AVR/SAM)** (`atmel`) | 28 | 5 promoted parts (ATmega328P, ATmega2560, ATtiny85, SAMD21G18A, SAME70Q21) + malformed | ELF, Intel HEX, Raw BIN | Harvard memory split (code/data/eeprom/io), unified AVR-Dx, Cortex-M0+/M7 SAM, Optiboot, SAM-BA |
+| **Raspberry Pi RP2040/RP2350** (`rp`) | 11 | RP2040, RP2350A, RP2354B | UF2, ELF32 ARM/RISC-V, Raw BIN, malformed UF2 | Block CRC, family IDs, Boot2 XIP, dual-core M0+, TrustZone M33, Hazard3 RISC-V, PIO programs |
+| **Total** | **318** | **62 targets** | **All supported embedded binary formats** | **100% manifest provenance and SHA-256 integrity** |
+
+#### Itemized Fixture Manifest Ledger
+
+| Path | Target | Format | SHA-256 (prefix) |
+|---|---|---|---|
+| `atmel/atmega2560_app.bin` | `ATmega2560` | RAW_BINARY | `33ad43a111977429...` |
+| `atmel/atmega2560_app.elf` | `ATmega2560` | ELF | `5108431dcd840504...` |
+| `atmel/atmega2560_app.hex` | `ATmega2560` | INTEL_HEX | `32c087aa1be2b5a5...` |
+| `atmel/atmega328p_app.bin` | `ATmega328P` | RAW_BINARY | `51e01c6161c50590...` |
+| `atmel/atmega328p_app.elf` | `ATmega328P` | ELF | `24b9a792c2dd9736...` |
+| `atmel/atmega328p_app.hex` | `ATmega328P` | INTEL_HEX | `84cad7929d1216d7...` |
+| `atmel/atmega328p_composite.hex` | `ATmega328P` | INTEL_HEX | `9156b919efe96841...` |
+| `atmel/atmega328p_optiboot.bin` | `ATmega328P` | RAW_BINARY | `0786c6014ca01ddf...` |
+| `atmel/atmega328p_optiboot.elf` | `ATmega328P` | ELF | `faad8a94c5e6193b...` |
+| `atmel/atmega328p_optiboot.hex` | `ATmega328P` | INTEL_HEX | `b68a1093983e07fd...` |
+| `atmel/attiny85_app.bin` | `ATtiny85` | RAW_BINARY | `27bac7b606561026...` |
+| `atmel/attiny85_app.elf` | `ATtiny85` | ELF | `27219888f9ed4909...` |
+| `atmel/attiny85_app.hex` | `ATtiny85` | INTEL_HEX | `d278d8a3958fec9f...` |
+| `atmel/malformed/atmega328p_truncated_elf.elf` | `ATmega328P` | ELF | `7bb2d34a01fbfdec...` |
+| `atmel/malformed/atmel_bad_checksum.hex` | `ATmega328P` | INTEL_HEX | `f6cc9d74aa64a045...` |
+| `atmel/malformed/atmel_overlapping.hex` | `ATmega328P` | INTEL_HEX | `38b2227328199fd6...` |
+| `atmel/malformed/atmel_truncated.hex` | `ATmega328P` | INTEL_HEX | `0e52725ff049c93d...` |
+| `atmel/malformed/attiny85_invalid_vector.bin` | `ATtiny85` | RAW_BINARY | `bffdc95901e365b7...` |
+| `atmel/malformed/samd21_bad_sp.bin` | `SAMD21G18A` | RAW_BINARY | `46b2a267e62c92fc...` |
+| `atmel/malformed/same70_truncated.bin` | `SAME70Q21` | RAW_BINARY | `d229a39ed686fe44...` |
+| `atmel/samd21g18a_app.bin` | `SAMD21G18A` | RAW_BINARY | `fa59caba32fecff5...` |
+| `atmel/samd21g18a_app.elf` | `SAMD21G18A` | ELF | `ada6d1f0965e9630...` |
+| `atmel/samd21g18a_app.hex` | `SAMD21G18A` | INTEL_HEX | `efcf3544e30e0e6d...` |
+| `atmel/same70q21_app.bin` | `SAME70Q21` | RAW_BINARY | `e631fa43a00f630e...` |
+| `atmel/same70q21_app.elf` | `SAME70Q21` | ELF | `538d364f7dcd50ab...` |
+| `atmel/same70q21_app.hex` | `SAME70Q21` | INTEL_HEX | `35078f5ecb83c8c1...` |
+| `atmel/same70q21_samba.bin` | `SAME70Q21` | RAW_BINARY | `afb02d47bd35db79...` |
+| `atmel/same70q21_samba.hex` | `SAME70Q21` | INTEL_HEX | `c582b59031c8787c...` |
+| `esp32/esp32-freestanding-minimal.bin` | `ESP32` | Espressif application image v1 | `6bd5981e4c4ae4a2...` |
+| `esp32/full-flash/custom-offset-misleading-magic.bin` | `ESP32` | Synthetic Espressif raw flash image | `d21e059116d942ce...` |
+| `esp32/full-flash/default-factory.bin` | `ESP32` | Synthetic Espressif raw flash image | `ed0d224a235a7823...` |
+| `esp32/full-flash/erased-slot.bin` | `ESP32` | Synthetic Espressif raw flash image | `e403cebabff6bab8...` |
+| `esp32/full-flash/invalid-partition-md5.bin` | `ESP32` | Synthetic Espressif raw flash image | `bff940968ec83c9c...` |
+| `esp32/full-flash/malformed-overlapping-partitions.bin` | `ESP32` | Synthetic Espressif raw flash image | `8613a5cdece134e5...` |
+| `esp32/full-flash/malformed-truncated.bin` | `ESP32` | Synthetic Espressif raw flash image | `47388b5fb5632c8e...` |
+| `esp32/full-flash/malformed-wrong-chip.bin` | `ESP32` | Synthetic Espressif raw flash image | `19679b6f41947283...` |
+| `esp32/full-flash/ota-custom-encrypted.bin` | `ESP32` | Synthetic Espressif raw flash image | `b1a35557eb50af50...` |
+| `esp32c2/esp32c2-freestanding-minimal.bin` | `ESP32-C2` | Espressif application image v1 | `23922c278a71f605...` |
+| `esp32c2/full-flash/custom-offset-misleading-magic.bin` | `ESP32-C2` | Synthetic Espressif raw flash image | `0be032615bc82522...` |
+| `esp32c2/full-flash/default-factory.bin` | `ESP32-C2` | Synthetic Espressif raw flash image | `8993554b838a325e...` |
+| `esp32c2/full-flash/erased-slot.bin` | `ESP32-C2` | Synthetic Espressif raw flash image | `b5590fa7ab42a526...` |
+| `esp32c2/full-flash/invalid-partition-md5.bin` | `ESP32-C2` | Synthetic Espressif raw flash image | `36a05094c27da094...` |
+| `esp32c2/full-flash/malformed-overlapping-partitions.bin` | `ESP32-C2` | Synthetic Espressif raw flash image | `1b9e9e8812718776...` |
+| `esp32c2/full-flash/malformed-truncated.bin` | `ESP32-C2` | Synthetic Espressif raw flash image | `4e8f6ad1c39dfad2...` |
+| `esp32c2/full-flash/malformed-wrong-chip.bin` | `ESP32-C2` | Synthetic Espressif raw flash image | `c7b01605b4a25850...` |
+| `esp32c2/full-flash/ota-custom-encrypted.bin` | `ESP32-C2` | Synthetic Espressif raw flash image | `40e2505a06b29ec6...` |
+| `esp32c3/esp32c3-freestanding-minimal.bin` | `ESP32-C3` | Espressif application image v1 | `25d33ca47189ca50...` |
+| `esp32c3/full-flash/custom-offset-misleading-magic.bin` | `ESP32-C3` | Synthetic Espressif raw flash image | `29ff2ab427fa8d3e...` |
+| `esp32c3/full-flash/default-factory.bin` | `ESP32-C3` | Synthetic Espressif raw flash image | `e45aacffbb2e475a...` |
+| `esp32c3/full-flash/erased-slot.bin` | `ESP32-C3` | Synthetic Espressif raw flash image | `ac23b468609934e3...` |
+| `esp32c3/full-flash/invalid-partition-md5.bin` | `ESP32-C3` | Synthetic Espressif raw flash image | `cb67a780eef46af6...` |
+| `esp32c3/full-flash/malformed-overlapping-partitions.bin` | `ESP32-C3` | Synthetic Espressif raw flash image | `ae42998ba31ad2ef...` |
+| `esp32c3/full-flash/malformed-truncated.bin` | `ESP32-C3` | Synthetic Espressif raw flash image | `c0eed5c7ed90846f...` |
+| `esp32c3/full-flash/malformed-wrong-chip.bin` | `ESP32-C3` | Synthetic Espressif raw flash image | `ed8a024187829efa...` |
+| `esp32c3/full-flash/ota-custom-encrypted.bin` | `ESP32-C3` | Synthetic Espressif raw flash image | `c61b6b38024b7027...` |
+| `esp32c5/esp32c5-freestanding-minimal.bin` | `ESP32-C5` | Espressif application image v1 | `4e109884e2b4f489...` |
+| `esp32c5/full-flash/custom-offset-misleading-magic.bin` | `ESP32-C5` | Synthetic Espressif raw flash image | `94f6a0270cfdf8b5...` |
+| `esp32c5/full-flash/default-factory.bin` | `ESP32-C5` | Synthetic Espressif raw flash image | `0ca3f478ed66eea1...` |
+| `esp32c5/full-flash/erased-slot.bin` | `ESP32-C5` | Synthetic Espressif raw flash image | `602ce032ce56a228...` |
+| `esp32c5/full-flash/invalid-partition-md5.bin` | `ESP32-C5` | Synthetic Espressif raw flash image | `921f1eca6469f536...` |
+| `esp32c5/full-flash/malformed-overlapping-partitions.bin` | `ESP32-C5` | Synthetic Espressif raw flash image | `95a4a05c43cad998...` |
+| `esp32c5/full-flash/malformed-truncated.bin` | `ESP32-C5` | Synthetic Espressif raw flash image | `36a980f9cc0dfe43...` |
+| `esp32c5/full-flash/malformed-wrong-chip.bin` | `ESP32-C5` | Synthetic Espressif raw flash image | `5c9e6444e8963d6a...` |
+| `esp32c5/full-flash/ota-custom-encrypted.bin` | `ESP32-C5` | Synthetic Espressif raw flash image | `06f08a5be4ee5387...` |
+| `esp32c6/esp32c6-freestanding-minimal.bin` | `ESP32-C6` | Espressif application image v1 | `6accf95c68d91dda...` |
+| `esp32c6/full-flash/custom-offset-misleading-magic.bin` | `ESP32-C6` | Synthetic Espressif raw flash image | `2b556277c1abf690...` |
+| `esp32c6/full-flash/default-factory.bin` | `ESP32-C6` | Synthetic Espressif raw flash image | `9762678ae32e3445...` |
+| `esp32c6/full-flash/erased-slot.bin` | `ESP32-C6` | Synthetic Espressif raw flash image | `ec30f85c4a7bd0e1...` |
+| `esp32c6/full-flash/invalid-partition-md5.bin` | `ESP32-C6` | Synthetic Espressif raw flash image | `ab9fa10ecc4e1181...` |
+| `esp32c6/full-flash/malformed-overlapping-partitions.bin` | `ESP32-C6` | Synthetic Espressif raw flash image | `7c776122dbd8364e...` |
+| `esp32c6/full-flash/malformed-truncated.bin` | `ESP32-C6` | Synthetic Espressif raw flash image | `e71b1dc34bd4492f...` |
+| `esp32c6/full-flash/malformed-wrong-chip.bin` | `ESP32-C6` | Synthetic Espressif raw flash image | `c7f14f946d9287cf...` |
+| `esp32c6/full-flash/ota-custom-encrypted.bin` | `ESP32-C6` | Synthetic Espressif raw flash image | `679955f439d4eeef...` |
+| `esp32c61/esp32c61-freestanding-minimal.bin` | `ESP32-C61` | Espressif application image v1 | `1c3a3b4a942545d9...` |
+| `esp32c61/full-flash/custom-offset-misleading-magic.bin` | `ESP32-C61` | Synthetic Espressif raw flash image | `b06bfbea18859586...` |
+| `esp32c61/full-flash/default-factory.bin` | `ESP32-C61` | Synthetic Espressif raw flash image | `c9886345999846ea...` |
+| `esp32c61/full-flash/erased-slot.bin` | `ESP32-C61` | Synthetic Espressif raw flash image | `6f1e400788aa2324...` |
+| `esp32c61/full-flash/invalid-partition-md5.bin` | `ESP32-C61` | Synthetic Espressif raw flash image | `e3f4040ceb0ca147...` |
+| `esp32c61/full-flash/malformed-overlapping-partitions.bin` | `ESP32-C61` | Synthetic Espressif raw flash image | `75968bd9023845b4...` |
+| `esp32c61/full-flash/malformed-truncated.bin` | `ESP32-C61` | Synthetic Espressif raw flash image | `43e9fa3af0ea8bc4...` |
+| `esp32c61/full-flash/malformed-wrong-chip.bin` | `ESP32-C61` | Synthetic Espressif raw flash image | `01959c029a05f41c...` |
+| `esp32c61/full-flash/ota-custom-encrypted.bin` | `ESP32-C61` | Synthetic Espressif raw flash image | `6047b4c1085142db...` |
+| `esp32e22/esp32e22-freestanding-minimal.bin` | `ESP32-E22` | Espressif application image v1 | `b8fb13d926f16693...` |
+| `esp32e22/full-flash/custom-offset-misleading-magic.bin` | `ESP32-E22` | Synthetic Espressif raw flash image | `ef1d50f240d9b832...` |
+| `esp32e22/full-flash/default-factory.bin` | `ESP32-E22` | Synthetic Espressif raw flash image | `0a74295115f266d2...` |
+| `esp32e22/full-flash/erased-slot.bin` | `ESP32-E22` | Synthetic Espressif raw flash image | `394385ff2b8b63a3...` |
+| `esp32e22/full-flash/invalid-partition-md5.bin` | `ESP32-E22` | Synthetic Espressif raw flash image | `513572a14d5d0124...` |
+| `esp32e22/full-flash/malformed-overlapping-partitions.bin` | `ESP32-E22` | Synthetic Espressif raw flash image | `cd8ced32cde62d04...` |
+| `esp32e22/full-flash/malformed-truncated.bin` | `ESP32-E22` | Synthetic Espressif raw flash image | `a6c1c88856951f21...` |
+| `esp32e22/full-flash/malformed-wrong-chip.bin` | `ESP32-E22` | Synthetic Espressif raw flash image | `efa19eb813084ea4...` |
+| `esp32e22/full-flash/ota-custom-encrypted.bin` | `ESP32-E22` | Synthetic Espressif raw flash image | `489c7cd71a467096...` |
+| `esp32h2/esp32h2-freestanding-minimal.bin` | `ESP32-H2` | Espressif application image v1 | `1dc73a5fa6b01891...` |
+| `esp32h2/full-flash/custom-offset-misleading-magic.bin` | `ESP32-H2` | Synthetic Espressif raw flash image | `eccff2e741d88138...` |
+| `esp32h2/full-flash/default-factory.bin` | `ESP32-H2` | Synthetic Espressif raw flash image | `b0528a087a4a19e7...` |
+| `esp32h2/full-flash/erased-slot.bin` | `ESP32-H2` | Synthetic Espressif raw flash image | `c2a7d8bc4c4cbcb6...` |
+| `esp32h2/full-flash/invalid-partition-md5.bin` | `ESP32-H2` | Synthetic Espressif raw flash image | `e1361ecfc42e4ad8...` |
+| `esp32h2/full-flash/malformed-overlapping-partitions.bin` | `ESP32-H2` | Synthetic Espressif raw flash image | `3b0975d1c35f3b2a...` |
+| `esp32h2/full-flash/malformed-truncated.bin` | `ESP32-H2` | Synthetic Espressif raw flash image | `d31a9314b54baf10...` |
+| `esp32h2/full-flash/malformed-wrong-chip.bin` | `ESP32-H2` | Synthetic Espressif raw flash image | `7997c014cf2f7eae...` |
+| `esp32h2/full-flash/ota-custom-encrypted.bin` | `ESP32-H2` | Synthetic Espressif raw flash image | `eee48f4f59627c8b...` |
+| `esp32h21/esp32h21-freestanding-minimal.bin` | `ESP32-H21` | Espressif application image v1 | `82a27aa9ae9968fc...` |
+| `esp32h21/full-flash/custom-offset-misleading-magic.bin` | `ESP32-H21` | Synthetic Espressif raw flash image | `bb95af87a07029f6...` |
+| `esp32h21/full-flash/default-factory.bin` | `ESP32-H21` | Synthetic Espressif raw flash image | `84d75bf4da137298...` |
+| `esp32h21/full-flash/erased-slot.bin` | `ESP32-H21` | Synthetic Espressif raw flash image | `84fdc888b05ab950...` |
+| `esp32h21/full-flash/invalid-partition-md5.bin` | `ESP32-H21` | Synthetic Espressif raw flash image | `cbd1dce25231af9d...` |
+| `esp32h21/full-flash/malformed-overlapping-partitions.bin` | `ESP32-H21` | Synthetic Espressif raw flash image | `1fcc0dd9461d1f50...` |
+| `esp32h21/full-flash/malformed-truncated.bin` | `ESP32-H21` | Synthetic Espressif raw flash image | `b2f2d6930dd416a4...` |
+| `esp32h21/full-flash/malformed-wrong-chip.bin` | `ESP32-H21` | Synthetic Espressif raw flash image | `252e0a24cbbddd06...` |
+| `esp32h21/full-flash/ota-custom-encrypted.bin` | `ESP32-H21` | Synthetic Espressif raw flash image | `8bb45cb0f1419260...` |
+| `esp32h4/esp32h4-freestanding-minimal.bin` | `ESP32-H4` | Espressif application image v1 | `0f121d6e9081aa6e...` |
+| `esp32h4/full-flash/custom-offset-misleading-magic.bin` | `ESP32-H4` | Synthetic Espressif raw flash image | `c3ce2404c271f483...` |
+| `esp32h4/full-flash/default-factory.bin` | `ESP32-H4` | Synthetic Espressif raw flash image | `0c0cefd27a73c818...` |
+| `esp32h4/full-flash/erased-slot.bin` | `ESP32-H4` | Synthetic Espressif raw flash image | `e63504fcd3efb05a...` |
+| `esp32h4/full-flash/invalid-partition-md5.bin` | `ESP32-H4` | Synthetic Espressif raw flash image | `5bddef5b5380dbef...` |
+| `esp32h4/full-flash/malformed-overlapping-partitions.bin` | `ESP32-H4` | Synthetic Espressif raw flash image | `1591478db28902fb...` |
+| `esp32h4/full-flash/malformed-truncated.bin` | `ESP32-H4` | Synthetic Espressif raw flash image | `428ccae6b0c791c3...` |
+| `esp32h4/full-flash/malformed-wrong-chip.bin` | `ESP32-H4` | Synthetic Espressif raw flash image | `21b57dbc1c6ee7d3...` |
+| `esp32h4/full-flash/ota-custom-encrypted.bin` | `ESP32-H4` | Synthetic Espressif raw flash image | `54d93582d6f3d681...` |
+| `esp32p4/esp32p4-freestanding-minimal.bin` | `ESP32-P4` | Espressif application image v1 | `4d1a34b6abd58ac9...` |
+| `esp32p4/full-flash/custom-offset-misleading-magic.bin` | `ESP32-P4` | Synthetic Espressif raw flash image | `79a924e373da5b93...` |
+| `esp32p4/full-flash/default-factory.bin` | `ESP32-P4` | Synthetic Espressif raw flash image | `3e2c815112aa4091...` |
+| `esp32p4/full-flash/erased-slot.bin` | `ESP32-P4` | Synthetic Espressif raw flash image | `44149bfb8565d396...` |
+| `esp32p4/full-flash/invalid-partition-md5.bin` | `ESP32-P4` | Synthetic Espressif raw flash image | `cf6aa4bc42f54efa...` |
+| `esp32p4/full-flash/malformed-overlapping-partitions.bin` | `ESP32-P4` | Synthetic Espressif raw flash image | `01869922d6f53447...` |
+| `esp32p4/full-flash/malformed-truncated.bin` | `ESP32-P4` | Synthetic Espressif raw flash image | `ca9e837f4c82e4ba...` |
+| `esp32p4/full-flash/malformed-wrong-chip.bin` | `ESP32-P4` | Synthetic Espressif raw flash image | `c93916ef711b6390...` |
+| `esp32p4/full-flash/ota-custom-encrypted.bin` | `ESP32-P4` | Synthetic Espressif raw flash image | `73d0e3c800f33b52...` |
+| `esp32s2/esp32s2-freestanding-minimal.bin` | `ESP32-S2` | Espressif application image v1 | `79e6befbb34c2f1f...` |
+| `esp32s2/full-flash/custom-offset-misleading-magic.bin` | `ESP32-S2` | Synthetic Espressif raw flash image | `134ef6d17437587b...` |
+| `esp32s2/full-flash/default-factory.bin` | `ESP32-S2` | Synthetic Espressif raw flash image | `733ef3111a985627...` |
+| `esp32s2/full-flash/erased-slot.bin` | `ESP32-S2` | Synthetic Espressif raw flash image | `2eb76ed0bf59e7ba...` |
+| `esp32s2/full-flash/invalid-partition-md5.bin` | `ESP32-S2` | Synthetic Espressif raw flash image | `0e029e54d6c697e3...` |
+| `esp32s2/full-flash/malformed-overlapping-partitions.bin` | `ESP32-S2` | Synthetic Espressif raw flash image | `bc9ba6c289f5b4ec...` |
+| `esp32s2/full-flash/malformed-truncated.bin` | `ESP32-S2` | Synthetic Espressif raw flash image | `5786b1521945c23f...` |
+| `esp32s2/full-flash/malformed-wrong-chip.bin` | `ESP32-S2` | Synthetic Espressif raw flash image | `554fc35c89a12705...` |
+| `esp32s2/full-flash/ota-custom-encrypted.bin` | `ESP32-S2` | Synthetic Espressif raw flash image | `db28e11ce4c4a6d4...` |
+| `esp32s3/esp32s3-freestanding-minimal-no-digest.bin` | `ESP32-S3` | Espressif application image v1 | `1992971280432b69...` |
+| `esp32s3/esp32s3-freestanding-minimal.bin` | `ESP32-S3` | Espressif application image v1 | `f17b265cb900c385...` |
+| `esp32s3/fid-mechanics/embedra-fid-mechanics.S` | `ESP32-S3` | Original Embedra assembler source | `1990d3dd46447abb...` |
+| `esp32s3/fid-mechanics/embedra-fid-mechanics.bin` | `ESP32-S3` | Raw Xtensa .text code | `cebe3e400b9070ed...` |
+| `esp32s3/fid-mechanics/embedra-fid-mechanics.o` | `ESP32-S3` | Symbolized Xtensa relocatable ELF | `d50702dd4707124b...` |
+| `esp32s3/fid/embedra-fid-cross-app-b.bin` | `ESP32-S3` | Espressif application image v1 (inherently stripped) | `e7ef4111bcc62e05...` |
+| `esp32s3/fid/embedra-fid-ref-app-a-o2.bin` | `ESP32-S3` | Espressif application image v1 (inherently stripped) | `de473683131f42d8...` |
+| `esp32s3/fid/embedra-fid-ref-app-a.bin` | `ESP32-S3` | Espressif application image v1 (inherently stripped) | `fd124758ae6e9ef1...` |
+| `esp32s3/fid/embedra-fid-ref-app-a.elf` | `ESP32-S3` | Symbolized Xtensa executable ELF (debug-stripped) | `acd6fb53b2f55fc4...` |
+| `esp32s3/full-flash/custom-offset-misleading-magic.bin` | `ESP32-S3` | Synthetic Espressif raw flash image | `7abf06a8e02a1eef...` |
+| `esp32s3/full-flash/default-factory.bin` | `ESP32-S3` | Synthetic Espressif raw flash image | `45cac3c72a7c4215...` |
+| `esp32s3/full-flash/invalid-partition-md5.bin` | `ESP32-S3` | Synthetic Espressif raw flash image | `7841f56a0ad2af7f...` |
+| `esp32s3/full-flash/ota-custom-encrypted.bin` | `ESP32-S3` | Synthetic Espressif raw flash image | `905ef03489998e54...` |
+| `esp32s3/language/salt-saltu.S` | `ESP32-S3` | Original Embedra assembler source | `3dfac01628f2e64f...` |
+| `esp32s3/language/salt-saltu.bin` | `ESP32-S3` | Raw Xtensa code | `f0d4082842fa3d74...` |
+| `esp32s3/language/salt-saltu.o` | `ESP32-S3` | Symbolized Xtensa relocatable ELF | `05c425d5ba9f4122...` |
+| `esp32s3/malformed/malformed-checksum.bin` | `ESP32-S3` | Malformed Espressif application image v1 | `56686515f40fb287...` |
+| `esp32s3/malformed/malformed-digest.bin` | `ESP32-S3` | Malformed Espressif application image v1 | `9f8426ea35927ec2...` |
+| `esp32s3/malformed/malformed-entry-unaligned.bin` | `ESP32-S3` | Malformed Espressif application image v1 | `42427fc50f1843dd...` |
+| `esp32s3/malformed/malformed-overlapping-segments.bin` | `ESP32-S3` | Malformed Espressif application image v1 | `450ccc4447b805f0...` |
+| `esp32s3/malformed/malformed-segment-length-overflow.bin` | `ESP32-S3` | Malformed Espressif application image v1 | `97ae4aff29e84a89...` |
+| `esp32s3/malformed/malformed-trailing-data.bin` | `ESP32-S3` | Malformed Espressif application image v1 | `23bd40d77d07120c...` |
+| `esp32s3/malformed/malformed-truncated-segment-data.bin` | `ESP32-S3` | Malformed Espressif application image v1 | `4641e566106a2956...` |
+| `esp32s3/malformed/malformed-wrong-chip.bin` | `ESP32-S3` | Malformed Espressif application image v1 | `7f9544aec9d09774...` |
+| `esp32s31/esp32s31-freestanding-minimal.bin` | `ESP32-S31` | Espressif application image v1 | `81712f7c1389bb99...` |
+| `esp32s31/full-flash/custom-offset-misleading-magic.bin` | `ESP32-S31` | Synthetic Espressif raw flash image | `32de19a4fa6d8d5b...` |
+| `esp32s31/full-flash/default-factory.bin` | `ESP32-S31` | Synthetic Espressif raw flash image | `1019da321b6e490e...` |
+| `esp32s31/full-flash/erased-slot.bin` | `ESP32-S31` | Synthetic Espressif raw flash image | `562c092c8d26c87e...` |
+| `esp32s31/full-flash/invalid-partition-md5.bin` | `ESP32-S31` | Synthetic Espressif raw flash image | `c76a7f88d6308bc7...` |
+| `esp32s31/full-flash/malformed-overlapping-partitions.bin` | `ESP32-S31` | Synthetic Espressif raw flash image | `5ec7f3e1029d5704...` |
+| `esp32s31/full-flash/malformed-truncated.bin` | `ESP32-S31` | Synthetic Espressif raw flash image | `c15b408667e33606...` |
+| `esp32s31/full-flash/malformed-wrong-chip.bin` | `ESP32-S31` | Synthetic Espressif raw flash image | `b09e8bd562c6df3f...` |
+| `esp32s31/full-flash/ota-custom-encrypted.bin` | `ESP32-S31` | Synthetic Espressif raw flash image | `2da4777b768816f0...` |
+| `esp8266/esp8266-freestanding-v1-0x00000.bin` | `ESP8266` | ESP8266 ROM image version 1 | `5d6596092012160e...` |
+| `esp8266/esp8266-freestanding-v1-0x01010.bin` | `ESP8266` | ESP8266 version 1 raw IROM companion | `9a82ca2c932d8342...` |
+| `esp8266/esp8266-freestanding-v2-0x01000.bin` | `ESP8266` | ESP8266 SDK OTA image version 2 | `99175667a2bcf43a...` |
+| `esp8266/malformed/malformed-v1-checksum.bin` | `ESP8266` | Malformed ESP8266 legacy image | `bda93f8bbdcd181a...` |
+| `esp8266/malformed/malformed-v2-crc.bin` | `ESP8266` | Malformed ESP8266 legacy image | `01b90c1d3e3ae2f4...` |
+| `esp8266/malformed/malformed-v2-truncated-second-header.bin` | `ESP8266` | Malformed ESP8266 legacy image | `1c70c9bbcf92686a...` |
+| `nordic/malformed/nrf52_bad_checksum.hex` | `nRF52832-QFAA` | INTEL_HEX | `970dd22ea1c948f1...` |
+| `nordic/malformed/nrf52_invalid_vector.bin` | `nRF52832-QFAA` | RAW_BINARY | `a3312e29390eac39...` |
+| `nordic/malformed/nrf52_overlapping.hex` | `nRF52832-QFAA` | INTEL_HEX | `6b2f9e0cada0bcb2...` |
+| `nordic/malformed/nrf52_truncated.hex` | `nRF52832-QFAA` | INTEL_HEX | `bc075761fa96d52d...` |
+| `nordic/malformed/nrf52_truncated_elf.elf` | `nRF52832-QFAA` | ELF | `758c85fe6952e91c...` |
+| `nordic/nrf51822_app.bin` | `nRF51822-QFAA` | RAW_BINARY | `3ab8fb6298dc358b...` |
+| `nordic/nrf51822_app.elf` | `nRF51822-QFAA` | ELF | `2166377b53337c68...` |
+| `nordic/nrf51822_app.hex` | `nRF51822-QFAA` | INTEL_HEX | `85b39244a79a25ea...` |
+| `nordic/nrf52832_app.bin` | `nRF52832-QFAA` | RAW_BINARY | `74b928393bec9957...` |
+| `nordic/nrf52832_app.elf` | `nRF52832-QFAA` | ELF | `70eb2460cf5f3fb9...` |
+| `nordic/nrf52832_app.hex` | `nRF52832-QFAA` | INTEL_HEX | `7f67b0b3689b7e33...` |
+| `nordic/nrf52832_s132_app.hex` | `nRF52832-QFAA` | INTEL_HEX | `0a987970c7b5c603...` |
+| `nordic/nrf52840_app.bin` | `nRF52840-QIAA` | RAW_BINARY | `b962e3a833697001...` |
+| `nordic/nrf52840_app.elf` | `nRF52840-QIAA` | ELF | `8204e3c5641ee46f...` |
+| `nordic/nrf52840_app.hex` | `nRF52840-QIAA` | INTEL_HEX | `0eafd4ab186dd035...` |
+| `nordic/nrf52840_s140_app.hex` | `nRF52840-QIAA` | INTEL_HEX | `00c88a7f676ec013...` |
+| `nordic/nrf52840_uicr.hex` | `nRF52840-QIAA` | INTEL_HEX | `18f8ea966f4b060c...` |
+| `nordic/nrf5340_app_core.elf` | `nRF5340-QKAA` | ELF | `b46e5e7dfaa7accf...` |
+| `nordic/nrf5340_net_core.elf` | `nRF5340-QKAA` | ELF | `4c0450a7f6f75b57...` |
+| `nordic/nrf9160_nonsecure.elf` | `nRF9160-SICA` | ELF | `508c4f8be446aed4...` |
+| `nordic/nrf9160_secure.elf` | `nRF9160-SICA` | ELF | `70eb2460cf5f3fb9...` |
+| `rp/malformed/uf2-corrupted-magic.uf2` | `RP2040` | UF2 malformed | `3d5892df5047b148...` |
+| `rp/malformed/uf2-family-mismatch.uf2` | `RP2040` | UF2 malformed | `c5e634bd1461cd5f...` |
+| `rp/malformed/uf2-truncated-block.uf2` | `RP2040` | UF2 malformed | `aa1e4682d8fe4ed4...` |
+| `rp/rp2040-boot2-xip.bin` | `RP2040` | raw binary | `0bf98297f40f3e9a...` |
+| `rp/rp2040-freestanding-dualcore.elf` | `RP2040` | ELF32 ARMv6-M | `d9fd2c3bab5c0b7b...` |
+| `rp/rp2040-pico-blinky.uf2` | `RP2040` | UF2 | `478a17a65746190c...` |
+| `rp/rp2350-arm-pico2.uf2` | `RP2350A` | UF2 | `4b7bf85f55dbebec...` |
+| `rp/rp2350-arm-trustzone.elf` | `RP2350A` | ELF32 ARMv8-M | `1d2978b3a0ae72f7...` |
+| `rp/rp2350-riscv-pico2.uf2` | `RP2350A` | UF2 | `ab98f3f35405f799...` |
+| `rp/rp2350-riscv-trap.elf` | `RP2350A` | ELF32 RISC-V | `bbed90436436f853...` |
+| `rp/rp2354-stacked-flash.bin` | `RP2354B` | raw binary | `223960c42b632ca6...` |
+| `stm32-core-samples/STM32F207ZGT6.bin` | `STM32F207ZGT6` | raw binary | `3a41561772ae4ce4...` |
+| `stm32-core-samples/STM32F207ZGT6.elf` | `STM32F207ZGT6` | ELF32 ARM | `e0d5acbe6a26a06b...` |
+| `stm32-core-samples/STM32F207ZGT6.hex` | `STM32F207ZGT6` | Intel HEX | `5a080812a7d3d241...` |
+| `stm32-core-samples/STM32F401RET6.bin` | `STM32F401RET6` | raw binary | `2bdf6851b5c59f11...` |
+| `stm32-core-samples/STM32F401RET6.elf` | `STM32F401RET6` | ELF32 ARM | `99a97a2ea86488f9...` |
+| `stm32-core-samples/STM32F401RET6.hex` | `STM32F401RET6` | Intel HEX | `5b15ecab817692ba...` |
+| `stm32-core-samples/STM32F756ZGT6.bin` | `STM32F756ZGT6` | raw binary | `e94f8feb206ddc68...` |
+| `stm32-core-samples/STM32F756ZGT6.elf` | `STM32F756ZGT6` | ELF32 ARM | `a041cae18b48fe10...` |
+| `stm32-core-samples/STM32F756ZGT6.hex` | `STM32F756ZGT6` | Intel HEX | `cfad8efcfe482054...` |
+| `stm32-core-samples/STM32G0B1RET6.bin` | `STM32G0B1RET6` | raw binary | `b936100cda955abd...` |
+| `stm32-core-samples/STM32G0B1RET6.elf` | `STM32G0B1RET6` | ELF32 ARM | `8fa8846b2d72c41a...` |
+| `stm32-core-samples/STM32G0B1RET6.hex` | `STM32G0B1RET6` | Intel HEX | `55b31b3bc59a473c...` |
+| `stm32-core-samples/STM32G431RBT6.bin` | `STM32G431RBT6` | raw binary | `3e1de810fa43f5a0...` |
+| `stm32-core-samples/STM32G431RBT6.elf` | `STM32G431RBT6` | ELF32 ARM | `44b0af4bb7582b97...` |
+| `stm32-core-samples/STM32G431RBT6.hex` | `STM32G431RBT6` | Intel HEX | `22b9bea44c9f0723...` |
+| `stm32-core-samples/STM32H503RBT6.bin` | `STM32H503RBT6` | raw binary | `6f1cba163d3778bb...` |
+| `stm32-core-samples/STM32H503RBT6.elf` | `STM32H503RBT6` | ELF32 ARM | `6dde0f559ecda50c...` |
+| `stm32-core-samples/STM32H503RBT6.hex` | `STM32H503RBT6` | Intel HEX | `6d0870277b47aa6c...` |
+| `stm32-core-samples/STM32H735IGK6.bin` | `STM32H735IGK6` | raw binary | `490fa183225a35b7...` |
+| `stm32-core-samples/STM32H735IGK6.elf` | `STM32H735IGK6` | ELF32 ARM | `6199096dd3e8cbeb...` |
+| `stm32-core-samples/STM32H735IGK6.hex` | `STM32H735IGK6` | Intel HEX | `4741273260ec2fd5...` |
+| `stm32-core-samples/STM32L412KBU3.bin` | `STM32L412KBU3` | raw binary | `c8a2aa98898c22b4...` |
+| `stm32-core-samples/STM32L412KBU3.elf` | `STM32L412KBU3` | ELF32 ARM | `15155d9241a29990...` |
+| `stm32-core-samples/STM32L412KBU3.hex` | `STM32L412KBU3` | Intel HEX | `c492c4b5c0bd1a8f...` |
+| `stm32-core-samples/STM32L4P5CGU6.bin` | `STM32L4P5CGU6` | raw binary | `40e56393c7a986b9...` |
+| `stm32-core-samples/STM32L4P5CGU6.elf` | `STM32L4P5CGU6` | ELF32 ARM | `ef02781fade8788e...` |
+| `stm32-core-samples/STM32L4P5CGU6.hex` | `STM32L4P5CGU6` | Intel HEX | `e5051647bb979ea4...` |
+| `stm32-core-samples/STM32L562QEI6Q.bin` | `STM32L562QEI6Q` | raw binary | `ebab0ab5dc960a45...` |
+| `stm32-core-samples/STM32L562QEI6Q.elf` | `STM32L562QEI6Q` | ELF32 ARM | `ad2aade419ef8710...` |
+| `stm32-core-samples/STM32L562QEI6Q.hex` | `STM32L562QEI6Q` | Intel HEX | `7431d13bff906003...` |
+| `stm32-core-samples/STM32N657X0H3Q.bin` | `STM32N657X0H3Q` | raw binary | `7d6efee706b00e97...` |
+| `stm32-core-samples/STM32N657X0H3Q.elf` | `STM32N657X0H3Q` | ELF32 ARM | `847db4095dd253bb...` |
+| `stm32-core-samples/STM32N657X0H3Q.hex` | `STM32N657X0H3Q` | Intel HEX | `378ec56234d1529c...` |
+| `stm32-core-samples/STM32U031R8T6.bin` | `STM32U031R8T6` | raw binary | `310cc1aca80e1f5b...` |
+| `stm32-core-samples/STM32U031R8T6.elf` | `STM32U031R8T6` | ELF32 ARM | `04ec9896014432da...` |
+| `stm32-core-samples/STM32U031R8T6.hex` | `STM32U031R8T6` | Intel HEX | `7a471e2b45991e0d...` |
+| `stm32-core-samples/STM32U385RGT6Q.bin` | `STM32U385RGT6Q` | raw binary | `00b8e1ea95bf7ac5...` |
+| `stm32-core-samples/STM32U385RGT6Q.elf` | `STM32U385RGT6Q` | ELF32 ARM | `be9d24581a12e4fc...` |
+| `stm32-core-samples/STM32U385RGT6Q.hex` | `STM32U385RGT6Q` | Intel HEX | `c2752c3f38c53739...` |
+| `stm32-core-samples/STM32U545RET6Q.bin` | `STM32U545RET6Q` | raw binary | `cd7f577cbc975169...` |
+| `stm32-core-samples/STM32U545RET6Q.elf` | `STM32U545RET6Q` | ELF32 ARM | `eb7f7b609153a763...` |
+| `stm32-core-samples/STM32U545RET6Q.hex` | `STM32U545RET6Q` | Intel HEX | `a6decd850f7bb730...` |
+| `stm32-core-samples/STM32WB05KZV6TR.bin` | `STM32WB05KZV6TR` | raw binary | `ca80a2170fbf4365...` |
+| `stm32-core-samples/STM32WB05KZV6TR.elf` | `STM32WB05KZV6TR` | ELF32 ARM | `9585895f9dc8a460...` |
+| `stm32-core-samples/STM32WB05KZV6TR.hex` | `STM32WB05KZV6TR` | Intel HEX | `fd6ccb41721a92da...` |
+| `stm32-core-samples/STM32WB15CCU6.bin` | `STM32WB15CCU6` | raw binary | `246484e6f6015c2e...` |
+| `stm32-core-samples/STM32WB15CCU6.elf` | `STM32WB15CCU6` | ELF32 ARM | `3705ba16356ea0ca...` |
+| `stm32-core-samples/STM32WB15CCU6.hex` | `STM32WB15CCU6` | Intel HEX | `5ca62ee059a2cde2...` |
+| `stm32-core-samples/STM32WBA25CEU7.bin` | `STM32WBA25CEU7` | raw binary | `7bc91d4ab7c19b5a...` |
+| `stm32-core-samples/STM32WBA25CEU7.elf` | `STM32WBA25CEU7` | ELF32 ARM | `d7afb782e1900acc...` |
+| `stm32-core-samples/STM32WBA25CEU7.hex` | `STM32WBA25CEU7` | Intel HEX | `3b6e362a8cb6e703...` |
+| `stm32-core-samples/STM32WL33CCV6TR.bin` | `STM32WL33CCV6TR` | raw binary | `a89dfa1063fe8fa7...` |
+| `stm32-core-samples/STM32WL33CCV6TR.elf` | `STM32WL33CCV6TR` | ELF32 ARM | `2ba2837e228dc1a7...` |
+| `stm32-core-samples/STM32WL33CCV6TR.hex` | `STM32WL33CCV6TR` | Intel HEX | `de6d38307877b6ce...` |
+| `stm32c0/STM32C051C8T6.bin` | `STM32C051C8T6` | raw binary | `ecc0d666a2826666...` |
+| `stm32c0/STM32C051C8T6.elf` | `STM32C051C8T6` | ELF32 ARM | `12a4cd88d08650ea...` |
+| `stm32c0/STM32C051C8T6.hex` | `STM32C051C8T6` | Intel HEX | `384281faa77b1a84...` |
+| `stm32c0/STM32C071RBT6.bin` | `STM32C071RBT6` | raw binary | `5a91a32f4cb03af6...` |
+| `stm32c0/STM32C071RBT6.elf` | `STM32C071RBT6` | ELF32 ARM | `cdb1e78e7c23d4de...` |
+| `stm32c0/STM32C071RBT6.hex` | `STM32C071RBT6` | Intel HEX | `800804816e6f7a97...` |
+| `stm32c0/STM32C092RCT6.bin` | `STM32C092RCT6` | raw binary | `dbbcae5293ba05ac...` |
+| `stm32c0/STM32C092RCT6.elf` | `STM32C092RCT6` | ELF32 ARM | `649b971721050665...` |
+| `stm32c0/STM32C092RCT6.hex` | `STM32C092RCT6` | Intel HEX | `35fa5ae7137652e7...` |
+| `stm32f103/STM32F103C8T6.bin` | `STM32F103C8T6` | raw binary | `e39282889c58a773...` |
+| `stm32f103/STM32F103C8T6.elf` | `STM32F103C8T6` | ELF32 ARM | `214a899f0ccfac9f...` |
+| `stm32f103/STM32F103C8T6.hex` | `STM32F103C8T6` | Intel HEX | `695dc423beedee1e...` |
+| `stm32f103/STM32F103CBT6.bin` | `STM32F103CBT6` | raw binary | `ca51b5c7f1b7fa33...` |
+| `stm32f103/STM32F103CBT6.elf` | `STM32F103CBT6` | ELF32 ARM | `573a6fe77cd932c4...` |
+| `stm32f103/STM32F103CBT6.hex` | `STM32F103CBT6` | Intel HEX | `52f9c3a1ddce9076...` |
+| `stm32f103/STM32F103RBT6.bin` | `STM32F103RBT6` | raw binary | `306211f2f21c5884...` |
+| `stm32f103/STM32F103RBT6.elf` | `STM32F103RBT6` | ELF32 ARM | `7934d32e1d07c6b5...` |
+| `stm32f103/STM32F103RBT6.hex` | `STM32F103RBT6` | Intel HEX | `e6983f3318f8dc21...` |
+| `stm32mp/stm32mp157c-minimal.dts` | `STM32MP157CAA3` | Device Tree Source | `ba7b56bb78b49aa2...` |
+| `stm8/STM8AF5288TAY.bin` | `STM8AF5288TAY` | raw binary | `0c71bb2b3e03c3ca...` |
+| `stm8/STM8AF5288TAY.elf` | `STM8AF5288TAY` | ELF executable | `3416cbfca3a4f760...` |
+| `stm8/STM8AF5288TAY.hex` | `STM8AF5288TAY` | Intel HEX | `f0c9d6bc900a12d5...` |
+| `stm8/STM8AF5288TAY.s19` | `STM8AF5288TAY` | Motorola S-Record | `2272fe326234c9d2...` |
+| `stm8/STM8AL3188TA.bin` | `STM8AL3188TA` | raw binary | `0c71bb2b3e03c3ca...` |
+| `stm8/STM8AL3188TA.elf` | `STM8AL3188TA` | ELF executable | `3416cbfca3a4f760...` |
+| `stm8/STM8AL3188TA.hex` | `STM8AL3188TA` | Intel HEX | `f0c9d6bc900a12d5...` |
+| `stm8/STM8AL3188TA.s19` | `STM8AL3188TA` | Motorola S-Record | `2272fe326234c9d2...` |
+| `stm8/STM8L151C8T6.bin` | `STM8L151C8T6` | raw binary | `0c71bb2b3e03c3ca...` |
+| `stm8/STM8L151C8T6.elf` | `STM8L151C8T6` | ELF executable | `3416cbfca3a4f760...` |
+| `stm8/STM8L151C8T6.hex` | `STM8L151C8T6` | Intel HEX | `f0c9d6bc900a12d5...` |
+| `stm8/STM8L151C8T6.s19` | `STM8L151C8T6` | Motorola S-Record | `2272fe326234c9d2...` |
+| `stm8/STM8L152R8T6.bin` | `STM8L152R8T6` | raw binary | `0c71bb2b3e03c3ca...` |
+| `stm8/STM8L152R8T6.elf` | `STM8L152R8T6` | ELF executable | `3416cbfca3a4f760...` |
+| `stm8/STM8L152R8T6.hex` | `STM8L152R8T6` | Intel HEX | `f0c9d6bc900a12d5...` |
+| `stm8/STM8L152R8T6.s19` | `STM8L152R8T6` | Motorola S-Record | `2272fe326234c9d2...` |
+| `stm8/STM8S003F3P6.bin` | `STM8S003F3P6` | raw binary | `0c71bb2b3e03c3ca...` |
+| `stm8/STM8S003F3P6.elf` | `STM8S003F3P6` | ELF executable | `3416cbfca3a4f760...` |
+| `stm8/STM8S003F3P6.hex` | `STM8S003F3P6` | Intel HEX | `f0c9d6bc900a12d5...` |
+| `stm8/STM8S003F3P6.s19` | `STM8S003F3P6` | Motorola S-Record | `2272fe326234c9d2...` |
+| `stm8/STM8S103F3P6.bin` | `STM8S103F3P6` | raw binary | `0c71bb2b3e03c3ca...` |
+| `stm8/STM8S103F3P6.elf` | `STM8S103F3P6` | ELF executable | `3416cbfca3a4f760...` |
+| `stm8/STM8S103F3P6.hex` | `STM8S103F3P6` | Intel HEX | `f0c9d6bc900a12d5...` |
+| `stm8/STM8S103F3P6.s19` | `STM8S103F3P6` | Motorola S-Record | `2272fe326234c9d2...` |
+| `stm8/STM8S208RBT6.bin` | `STM8S208RBT6` | raw binary | `0c71bb2b3e03c3ca...` |
+| `stm8/STM8S208RBT6.elf` | `STM8S208RBT6` | ELF executable | `3416cbfca3a4f760...` |
+| `stm8/STM8S208RBT6.hex` | `STM8S208RBT6` | Intel HEX | `cda5f70409b119b1...` |
+| `stm8/STM8S208RBT6.s19` | `STM8S208RBT6` | Motorola S-Record | `1db5ac139669938a...` |
+| `stm8/STM8T143AU.bin` | `STM8T143AU` | raw binary | `0c71bb2b3e03c3ca...` |
+| `stm8/STM8T143AU.elf` | `STM8T143AU` | ELF executable | `3416cbfca3a4f760...` |
+| `stm8/STM8T143AU.hex` | `STM8T143AU` | Intel HEX | `f0c9d6bc900a12d5...` |
+| `stm8/STM8T143AU.s19` | `STM8T143AU` | Motorola S-Record | `2272fe326234c9d2...` |
+| `stm8/malformed/stm8af_invalid_opcode.bin` | `STM8_MALFORMED` | raw binary | `7052471c0e8cb3ee...` |
+| `stm8/malformed/stm8al_out_of_bounds_vector.bin` | `STM8_MALFORMED` | raw binary | `3ace091383323d16...` |
+| `stm8/malformed/stm8l151_checksum.s19` | `STM8_MALFORMED` | Motorola S-Record | `764d1c3dc78b2edd...` |
+| `stm8/malformed/stm8s003_checksum.hex` | `STM8_MALFORMED` | Intel HEX | `76226440b313f626...` |
+| `stm8/malformed/stm8s103_truncated.bin` | `STM8_MALFORMED` | raw binary | `27fe798e74c5dc0d...` |
+| `stm8/malformed/stm8s208_overlapping.hex` | `STM8_MALFORMED` | Intel HEX | `1983c7d83343a8e2...` |
+
 ### Oracles
 
 - Espressif `esptool`, ESP-IDF build output, and ROM/device sources.

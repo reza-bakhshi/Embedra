@@ -45,7 +45,11 @@ do
         exit 1
     fi
     expected_digest=$(jq -r '.sha256' "$manifest")
-    actual_digest=$(sha256sum "$fixture" | cut -d' ' -f1)
+    if command -v sha256sum >/dev/null 2>&1; then
+        actual_digest=$(sha256sum "$fixture" | cut -d' ' -f1)
+    else
+        actual_digest=$(shasum -a 256 "$fixture" | cut -d' ' -f1)
+    fi
     if [ "$actual_digest" != "$expected_digest" ]; then
         echo "Fixture digest mismatch: $fixture" >&2
         exit 1

@@ -24,7 +24,11 @@ if [ "$specification_path" != "Embedra-SpecKit.md" ]; then
     exit 1
 fi
 expected_digest=$(jq -r '.specification.sha256' "$state")
-actual_digest=$(sha256sum "$repository/$specification_path" | cut -d' ' -f1)
+if command -v sha256sum >/dev/null 2>&1; then
+    actual_digest=$(sha256sum "$repository/$specification_path" | cut -d' ' -f1)
+else
+    actual_digest=$(shasum -a 256 "$repository/$specification_path" | cut -d' ' -f1)
+fi
 if [ "$actual_digest" != "$expected_digest" ]; then
     echo "Specification digest does not match continuity state." >&2
     exit 1

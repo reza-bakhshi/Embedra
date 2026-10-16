@@ -377,7 +377,7 @@ bash scripts/build-release-artifacts.sh dist/ghidra_12.1.3_PUBLIC_20261016_Embed
 
 ## Known Limitations
 
-- **Platform Certification**: Linux x86-64 is the primary verified clean-build and CI test platform; Windows and macOS remain planned pending dedicated platform test environments ([`docs/compatibility-matrix.md`](docs/compatibility-matrix.md)).
+- **Platform Certification**: Linux x86-64, Windows x86-64, and macOS (x86-64 and Apple Silicon ARM64) are verified clean-build and test platforms via multi-platform CI matrices ([`docs/compatibility-matrix.md`](docs/compatibility-matrix.md)).
 - **Catalog Promotion**: STM8, Nordic nRF, and Atmel / Microchip families have verified representative parts promoted to `SUPPORTED` (8 STM8, 5 Nordic nRF, 5 Atmel/Microchip parts), with remaining cataloged parts held in `PLANNED` status pending individual golden fixture evidence.
 - **Static Analysis Scope**: Symbolic data-flow analysis and whole-program decompiler-driven interprocedural taint propagation are planned future expansions; current crypto call-site analyzers operate with bounded backward analysis.
 - **Corpus Verification**: Benchmark metrics are corpus measurements on deterministic synthetic suites ([`docs/crypto-coverage.md`](docs/crypto-coverage.md)), not formal guarantees over arbitrary obfuscated malware.
@@ -406,5 +406,5 @@ bash scripts/build-release-artifacts.sh dist/ghidra_12.1.3_PUBLIC_20261016_Embed
 
 ## License
 
-Embedra is licensed under the [Apache License, Version 2.0](LICENSE).  
+Embedra is licensed under the [Apache License, Version 2.0](LICENSE).
 Third-party attribution and redistribution boundaries are recorded in [NOTICE](NOTICE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) (audited ledger in [`docs/license-audit.md`](docs/license-audit.md)).
