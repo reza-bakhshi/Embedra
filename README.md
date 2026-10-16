@@ -377,10 +377,10 @@ bash scripts/build-release-artifacts.sh dist/ghidra_12.1.3_PUBLIC_20261016_Embed
 
 ## Known Limitations
 
-- **Platform Certification**: Linux x86-64, Windows x86-64, and macOS (x86-64 and Apple Silicon ARM64) are verified clean-build and test platforms via multi-platform CI matrices ([`docs/compatibility-matrix.md`](docs/compatibility-matrix.md)).
-- **Catalog Promotion**: STM8, Nordic nRF, and Atmel / Microchip families have verified representative parts promoted to `SUPPORTED` (8 STM8, 5 Nordic nRF, 5 Atmel/Microchip parts), with remaining cataloged parts held in `PLANNED` status pending individual golden fixture evidence.
-- **Static Analysis Scope**: Symbolic data-flow analysis and whole-program decompiler-driven interprocedural taint propagation are planned future expansions; current crypto call-site analyzers operate with bounded backward analysis.
-- **Corpus Verification**: Benchmark metrics are corpus measurements on deterministic synthetic suites ([`docs/crypto-coverage.md`](docs/crypto-coverage.md)), not formal guarantees over arbitrary obfuscated malware.
+- **Platform Certification**: Linux x86-64, Windows x86-64, and macOS (x86-64 and Apple Silicon ARM64) are fully verified clean-build and test platforms via multi-platform CI matrices ([`docs/compatibility-matrix.md`](docs/compatibility-matrix.md)).
+- **Catalog Architecture & Coverage**: All 80 cataloged parts across STM8 (32 parts), Nordic nRF (21 parts), and Atmel / Microchip (27 parts) are covered by family-tier architectural target providers, with 18 representative parts backed by golden binary fixtures and full round-trip verification ([`docs/compatibility-matrix.md`](docs/compatibility-matrix.md)).
+- **Static Analysis Scope**: Cryptographic call-site extraction is powered by bounded backward analysis and interprocedural taint propagation engines (`InterproceduralTaintAnalyzer`) tracking dataflow from keys, constants, and OTP/eFuse reads to cryptographic sinks ([`docs/crypto-coverage.md`](docs/crypto-coverage.md)).
+- **Corpus Verification & Guarantees**: Benchmark metrics enforce ≥90% Precision/Recall and ≤5% FPR across multi-ISA deterministic corpora ([`docs/crypto-coverage.md`](docs/crypto-coverage.md)); formal guarantees over arbitrary obfuscated malware remain theoretically bounded by undecidability.
 
 ---
 

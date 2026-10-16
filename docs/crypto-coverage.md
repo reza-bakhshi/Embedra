@@ -21,6 +21,7 @@ The layered pipeline fuses seven independent detector subsystems, all pure
 | `VENDOR_ROM` | 6 cataloged ROM routines: RP2040 Boot ROM flash/2-char lookup codes, ESP32-S3 mask-ROM SHA/AES/secure-boot entrypoints | VERIFIED catalog, EXPERIMENTAL detection |
 | `KEY_MATERIAL` | 128/192/256-bit candidate symmetric keys; rejects zero runs, repetitive patterns, low-entropy ASCII, and code idioms | VERIFIED |
 | `ENTROPY_ANALYSIS` | Sliding-window Shannon entropy (threshold ≥ 7.2 bits/byte), Pearson chi-squared, compression-header differentiation (`ENTROPY_ANOMALY` is never called encryption) | VERIFIED |
+| `DATA_FLOW` | Interprocedural taint propagation tracking dataflow from keys, constants, and OTP/eFuse reads across call edges to cryptographic sinks (`InterproceduralTaintAnalyzer`) | VERIFIED |
 | `FUSED_PIPELINE` | Multi-layer fusion with the four-tier confidence ladder and unified export | VERIFIED |
 
 Alongside the fused crypto pipeline, supporting engines contribute leads:
